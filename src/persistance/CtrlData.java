@@ -1,4 +1,4 @@
-package data;
+package persistance;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

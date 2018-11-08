@@ -1,4 +1,4 @@
-package domaincontrollers;
+package domain.controllers;
 
 import java.util.Map;
 import java.util.Set;
@@ -17,11 +17,11 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject; 
 import org.json.simple.parser.*;
 
-import data.CtrlData;
 import domain.Room;
 import domain.Schedule;
 import domain.Subject;
 import domain.Timeframe;
+import persistance.CtrlData;
 import domain.Group; 
 
 public class CtrlDomain {

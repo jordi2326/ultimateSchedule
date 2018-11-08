@@ -1,6 +1,5 @@
-import domaincontrollers.CtrlDomain;
-
 import domain.Schedule;
+import domain.controllers.CtrlDomain;
 
 public class Main {
 	public static void main(String[] args) throws Exception {

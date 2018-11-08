@@ -1,5 +1,6 @@
 import java.util.Scanner;
-import domaincontrollers.CtrlDomain;
+
+import domain.controllers.CtrlDomain;
 
 public class CtrlDomainDriver {
 	private static CtrlDomain cD;

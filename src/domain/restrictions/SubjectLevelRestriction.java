@@ -7,7 +7,7 @@ import domain.Room;
 import domain.Schedule;
 import domain.Subject;
 import domain.Timeframe;
-import domaincontrollers.CtrlDomain;
+import domain.controllers.CtrlDomain;
 
 public class SubjectLevelRestriction extends Restriction{
 	

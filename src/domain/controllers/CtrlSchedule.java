@@ -1,16 +1,15 @@
-package domaincontrollers;
+package domain.controllers;
 
 import domain.Schedule;
 
 import domain.Group.DayPeriod;
 import domain.Group.Type;
-
+import domain.controllers.CtrlDomain;
 import domain.Timeframe;
 
 import domain.Room;
 import domain.Group;
 import domain.Restriction;
-import domaincontrollers.CtrlDomain; // PROVA MAIN
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
