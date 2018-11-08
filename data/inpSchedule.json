@@ -1,0 +1,39 @@
+{"timeFrames": [
+	{	"dayOfWeek": "MONDAY", 
+		"timeStart": "11:00", 
+		"lectures":{
+			"A6002":"M231PROBLEMS",
+			"C6S103":"M232PROBLEMS",
+			"A6001":"PRO110THEORY",
+			"A5S108":"PRO112LABORATORY"
+		}
+	},
+	{	"dayOfWeek": "MONDAY", 
+		"timeStart": "12:00", 
+		"lectures":{
+			"A6002":"M231PROBLEMS",
+			"C6S103":"M232PROBLEMS",
+			"A6001":"PRO110THEORY",
+			"A5S108":"PRO112LABORATORY"
+		}
+	},
+	{	"dayOfWeek": "TUESDAY", 
+		"timeStart": "11:00", 
+		"lectures":{
+			"A6002":"M231PROBLEMS",
+			"C6S103":"M232PROBLEMS",
+			"A6001":"PRO110THEORY",
+			"A5S108":"PRO112LABORATORY"
+		}
+	},
+	{	"dayOfWeek": "TUESDAY", 
+		"timeStart": "12:00", 
+		"lectures":{
+			"A6002":"M231PROBLEMS",
+			"C6S103":"M232PROBLEMS",
+			"A6001":"PRO110THEORY",
+			"A5S108":"PRO112LABORATORY"
+		}
+	}
+	]
+}

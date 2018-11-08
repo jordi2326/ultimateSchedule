@@ -1,0 +1,118 @@
+{
+    "rooms":
+    [
+      {
+        "code": "A6001",
+        "capacity": 90,
+        "hasComputers": false
+      },
+      {
+        "code": "A6002",
+        "capacity": 80,
+        "hasComputers": false
+      },
+      {
+        "code": "A5S108",
+        "capacity": 35,
+        "hasComputers": true
+      },
+      {
+        "code": "C6S103",
+        "capacity": 26,
+        "hasComputers": true
+      }
+    ],
+    "subjects": 
+    [
+      {
+          "code": "PRO1",
+          "name": "Programació 1",
+          "level": "1",
+          "coreqs": [],
+          "groups": 
+          [
+              {
+                "code": "10",
+                "numPeople": 90,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2, 1]
+              },
+              {
+                "code": "11",
+                "numPeople": 30,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "12",
+                "numPeople": 25,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "13",
+                "numPeople": 27,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              }
+          ] 
+      },
+      {
+        "code": "M2",
+        "name": "Matemàtiques 2",
+        "level": "2",
+        "coreqs": ["M1", "M3"]
+        "groups": 
+        [
+            {
+              "code": "30",
+              "numPeople": 120,
+              "parentGroupCode": "30",
+              "type": "THEORY",
+              "dayPeriod": "AFTERNOON",
+              "lecturesDuration": [2]
+            },
+            {
+              "code": "31",
+              "numPeople": 36,
+              "parentGroupCode": "30",
+              "type": "PROBLEMS",
+              "dayPeriod": "AFTERNOON",
+              "lecturesDuration": [1]
+            },
+            {
+              "code": "32",
+              "numPeople": 22,
+              "parentGroupCode": "30",
+              "type": "PROBLEMS",
+              "dayPeriod": "AFTERNOON",
+              "lecturesDuration": [1]
+            },
+            {
+              "code": "33",
+              "numPeople": 29,
+              "parentGroupCode": "30",
+              "type": "PROBLEMS",
+              "dayPeriod": "AFTERNOON",
+              "lecturesDuration": [1]
+            },
+            {
+              "code": "34",
+              "numPeople": 27,
+              "parentGroupCode": "30",
+              "type": "PROBLEMS",
+              "dayPeriod": "AFTERNOON",
+              "lecturesDuration": [1]
+            }
+        ] 
+    }
+    ]
+}
