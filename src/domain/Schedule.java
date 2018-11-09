@@ -3,17 +3,15 @@
  */
 package domain;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class Schedule {
-
-	Map<Timeframe, Map <String, String>> schedule; //Map<Calendar, Map <Room.toString(), Group.toString()>>
+	Map<String, Group[][]> schedule;
 	
 	public Schedule() {
-		schedule = new HashMap<Timeframe, Map<String,String>>();
+		schedule = new HashMap<String, Group[][]>();
 	}
 	
 	public Schedule (Map<Timeframe, Map <String, String>> schedule) {
@@ -22,7 +20,7 @@ public class Schedule {
 	
 	public Map<Timeframe, Map <String, String>> getScheduleAsMap() {
 		return schedule;
-	}
+	}Map<String, Group> groups, Map<String, Room> rooms, ArrayList<Timeframe> timeFrames, ArrayList<Restriction> restrictions, Schedule schedule
 	
 	public Integer getSizeOf(Timeframe timeFrame) {
 		return this.schedule.get(timeFrame).size();

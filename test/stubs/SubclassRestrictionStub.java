@@ -2,12 +2,12 @@ package stubs;
 
 import java.util.Random;
 import domain.Group;
-import domain.Restriction;
 import domain.Room;
 import domain.Schedule;
 import domain.Timeframe;
+import domain.restrictions.UnaryRestriction;
 
-public class SubclassRestrictionStub extends Restriction{
+public class SubclassRestrictionStub extends UnaryRestriction{
 	public SubclassRestrictionStub(boolean negotiable) {
 		super(negotiable); //negotiable
 	}

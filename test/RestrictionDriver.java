@@ -1,11 +1,11 @@
 import java.util.Scanner;
 
-import domain.Restriction;
 import domain.Room;
+import domain.restrictions.UnaryRestriction;
 import stubs.SubclassRestrictionStub;
 
 public class RestrictionDriver {
-	private static Restriction r;
+	private static UnaryRestriction r;
 	
 	private static void menu() {
 		System.out.print(
@@ -69,7 +69,7 @@ public class RestrictionDriver {
 		        }
 		        if(b.equals("s")) negotiable = true;
 		        
-		        r = (Restriction) new SubclassRestrictionStub(negotiable);
+		        r = (UnaryRestriction) new SubclassRestrictionStub(negotiable);
 		        System.out.println("Nueva Restriccion definida");
 		    } catch (Exception e) {
 		        System.out.println(e);

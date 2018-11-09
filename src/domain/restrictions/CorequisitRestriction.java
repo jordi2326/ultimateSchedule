@@ -4,21 +4,20 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import domain.Group;
-import domain.Restriction;
 import domain.Room;
 import domain.Schedule;
 import domain.Subject;
 import domain.Timeframe;
-import domaincontrollers.CtrlDomain;
+import domain.controllers.CtrlDomain;
 
-public class CorequisitRestriction extends Restriction{
+public class CorequisitRestriction extends NaryRestriction{
 	
 	public CorequisitRestriction() {
 		super(true); //negotiable
 	}
 	
 	@Override
-	public boolean validate(Group group, Room room, Timeframe timeFrame, Schedule schedule) {
+	public boolean validate(Group group, Room room, Schedule schedule) {
 		CtrlDomain CD = CtrlDomain.getInstance();
 		Map<String, String> lectures = schedule.getLecturesAtTime(timeFrame);
 		Subject subject = CD.getSubject(group.getSubject());

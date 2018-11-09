@@ -1,4 +1,4 @@
-package domaincontrollers;
+package domain.controllers;
 
 import java.util.Map;
 import java.util.Set;
@@ -17,11 +17,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject; 
 import org.json.simple.parser.*;
 
-import data.CtrlData;
 import domain.Room;
 import domain.Schedule;
 import domain.Subject;
-import domain.Timeframe;
+import domain.restrictions.NaryRestriction;
+import domain.restrictions.UnaryRestriction;
+import persistance.CtrlData;
 import domain.Group; 
 
 public class CtrlDomain {
@@ -32,6 +33,10 @@ public class CtrlDomain {
 	private Map<String, Subject> subjects;
 	private Map<String, Room> rooms;
 	private Map<String, Group> groups;
+	
+	//Restrictions for every group
+	private Map<String, Map<String, Set<UnaryRestriction>>> unaryRestricions; //Key = group.toString()
+	private Map<String, Map<String, Set<NaryRestriction>>> naryRestrictions;
 	
 	
 	private CtrlDomain() {

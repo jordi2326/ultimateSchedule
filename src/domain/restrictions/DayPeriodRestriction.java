@@ -2,24 +2,28 @@ package domain.restrictions;
 
 import domain.Group;
 import domain.Group.DayPeriod;
-import domain.Restriction;
 import domain.Room;
 import domain.Schedule;
-import domain.Timeframe;
 
-public class DayPeriodRestriction extends Restriction{
+public class DayPeriodRestriction extends UnaryRestriction{
 	private int midDay;
+	private Group.DayPeriod dayPeriod;
 	
-	public DayPeriodRestriction(int midDay) {
-		super(true); //negotiable
+	public DayPeriodRestriction(int midDay, Group.DayPeriod dayPeriod) {
+		super(false); //negotiable
 		this.midDay = midDay;
+		this.dayPeriod = dayPeriod;
 	}
 	
 	@Override
-	public boolean validate(Group group, Room room, Timeframe timeFrame, Schedule schedule) {
-		return (group.getDayPeriod()==DayPeriod.INDIFERENT)
-				|| (group.getDayPeriod()==DayPeriod.MORNING && timeFrame.getTime().getHour()<midDay)
-				|| (group.getDayPeriod()==DayPeriod.AFTERNOON && timeFrame.getTime().getHour()>=midDay);
+	public boolean validate(Integer day, Integer hour) {
+		if (dayPeriod == Group.DayPeriod.AFTERNOON) {
+			return hour <= midDay;
+		}
+		else if (dayPeriod == Group.DayPeriod.MORNING) {
+			return hour > midDay;
+		}
+		else return true;
 	}
 
 }
