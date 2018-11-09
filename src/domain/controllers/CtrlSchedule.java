@@ -5,6 +5,8 @@ import domain.Schedule;
 import domain.Group.DayPeriod;
 import domain.Group.Type;
 import domain.controllers.CtrlDomain;
+import domain.restrictions.DayPeriodRestriction;
+import domain.restrictions.RoomCapacityRestriction;
 import domain.Timeframe;
 
 import domain.Room;
@@ -79,7 +81,8 @@ public class CtrlSchedule {
 		
 		// Preguntar carlos si ja existeix aquesta funcio: fer un ArrayList de Restriction
 		ArrayList<Restriction> restrictions = new ArrayList<Restriction>();
-		
+		restrictions.add(new DayPeriodRestriction(12));
+		restrictions.add(new RoomCapacityRestriction());
 		// S'haurà d'imprimir per pantalla?
 		// Guardar en un file?
 		generateSchedule(groups, rooms, timeFrames, restrictions);

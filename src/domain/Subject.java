@@ -9,7 +9,7 @@ public class Subject {
 	private String level;
 	private ArrayList<String> groups; //Contains the group.toString() of every group in the subject
 	private ArrayList<String> coreqs; //Contains the subject.toString() of every group in the subject
-	
+
 	public Subject(String code, String name, String level, ArrayList<String> groups, ArrayList<String> coreqs) {
 		this.code = code;
 		this.name = name;

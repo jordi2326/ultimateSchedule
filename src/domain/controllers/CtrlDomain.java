@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator; 
+import java.util.Iterator;
+import java.util.List;
 
 import org.json.simple.JSONArray; 
 import org.json.simple.JSONObject; 
@@ -45,6 +46,14 @@ public class CtrlDomain {
 		if (instance == null)
 			instance = new CtrlDomain();
 		return instance;
+	}
+	
+	public ArrayList<String> getRoomNamesList() {
+		return new ArrayList<String>(rooms.keySet());
+	}
+	
+	public ArrayList<String> getSubjectNamesList() {
+		return new ArrayList<String>(subjects.keySet());
 	}
 	
 	public ArrayList<Room> getRooms() {
@@ -115,8 +124,8 @@ public class CtrlDomain {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public boolean importData(String filename) throws ParseException, IOException   {
-		 String jsonData = dataController.readData(filename);
+	public boolean importEnvironment(String filename) throws ParseException, IOException   {
+		 String jsonData = dataController.readEnvironment(filename);
 		 Object obj = new JSONParser().parse(jsonData);
 		 
 		// typecasting obj to JSONObject 
@@ -185,7 +194,7 @@ public class CtrlDomain {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public boolean exportData(String filename) throws IOException {
+	public boolean exportEnvironment(String filename) throws IOException {
 		// creating JSONObject 
         JSONObject jo = new JSONObject();
         // creating subjects JSONArray
@@ -234,12 +243,12 @@ public class CtrlDomain {
         jo.put("subjects", jsonSubjects);
     	
         //Send to data controller to write
-        return dataController.writeData(filename, jo.toJSONString(0));        
+        return dataController.writeEnvironment(filename, jo.toJSONString(0));        
 	}
 	
 	@SuppressWarnings("unchecked")
 	public Schedule importSchedule(String filename) throws ParseException, FileNotFoundException {
-		String jsonData = dataController.readData(filename);
+		String jsonData = dataController.readSchedule(filename);
 		Object obj = new JSONParser().parse(jsonData);
 	
 		// typecasting obj to JSONObject 
@@ -280,7 +289,7 @@ public class CtrlDomain {
         //Add Subjects and Rooms to final object
         jo.put("timeFrames", jsonTfs);
 		//Send to data controller to write
-        return dataController.writeData(filename, jo.toJSONString(0));        
+        return dataController.writeSchedule(filename, jo.toJSONString(0));        
 	}
 	
 	private ArrayList<Group> getGroupsFromSubject(String subject) {
@@ -293,5 +302,8 @@ public class CtrlDomain {
 		return groupsFromSubject;
 	}
 	
+	public List<String> getEnvironmentFilesList(){
+		return dataController.getEnvironmentFilesList();
+	}
 	
 }
