@@ -15,6 +15,7 @@ import domain.Group;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Set;
 // import java.util.Calendar; No s'utilitza ja
 import java.util.HashMap;
@@ -91,17 +92,22 @@ public class CtrlSchedule {
 	
 	// ************************************************************************
 	
-	public static void generateSchedule(Map<String, UnaryRestriction> unaryRestrictions, Map<String, NaryRestriction> NaryRestrictions, Map<String, Group> groups, Map<String, Subject> subjects, Map<String, Room> rooms) {
+	public static void generateSchedule(Map<String, UnaryRestriction> unaryRestrictions, Map<String, NaryRestriction> naryRestrictions, Map<String, Group> groups, Map<String, Subject> subjects, Map<String, Room> rooms) {
 		//TODO: Implementar la restriction de que un grup no vagi en un dia o hora concrets
 		//Filter possible rooms hours and days for each group according to room capacity, PC's, day period and restrictions of days / hours
 		Map<String, Map<Integer, Set<Map <Integer, Set<String>>>>> shrek = new HashMap<String, Map<Integer, Set<Map <Integer, Set<String>>>>>();
+		
+		//no se si s'ordena sol. L'Integer es el numero de classes totals a les que pot anar aquell grup
+		PriorityQueue<Pair<Integer, String>> pq = new PriorityQueue<Pair<Integer, String>>(); // PriorityQueue<Pair<Int, Group.toString()>>
 		for (Group g : groups.values()) {
+			Integer totalGroupRooms = 0;
 			Set<String> roomSet = new HashSet<String>();
 			for (Room r : rooms.values()) {
 				if (g.getNumPeople() <= r.getCapacity()) {
 					if ((g.getType() == Group.Type.LABORATORY && r.hasComputers())
 						|| (g.getType() != Group.Type.LABORATORY)) {
 						roomSet.add(r.toString());
+						totalGroupRooms += 1;
 					}
 				}
 			}
@@ -124,11 +130,15 @@ public class CtrlSchedule {
 				dayHourRooms.put(day, setHourRooms);
 			}
 			shrek.put(g.toString(), dayHourRooms);
+			Pair<Integer, String> pair = new Pair<>(totalGroupRooms, g.toString());
+			pq.add(pair);
 		}
 		
 		Schedule schedule = new Schedule();
 		
-		boolean exists = generate(schedule, shrek, pq);
+	
+		
+		boolean exists = generate(schedule, shrek, pq, naryRestrictions);
 		
 		if (exists) {
 			schedule.imprimir();
