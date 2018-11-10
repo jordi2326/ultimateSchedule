@@ -1,4 +1,4 @@
-package stubs;
+package domain.drivers.stubs;
 
 import java.util.Random;
 import domain.Group;

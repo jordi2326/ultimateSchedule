@@ -1,8 +1,9 @@
+package domain.drivers;
 import java.util.Scanner;
 
 import domain.Restriction;
 import domain.Room;
-import stubs.SubclassRestrictionStub;
+import domain.drivers.stubs.SubclassRestrictionStub;
 
 public class RestrictionDriver {
 	private static Restriction r;

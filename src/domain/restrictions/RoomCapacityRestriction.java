@@ -13,7 +13,7 @@ public class RoomCapacityRestriction extends Restriction{
 	
 	@Override
 	public boolean validate(Group group, Room room, Timeframe timeFrame, Schedule schedule) {
-		return group.getNumPeople() <= room.getCapacity();
+		return group.getNumOfPeople() <= room.getCapacity();
 	}
 
 	

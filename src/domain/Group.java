@@ -51,7 +51,7 @@ public class Group {
 	/**
 	 * @return the numPeople
 	 */
-	public Integer getNumPeople() {
+	public Integer getNumOfPeople() {
 		return numPeople;
 	}
 
@@ -86,7 +86,7 @@ public class Group {
 	/**
 	 * @return the number of lectures
 	 */
-	public Integer getNumberOfLectures() {
+	public Integer getNumOfLectures() {
 		return this.lecturesDuration.size();
 	}
 
