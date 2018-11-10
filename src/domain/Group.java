@@ -49,14 +49,14 @@ public class Group {
 	}
 
 	/**
-	 * @return the numPeople
+	 * @return the number of people
 	 */
 	public Integer getNumOfPeople() {
 		return numPeople;
 	}
 
 	/**
-	 * @return the parentGroupCode
+	 * @return the code of the parent group
 	 */
 	public String getParentGroupCode() {
 		return parentGroupCode;

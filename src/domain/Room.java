@@ -28,7 +28,7 @@ public class Room {
 	}
 
 	/**
-	 * @return the hasComputers
+	 * @return true if the room has computers
 	 */
 	public Boolean hasComputers() {
 		return hasComputers;

@@ -213,12 +213,12 @@ public class CtrlDomain {
         	for (Group group : groupsFromSubject) {
         		JSONObject jsonGroup = new JSONObject();
         		jsonGroup.put("code", group.getCode());
-        		jsonGroup.put("numPeople", group.getNumPeople());
+        		jsonGroup.put("numPeople", group.getNumOfPeople());
         		jsonGroup.put("parentGroupCode", group.getParentGroupCode());
         		jsonGroup.put("subject", group.getSubject());
-        		jsonGroup.put("type", group.getTypeAsString());
-        		jsonGroup.put("dayPeriod", group.getDayPeriodAsString());
-        		jsonGroup.put("lecturesDuration", group.getLecturesDuration());
+        		jsonGroup.put("type", group.getType().toString());
+        		jsonGroup.put("dayPeriod", group.getDayPeriod().toString());
+        		//jsonGroup.put("lecturesDuration", ); //TODO
         		jsonGroups.add(jsonGroup);
         	}
         	
