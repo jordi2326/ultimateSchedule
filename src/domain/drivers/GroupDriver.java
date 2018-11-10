@@ -67,14 +67,15 @@ public class GroupDriver {
 	    try {
 	    	String filename = filenames.get(n);
 	    	Scanner in = new Scanner(new FileReader(new File(path+filename)));
-	    	g = new Group(in.next(), in.nextInt(), in.next(), in.next(), Type.valueOf(in.next()), DayPeriod.valueOf(in.next()), readDurationsList(in));
+	    	g = new Group(in.next(), in.nextInt(), in.next(), in.next(), Type.valueOf(in.next()), DayPeriod.valueOf(in.next()), readIntegerList(in));
+	    	in.close();
 	    	subMenu();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private static ArrayList<Integer> readDurationsList(Scanner in){
+	private static ArrayList<Integer> readIntegerList(Scanner in){
 		ArrayList<Integer> l = new ArrayList<Integer>();
 		Integer d = in.nextInt();
 		while(d!=-1) {
