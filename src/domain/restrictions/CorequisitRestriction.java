@@ -22,7 +22,7 @@ public class CorequisitRestriction extends Restriction{
 		CtrlDomain CD = CtrlDomain.getInstance();
 		Map<String, String> lectures = schedule.getLecturesAtTime(timeFrame);
 		Subject subject = CD.getSubject(group.getSubject());
-		ArrayList<String> coreqs = subject.getAllCorequisits();
+		ArrayList<String> coreqs = subject.getCoreqs();
 		
 		if(!coreqs.isEmpty()) {
 			for (Map.Entry<String, String> l: lectures.entrySet()) {

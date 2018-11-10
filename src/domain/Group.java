@@ -97,33 +97,10 @@ public class Group {
 		// Hem de tenir en compte que es possible que i > lecturesDuration.size()?
 		return this.lecturesDuration.get(i);
 	}
-	
-	public ArrayList<Integer> getLecturesDuration() {
-		return lecturesDuration;
-	}
-	
-	public boolean removeLecture(Integer duration) {
-		this.lecturesDuration.remove(duration);
-		return true;
-	}
-	
-	public boolean addLecture(Integer duration) {
-		this.lecturesDuration.add(0, duration);
-		return true;
-	}
-	
-	public String getTypeAsString() {
-		return type.toString();
-	}
-	
 
 	public boolean hasLectures() {
 		if (lecturesDuration.isEmpty()) return false;
 		return true;
-	}
-
-	public String getDayPeriodAsString() {
-		return dayPeriod.toString();
 	}
 
 	@Override

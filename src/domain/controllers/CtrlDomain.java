@@ -205,7 +205,7 @@ public class CtrlDomain {
         	subject.put("code", value.getCode());
         	subject.put("name", value.getName());
         	subject.put("level", value.getLevel());
-        	subject.put("coreqs", value.getAllCorequisits());
+        	subject.put("coreqs", value.getCoreqs());
         	
         	JSONArray jsonGroups = new JSONArray();
         	

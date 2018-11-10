@@ -21,7 +21,8 @@ public class GroupDriver {
 	            + " 7| getParentGroupCode\n"
 	            + " 8| getSubject\n"
 	            + " 9| getType\n"
-	            + "10| toString\n"
+	            + "10| hasLectures\n"
+	            + "11| toString\n"
 	            + "---------------------\n"
 	            );
 	                    
@@ -63,6 +64,9 @@ public class GroupDriver {
 	            	testGetType(sc);
 	                break;
 	            case 10:
+	            	testHasLectures(sc);
+	                break;
+	            case 11:
 	            	testToString(sc);
 	                break;
 	        }
@@ -197,6 +201,15 @@ public class GroupDriver {
 			try {
 	            Type x = g.getType();
 	            System.out.println("Tipo: " + x);
+	        } catch (Exception e) {
+	            System.out.println(e);
+	        }
+		}
+		
+		public static void testHasLectures(Scanner sc){
+			try {
+	            Boolean x = g.hasLectures();
+	            System.out.println("Tiene Lectures: " + x);
 	        } catch (Exception e) {
 	            System.out.println(e);
 	        }

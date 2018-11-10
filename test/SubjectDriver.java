@@ -13,9 +13,9 @@ public class SubjectDriver {
 	            + "Opciones\n"
 	            + " 0| Salir\n"
 	            + " 1| new Subject\n"
-	            + " 2| getAllCorequisits\n"
-	            + " 3| getAllGroups\n"
-	            + " 4| getCode\n"
+	            + " 2| getCode\n"
+	            + " 3| getCoreqs\n"
+	            + " 4| getGroups\n"
 	            + " 5| getLevel\n"
 	            + " 6| getName\n"
 	            + " 7| toString\n"
@@ -36,13 +36,13 @@ public class SubjectDriver {
 	            	testConstructor(sc);
 	                break;
 	            case 2:
-	            	testGetAllCorequisits(sc);
+	            	testGetCode(sc);
 	                break;
 	            case 3:
-	            	testGetAllGroups(sc);
+	            	testGetCoreqs(sc);
 	                break;
 	            case 4:
-	            	testGetCode(sc);
+	            	testGetGroups(sc);
 	                break;
 	            case 5:
 	            	testGetLevel(sc);
@@ -80,18 +80,18 @@ public class SubjectDriver {
 		    }
 		}
 		
-		public static void testGetAllCorequisits(Scanner sc){
+		public static void testGetCoreqs(Scanner sc){
 			try {
-	            ArrayList<String> x = s.getAllCorequisits();
+	            ArrayList<String> x = s.getCoreqs();
 	            System.out.println("Corequisits: " + x);
 	        } catch (Exception e) {
 	            System.out.println(e);
 	        }
 		}
 		
-		public static void testGetAllGroups(Scanner sc){
+		public static void testGetGroups(Scanner sc){
 			try {
-	            ArrayList<String> x = s.getAllGroups();
+	            ArrayList<String> x = s.getGroups();
 	            System.out.println("Groups: " + x);
 	        } catch (Exception e) {
 	            System.out.println(e);

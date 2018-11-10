@@ -29,12 +29,8 @@ public class Subject {
 	public String getLevel() {
 		return level;
 	}
-
-	public ArrayList<String> getAllGroups() {
-		return groups;
-	}
 	
-	public ArrayList<String> getAllCorequisits() {
+	public ArrayList<String> getCoreqs() {
 		return coreqs;
 	}
 	
