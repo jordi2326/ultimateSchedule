@@ -149,14 +149,93 @@ public class CtrlSchedule {
 		}
 	}
 	
-
-	
-	private static boolean generate(Schedule schedule, Map<Lecture, posAssig> shrek, Map<String, NaryRestriction[]> naryRestrictions) {
-		// Map<String, String[][]> schedule;
-		// Map<Integer, Map< Integer, Set<String>>> shrek;
-		//      Dia		       Hora		   Aula
+	private static boolean generate(Schedule schedule, Map<Lecture, posAssig> shrek, Map<String, NaryRestriction[]> naryRestrictions) {		
+		// Pre: a shrek hi tenim només les Lectures que falten afegir i les assignacions possibles que li podem donar. Només les possibles! (forward checking)
+		// Pre: a més, per com està feta la funció podar, no hi ha cap Lecture amb 0 possibles assignacions
 		
-		
-		return true;
+		// Cas base (CORRECTE) => shrek està buit => No queda res per afegir
+		if (shrek.size() == 0) {
+			return true;
+		} else { // Encara tenim Lectures per afegir
+			// 1.	Agafem la primera Lecture de "shrek"
+			Map.Entry<Lecture, posAssig> firstEntry = shrek.entrySet().iterator().next();
+			Lecture key = firstEntry.getKey(); // Lecture
+			String group = key.getGroup(); // Grup ///////////////////////////////////////////////////////////
+			Integer duration = key.getDuration(); // Duració de la Lecture ///////////////////////////////////
+			posAssig possibleAssignacio = firstEntry.getValue(); // posAssig
+			
+			// 2.	Eliminar la lecture de shrek (es podria fer abans del for?)
+			shrek.remove(key);
+			
+			Map<Integer, Map<Integer, Set<String>>> posA = possibleAssignacio.getMap(); // Això és el map de dia hora i aula
+			// Iterem per totes les possible assignacions
+			for (Map.Entry<Integer, Map<Integer, Set<String>>> firstOfposAssig : posA.entrySet()) {
+				Integer day = firstOfposAssig.getKey(); // Dia ///////////////////////////////////////////////////
+				Map<Integer, Set<String>> hourRoom = firstOfposAssig.getValue(); // Hora i Aula
+				
+				for (Map.Entry<Integer, Set<String>> HR : hourRoom.entrySet()) {
+					Integer hour = HR.getKey(); // Hour //////////////////////////////////////////////////////////////
+					Set<String> Rooms = HR.getValue();
+					
+					for (String room : Rooms) {
+						// 3.	Afegir-lo al schedule (Map<String, String[][]>)
+						String[][] scheduleRoom = schedule.getScheduleOf(room);
+						Integer h = 0;
+						while (h < duration) {
+							scheduleRoom[hour + h][day] = group;
+							++h;
+						}
+						
+						// 4.	Podar
+						boolean podat = true; // Funció d'en Laca
+						
+						if (podat) {
+							boolean possible = generate(schedule, shrek, naryRestrictions); // True => És possible generar l'horari
+																							// False => No és possible
+							if (possible) return true;
+							else {
+								// Borrar de l'schedule i seguir iterant per les possibles assignacions
+								h = 0;
+								while (h < duration) {
+									scheduleRoom[hour + h][day] = null;
+									++h;
+								}
+							}
+						} else {
+							// Backtracking
+							shrek.put(key, possibleAssignacio);
+							return false;
+						}
+					}
+				}
+			}
+			// Falta torna-lo a afegir?
+			// Ho faig per si un cas
+			shrek.put(key, possibleAssignacio);
+			
+			return false;
+		}
 	}
+	
+	/* ********************** FORWARD CHECKING ******************
+	 * Función: forward checking (vfuturas, solucion)
+		si vfuturas.es_vacio?() entonces
+			retorna solucion
+		sino
+			vactual <- vfuturas.primero()
+			vfuturas.borrar_primero()
+				para cada v (pertany) vactual.valores() hacer
+				vactual.asignar(v)
+				solucion.anadir(vactual)
+				vfuturas.propagar_restricciones(vactual) // forward checking
+				si no vfuturas.algun_dominio_vacio?() entonces
+					solucion <- forward_checking(vfuturas,solucion)
+					si no solucion.es_fallo?() entonces
+						retorna solucion
+					sino
+						solucion.borrar(vactual)
+				sino
+				solucion.borrar(vactual)
+			retorna solucion.fallo()
+*/
 }

@@ -14,6 +14,10 @@ public class Schedule {
 		schedule = new HashMap<String, Group[][]>();
 	}
 	
+	public String[][] getScheduleOf (String room) {
+		return schedule.get(room);
+	}
+	
 	public Schedule (Map<Timeframe, Map <String, String>> schedule) {
 		this.schedule = schedule;
 	}

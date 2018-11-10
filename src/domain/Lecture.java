@@ -12,7 +12,6 @@ public class Lecture {
 	 * @param group
 	 */
 	public Lecture(Integer id, String group, Integer duration) {
-		super();
 		this.id = id;
 		this.group = group;
 		this.duration = duration;
@@ -61,5 +60,10 @@ public class Lecture {
 	public boolean setDuration(Integer duration) {
 		this.duration = duration;
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return group + id;
 	}
 }

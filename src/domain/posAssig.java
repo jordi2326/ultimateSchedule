@@ -11,5 +11,9 @@ public class posAssig {
 	public posAssig() {
 		shrek = new HashMap<Integer, Map< Integer, Set<String>>>();
 	}
+	
+	public Map<Integer, Map< Integer, Set<String>>> getMap() { // Pensar en canviar el nom xD
+		return shrek;
+	}
 
 }
