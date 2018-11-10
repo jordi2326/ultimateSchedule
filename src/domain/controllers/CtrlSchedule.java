@@ -149,7 +149,7 @@ public class CtrlSchedule {
 		}
 	}
 	
-	private static boolean generate(Schedule schedule, Map<Lecture, posAssig> shrek, Map<String, NaryRestriction[]> naryRestrictions) {		
+	private static boolean generate(Schedule schedule, Map<String, posAssig> shrek, Map<String, NaryRestriction[]> naryRestrictions, PriorityQueue<Pair<Integer, Lecture>> heuristica) { // Canviar nom de la PQ si volem xD		
 		// Pre: a shrek hi tenim només les Lectures que falten afegir i les assignacions possibles que li podem donar. Només les possibles! (forward checking)
 		// Pre: a més, per com està feta la funció podar, no hi ha cap Lecture amb 0 possibles assignacions
 		
@@ -157,18 +157,21 @@ public class CtrlSchedule {
 		if (shrek.size() == 0) {
 			return true;
 		} else { // Encara tenim Lectures per afegir
-			// 1.	Agafem la primera Lecture de "shrek"
-			Map.Entry<Lecture, posAssig> firstEntry = shrek.entrySet().iterator().next();
-			Lecture key = firstEntry.getKey(); // Lecture
-			String group = key.getGroup(); // Grup ///////////////////////////////////////////////////////////
-			Integer duration = key.getDuration(); // Duració de la Lecture ///////////////////////////////////
-			posAssig possibleAssignacio = firstEntry.getValue(); // posAssig
+			// 1.	Agafar la primera Lecture, que ha estat ordenat heruísticament
+			Pair<Integer, Lecture> firstCandidate = heuristica.poll(); // També l'elimino de la PQ
+			Lecture lecture = firstCandidate.getValue(); // Lecture
 			
-			// 2.	Eliminar la lecture de shrek (es podria fer abans del for?)
-			shrek.remove(key);
+			String group = lecture.getGroup(); // Grup ///////////////////////////////////////////////////////////
+			Integer duration = lecture.getDuration(); // Duració de la Lecture ///////////////////////////////////
+
+			posAssig possibleAssignacions = shrek.get(lecture.toString());
 			
-			Map<Integer, Map<Integer, Set<String>>> posA = possibleAssignacio.getMap(); // Això és el map de dia hora i aula
-			// Iterem per totes les possible assignacions
+			// 2.	Eliminar la lecture de shrek
+			shrek.remove(lecture.toString());
+
+			Map<Integer, Map<Integer, Set<String>>> posA = possibleAssignacions.getMap(); // Això és el map de dia hora i aula
+			
+			// 3.	Iterem per totes les possible assignacions
 			for (Map.Entry<Integer, Map<Integer, Set<String>>> firstOfposAssig : posA.entrySet()) {
 				Integer day = firstOfposAssig.getKey(); // Dia ///////////////////////////////////////////////////
 				Map<Integer, Set<String>> hourRoom = firstOfposAssig.getValue(); // Hora i Aula
@@ -178,7 +181,7 @@ public class CtrlSchedule {
 					Set<String> Rooms = HR.getValue();
 					
 					for (String room : Rooms) {
-						// 3.	Afegir-lo al schedule (Map<String, String[][]>)
+						// 4.	Afegir-lo al schedule (Map<String, String[][]>)
 						String[][] scheduleRoom = schedule.getScheduleOf(room);
 						Integer h = 0;
 						while (h < duration) {
@@ -186,12 +189,12 @@ public class CtrlSchedule {
 							++h;
 						}
 						
-						// 4.	Podar
-						boolean podat = true; // Funció d'en Laca
+						// 5.	Podar
+						boolean podat; // Funció d'en Laca
 						
 						if (podat) {
-							boolean possible = generate(schedule, shrek, naryRestrictions); // True => És possible generar l'horari
-																							// False => No és possible
+							boolean possible = generate(schedule, shrek, naryRestrictions, heuristica); // True => És possible generar l'horari
+																										// False => No és possible
 							if (possible) return true;
 							else {
 								// Borrar de l'schedule i seguir iterant per les possibles assignacions
@@ -202,16 +205,27 @@ public class CtrlSchedule {
 								}
 							}
 						} else {
-							// Backtracking
-							shrek.put(key, possibleAssignacio);
-							return false;
+							// Borrar de l'schedule i seguir iterant per les possibles assignacions
+							h = 0;
+							while (h < duration) {
+								scheduleRoom[hour + h][day] = null;
+								++h;
+							}
+							
+							// Backtracking => Fa falta aquí? Crec que no
+							/*shrek.put(lecture.toString(), possibleAssignacions);
+							Pair<Integer, Lecture> p = new Pair<Integer, Lecture>(firstCandidate.getKey(), lecture); // Canvair nom si volem
+							heuristica.add(p);
+							
+							return false;*/
 						}
 					}
 				}
 			}
-			// Falta torna-lo a afegir?
-			// Ho faig per si un cas
-			shrek.put(key, possibleAssignacio);
+			// Backtracking
+			shrek.put(lecture.toString(), possibleAssignacions);
+			Pair<Integer, Lecture> p = new Pair<Integer, Lecture>(firstCandidate.getKey(), lecture); // Canvair nom si volem
+			heuristica.add(p);
 			
 			return false;
 		}
