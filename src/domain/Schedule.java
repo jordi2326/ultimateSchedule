@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class Schedule {
-	Map<String, Group[][]> schedule;
+	Map<String, String[][]> schedule;
 	
 	public Schedule() {
 		schedule = new HashMap<String, Group[][]>();
