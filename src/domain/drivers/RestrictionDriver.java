@@ -13,13 +13,12 @@ public class RestrictionDriver {
 	            "Room Driver\n"
 	            + "---------------------\n"
 	            + "Opciones\n"
-	            + " 0| Salir\n"
 	            + " 1| new Restriction\n"
 	            + " 2| disable\n"
 	            + " 3| enable\n"
 	            + " 4| isEnabled\n"
 	            + " 5| isNegotiable\n"
-	            + " 6| validate\n"
+	            + " 0| Salir\n"
 	            + "---------------------\n"
 	            );
 	                    
@@ -47,9 +46,6 @@ public class RestrictionDriver {
 	                break;
 	            case 5:
 	            	testIsNegotiable(sc);
-	                break;
-	            case 6:
-	            	testValidate(sc);
 	                break;
 	        }
 	        //menu();
@@ -114,13 +110,5 @@ public class RestrictionDriver {
 	        }
 		}
 		
-		public static void testValidate(Scanner sc){
-			try {
-	            Boolean x = r.validate(null, null, null, null);
-	            System.out.println("Valid: " + x);
-	        } catch (Exception e) {
-	            System.out.println(e);
-	        }
-		}
 	
 	}

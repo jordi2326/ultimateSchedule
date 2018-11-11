@@ -53,7 +53,7 @@ public class SubjectDriver {
     }
 	
 	public static void loadSubjectMenu(){
-		String path = "data/driverTests/subjectDriver/";
+		String path = "data/driverTests/subjects/";
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
 		List<String> filenames = new ArrayList<String>();
@@ -113,13 +113,13 @@ public class SubjectDriver {
 	            "Subject Driver\n"
 	            + "---------------------\n"
 	            + "Opciones\n"
-	            + " 0| Salir\n"
 	            + " 1| getCode\n"
 	            + " 2| getCoreqs\n"
 	            + " 3| getGroups\n"
 	            + " 4| getLevel\n"
 	            + " 5| getName\n"
 	            + " 6| toString\n"
+	            + " 0| Salir\n"
 	            + "---------------------\n"
 	            );
 	                    

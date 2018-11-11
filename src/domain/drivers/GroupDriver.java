@@ -53,7 +53,7 @@ public class GroupDriver {
     }
 	
 	public static void loadGroupMenu(){
-		String path = "data/driverTests/groupDriver/";
+		String path = "data/driverTests/groups/";
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
 		List<String> filenames = new ArrayList<String>();

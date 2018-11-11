@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import domain.classes.Room;
+import domain.classes.Lecture;
 
-public class RoomDriver {
+public class LectureDriver {
 	private static Scanner sc;
-	private static Room r;
+	private static Lecture l;
 	
 	private static void printMain() {
 		System.out.print(
-	            "Room Driver\n"
+	            "Lecture Driver\n"
 	            + "---------------------\n"
 	            + "Opciones\n"
-	            + " 1| Cargar Room de un archivo\n"
-	            + " 2| Definir Room manualmente\n"
+	            + " 1| Cargar Lecture de un archivo\n"
+	            + " 2| Definir Lecture manualmente\n"
 	            + " 0| Salir\n"
 	            + "---------------------\n"
 	            );
@@ -31,7 +31,7 @@ public class RoomDriver {
 	    n = sc.nextInt();
 	    switch (n) {
 	    	case 1:
-	    		loadRoomMenu();
+	    		loadLectureMenu();
 	            break;
 	        case 2:
 	        	newRoomMenu();
@@ -50,8 +50,8 @@ public class RoomDriver {
 		System.out.print("--------------------------\n");
     }
 	
-	public static void loadRoomMenu(){
-		String path = "data/driverTests/rooms/";
+	public static void loadLectureMenu(){
+		String path = "data/driverTests/lectures/";
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
 		List<String> filenames = new ArrayList<String>();
@@ -66,7 +66,7 @@ public class RoomDriver {
 	    try {
 	    	String filename = filenames.get(n);
 	    	Scanner in = new Scanner(new FileReader(new File(path+filename)));
-	    	r = new Room(in.next(), in.nextInt(), in.nextBoolean());
+	    	l = new Lecture(in.nextInt(), in.next(), in.nextInt());
 	    	in.close();
 	    	subMenu();
 		} catch (Exception e) {
@@ -76,28 +76,24 @@ public class RoomDriver {
 	
 	private static void newRoomMenu() {
 		try {
-	    	System.out.println("Definir nueva Aula");
-	    	System.out.println(">Introduzca Codigo del Aula");
-	        String code = sc.next();
-	        
-	        System.out.println(">Introduzca Capacidad");
+	    	System.out.println("Definir nueva Lecture");
+	    	System.out.println(">Introduzca Id de la Lecture");
 	        while (!sc.hasNextInt()) {
 	        	System.out.println("Error: Se ncecesita un entero");
 	            sc.nextLine();
 	        }
-	        Integer capacity = sc.nextInt();
+	        Integer id = sc.nextInt();
 	        
-	        System.out.println(">Introduzca si tiene ordenadores [S/N]");
+	        String group = sc.next();
 	        
-	        Boolean hasComputers = false;
-	        String b = sc.next().trim().toLowerCase();
-	        while(!b.equals("s") && !b.equals("n")) {
-	        	System.out.println("Error: Introduzca 'S' o 'N'");
-	        	b = sc.next().trim().toLowerCase();
+	        System.out.println(">Introduzca Duracion");
+	        while (!sc.hasNextInt()) {
+	        	System.out.println("Error: Se ncecesita un entero");
+	            sc.nextLine();
 	        }
-	        if(b.equals("s")) hasComputers = true;
+	        Integer duration = sc.nextInt();
 	        
-	        r = new Room(code, capacity, hasComputers);
+	        l = new Lecture(id, group, duration);
 	        System.out.println("Nueva Aula definida");
 	        subMenu();
 	    } catch (Exception e) {
@@ -110,10 +106,9 @@ public class RoomDriver {
 	            "Room Driver\n"
 	            + "---------------------\n"
 	            + "Opciones\n"
-	            + " 1| getCapacity\n"
-	            + " 2| getCode\n"
-	            + " 3| hasComputers\n"
-	            + " 4| toString\n"
+	            + " 1| getDuration\n"
+	            + " 2| getGroup\n"
+	            + " 3| getId\n"
 	            + " 0| Salir\n"
 	            + "---------------------\n"
 	            );
@@ -127,51 +122,39 @@ public class RoomDriver {
 	    while (n != 0) {
 	        switch (n) {
 	            case 1:
-	            	testGetCapacity();
+	            	testGetDuration();
 	                break;
 	            case 2:
-	            	testGetCode();
+	            	testGetGroup();
 	                break;
 	            case 3:
-	            	testHasComputers();
-	                break;
-	            case 4:
-	            	testToString();
+	            	testGetId();
 	                break;
 	        }
 	        n = sc.nextInt();
 	    }
 	}
-		public static void testGetCapacity(){
+		public static void testGetDuration(){
 			try {
-	            Integer x = r.getCapacity();
+	            Integer x = l.getDuration();
 	            System.out.println(x);
 	        } catch (Exception e) {
 	            System.out.println(e);
 	        }
 		}
 		
-		public static void testGetCode(){
+		public static void testGetGroup(){
 			try {
-	            String x = r.getCode();
+	            String x = l.getGroup();
 	            System.out.println(x);
 	        } catch (Exception e) {
 	            System.out.println(e);
 	        }
 		}
 		
-		public static void testHasComputers(){
+		public static void testGetId(){
 			try {
-	            Boolean x = r.hasComputers();
-	            System.out.println(x);
-	        } catch (Exception e) {
-	            System.out.println(e);
-	        }
-		}
-		
-		public static void testToString(){
-			try {
-	            String x = r.toString();
+	            Integer x = l.getId();
 	            System.out.println(x);
 	        } catch (Exception e) {
 	            System.out.println(e);
