@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 // import java.io.FileNotFoundException;
-//import org.json.simple.JSONObject;
+// import org.json.simple.JSONObject;
 
 public class CtrlData {
 	
@@ -41,18 +41,18 @@ public class CtrlData {
 		return writeData("environments/"+filename, content);
 	}
 	
-	private String readData(String filename) throws FileNotFoundException {
-		FileReader fr = new FileReader("data/"+filename);
-		Scanner scan = new Scanner(fr);
-		scan.useDelimiter("\\Z");
-		return scan.next();
+	public String readData(String filename) throws FileNotFoundException {
+			FileReader fr = new FileReader("data/"+filename);
+			Scanner scan = new Scanner(fr);
+			scan.useDelimiter("\\Z");
+			return scan.next();
 	}
 	
-	private boolean writeData(String filename, String content) throws FileNotFoundException {
+	public boolean writeData(String filename, String content) throws FileNotFoundException {
 		PrintWriter pw = new PrintWriter("data/"+filename); 
         pw.write(content); 
         pw.flush(); 
-        pw.close();
+        pw.close(); 
         return true;
 	}
 	

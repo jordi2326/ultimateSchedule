@@ -5,7 +5,6 @@ import domain.Group;
 import domain.Restriction;
 import domain.Room;
 import domain.Schedule;
-import domain.Timeframe;
 
 public class SubclassRestrictionStub extends Restriction{
 	public SubclassRestrictionStub(boolean negotiable) {
@@ -16,6 +15,4 @@ public class SubclassRestrictionStub extends Restriction{
 	public boolean validate(Group group, Room room, Timeframe timeFrame, Schedule schedule) {
 		return new Random().nextBoolean();
 	}
-
-	
 }

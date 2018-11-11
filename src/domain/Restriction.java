@@ -4,8 +4,6 @@ public abstract class Restriction {
 	private boolean negotiable;
 	private boolean enabled = true;
 	
-	public abstract boolean validate(Group group, Room room, Timeframe timeFrame, Schedule schedule);
-	
 	public Restriction(boolean negotiable) {
 		this.negotiable = negotiable;
 	}
