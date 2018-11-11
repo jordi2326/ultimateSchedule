@@ -6,8 +6,6 @@ import domain.Group;
 import domain.Lecture;
 import domain.PosAssig;
 import domain.Restriction;
-import domain.Room;
-import domain.Schedule;
 import domain.Subject;
 
 public abstract class NaryRestriction extends Restriction {

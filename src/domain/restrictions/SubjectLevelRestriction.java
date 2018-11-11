@@ -1,14 +1,11 @@
 package domain.restrictions;
 
-import java.util.Iterator;
 import java.util.Map;
 
 import domain.Group;
 import domain.Lecture;
 import domain.PosAssig;
-import domain.Room;
 import domain.Subject;
-import domain.controllers.CtrlDomain;
 
 public class SubjectLevelRestriction extends NaryRestriction{
 	
@@ -32,21 +29,23 @@ public class SubjectLevelRestriction extends NaryRestriction{
 					if (groups.get(gr).getCode().equals(groupCode)) {
 						for (String lec : groups.get(gr).getLectures()) {
 							//If same level and same code, then l cannot be in the same day and hour as lecture
-							if (shrek.get(lec).hasDay(day)) {
-								Integer duration = lectures.get(lecture).getDuration(); //duration of lecture
-								Integer d = lectures.get(lec).getDuration(); //duration of l
-								Integer i = hour - d + 1;
-								while (i < hour+duration) { 
-									if(shrek.get(lec).hasHourFromDay(day, i)) {
-										shrek.get(lec).removeHourFromDay(day, i); //it returns a boolean that is false if the hour or day weren't in shrek. But it's not needed here
+							if (shrek.containsKey(lec)) {
+								if (shrek.get(lec).hasDay(day)) {
+									Integer duration = lectures.get(lecture).getDuration(); //duration of lecture
+									Integer d = lectures.get(lec).getDuration(); //duration of l
+									Integer i = hour - d + 1;  //mirar foto del mobil per entendre si fa falta
+									while (i < hour+duration) { //mirar foto del mobil per entendre si fa falta
+										if(shrek.get(lec).hasHourFromDay(day, i)) {
+											shrek.get(lec).removeHourFromDay(day, i); //it returns a boolean that is false if the hour or day weren't in shrek. But it's not needed here
+										}
+										++i;
 									}
-									++i;
-								}
-								if (shrek.get(lec).dayIsEmpty(day)) {
-									shrek.get(lec).removeDay(day);
-								}
-								if (shrek.isEmpty()) {
-									return false;
+									if (shrek.get(lec).dayIsEmpty(day)) {
+										shrek.get(lec).removeDay(day);
+									}
+									if ((shrek.get(lec).hasNoDays()) {
+										return false;
+									}
 								}
 							}
 						}

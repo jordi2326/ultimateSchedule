@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import domain.Group;
-import domain.Room;
-import domain.Schedule;
+import domain.Lecture;
+import domain.PosAssig;
 import domain.Subject;
-import domain.Timeframe;
-import domain.controllers.CtrlDomain;
+
 
 public class CorequisitRestriction extends NaryRestriction{
 	
@@ -16,23 +15,45 @@ public class CorequisitRestriction extends NaryRestriction{
 		super(true); //negotiable
 	}
 	
-	@Override
-	public boolean validate(Group group, Room room, Schedule schedule) {
-		CtrlDomain CD = CtrlDomain.getInstance();
-		Map<String, String> lectures = schedule.getLecturesAtTime(timeFrame);
-		Subject subject = CD.getSubject(group.getSubject());
-		ArrayList<String> coreqs = subject.getAllCorequisits();
-		
-		if(!coreqs.isEmpty()) {
-			for (Map.Entry<String, String> l: lectures.entrySet()) {
-				String ngroup_name = l.getValue();
-				Group ngroup = CD.getGroup(ngroup_name);
-				
-				if(coreqs.contains(ngroup.getSubject())) return false;
-				
+	//Si la assignatura A és correq de B, llavors hi ha d'haver alguna combinació en que algun grup de A i un grup que pot ser diferent de B no es solapen
+	public boolean validate(String lecture, String room, Integer day, Integer hour, Map<String, Subject> subjects,
+			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek) {
+		String group = lectures.get(lecture).getGroup();
+		String subject = groups.get(group).getSubject();
+		ArrayList<String> coreqs = subjects.get(subject).getAllCorequisits();
+		//Get group code from inserted lecture
+		String groupCode = groups.get(group).getCode();
+		//Tweak every lecture of a group with same code and subject that is correq. 
+		for (Subject sub : subjects.values()) {
+			if (sub.getAllCorequisits().contains(subject) || coreqs.contains(sub.toString())) {
+				for (String gr : sub.getAllGroups()) {
+					if (groups.get(gr).getCode().equals(groupCode)) {
+						for (String lec : groups.get(gr).getLectures()) {
+							//If coreq and same group code, then l cannot be in the same day and hour as lecture
+							if (shrek.containsKey(lec)) {
+								if (shrek.get(lec).hasDay(day)) {
+									Integer duration = lectures.get(lecture).getDuration(); //duration of lecture
+									Integer d = lectures.get(lec).getDuration(); //duration of l
+									Integer i = hour - d + 1;  //mirar foto del mobil per entendre si fa falta
+									while (i < hour+duration) { //mirar foto del mobil per entendre si fa falta
+										if(shrek.get(lec).hasHourFromDay(day, i)) {
+											shrek.get(lec).removeHourFromDay(day, i); //it returns a boolean that is false if the hour or day weren't in shrek. But it's not needed here
+										}
+										++i;
+									}
+									if (shrek.get(lec).dayIsEmpty(day)) {
+										shrek.get(lec).removeDay(day);
+									}
+									if (shrek.get(lec).hasNoDays()) {
+										return false;
+									}
+								}
+							}
+						}
+					}	
+				}
 			}
 		}
-		
 		return true;
 	}
 }

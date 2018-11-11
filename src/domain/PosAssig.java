@@ -28,7 +28,7 @@ public class PosAssig {
 		return shrek.get(day).isEmpty();
 	}
 	
-	public boolean isEmpty() {
+	public boolean hasNoDays() {
 		return shrek.isEmpty();
 	}
 	
@@ -38,6 +38,14 @@ public class PosAssig {
 	
 	public void removeDay(Integer day) {
 		shrek.remove(day);
+	}
+	
+	public boolean hasRoomFromDayAndHour(Integer day, Integer hour, String room) {
+		return shrek.get(day).get(hour).contains(room);
+	}
+	
+	public void removeRoomFromHourAndDay(Integer day, Integer hour, String room) {
+		shrek.get(day).get(hour).remove(room);
 	}
 
 }

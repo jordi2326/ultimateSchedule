@@ -57,7 +57,7 @@ public class CtrlSchedule {
 	
 	// ************************************************************************
 	
-	public static void generateSchedule(Map<String, UnaryRestriction[]> unaryRestrictions, Map<String, NaryRestriction[]> naryRestrictions, Map<String, Group> groups, Map<String, Rooms> rooms, Map<String, Subject> subjects, Map<String, Lecture> lectures) {
+	public static void generateSchedule(Map<String, UnaryRestriction[]> unaryRestrictions, NaryRestriction[] naryRestrictions, Map<String, Group> groups, Map<String, Room> rooms, Map<String, Subject> subjects, Map<String, Lecture> lectures) {
 		//TODO: Implementar la restriction de que un grup no vagi en un dia o hora concrets
 		//Filter possible rooms hours and days for each group according to room capacity, PC's, day period and restrictions of days / hours
 		
@@ -126,8 +126,14 @@ public class CtrlSchedule {
 	
 	
 	
-	private static boolean forwardCheck() {
-		
+	private static boolean forwardCheck(String lecture, String room, Integer day, Integer hour, Map<String, Subject> subjects,
+			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek, NaryRestriction[] naryRestrictions) {
+		for (NaryRestriction restr : naryRestrictions) {
+			if (!restr.validate(lecture, room, day, hour, subjects, groups, lectures, shrek)) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	
