@@ -1,7 +1,7 @@
 /**
  * 
  */
-package domain;
+package domain.classes;
 
 import java.util.HashMap;
 import java.util.Map;

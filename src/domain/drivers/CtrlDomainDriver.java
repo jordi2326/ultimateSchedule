@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 import org.json.simple.parser.ParseException;
 
-import domain.Group;
-import domain.Room;
+import domain.classes.Group;
+import domain.classes.Room;
 import domain.controllers.CtrlDomain;
 
 public class CtrlDomainDriver {

@@ -1,4 +1,4 @@
-package domain;
+package domain.classes;
 
 public abstract class Restriction {
 	private boolean negotiable;

@@ -1,18 +1,17 @@
 package domain.controllers;
 
-import domain.Schedule;
-import domain.Subject;
-import domain.PosAssig;
-import domain.Group.DayPeriod;
-import domain.Group.Type;
-import domain.Lecture;
+import domain.classes.Group;
+import domain.classes.Lecture;
+import domain.classes.PosAssig;
+import domain.classes.Room;
+import domain.classes.Schedule;
+import domain.classes.Subject;
+import domain.classes.Group.DayPeriod;
+import domain.classes.Group.Type;
 import domain.controllers.CtrlDomain;
 import domain.restrictions.NaryRestriction;
 import domain.restrictions.UnaryRestriction;
 import javafx.util.Pair;
-
-import domain.Room;
-import domain.Group;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;

@@ -1,10 +1,11 @@
 package domain.drivers.stubs;
 
 import java.util.Random;
-import domain.Group;
-import domain.Restriction;
-import domain.Room;
-import domain.Schedule;
+
+import domain.classes.Group;
+import domain.classes.Restriction;
+import domain.classes.Room;
+import domain.classes.Schedule;
 
 public class SubclassRestrictionStub extends Restriction{
 	public SubclassRestrictionStub(boolean negotiable) {

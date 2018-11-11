@@ -18,14 +18,14 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject; 
 import org.json.simple.parser.*;
 
-import domain.Room;
-import domain.Schedule;
-import domain.Subject;
+import domain.classes.Group;
+import domain.classes.Lecture;
+import domain.classes.Room;
+import domain.classes.Schedule;
+import domain.classes.Subject;
 import domain.restrictions.NaryRestriction;
 import domain.restrictions.UnaryRestriction;
 import persistance.CtrlData;
-import domain.Group;
-import domain.Lecture;
 
 public class CtrlDomain {
 	

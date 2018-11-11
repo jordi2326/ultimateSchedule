@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import domain.Room;
-import domain.Subject;
+import domain.classes.Room;
+import domain.classes.Subject;
 
 public class SubjectDriver {
 	private static Scanner sc;
