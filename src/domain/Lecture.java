@@ -2,8 +2,8 @@ package domain;
 
 public class Lecture {
 	
-	private Integer id;
-	private String group;
+	private Integer id; //number of lecture. 0 <= id <= number of lectures of group
+	private String group; //group to string
 	private Integer duration;
 	
 	/**
@@ -61,5 +61,10 @@ public class Lecture {
 	public boolean setDuration(Integer duration) {
 		this.duration = duration;
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return group + id;
 	}
 }
