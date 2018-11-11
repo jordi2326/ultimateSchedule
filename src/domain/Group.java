@@ -20,7 +20,7 @@ public class Group {
 	private String subject; //Es el code del subject, que es el mateix que el subject.toString()
 	private Type type;
 	private DayPeriod dayPeriod;
-	private ArrayList<Integer> lecturesDuration; // durations[i] = duration of lecture i
+	private ArrayList<String> lectures; // lectures.toString(). 0 < length
 	
 	/**
 	 * @param code
@@ -38,7 +38,7 @@ public class Group {
 		this.subject = subject;
 		this.type = type;
 		this.dayPeriod = dayPeriod;
-		this.lecturesDuration = durations;
+		this.lecturesDuration = durations; 
 	}
 
 	/**
@@ -129,5 +129,9 @@ public class Group {
 	@Override
 	public String toString() {
 		return subject + code + type;
+	}
+	
+	public ArrayList<String> getLectures() {
+		return lectures;
 	}
 }

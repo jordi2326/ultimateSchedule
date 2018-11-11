@@ -23,7 +23,8 @@ import domain.Subject;
 import domain.restrictions.NaryRestriction;
 import domain.restrictions.UnaryRestriction;
 import persistance.CtrlData;
-import domain.Group; 
+import domain.Group;
+import domain.Lecture; 
 
 public class CtrlDomain {
 	
@@ -33,6 +34,7 @@ public class CtrlDomain {
 	private Map<String, Subject> subjects;
 	private Map<String, Room> rooms;
 	private Map<String, Group> groups;
+	private Map<String, Lecture> lectures;
 	
 	//Restrictions for every group
 	private Map<String, Map<String, Set<UnaryRestriction>>> unaryRestricions; //Key = group.toString()
@@ -60,13 +62,6 @@ public class CtrlDomain {
 		return roomsArray;
 	}
 	
-	public ArrayList<Group> getGroups() {
-		ArrayList<Group> groupsArray = new ArrayList<Group>();
-		for (Group group : groups.values()) {
-			groupsArray.add(group);
-		}
-		return groupsArray;
-	}
 	
 	public Subject getSubject(String s){
 		return subjects.get(s);
@@ -76,20 +71,10 @@ public class CtrlDomain {
 		return groups.get(g);
 	}
 	
-	public ArrayList<Timeframe> generatePossibleTimeframes(DayOfWeek iniDayOfWeek, DayOfWeek finDayOfWeek, int iniTime, int finTime) {
-		ArrayList<Timeframe> possibleTimeframes = new ArrayList<Timeframe>();
-		DayOfWeek currentDayOfWeek = iniDayOfWeek;
-		finDayOfWeek = finDayOfWeek.plus(1);
-		while (currentDayOfWeek!=finDayOfWeek) {
-			int currentTime = iniTime;
-			while (currentTime <= finTime) {
-				possibleTimeframes.add(new Timeframe(currentDayOfWeek, LocalTime.of(currentTime, 0)));
-				currentTime++;
-			}
-			currentDayOfWeek = currentDayOfWeek.plus(1);
-		}
-		return possibleTimeframes;
+	public Set<String> getGroups() {
+		return groups.keySet();
 	}
+
 	
 	//For now every day starts at the same hour and ends at the same hour
 	public ArrayList<Calendar> generatePossibleCalendars(int iniDayOfWeek, int finDayOfWeek, int iniHourOfDay, int finHourOfDay) {
