@@ -15,6 +15,10 @@ public class PosAssig {
 	public PosAssig(Map<Integer,Map <Integer, Set<String>>> shrek) {
 		this.shrek = shrek;
 	}
+
+	public Map<Integer, Map< Integer, Set<String>>> getMap() {
+		return shrek;
+	}
 	
 	public boolean hasDay(Integer day) {
 		return shrek.containsKey(day);
