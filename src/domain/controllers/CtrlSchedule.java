@@ -131,6 +131,11 @@ public class CtrlSchedule {
 		if (shrek.size() == 0) {
 			return true;
 		} else { // Encara tenim Lectures per afegir
+			
+			// Faig còpia d'shrek perquè no se m'eliminin coses al passar-ho per referència
+			Map<String, PosAssig> copyShrek = new HashMap<String, PosAssig>(shrek);
+			
+			
 			// 1.	Agafar la primera Lecture, que ha estat ordenat heruísticament
 			Pair<Integer, Lecture> firstCandidate = heuristica.poll(); // També l'elimino de la PQ
 			Lecture lecture = firstCandidate.getValue(); // Lecture
@@ -141,7 +146,7 @@ public class CtrlSchedule {
 			PosAssig possibleAssignacions = shrek.get(lecture.toString());
 			
 			// 2.	Eliminar la lecture de shrek
-			shrek.remove(lecture.toString());
+			shrek.remove(lecture.toString()); // Ara ha de ser shrek o copyShrek?????????????????????????????????
 
 			Map<Integer, Map<Integer, Set<String>>> posA = possibleAssignacions.getMap(); // Això és el map de dia hora i aula
 			
@@ -164,11 +169,11 @@ public class CtrlSchedule {
 						}
 						
 						// 5.	Podar
-						boolean podat; // Funció d'en Laca
+						boolean podat; // Funció d'en Laca (passant-li copyShrek)
 						
 						if (podat) {
-							boolean possible = generate(schedule, shrek, naryRestrictions, heuristica); // True => És possible generar l'horari
-																										// False => No és possible
+							boolean possible = generate(schedule, copyShrek, naryRestrictions, heuristica); // True => És possible generar l'horari
+																											// False => No és possible
 							if (possible) return true;
 							else {
 								// Borrar de l'schedule i seguir iterant per les possibles assignacions
