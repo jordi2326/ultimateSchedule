@@ -84,6 +84,7 @@ public class LectureDriver {
 	        }
 	        Integer id = sc.nextInt();
 	        
+	        System.out.println(">Introduzca Codigo del Grupo");
 	        String group = sc.next();
 	        
 	        System.out.println(">Introduzca Duracion");

@@ -23,8 +23,8 @@ import domain.classes.Lecture;
 import domain.classes.Room;
 import domain.classes.Schedule;
 import domain.classes.Subject;
-import domain.restrictions.NaryRestriction;
-import domain.restrictions.UnaryRestriction;
+import domain.classes.restrictions.NaryRestriction;
+import domain.classes.restrictions.UnaryRestriction;
 import persistance.CtrlData;
 
 public class CtrlDomain {
@@ -82,35 +82,6 @@ public class CtrlDomain {
 	
 	public Set<String> getGroups() {
 		return groups.keySet();
-	}
-
-	
-	//For now every day starts at the same hour and ends at the same hour
-	public ArrayList<Calendar> generatePossibleCalendars(int iniDayOfWeek, int finDayOfWeek, int iniHourOfDay, int finHourOfDay) {
-		ArrayList<Calendar> possibleCalendars = new ArrayList<Calendar>();
-		
-		//initialize currentCalendar with first possible day of week
-		Calendar currentCalendar = Calendar.getInstance();
-		currentCalendar.setTime(new Date(0));
-		currentCalendar.set(Calendar.DAY_OF_WEEK, iniDayOfWeek);
-		
-		//Add all possible calendars
-		while (currentCalendar.get(Calendar.DAY_OF_WEEK) <= finDayOfWeek) {	
-			//Set hour to first hour of the day
-			//HOUR_OF_DAY is in 24 hour format
-			currentCalendar.set(Calendar.HOUR_OF_DAY, iniHourOfDay);
-			
-			//IF day ends at 20:00h, the last hour added to possibleCalendars will be 19:00h
-			while (currentCalendar.get(Calendar.HOUR_OF_DAY) < finHourOfDay) {
-				//Add currentCalendar to possible Calendars
-				possibleCalendars.add((Calendar) currentCalendar.clone());
-				//Increase currentCalendar hour by 1
-				currentCalendar.add(Calendar.HOUR_OF_DAY, 1);
-			}
-			//Set currentCalendar to next Day of the week
-			currentCalendar.add(Calendar.DAY_OF_WEEK, 1);
-		}
-		return possibleCalendars;
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -236,50 +207,14 @@ public class CtrlDomain {
         return dataController.writeEnvironment(filename, jo.toJSONString(0));        
 	}
 	
-	@SuppressWarnings("unchecked")
 	public Schedule importSchedule(String filename) throws ParseException, FileNotFoundException {
 		String jsonData = dataController.readSchedule(filename);
-		Object obj = new JSONParser().parse(jsonData);
-	
-		// typecasting obj to JSONObject 
-	   	JSONObject jo = (JSONObject) obj; 
-	   	Map<Timeframe, Map<String, String>> scheduleAsMap = new HashMap<Timeframe, Map<String, String>>();
-	   	
-	   	JSONArray jsonTimeframes = (JSONArray) jo.get("timeFrames"); 
-    	
-    	//getting groups
-    	Iterator itr1 = jsonTimeframes.iterator(); 
-    	while (itr1.hasNext()) {
-    		JSONObject timeframeJSON = (JSONObject) itr1.next();
-    		Timeframe timeframe = new Timeframe(DayOfWeek.valueOf((String) timeframeJSON.get("dayOfWeek")), (String) timeframeJSON.get("timeStart"));
-    		scheduleAsMap.put(timeframe, (Map<String, String>) timeframeJSON.get("lectures"));
-    	}
-	   	Schedule schedule = new Schedule(scheduleAsMap);
+		Schedule schedule = new Schedule(jsonData);
 	   	return schedule;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public boolean exportSchedule(String filename, Schedule schedule) throws IOException  {
-		Map<String, Map<String, String>> prettySchedule = new HashMap<String, Map<String, String>>();
-		Map<Timeframe, Map<String, String>> scheduleAsMap = schedule.getScheduleAsMap();
-
-		JSONObject jo = new JSONObject();
-        JSONArray jsonTfs = new JSONArray();
-        
-        for (Timeframe tf : scheduleAsMap.keySet()) {
-        	JSONObject room = new JSONObject();
-        	room.put("dayOfWeek", tf.getDayOfWeek().toString());
-        	room.put("timeStart", tf.timeToString());
-        	JSONObject classes = (JSONObject) scheduleAsMap.get(tf);
-        	room.put("lectures", classes);
-        	
-        	jsonTfs.add(room);
-        }
-        
-        //Add Subjects and Rooms to final object
-        jo.put("timeFrames", jsonTfs);
-		//Send to data controller to write
-        return dataController.writeSchedule(filename, jo.toJSONString(0));        
+        return dataController.writeSchedule(filename, schedule.toJsonString());
 	}
 	
 	private ArrayList<Group> getGroupsFromSubject(String subject) {

@@ -1,0 +1,20 @@
+{
+"MONDAY":{
+	"0":{
+		"A5101":"M231PROBLEMS",
+		"A6001":"M232PROBLEMS"
+		},
+	"1":{
+		"A5101":"M231PROBLEMS",
+		"A6001":"M232PROBLEMS"
+		}
+},
+"TUESDAY":{
+	"0":{
+		"A5101":"PRO110THEORY"
+		},
+	"1":{
+		"A5101":"PRO110THEORY"
+		}
+}
+}

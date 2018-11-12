@@ -1,11 +1,5 @@
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import org.json.simple.parser.ParseException;
-
 import domain.controllers.CtrlDomain;
 
 public class Main {
@@ -57,7 +51,6 @@ public class Main {
 			ctDomain.importEnvironment(filename);
 			environmentMenu(sc, filename);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

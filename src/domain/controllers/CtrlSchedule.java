@@ -9,8 +9,8 @@ import domain.classes.Subject;
 import domain.classes.Group.DayPeriod;
 import domain.classes.Group.Type;
 import domain.controllers.CtrlDomain;
-import domain.restrictions.NaryRestriction;
-import domain.restrictions.UnaryRestriction;
+import domain.classes.restrictions.NaryRestriction;
+import domain.classes.restrictions.UnaryRestriction;
 import javafx.util.Pair;
 
 import java.time.DayOfWeek;
@@ -70,7 +70,7 @@ public class CtrlSchedule {
 			Integer totalGroupRooms = 0;
 			Set<String> roomSet = new HashSet<String>();
 			for (Room r : rooms.values()) {
-				if (g.getNumPeople() <= r.getCapacity()) {
+				if (g.getNumOfPeople() <= r.getCapacity()) {
 					if ((g.getType() == Group.Type.LABORATORY && r.hasComputers())
 						|| (g.getType() != Group.Type.LABORATORY)) {
 						roomSet.add(r.toString());
@@ -107,8 +107,6 @@ public class CtrlSchedule {
 		}
 		
 		Schedule schedule = new Schedule();
-		
-	
 		
 		boolean exists = generate(schedule, shrek, pq, naryRestrictions);
 		
@@ -161,10 +159,9 @@ public class CtrlSchedule {
 					
 					for (String room : Rooms) {
 						// 4.	Afegir-lo al schedule (Map<String, String[][]>)
-						String[][] scheduleRoom = schedule.getScheduleOf(room);
 						Integer h = 0;
 						while (h < duration) {
-							scheduleRoom[hour + h][day] = group;
+							schedule.putLecture(room, day, hour+h, group);
 							++h;
 						}
 						
@@ -179,7 +176,7 @@ public class CtrlSchedule {
 								// Borrar de l'schedule i seguir iterant per les possibles assignacions
 								h = 0;
 								while (h < duration) {
-									scheduleRoom[hour + h][day] = null;
+									schedule.removeLecture(room, day, hour+h);
 									++h;
 								}
 							}
@@ -187,7 +184,7 @@ public class CtrlSchedule {
 							// Borrar de l'schedule i seguir iterant per les possibles assignacions
 							h = 0;
 							while (h < duration) {
-								scheduleRoom[hour + h][day] = null;
+								schedule.removeLecture(room, day, hour+h);
 								++h;
 							}
 							

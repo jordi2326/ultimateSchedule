@@ -3,106 +3,77 @@
  */
 package domain.classes;
 
+import java.time.DayOfWeek;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class Schedule {
 	Map<String, String[][]> schedule;
 	
 	public Schedule() {
-		schedule = new HashMap<String, Group[][]>();
+		schedule = new HashMap<String, String[][]>();
 	}
 	
-	public String[][] getScheduleOf (String room) {
-		return schedule.get(room);
-	}
-	
-	public Schedule (Map<Timeframe, Map <String, String>> schedule) {
-		this.schedule = schedule;
-	}
-	
-	public Map<Timeframe, Map <String, String>> getScheduleAsMap() {
-		return schedule;
-	}Map<String, Group> groups, Map<String, Room> rooms, ArrayList<Timeframe> timeFrames, ArrayList<Restriction> restrictions, Schedule schedule
-	
-	public Integer getSizeOf(Timeframe timeFrame) {
-		return this.schedule.get(timeFrame).size();
-	}
-	
-	public boolean te(Timeframe timeFrame) {
-		return schedule.containsKey(timeFrame);
-	}
-	
-	/*public Calendar getFirst() {
-		for (Timeframe tf : schedule.keySet()) {
-			return tf;
-		}
-	}*/
-	
-	/**
-	 * @param c
-	 * @param r
-	 * @param g
-	 * @param duration
-	 */
-	// TODO: Que passa si nHours es 2 i la primera hora es pot afegir pero a la segona no es pot? Perque en teoria retornen False a la
-	// segona hora pero la primera ja ha estat afegida
-	public boolean addLecture(Timeframe c, String r, String g, Integer duration) {
-		Integer nHours = duration;
-		Timeframe iniTime = c;
-		//Check if there's any class at time iniTime (because this will determine whether the Map<String, String> exists or not)
-		while (nHours > 0) {
-			if(schedule.containsKey(iniTime)) {
-				//If the room is already occupied return false
-				if(schedule.get(iniTime).containsKey(r)) return false;
-				//If room is available, add lecture to schedule
-				schedule.get(iniTime).put(r,g);
-			} else {
-				//If there isn't any class at time iniTime, we first create a map with a lecture
-				Map<String, String> n = new HashMap<String, String>();
-				n.put(r, g);
-				//and put the map with 1 lecture in the schedule at time iniTime
-				schedule.put(iniTime, n);
-			}
-			//Decrease by 1 the duration left
-			nHours -= 1;
-			//Increase by 1 the next hour at which the following piece of lecture will start
-
-			iniTime = new Timeframe(iniTime.getDayOfWeek(), iniTime.getTime().plusHours(1));
-		}	
-		//Everything has worked and lecture has been added to schedule
-		return true;
-	}
-	
-	// Es pot fer millor? (Passant-li duration i quan troba el que volem anar iterant fins que acabi duration)
-	// L'he creat per si la necessitem pel que he dit a la funcio anterior (enlloc de return false cridar aquesta funcio)
-	public void removeLecture(String r, String g) {
-		// For all the keys of the calendar
-		for (Timeframe c : schedule.keySet()) {
-			// For all the rooms of one day & hour
-			for (String ro : schedule.get(c).keySet()) {
-				// If the key ro is equal to the @r
-				if (ro.equals(r)) {
-					// If the value is @g
-					if (schedule.get(c).get(ro).equals(g)) {
-						schedule.get(c).remove(ro);
+	public Schedule(String json) {
+		schedule = new HashMap<String, String[][]>();
+		try {
+			JSONObject jo = (JSONObject) new JSONParser().parse(json);
+			for(Map.Entry<String,JSONObject> dayE : (Set<Map.Entry<String,JSONObject>>) jo.entrySet()) {
+				for(Map.Entry<String,JSONObject> hourE : (Set<Map.Entry<String,JSONObject>>) dayE.getValue().entrySet()) {
+					for(Map.Entry<String,String> l : (Set<Map.Entry<String,String>>) hourE.getValue().entrySet()) {
+						this.putLecture(l.getKey(), DayOfWeek.valueOf(dayE.getKey()).ordinal(), Integer.parseInt(hourE.getKey()), l.getValue());
 					}
 				}
 			}
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
 	}
-
-	public void imprimir() {
-		for (Timeframe tf : schedule.keySet()) {
-			System.out.println("DHA: " + tf + "\n" + "\n");
-			for (String ro : schedule.get(tf).keySet()) {
-				System.out.println("Room: " + ro + "	" + "Group: " + schedule.get(tf).get(ro) +"\n");
-			}
+	
+	public boolean putLecture(String room, int day, int hour, String group) {
+		if(!schedule.containsKey(room)){
+			String[][] ls = new String[5][12];
+			ls[day][hour] = group;
+			schedule.put(room, ls);
+		}else {
+			schedule.get(room)[day][hour]=group;
 		}
+		return true;
 	}
-
-	public Map<String, String> getLecturesAtTime(Timeframe c) {
-		return schedule.get(c);
+	
+	public boolean removeLecture(String room, int day, int hour) {
+		if(schedule.containsKey(room)){
+			schedule.get(room)[day][hour]=null;
+			return true;
+		}
+		return false;
+	}
+	
+	public String toJsonString(){
+		DayOfWeek[] dayNames = DayOfWeek.values();
+        JSONObject jo = new JSONObject();
+        
+        for (Entry<String, String[][]> entry : schedule.entrySet()) {
+        	String roomName = entry.getKey();
+        	String[][] roomSchedule = entry.getValue();
+        	for(Integer day = 0; day<5; day++) {
+        		String dayName = dayNames[day].toString();
+        		for(Integer hour = 0; hour<12; hour++) {
+        			if(roomSchedule[day][hour]!=null && !roomSchedule[day][hour].isEmpty()) {
+        				if(!jo.containsKey(dayName)) jo.put(dayName, new JSONObject());
+        				if(!((JSONObject) jo.get(dayName)).containsKey(hour.toString())) ((JSONObject) jo.get(dayName)).put(hour.toString(), new JSONObject());
+        				((JSONObject) ((JSONObject) jo.get(dayName)).get(hour.toString())).put(roomName, roomSchedule[day][hour]);
+        			}
+        		}
+        	}
+        }
+        
+        return jo.toJSONString(0);        
 	}
 }
