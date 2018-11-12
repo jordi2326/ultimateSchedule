@@ -1,12 +1,12 @@
-package domain.classes.restrictions;
+package domain.restrictions;
 
 import java.util.Map;
 
-import domain.classes.Group;
-import domain.classes.Lecture;
-import domain.classes.PosAssig;
-import domain.classes.Restriction;
-import domain.classes.Subject;
+import domain.Group;
+import domain.Lecture;
+import domain.PosAssig;
+import domain.Restriction;
+import domain.Subject;
 
 public abstract class NaryRestriction extends Restriction {
 	
