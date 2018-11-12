@@ -51,6 +51,9 @@ public class PosAssig {
 	
 	public void removeRoomFromHourAndDay(Integer day, Integer hour, String room) {
 		shrek.get(day).get(hour).remove(room);
+		if (shrek.get(day).get(hour).isEmpty()) {
+			shrek.get(day).remove(hour);
+		}
 	}
 
 
