@@ -84,7 +84,8 @@ public class CtrlSchedule {
 			for (int day = 0; day < 5; ++day) {
 				Map <Integer, Set<String>> hourRooms = new HashMap<Integer, Set<String>>();
 				for (int hour = 0; hour < 12; ++hour) {	
-					if ((g.getDayPeriod().equals(Group.DayPeriod.AFTERNOON) && hour <= midDay)
+					if ((g.getDayPeriod().equals(Group.DayPeriod.INDIFERENT)
+					     	|| (g.getDayPeriod().equals(Group.DayPeriod.AFTERNOON) && hour <= midDay)
 						|| (g.getDayPeriod().equals(Group.DayPeriod.MORNING) && hour > midDay)) {
 						boolean valid = true;
 						if(unaryRestrictions.containsKey(g.toString())){
