@@ -8,16 +8,17 @@ public class PosAssig {
 	Map<Integer, Map< Integer, Set<String>>> shrek;
 	//   Dia		    Hora		Aula
 	
+
+	public Map<Integer, Map< Integer, Set<String>>> getMap() {
+		return shrek;
+	}
+	
 	public PosAssig() {
 		shrek = new HashMap<Integer, Map< Integer, Set<String>>>();
 	}
 	
 	public PosAssig(Map<Integer,Map <Integer, Set<String>>> shrek) {
 		this.shrek = shrek;
-	}
-
-	public Map<Integer, Map< Integer, Set<String>>> getMap() {
-		return shrek;
 	}
 	
 	public boolean hasDay(Integer day) {
@@ -32,7 +33,7 @@ public class PosAssig {
 		return shrek.get(day).isEmpty();
 	}
 	
-	public boolean isEmpty() {
+	public boolean hasNoDays() {
 		return shrek.isEmpty();
 	}
 	
@@ -43,5 +44,14 @@ public class PosAssig {
 	public void removeDay(Integer day) {
 		shrek.remove(day);
 	}
+	
+	public boolean hasRoomFromDayAndHour(Integer day, Integer hour, String room) {
+		return shrek.get(day).get(hour).contains(room);
+	}
+	
+	public void removeRoomFromHourAndDay(Integer day, Integer hour, String room) {
+		shrek.get(day).get(hour).remove(room);
+	}
+
 
 }
