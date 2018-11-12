@@ -61,7 +61,6 @@ public class CtrlSchedule {
 					    Lecture> lectures, Integer midDay) {
 		//TODO: Implementar la restriction de que un grup no vagi en un dia o hora concrets
 		//Filter possible rooms hours and days for each group according to room capacity, PC's, day period and restrictions of days / hours
-		
 		//posAssig te
 		//Map<Integer,<Map <Integer, Set<String>>>>
 		Map<String, PosAssig> shrek = new HashMap<String, PosAssig>(); //String = Lecture.toString()
@@ -84,9 +83,9 @@ public class CtrlSchedule {
 			for (int day = 0; day < 5; ++day) {
 				Map <Integer, Set<String>> hourRooms = new HashMap<Integer, Set<String>>();
 				for (int hour = 0; hour < 12; ++hour) {	
-					if ((g.getDayPeriod().equals(Group.DayPeriod.INDIFERENT)
-					     	|| (g.getDayPeriod().equals(Group.DayPeriod.AFTERNOON) && hour <= midDay)
-						|| (g.getDayPeriod().equals(Group.DayPeriod.MORNING) && hour > midDay)) {
+					if (g.getDayPeriod().equals(Group.DayPeriod.INDIFERENT)
+					     	|| (g.getDayPeriod().equals(Group.DayPeriod.MORNING) && hour < midDay)
+						|| (g.getDayPeriod().equals(Group.DayPeriod.AFTERNOON) && hour >= midDay)) {
 						boolean valid = true;
 						if(unaryRestrictions.containsKey(g.toString())){
 							for (UnaryRestriction restr : unaryRestrictions.get(g.toString())) {
@@ -121,7 +120,7 @@ public class CtrlSchedule {
 		boolean exists = generate(schedule, pq, subjects, groups, lectures,  shrek, naryRestrictions);
 		
 		if (exists) {
-			System.out.print(schedule.toJsonString());
+			System.out.println(schedule.toJsonString());
 		} else {
 			System.out.println("error");
 		}
@@ -145,13 +144,12 @@ public class CtrlSchedule {
 		// Pre: a m�s, per com est� feta la funci� podar, no hi ha cap Lecture amb 0 possibles assignacions
 		
 		// Cas base (CORRECTE) => shrek est� buit => No queda res per afegir
-		if (shrek.size() == 0) {
+		if (shrek.isEmpty() || heuristica.isEmpty()) {
 			return true;
 		} else { // Encara tenim Lectures per afegir
 			
 			// Faig c�pia d'shrek perqu� no se m'eliminin coses al passar-ho per refer�ncia
 			Map<String, PosAssig> copyShrek = new HashMap<String, PosAssig>(shrek);
-			
 			
 			// 1.	Agafar la primera Lecture, que ha estat ordenat heru�sticament
 			Map.Entry<Integer, String> firstCandidate = heuristica.poll(); // Tamb� l'elimino de la PQ

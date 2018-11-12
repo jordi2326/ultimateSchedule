@@ -24,7 +24,7 @@ public class LectureDriver {
 	                    
     }
 	
-	public static void main (String [] args) {
+	public static void main (String [] args) throws Exception {
 		sc = new Scanner(System.in);
 		int n;
 	    printMain();

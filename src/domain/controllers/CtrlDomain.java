@@ -90,6 +90,7 @@ public class CtrlDomain {
 	
 	public void generateSchedule() {
 		CtrlSchedule ctS = CtrlSchedule.getInstance();
+		//System.out.println(lectures);
 		ctS.generateSchedule(unaryRestrictions, naryRestrictions, groups, rooms, subjects, lectures, 14);
 	}
 	
@@ -113,7 +114,7 @@ public class CtrlDomain {
         	JSONObject subject = (JSONObject) itr1.next();
         	JSONArray jsonGroups = (JSONArray) subject.get("groups"); 
         	ArrayList<String> groupsToString = new ArrayList<String>();
-        	
+        	String scode = (String) subject.get("code");
         	//getting groups
         	Iterator itr2 = jsonGroups.iterator(); 
         	while (itr2.hasNext()) {
@@ -121,18 +122,18 @@ public class CtrlDomain {
         		ArrayList<String> ls = new ArrayList<String>();
         		ArrayList<Long> durations = (ArrayList<Long>) group.get("lecturesDuration");
         		
-        		String gcode = (String) subject.get("code");
+        		String gcode = (String) group.get("code");
         		for(int i = 0; i < durations.size(); i++){
-        			Lecture l = new Lecture(i, gcode, durations.get(i).intValue());
+        			Lecture l = new Lecture(i, scode+gcode, durations.get(i).intValue());
         			lectures.put(l.toString(), l);
         			ls.add(l.toString());
         		}
     			@SuppressWarnings("unchecked")
 				Group g = new Group(
-    					(String) group.get("code"),
+    					gcode,
     					((Long) group.get("numPeople")).intValue(),
     					(String) group.get("parentGroupCode"),
-    					(String) gcode,
+    					scode,
     					Group.Type.valueOf((String) group.get("type")),
     					Group.DayPeriod.valueOf((String) group.get("dayPeriod")),
     					ls);
@@ -141,7 +142,7 @@ public class CtrlDomain {
         	}
         	@SuppressWarnings("unchecked")
 			Subject s = new Subject(
-    			(String) subject.get("code"),
+				scode,
 				(String) subject.get("name"),
 				(String) subject.get("level"),
 				groupsToString,
@@ -149,7 +150,6 @@ public class CtrlDomain {
     			);
         	subjects.put(s.toString(), s);
         }
-        
         // getting rooms 
         JSONArray jsonRooms = (JSONArray) jo.get("rooms");
         Map<String, Room> rooms = new HashMap<String, Room>();
