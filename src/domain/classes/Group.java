@@ -20,7 +20,7 @@ public class Group {
 	private String subject; //Es el code del subject, que es el mateix que el subject.toString()
 	private Type type;
 	private DayPeriod dayPeriod;
-	private ArrayList<Integer> lecturesDuration; // durations[i] = duration of lecture i
+	private ArrayList<String> lectures; // durations[i] = duration of lecture i
 	
 	/**
 	 * @param code
@@ -31,14 +31,14 @@ public class Group {
 	 * @param dayPeriod
 	 * @param durations
 	 */
-	public Group(String code, Integer numPeople, String parentGroupCode, String subject, Type type, DayPeriod dayPeriod, ArrayList<Integer> durations) {
+	public Group(String code, Integer numPeople, String parentGroupCode, String subject, Type type, DayPeriod dayPeriod, ArrayList<String> lectures) {
 		this.code = code;
 		this.numPeople = numPeople;
 		this.parentGroupCode = parentGroupCode;
 		this.subject = subject;
 		this.type = type;
 		this.dayPeriod = dayPeriod;
-		this.lecturesDuration = durations;
+		this.lectures = lectures;
 	}
 
 	/**
@@ -84,24 +84,12 @@ public class Group {
 	}
 
 	/**
-	 * @return the number of lectures
+	 * @return array of lectures of lectures
 	 */
-	public Integer getNumOfLectures() {
-		return this.lecturesDuration.size();
+	public ArrayList<String> getLectures() {
+		return lectures;
 	}
-
-	/**
-	 * @return the duration of the i-th lecture
-	 */
-	public Integer getLectureDuration(Integer i) {
-		// Hem de tenir en compte que es possible que i > lecturesDuration.size()?
-		return this.lecturesDuration.get(i);
-	}
-
-	public boolean hasLectures() {
-		if (lecturesDuration.isEmpty()) return false;
-		return true;
-	}
+	
 
 	@Override
 	public String toString() {

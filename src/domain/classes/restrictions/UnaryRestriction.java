@@ -1,6 +1,6 @@
-package domain.restrictions;
+package domain.classes.restrictions;
 
-import domain.Restriction;
+import domain.classes.Restriction;
 
 
 public abstract class UnaryRestriction extends Restriction {

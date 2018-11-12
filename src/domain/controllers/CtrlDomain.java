@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -38,8 +39,8 @@ public class CtrlDomain {
 	private Map<String, Lecture> lectures;
 	
 	//Restrictions for every group
-	private Map<String, Map<String, Set<UnaryRestriction>>> unaryRestricions; //Key = group.toString()
-	private Map<String, Map<String, Set<NaryRestriction>>> naryRestrictions;
+	private Map<String, Set<UnaryRestriction>> unaryRestrictions; //Key = group.toString()
+	private Set<NaryRestriction> naryRestrictions;
 	
 	
 	private CtrlDomain() {
@@ -47,6 +48,9 @@ public class CtrlDomain {
 		subjects = new HashMap<String, Subject>();
 		rooms = new HashMap<String, Room>();
 		groups = new HashMap<String, Group>();
+		lectures = new HashMap<String, Lecture>();
+		unaryRestrictions = new HashMap<String, Set<UnaryRestriction>>();
+		naryRestrictions = new HashSet<NaryRestriction>();
 	}
 	
 	public static CtrlDomain getInstance() {
@@ -84,6 +88,11 @@ public class CtrlDomain {
 		return groups.keySet();
 	}
 	
+	public void generateSchedule() {
+		CtrlSchedule ctS = CtrlSchedule.getInstance();
+		ctS.generateSchedule(unaryRestrictions, naryRestrictions, groups, rooms, subjects, lectures, 14);
+	}
+	
 	@SuppressWarnings("rawtypes")
 	public boolean importEnvironment(String filename) throws ParseException, IOException   {
 		 String jsonData = dataController.readEnvironment(filename);
@@ -109,17 +118,24 @@ public class CtrlDomain {
         	Iterator itr2 = jsonGroups.iterator(); 
         	while (itr2.hasNext()) {
         		JSONObject group = (JSONObject) itr2.next();
-
+        		ArrayList<String> ls = new ArrayList<String>();
+        		ArrayList<Long> durations = (ArrayList<Long>) group.get("lecturesDuration");
+        		
+        		String gcode = (String) subject.get("code");
+        		for(int i = 0; i < durations.size(); i++){
+        			Lecture l = new Lecture(i, gcode, durations.get(i).intValue());
+        			lectures.put(l.toString(), l);
+        			ls.add(l.toString());
+        		}
     			@SuppressWarnings("unchecked")
 				Group g = new Group(
     					(String) group.get("code"),
     					((Long) group.get("numPeople")).intValue(),
     					(String) group.get("parentGroupCode"),
-    					(String) subject.get("code"),
+    					(String) gcode,
     					Group.Type.valueOf((String) group.get("type")),
     					Group.DayPeriod.valueOf((String) group.get("dayPeriod")),
-    					(ArrayList<Integer>) group.get("lecturesDuration")
-    					);
+    					ls);
     			groups.put(g.toString(), g);
     			groupsToString.add(g.toString());
         	}

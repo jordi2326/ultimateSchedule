@@ -74,7 +74,7 @@ public class Main {
 	    while (n != 0) {
 	        switch (n) {
 	            case 1:
-	            	//testGetCapacity(sc);
+	            	ctDomain.generateSchedule();
 	                break;
 	            case 2:
 	            	//testGetCapacity(sc);

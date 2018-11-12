@@ -11,9 +11,9 @@ import domain.classes.Group.Type;
 import domain.controllers.CtrlDomain;
 import domain.classes.restrictions.NaryRestriction;
 import domain.classes.restrictions.UnaryRestriction;
-import javafx.util.Pair;
 
 import java.time.DayOfWeek;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
@@ -26,11 +26,11 @@ import java.util.HashSet;
 
 //TODO: Fer que subject tingui String[] groups en comptes de ArrayList<String>. Fer el mateix amb Group, etc.
 
-class groupHeuristicComparator implements Comparator<Pair<Integer, String>>{ 
+class groupHeuristicComparator implements Comparator<Map.Entry<Integer, String>>{ 
     
     // Overriding compare()method of Comparator  
     // for descending order of the integer of the pair, which is the number of possible rooms of that lecture
-    public int compare(Pair<Integer, String> p1, Pair<Integer, String> p2) { 
+    public int compare(Map.Entry<Integer, String> p1, Map.Entry<Integer, String> p2) { 
         if (p1.getKey() > p2.getKey()) 
             return 1; 
         else if (p1.getKey() < p2.getKey()) 
@@ -56,7 +56,7 @@ public class CtrlSchedule {
 	
 	// ************************************************************************
 	
-	public static void generateSchedule(Map<String, UnaryRestriction[]> unaryRestrictions, NaryRestriction[] naryRestrictions, 
+	public static void generateSchedule(Map<String, Set<UnaryRestriction>> unaryRestrictions, Set<NaryRestriction> naryRestrictions, 
 					    Map<String, Group> groups, Map<String, Room> rooms, Map<String, Subject> subjects, Map<String, 
 					    Lecture> lectures, Integer midDay) {
 		//TODO: Implementar la restriction de que un grup no vagi en un dia o hora concrets
@@ -65,14 +65,14 @@ public class CtrlSchedule {
 		//posAssig te
 		//Map<Integer,<Map <Integer, Set<String>>>>
 		Map<String, PosAssig> shrek = new HashMap<String, PosAssig>(); //String = Lecture.toString()
-		PriorityQueue<Pair<Integer, String>> pq = new PriorityQueue<Pair<Integer, String>>(new groupHeuristicComparator()); // PriorityQueue<Pair<Int, Lecture.toString()>>
+		PriorityQueue<Map.Entry<Integer, String>> pq = new PriorityQueue<Map.Entry<Integer, String>>(new groupHeuristicComparator()); // PriorityQueue<Pair<Int, Lecture.toString()>>
 		
 		for (Group g : groups.values()) {
 			
 			Integer totalGroupRooms = 0;
 			Set<String> roomSet = new HashSet<String>();
 			for (Room r : rooms.values()) {
-				if (g.getNumPeople() <= r.getCapacity()) {
+				if (g.getNumOfPeople() <= r.getCapacity()) {
 					if ((g.getType() == Group.Type.LABORATORY && r.hasComputers())
 						|| (g.getType() != Group.Type.LABORATORY)) {
 						roomSet.add(r.toString());
@@ -87,9 +87,11 @@ public class CtrlSchedule {
 					if ((g.getDayPeriod().equals(Group.DayPeriod.AFTERNOON) && hour <= midDay)
 						|| (g.getDayPeriod().equals(Group.DayPeriod.MORNING) && hour > midDay)) {
 						boolean valid = true;
-						for (UnaryRestriction restr : unaryRestrictions.get(g.toString())) {
-							if (!restr.validate(day, hour)) {
-								valid = false;
+						if(unaryRestrictions.containsKey(g.toString())){
+							for (UnaryRestriction restr : unaryRestrictions.get(g.toString())) {
+								if (!restr.validate(day, hour)) {
+									valid = false;
+								}
 							}
 						}
 						if (valid) {
@@ -105,7 +107,7 @@ public class CtrlSchedule {
 				PosAssig pa = new PosAssig(dayHourRooms);
 				for (String lecture : g.getLectures()) {
 					shrek.put(lecture, pa);
-					Pair<Integer, String> pair = new Pair<>(totalGroupRooms, lecture);
+					Map.Entry<Integer, String> pair = new AbstractMap.SimpleEntry(totalGroupRooms, lecture);
 					pq.add(pair);
 				}
 			}
@@ -115,18 +117,18 @@ public class CtrlSchedule {
 		
 	
 		
-		boolean exists = generate(schedule, shrek, pq, naryRestrictions);
+		boolean exists = generate(schedule, pq, subjects, groups, lectures,  shrek, naryRestrictions);
 		
 		if (exists) {
-			schedule.imprimir();
+			System.out.print(schedule.toJsonString());
 		} else {
-			// Error
+			System.out.println("error");
 		}
 	}
 	
 	
 	private static boolean forwardCheck(String lecture, String room, Integer day, Integer hour, Map<String, Subject> subjects,
-			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek, NaryRestriction[] naryRestrictions) {
+			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek, Set<NaryRestriction> naryRestrictions) {
 		for (NaryRestriction restr : naryRestrictions) {
 			if (!restr.validate(lecture, room, day, hour, subjects, groups, lectures, shrek)) {
 				return false;
@@ -135,32 +137,34 @@ public class CtrlSchedule {
 		return true;
 	}
 
-	private static boolean generate(Schedule schedule, Map<String, PosAssig> shrek, Map<String, NaryRestriction[]> naryRestrictions, PriorityQueue<Pair<Integer, Lecture>> heuristica) { // Canviar nom de la PQ si volem xD		
-		// Pre: a shrek hi tenim només les Lectures que falten afegir i les assignacions possibles que li podem donar. Només les possibles! (forward checking)
-		// Pre: a més, per com està feta la funció podar, no hi ha cap Lecture amb 0 possibles assignacions
+	private static boolean generate(Schedule schedule, PriorityQueue<Map.Entry<Integer, String>> heuristica, Map<String, Subject> subjects,
+			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek, Set<NaryRestriction> naryRestrictions) {
+		{ // Canviar nom de la PQ si volem xD		
+		// Pre: a shrek hi tenim nomï¿½s les Lectures que falten afegir i les assignacions possibles que li podem donar. Nomï¿½s les possibles! (forward checking)
+		// Pre: a mï¿½s, per com estï¿½ feta la funciï¿½ podar, no hi ha cap Lecture amb 0 possibles assignacions
 		
-		// Cas base (CORRECTE) => shrek està buit => No queda res per afegir
+		// Cas base (CORRECTE) => shrek estï¿½ buit => No queda res per afegir
 		if (shrek.size() == 0) {
 			return true;
 		} else { // Encara tenim Lectures per afegir
 			
-			// Faig còpia d'shrek perquè no se m'eliminin coses al passar-ho per referència
+			// Faig cï¿½pia d'shrek perquï¿½ no se m'eliminin coses al passar-ho per referï¿½ncia
 			Map<String, PosAssig> copyShrek = new HashMap<String, PosAssig>(shrek);
 			
 			
-			// 1.	Agafar la primera Lecture, que ha estat ordenat heruísticament
-			Pair<Integer, Lecture> firstCandidate = heuristica.poll(); // També l'elimino de la PQ
-			Lecture lecture = firstCandidate.getValue(); // Lecture
+			// 1.	Agafar la primera Lecture, que ha estat ordenat heruï¿½sticament
+			Map.Entry<Integer, String> firstCandidate = heuristica.poll(); // Tambï¿½ l'elimino de la PQ
+			Lecture lecture = lectures.get(firstCandidate.getValue()); // Lecture
 			
 			String group = lecture.getGroup(); // Grup ///////////////////////////////////////////////////////////
-			Integer duration = lecture.getDuration(); // Duració de la Lecture ///////////////////////////////////
+			Integer duration = lecture.getDuration(); // Duraciï¿½ de la Lecture ///////////////////////////////////
 
 			PosAssig possibleAssignacions = shrek.get(lecture.toString());
 			
 			// 2.	Eliminar la lecture de shrek
 			shrek.remove(lecture.toString()); // Ara ha de ser shrek o copyShrek?????????????????????????????????
 
-			Map<Integer, Map<Integer, Set<String>>> posA = possibleAssignacions.getMap(); // Això és el map de dia hora i aula
+			Map<Integer, Map<Integer, Set<String>>> posA = possibleAssignacions.getMap(); // Aixï¿½ ï¿½s el map de dia hora i aula
 			
 			// 3.	Iterem per totes les possible assignacions
 			for (Map.Entry<Integer, Map<Integer, Set<String>>> firstOfposAssig : posA.entrySet()) {
@@ -180,11 +184,12 @@ public class CtrlSchedule {
 						}
 						
 						// 5.	Podar
-						boolean podat; // Funció d'en Laca (passant-li copyShrek)
+						boolean podat = forwardCheck(lecture.toString(), room, day, hour, subjects,
+								groups, lectures, shrek, naryRestrictions); // Funciï¿½ d'en Laca (passant-li copyShrek)
 						
 						if (podat) {
-							boolean possible = generate(schedule, copyShrek, naryRestrictions, heuristica); // True => És possible generar l'horari
-																											// False => No és possible
+							boolean possible = generate(schedule, heuristica, subjects, groups, lectures,  copyShrek, naryRestrictions); // True => ï¿½s possible generar l'horari
+																											// False => No ï¿½s possible
 							if (possible) return true;
 							else {
 								// Borrar de l'schedule i seguir iterant per les possibles assignacions
@@ -202,7 +207,7 @@ public class CtrlSchedule {
 								++h;
 							}
 							
-							// Backtracking => Fa falta aquí? Crec que no
+							// Backtracking => Fa falta aquï¿½? Crec que no
 							/*shrek.put(lecture.toString(), possibleAssignacions);
 							Pair<Integer, Lecture> p = new Pair<Integer, Lecture>(firstCandidate.getKey(), lecture); // Canvair nom si volem
 							heuristica.add(p);
@@ -214,7 +219,7 @@ public class CtrlSchedule {
 			}
 			// Backtracking
 			shrek.put(lecture.toString(), possibleAssignacions);
-			Pair<Integer, Lecture> p = new Pair<Integer, Lecture>(firstCandidate.getKey(), lecture); // Canvair nom si volem
+			Map.Entry<Integer, String> p = new AbstractMap.SimpleEntry<Integer, String>(firstCandidate.getKey(), lecture.toString()); // Canvair nom si volem
 			heuristica.add(p);
 			
 			return false;
@@ -222,7 +227,7 @@ public class CtrlSchedule {
 	}
 	
 	/* ********************** FORWARD CHECKING ******************
-	 * Función: forward checking (vfuturas, solucion)
+	 * Funciï¿½n: forward checking (vfuturas, solucion)
 		si vfuturas.es_vacio?() entonces
 			retorna solucion
 		sino
@@ -242,4 +247,5 @@ public class CtrlSchedule {
 				solucion.borrar(vactual)
 			retorna solucion.fallo()
 */
+}
 }

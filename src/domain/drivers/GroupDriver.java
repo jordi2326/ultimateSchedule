@@ -68,7 +68,7 @@ public class GroupDriver {
 	    try {
 	    	String filename = filenames.get(n);
 	    	Scanner in = new Scanner(new FileReader(new File(path+filename)));
-	    	g = new Group(in.next(), in.nextInt(), in.next(), in.next(), Type.valueOf(in.next()), DayPeriod.valueOf(in.next()), readIntegerList(in));
+	    	g = new Group(in.next(), in.nextInt(), in.next(), in.next(), Type.valueOf(in.next()), DayPeriod.valueOf(in.next()), readStringList(in));
 	    	in.close();
 	    	subMenu();
 		} catch (Exception e) {
@@ -76,13 +76,9 @@ public class GroupDriver {
 		}
 	}
 	
-	private static ArrayList<Integer> readIntegerList(Scanner in){
-		ArrayList<Integer> l = new ArrayList<Integer>();
-		Integer d = in.nextInt();
-		while(d!=-1) {
-			l.add(d);
-			d = in.nextInt();
-		}
+	private static ArrayList<String> readStringList(Scanner in){
+		ArrayList<String> l = new ArrayList<String>();
+		l.add(in.next());
 		return l;
 	}
 

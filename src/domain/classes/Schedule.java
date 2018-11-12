@@ -17,7 +17,7 @@ public class Schedule {
 	Map<String, String[][]> schedule;
 	
 	public Schedule() {
-		schedule = new HashMap<String, String[][]>();
+		schedule = new HashMap<String, String[][]>(); //String es codi del grup 
 	}
 	
 	public Schedule(String json) {

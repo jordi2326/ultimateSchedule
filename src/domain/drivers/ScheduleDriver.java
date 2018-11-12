@@ -24,7 +24,7 @@ public class ScheduleDriver {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		sc = new Scanner(System.in);
 		int n;
 		printMain();
@@ -126,11 +126,11 @@ public class ScheduleDriver {
 			}
 			Integer hour = sc.nextInt();
 			
-			System.out.println(">Introduzca codigo del Group a añadir");
+			System.out.println(">Introduzca codigo del Group a aï¿½adir");
 			String group = sc.next();
 			
 			sch.putLecture(room, day, hour, group);
-			System.out.println("Grupo añadido al horario");
+			System.out.println("Grupo aï¿½adido al horario");
 		} catch (Exception e) {
 			System.out.println(e);
 		}

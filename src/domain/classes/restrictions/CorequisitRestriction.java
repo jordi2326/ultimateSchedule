@@ -1,12 +1,12 @@
-package domain.restrictions;
+package domain.classes.restrictions;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-import domain.Group;
-import domain.Lecture;
-import domain.PosAssig;
-import domain.Subject;
+import domain.classes.Group;
+import domain.classes.Lecture;
+import domain.classes.PosAssig;
+import domain.classes.Subject;
 
 
 public class CorequisitRestriction extends NaryRestriction{
@@ -15,18 +15,18 @@ public class CorequisitRestriction extends NaryRestriction{
 		super(true); //negotiable
 	}
 	
-	//Si la assignatura A és correq de B, llavors hi ha d'haver alguna combinació en que algun grup de A i un grup que pot ser diferent de B no es solapen
+	//Si la assignatura A ï¿½s correq de B, llavors hi ha d'haver alguna combinaciï¿½ en que algun grup de A i un grup que pot ser diferent de B no es solapen
 	public boolean validate(String lecture, String room, Integer day, Integer hour, Map<String, Subject> subjects,
 			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek) {
 		String group = lectures.get(lecture).getGroup();
 		String subject = groups.get(group).getSubject();
-		ArrayList<String> coreqs = subjects.get(subject).getAllCorequisits();
+		ArrayList<String> coreqs = subjects.get(subject).getCoreqs();
 		//Get group code from inserted lecture
 		String groupCode = groups.get(group).getCode();
 		//Tweak every lecture of a group with same code and subject that is correq. 
 		for (Subject sub : subjects.values()) {
-			if (sub.getAllCorequisits().contains(subject) || coreqs.contains(sub.toString())) {
-				for (String gr : sub.getAllGroups()) {
+			if (sub.getCoreqs().contains(subject) || coreqs.contains(sub.toString())) {
+				for (String gr : sub.getGroups()) {
 					if (groups.get(gr).getCode().equals(groupCode)) {
 						for (String lec : groups.get(gr).getLectures()) {
 							//If coreq and same group code, then l cannot be in the same day and hour as lecture

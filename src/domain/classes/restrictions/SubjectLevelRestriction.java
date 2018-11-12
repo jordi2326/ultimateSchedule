@@ -1,11 +1,11 @@
-package domain.restrictions;
+package domain.classes.restrictions;
 
 import java.util.Map;
 
-import domain.Group;
-import domain.Lecture;
-import domain.PosAssig;
-import domain.Subject;
+import domain.classes.Group;
+import domain.classes.Lecture;
+import domain.classes.PosAssig;
+import domain.classes.Subject;
 
 public class SubjectLevelRestriction extends NaryRestriction{
 	
@@ -25,7 +25,7 @@ public class SubjectLevelRestriction extends NaryRestriction{
 		//Yweak every lecture of a group with same code and subject with same level. WE don't iterate all over shrek :) so efficient
 		for (Subject sub : subjects.values()) {
 			if (sub.getLevel().equals(subjectLevel)) {
-				for (String gr : sub.getAllGroups()) {
+				for (String gr : sub.getGroups()) {
 					if (groups.get(gr).getCode().equals(groupCode)) {
 						for (String lec : groups.get(gr).getLectures()) {
 							//If same level and same code, then l cannot be in the same day and hour as lecture
@@ -43,7 +43,7 @@ public class SubjectLevelRestriction extends NaryRestriction{
 									if (shrek.get(lec).dayIsEmpty(day)) {
 										shrek.get(lec).removeDay(day);
 									}
-									if ((shrek.get(lec).hasNoDays()) {
+									if (shrek.get(lec).hasNoDays()) {
 										return false;
 									}
 								}

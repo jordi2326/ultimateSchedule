@@ -1,13 +1,13 @@
-package domain.restrictions;
+package domain.classes.restrictions;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import domain.Group;
-import domain.Lecture;
-import domain.PosAssig;
-import domain.Subject;
+import domain.classes.Group;
+import domain.classes.Lecture;
+import domain.classes.PosAssig;
+import domain.classes.Subject;
 
 
 public class ParentGroupOverlapRestriction extends NaryRestriction{

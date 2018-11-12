@@ -1,9 +1,4 @@
-package domain.restrictions;
-
-import domain.Group;
-import domain.Group.DayPeriod;
-import domain.Room;
-import domain.Schedule;
+package domain.classes.restrictions;
 
 public class EspecificDayOrHourRestriction extends UnaryRestriction{
 	private Integer day;
