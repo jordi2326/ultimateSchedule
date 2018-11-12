@@ -56,7 +56,9 @@ public class CtrlSchedule {
 	
 	// ************************************************************************
 	
-	public static void generateSchedule(Map<String, UnaryRestriction[]> unaryRestrictions, Map<String, NaryRestriction[]> naryRestrictions, Map<String, Group> groups, Map<String, Rooms> rooms, Map<String, Subject> subjects, Map<String, Lecture> lectures) {
+	public static void generateSchedule(Map<String, UnaryRestriction[]> unaryRestrictions, NaryRestriction[] naryRestrictions, 
+					    Map<String, Group> groups, Map<String, Room> rooms, Map<String, Subject> subjects, Map<String, 
+					    Lecture> lectures, Integer midDay) {
 		//TODO: Implementar la restriction de que un grup no vagi en un dia o hora concrets
 		//Filter possible rooms hours and days for each group according to room capacity, PC's, day period and restrictions of days / hours
 		
@@ -70,7 +72,7 @@ public class CtrlSchedule {
 			Integer totalGroupRooms = 0;
 			Set<String> roomSet = new HashSet<String>();
 			for (Room r : rooms.values()) {
-				if (g.getNumOfPeople() <= r.getCapacity()) {
+				if (g.getNumPeople() <= r.getCapacity()) {
 					if ((g.getType() == Group.Type.LABORATORY && r.hasComputers())
 						|| (g.getType() != Group.Type.LABORATORY)) {
 						roomSet.add(r.toString());
@@ -82,14 +84,17 @@ public class CtrlSchedule {
 			for (int day = 0; day < 5; ++day) {
 				Map <Integer, Set<String>> hourRooms = new HashMap<Integer, Set<String>>();
 				for (int hour = 0; hour < 12; ++hour) {	
-					boolean valid = true;
-					for (UnaryRestriction restr : unaryRestrictions.get(g.toString())) {
-						if (!restr.validate(day, hour)) {
-							valid = false;
+					if ((g.getDayPeriod().equals(Group.DayPeriod.AFTERNOON) && hour <= midDay)
+						|| (g.getDayPeriod().equals(Group.DayPeriod.MORNING) && hour > midDay)) {
+						boolean valid = true;
+						for (UnaryRestriction restr : unaryRestrictions.get(g.toString())) {
+							if (!restr.validate(day, hour)) {
+								valid = false;
+							}
 						}
-					}
-					if (valid) {
-						hourRooms.put(hour, roomSet);
+						if (valid) {
+							hourRooms.put(hour, roomSet);
+						}
 					}
 				}
 				if (!hourRooms.isEmpty()) {
@@ -108,6 +113,8 @@ public class CtrlSchedule {
 		
 		Schedule schedule = new Schedule();
 		
+	
+		
 		boolean exists = generate(schedule, shrek, pq, naryRestrictions);
 		
 		if (exists) {
@@ -117,8 +124,15 @@ public class CtrlSchedule {
 		}
 	}
 	
-	private static boolean forwardCheck() {
-		
+	
+	private static boolean forwardCheck(String lecture, String room, Integer day, Integer hour, Map<String, Subject> subjects,
+			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek, NaryRestriction[] naryRestrictions) {
+		for (NaryRestriction restr : naryRestrictions) {
+			if (!restr.validate(lecture, room, day, hour, subjects, groups, lectures, shrek)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private static boolean generate(Schedule schedule, Map<String, PosAssig> shrek, Map<String, NaryRestriction[]> naryRestrictions, PriorityQueue<Pair<Integer, Lecture>> heuristica) { // Canviar nom de la PQ si volem xD		
