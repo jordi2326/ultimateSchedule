@@ -22,7 +22,15 @@
                 "parentGroupCode": "10",
                 "type": "THEORY",
                 "dayPeriod": "MORNING",
-                "lecturesDuration": [2, 1]
+                "lecturesDuration": [3, 2]
+              },
+              {
+                "code": "11",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [1, 2]
               }
           ] 
       }

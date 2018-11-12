@@ -25,6 +25,7 @@ import domain.classes.Room;
 import domain.classes.Schedule;
 import domain.classes.Subject;
 import domain.classes.restrictions.NaryRestriction;
+import domain.classes.restrictions.OccupiedRoomRestriction;
 import domain.classes.restrictions.UnaryRestriction;
 import persistance.CtrlData;
 
@@ -51,6 +52,7 @@ public class CtrlDomain {
 		lectures = new HashMap<String, Lecture>();
 		unaryRestrictions = new HashMap<String, Set<UnaryRestriction>>();
 		naryRestrictions = new HashSet<NaryRestriction>();
+		naryRestrictions.add(new OccupiedRoomRestriction());
 	}
 	
 	public static CtrlDomain getInstance() {
@@ -91,7 +93,7 @@ public class CtrlDomain {
 	public void generateSchedule() {
 		CtrlSchedule ctS = CtrlSchedule.getInstance();
 		//System.out.println(lectures);
-		ctS.generateSchedule(unaryRestrictions, naryRestrictions, groups, rooms, subjects, lectures, 14);
+		ctS.generateSchedule(unaryRestrictions, naryRestrictions, groups, rooms, subjects, lectures, 6);
 	}
 	
 	@SuppressWarnings("rawtypes")

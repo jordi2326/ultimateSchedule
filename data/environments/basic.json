@@ -74,7 +74,7 @@
         [
             {
               "code": "30",
-              "numPeople": 120,
+              "numPeople": 10,
               "parentGroupCode": "30",
               "type": "THEORY",
               "dayPeriod": "AFTERNOON",

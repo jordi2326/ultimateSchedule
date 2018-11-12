@@ -19,6 +19,7 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
+import java.util.stream.Collectors;
 // import java.util.Calendar; No s'utilitza ja
 import java.util.HashMap;
 import java.util.HashSet;
@@ -56,7 +57,7 @@ public class CtrlSchedule {
 	
 	// ************************************************************************
 	
-	public static void generateSchedule(Map<String, Set<UnaryRestriction>> unaryRestrictions, Set<NaryRestriction> naryRestrictions, 
+	public void generateSchedule(Map<String, Set<UnaryRestriction>> unaryRestrictions, Set<NaryRestriction> naryRestrictions, 
 					    Map<String, Group> groups, Map<String, Room> rooms, Map<String, Subject> subjects, Map<String, 
 					    Lecture> lectures, Integer midDay) {
 		//TODO: Implementar la restriction de que un grup no vagi en un dia o hora concrets
@@ -95,7 +96,8 @@ public class CtrlSchedule {
 							}
 						}
 						if (valid) {
-							hourRooms.put(hour, roomSet);
+							Set<String> newSet = roomSet.stream().collect(Collectors.toSet());
+							hourRooms.put(hour, newSet);
 						}
 					}
 				}
@@ -147,10 +149,6 @@ public class CtrlSchedule {
 		if (shrek.isEmpty() || heuristica.isEmpty()) {
 			return true;
 		} else { // Encara tenim Lectures per afegir
-			
-			// Faig c�pia d'shrek perqu� no se m'eliminin coses al passar-ho per refer�ncia
-			Map<String, PosAssig> copyShrek = new HashMap<String, PosAssig>(shrek);
-			
 			// 1.	Agafar la primera Lecture, que ha estat ordenat heru�sticament
 			Map.Entry<Integer, String> firstCandidate = heuristica.poll(); // Tamb� l'elimino de la PQ
 			Lecture lecture = lectures.get(firstCandidate.getValue()); // Lecture
@@ -162,6 +160,10 @@ public class CtrlSchedule {
 			
 			// 2.	Eliminar la lecture de shrek
 			shrek.remove(lecture.toString()); // Ara ha de ser shrek o copyShrek?????????????????????????????????
+			
+			// Faig c�pia d'shrek perqu� no se m'eliminin coses al passar-ho per refer�ncia
+			Map<String, PosAssig> copyShrek = shrek.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> new PosAssig(e.getValue().getMap())));
+
 
 			Map<Integer, Map<Integer, Set<String>>> posA = possibleAssignacions.getMap(); // Aix� �s el map de dia hora i aula
 			
@@ -184,7 +186,7 @@ public class CtrlSchedule {
 						
 						// 5.	Podar
 						boolean podat = forwardCheck(lecture.toString(), room, day, hour, subjects,
-								groups, lectures, shrek, naryRestrictions); // Funci� d'en Laca (passant-li copyShrek)
+								groups, lectures, copyShrek, naryRestrictions); // Funci� d'en Laca (passant-li copyShrek)
 						
 						if (podat) {
 							boolean possible = generate(schedule, heuristica, subjects, groups, lectures,  copyShrek, naryRestrictions); // True => �s possible generar l'horari
