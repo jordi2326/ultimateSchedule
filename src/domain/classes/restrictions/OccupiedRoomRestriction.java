@@ -28,8 +28,8 @@ public class OccupiedRoomRestriction extends NaryRestriction{
 					Integer i = hour - d + 1;  //mirar foto del mobil per entendre si fa falta
 					while (i < hour+duration) { //mirar foto del mobil per entendre si fa falta
 						if(pa.hasHourFromDay(day, i)) {
-							if (pa.hasRoomFromDayAndHour(day, hour, room)) {
-								pa.removeRoomFromHourAndDay(day, hour, room);
+							if (pa.hasRoomFromDayAndHour(day, i, room)) {
+								pa.removeRoomFromHourAndDay(day, i, room);
 							} 
 						}
 						++i;
