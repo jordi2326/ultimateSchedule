@@ -1,10 +1,10 @@
 package domain.classes.restrictions;
 
-public class EspecificDayOrHourRestriction extends UnaryRestriction{
+public class SpecificDayOrHourRestriction extends UnaryRestriction{
 	private Integer day;
 	private Integer hour;
 	
-	public EspecificDayOrHourRestriction(Integer day, Integer hour) {
+	public SpecificDayOrHourRestriction(Integer day, Integer hour) {
 		super(true); //negotiable
 		this.day = day;
 		this.hour = hour;
