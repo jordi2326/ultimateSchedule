@@ -100,11 +100,14 @@ public class PosAssigDriver {
 	            + "---------------------\n"
 	            + "Opciones\n"
 	            + " 1| dayIsEmpty\n"
-	            + " 2| hasDay\n"
-	            + " 3| hasHourFromDay\n"
-	            + " 4| isEmpty\n"
-	            + " 5| removeDay\n"
-	            + " 6| removeHourFromDay\n"
+	            + " 2| getMap\n"
+	            + " 3| hasDay\n"
+	            + " 4| hasHourFromDay\n"
+	            + " 5| hasNoDays\n"
+	            + " 6| hasRoomFromDayAndHour\n"
+	            + " 7| removeDay\n"
+	            + " 8| removeHourFromDay\n"
+	            + " 9| removeRoomFromHourAndDay\n"
 	            + " 0| Salir\n"
 	            + "---------------------\n"
 	            );
@@ -121,33 +124,32 @@ public class PosAssigDriver {
 	            	testDayIsEmpty();
 	                break;
 	            case 2:
-	            	testHasDay();
+	            	//testGetMap();
 	                break;
 	            case 3:
-	            	testHasHourFromDay();
+	            	testHasDay();
 	                break;
 	            case 4:
-	            	testIsEmpty();
+	            	testHasHourFromDay();
 	                break;
 	            case 5:
-	            	testRemoveDay();
+	            	//testHasRoomFromDayAndHour();
 	                break;
 	            case 6:
+	            	testHasNoDays();
+	                break;
+	            case 7:
+	            	testRemoveDay();
+	                break;
+	            case 8:
 	            	testRemoveHourFromDay();
+	                break;
+	            case 9:
+	            	//testRemoveRoomFromHourAndDay();
 	                break;
 	        }
 	        n = sc.nextInt();
 	    }
-	}
-	
-	public static void testDayIsEmpty(){
-		System.out.println(">Introduzca Num de Dia");
-		try {
-            Boolean x = p.dayIsEmpty(sc.nextInt());
-            System.out.println(x);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
 	}
 	
 	public static void testHasDay(){
@@ -173,9 +175,19 @@ public class PosAssigDriver {
         }
 	}
 	
-	public static void testIsEmpty(){
+	public static void testDayIsEmpty(){
+		System.out.println(">Introduzca Num de Dia");
 		try {
-			Boolean x = p.isEmpty();
+            Boolean x = p.dayIsEmpty(sc.nextInt());
+            System.out.println(x);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+	}
+	
+	public static void testHasNoDays(){
+		try {
+			Boolean x = p.hasNoDays();
 	        System.out.println(x);
 	    } catch (Exception e) {
 	        System.out.println(e);

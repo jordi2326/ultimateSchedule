@@ -60,7 +60,7 @@ public class CtrlDomainDriver {
 	        		testGetGroup(sc);
 	        		break;
 	        	case 6:
-	        		testGetGroups();
+	        		//testGetGroups();
 	        		break;
 	        	case 7:
 	        		testGetGroupsFromSubject();
@@ -106,15 +106,6 @@ public class CtrlDomainDriver {
 			String s = sc.next();
             Group x = cD.getGroup(s);
             System.out.println("Group: " + x);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-	}
-	
-	private static void testGetGroups() {
-		try {
-            ArrayList<Group> x = cD.getGroups();
-            System.out.println("Groups: " + x);
         } catch (Exception e) {
             System.out.println(e);
         }

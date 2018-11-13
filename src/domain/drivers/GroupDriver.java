@@ -143,13 +143,12 @@ public class GroupDriver {
 	            + "Opciones\n"
 	            + " 1| getCode\n"
 	            + " 2| getDayPeriod\n"
-	            + " 3| getLectureDuration\n"
-	            + " 4| getNumOfLectures\n"
-	            + " 5| getNumOfPeople\n"
-	            + " 6| getParentGroupCode\n"
-	            + " 7| getSubject\n"
-	            + " 8| getType\n"
-	            + " 9| toString\n"
+	            + " 3| getLectures\n"
+	            + " 4| getNumOfPeople\n"
+	            + " 5| getParentGroupCode\n"
+	            + " 6| getSubject\n"
+	            + " 7| getType\n"
+	            + " 8| toString\n"
 	            + " 0| Salir\n"
 	            + "---------------------\n"
 	            );
@@ -169,24 +168,21 @@ public class GroupDriver {
 	            	testGetDayPeriod();
 	                break;
 	            case 3:
-	            	testGetLectureDuration();
+	            	testGetLectures();
 	                break;
 	            case 4:
-	            	testGetNumOfLectures();
-	                break;
-	            case 5:
 	            	testGetNumOfPeople();
 	                break;
-	            case 6:
+	            case 5:
 	            	testGetParentGroupCode();
 	                break;
-	            case 7:
+	            case 6:
 	            	testGetSubject();
 	                break;
-	            case 8:
+	            case 7:
 	            	testGetType();
 	                break;
-	            case 9:
+	            case 8:
 	            	testToString();
 	                break;
 	        }
@@ -212,24 +208,9 @@ public class GroupDriver {
 	        }
 		}
 		
-		public static void testGetLectureDuration(){
-			System.out.println(">Introduzca numero de Lecture");
+		public static void testGetLectures(){
 			try {
-				while (!sc.hasNextInt()) {
-		        	System.out.println("Error: Se ncecesita un entero");
-		            sc.nextLine();
-		        }
-				Integer i = sc.nextInt();
-	            Integer x = g.getLectureDuration(i);
-	            System.out.println(x);
-	        } catch (Exception e) {
-	            System.out.println(e);
-	        }
-		}
-		
-		public static void testGetNumOfLectures(){
-			try {
-	            Integer x = g.getNumOfLectures();
+	            ArrayList<String> x = g.getLectures();
 	            System.out.println(x);
 	        } catch (Exception e) {
 	            System.out.println(e);
@@ -271,16 +252,7 @@ public class GroupDriver {
 	            System.out.println(e);
 	        }
 		}
-		
-		public static void testHasLectures(){
-			try {
-	            Boolean x = g.hasLectures();
-	            System.out.println(x);
-	        } catch (Exception e) {
-	            System.out.println(e);
-	        }
-		}
-		
+
 		public static void testToString(){
 			try {
 	            String x = g.toString();
