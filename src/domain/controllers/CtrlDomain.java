@@ -24,6 +24,7 @@ import domain.classes.Lecture;
 import domain.classes.Room;
 import domain.classes.Schedule;
 import domain.classes.Subject;
+import domain.classes.restrictions.CorequisitRestriction;
 import domain.classes.restrictions.NaryRestriction;
 import domain.classes.restrictions.OccupiedRoomRestriction;
 import domain.classes.restrictions.UnaryRestriction;
@@ -53,6 +54,7 @@ public class CtrlDomain {
 		unaryRestrictions = new HashMap<String, Set<UnaryRestriction>>();
 		naryRestrictions = new HashSet<NaryRestriction>();
 		naryRestrictions.add(new OccupiedRoomRestriction());
+		naryRestrictions.add(new CorequisitRestriction());
 	}
 	
 	public static CtrlDomain getInstance() {
@@ -126,7 +128,7 @@ public class CtrlDomain {
         		
         		String gcode = (String) group.get("code");
         		for(int i = 0; i < durations.size(); i++){
-        			Lecture l = new Lecture(i, scode+gcode, durations.get(i).intValue());
+        			Lecture l = new Lecture(i, scode + gcode + group.get("type"), durations.get(i).intValue());
         			lectures.put(l.toString(), l);
         			ls.add(l.toString());
         		}

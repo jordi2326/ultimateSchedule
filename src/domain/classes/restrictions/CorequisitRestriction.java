@@ -22,12 +22,12 @@ public class CorequisitRestriction extends NaryRestriction{
 		String subject = groups.get(group).getSubject();
 		ArrayList<String> coreqs = subjects.get(subject).getCoreqs();
 		//Get group code from inserted lecture
-		String groupCode = groups.get(group).getCode();
+		String groupParentCode = groups.get(group).getParentGroupCode();
 		//Tweak every lecture of a group with same code and subject that is correq. 
 		for (Subject sub : subjects.values()) {
 			if (sub.getCoreqs().contains(subject) || coreqs.contains(sub.toString())) {
 				for (String gr : sub.getGroups()) {
-					if (groups.get(gr).getCode().equals(groupCode)) {
+					if (groups.get(gr).getParentGroupCode().equals(groupParentCode)) {
 						for (String lec : groups.get(gr).getLectures()) {
 							//If coreq and same group code, then l cannot be in the same day and hour as lecture
 							if (shrek.containsKey(lec)) {

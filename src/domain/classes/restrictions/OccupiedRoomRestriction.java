@@ -19,7 +19,7 @@ public class OccupiedRoomRestriction extends NaryRestriction{
 	public boolean validate(String lecture, String room, Integer day, Integer hour, Map<String, Subject> subjects,
 			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek) {
 		
-for (Entry<String, PosAssig> entry : shrek.entrySet()) {
+		for (Entry<String, PosAssig> entry : shrek.entrySet()) {
 			PosAssig pa = entry.getValue();
 			if (pa.hasDay(day)) {
 				if (pa.hasHourFromDay(day, hour)) {

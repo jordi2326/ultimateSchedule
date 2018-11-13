@@ -1,0 +1,52 @@
+{
+    "rooms":
+    [
+      {
+        "code": "A6001",
+        "capacity": 900,
+        "hasComputers": false
+      },
+      {
+        "code": "C6201",
+        "capacity": 900,
+        "hasComputers": false
+      }
+    ],
+    "subjects": 
+    [
+      {
+          "code": "PRO1",
+          "name": "Programació 1",
+          "level": "1",
+          "coreqs": ["M2"],
+          "groups": 
+          [
+              {
+                "code": "11",
+                "numPeople": 90,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              }
+          ] 
+      },
+      {
+        "code": "M2",
+        "name": "Matemàtiques 2",
+        "level": "2",
+        "coreqs": ["PRO1"]
+        "groups": 
+        [
+            {
+              "code": "19",
+              "numPeople": 10,
+              "parentGroupCode": "10",
+              "type": "THEORY",
+              "dayPeriod": "MORNING",
+              "lecturesDuration": [2]
+            }
+        ] 
+    }
+    ]
+}
