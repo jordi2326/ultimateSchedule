@@ -1,5 +1,6 @@
 JFLAGS = -g
 JC = javac
+#JC = /usr/java/jdk1.8.0_45/bin/javac
 JVM= java
 
 BIN = ./exe/
@@ -28,7 +29,7 @@ MAIN = Main
 default: bin classes
 
 bin:
-	mkdir $(BIN)
+	mkdir -p $(BIN)
 
 classes: $(CLASSES:.java=.class)
 
@@ -42,4 +43,4 @@ run-driver-group:
 	$(JVM) -cp $(RCPATHS) domain.drivers.GroupDriver
 
 clean:
-	$(RM) -rf $(BIN)
+	$(RM) -rf $(BIN)*
