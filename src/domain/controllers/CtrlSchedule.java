@@ -114,6 +114,7 @@ public class CtrlSchedule {
 				}
 			}
 		}
+		//TODO: fer que no sigui priority queue perque lllavvors no tenim manerade
 		
 		Schedule schedule = new Schedule();
 		

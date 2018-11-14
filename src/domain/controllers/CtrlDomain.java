@@ -25,6 +25,7 @@ import domain.classes.Room;
 import domain.classes.Schedule;
 import domain.classes.Subject;
 import domain.classes.restrictions.CorequisitRestriction;
+import domain.classes.restrictions.LectureFromSameGroupOverlapRestriction;
 import domain.classes.restrictions.SpecificDayOrHourRestriction;
 import domain.classes.restrictions.SubjectLevelRestriction;
 import domain.classes.restrictions.NaryRestriction;
@@ -60,6 +61,7 @@ public class CtrlDomain {
 		naryRestrictions.add(new ParentGroupOverlapRestriction());
 		naryRestrictions.add(new CorequisitRestriction());
 		naryRestrictions.add(new SubjectLevelRestriction());
+		naryRestrictions.add(new LectureFromSameGroupOverlapRestriction());
 		// Set<UnaryRestriction> unary = new HashSet<UnaryRestriction>();
 		// unary.add(new SpecificDayOrHourRestriction(0, 0));
 		// unaryRestrictions.put("PRO111THEORY", unary);
