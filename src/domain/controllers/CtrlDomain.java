@@ -243,13 +243,13 @@ public class CtrlDomain {
         return dataController.writeEnvironment(filename, jo.toJSONString(0));        
 	}
 	
-	public Schedule importSchedule(String filename) throws ParseException, FileNotFoundException {
+	public boolean importSchedule(String filename) throws ParseException, FileNotFoundException {
 		String jsonData = dataController.readSchedule(filename);
-		Schedule schedule = new Schedule(jsonData);
-	   	return schedule;
+		schedule = new Schedule(jsonData);
+	   	return true;
 	}
 	
-	public boolean exportSchedule(String filename, Schedule schedule) throws IOException  {
+	public boolean exportSchedule(String filename) throws IOException  {
         return dataController.writeSchedule(filename, schedule.toJsonString());
 	}
 	
@@ -265,6 +265,10 @@ public class CtrlDomain {
 	
 	public List<String> getEnvironmentFilesList(){
 		return dataController.getEnvironmentFilesList();
+	}
+	
+	public List<String> getScheduleFilesList(){
+		return dataController.getScheduleFilesList();
 	}
 	
 }

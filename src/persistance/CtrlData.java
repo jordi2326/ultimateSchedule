@@ -38,7 +38,7 @@ public class CtrlData {
 	}
 	
 	public boolean writeSchedule(String filename, String content) throws FileNotFoundException {
-		return writeData("environments/"+filename, content);
+		return writeData("schedules/"+filename, content);
 	}
 	
 	public String readData(String filename) throws FileNotFoundException {
@@ -48,7 +48,7 @@ public class CtrlData {
 			return scan.next();
 	}
 	
-	public boolean writeData(String filename, String content) throws FileNotFoundException {
+	private boolean writeData(String filename, String content) throws FileNotFoundException {
 		PrintWriter pw = new PrintWriter("data/"+filename); 
         pw.write(content); 
         pw.flush(); 
@@ -57,8 +57,15 @@ public class CtrlData {
 	}
 	
 	public List<String> getEnvironmentFilesList(){
-		String envPath = "data/environments";
-		File folder = new File(envPath);
+		return getFilesList("data/environments");
+	}
+	
+	public List<String> getScheduleFilesList(){
+		return getFilesList("data/schedules");
+	}
+	
+	private List<String> getFilesList(String path){
+		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
 		List<String> results = new ArrayList<String>();
 		
