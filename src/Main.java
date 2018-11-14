@@ -74,7 +74,11 @@ public class Main {
 	    while (n != 0) {
 	        switch (n) {
 	            case 1:
-	            	ctDomain.generateSchedule();
+	            	if(ctDomain.generateSchedule()){
+	            		System.out.println(ctDomain.scheduleToJsonString());
+	            	}else{
+	            		System.out.println("Error. No Valid Schedule Found");
+	            	}
 	                break;
 	            case 2:
 	            	//testGetCapacity(sc);
@@ -89,6 +93,12 @@ public class Main {
 	        printEnvironmentMenu(envName);
 	        n = sc.nextInt();
 	    }
+	}
+	
+
+	
+	public static void scheduleMenu(Scanner sc, String schName){
+	
 	}
 	
 	private static void printGenericListMenu(String title, List<String> items) {

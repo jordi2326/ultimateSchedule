@@ -40,7 +40,7 @@ public class CtrlDomain {
 	private Map<String, Room> rooms;
 	private Map<String, Group> groups;
 	private Map<String, Lecture> lectures;
-	
+	private Schedule schedule;
 	//Restrictions for every group
 	private Map<String, Set<UnaryRestriction>> unaryRestrictions; //Key = group.toString()
 	private Set<NaryRestriction> naryRestrictions;
@@ -96,11 +96,17 @@ public class CtrlDomain {
 		return groups.keySet();
 	}
 	
-	public void generateSchedule() {
+	public boolean generateSchedule() {
 		CtrlSchedule ctS = CtrlSchedule.getInstance();
-		//System.out.println(lectures);
-		ctS.generateSchedule(unaryRestrictions, naryRestrictions, groups, rooms, subjects, lectures, 6);
+		schedule = new Schedule();
+		return ctS.generateSchedule(unaryRestrictions, naryRestrictions, groups, rooms, subjects, lectures, 6, schedule);
+		
 	}
+	
+	public String scheduleToJsonString() {
+		return schedule.toJsonString();
+	}
+	
 	
 	@SuppressWarnings("rawtypes")
 	public boolean importEnvironment(String filename) throws ParseException, IOException   {

@@ -27,7 +27,7 @@ public class Schedule {
 			for(Map.Entry<String,JSONObject> dayE : (Set<Map.Entry<String,JSONObject>>) jo.entrySet()) {
 				for(Map.Entry<String,JSONObject> hourE : (Set<Map.Entry<String,JSONObject>>) dayE.getValue().entrySet()) {
 					for(Map.Entry<String,String> l : (Set<Map.Entry<String,String>>) hourE.getValue().entrySet()) {
-						this.putLecture(l.getKey(), DayOfWeek.valueOf(dayE.getKey()).ordinal(), Integer.parseInt(hourE.getKey()), l.getValue());
+						this.putLecture(l.getKey(), DayOfWeek.valueOf(dayE.getKey()).ordinal(), Integer.parseInt(hourE.getKey())-8, l.getValue());
 					}
 				}
 			}
@@ -67,8 +67,8 @@ public class Schedule {
         		for(Integer hour = 0; hour<12; hour++) {
         			if(roomSchedule[day][hour]!=null && !roomSchedule[day][hour].isEmpty()) {
         				if(!jo.containsKey(dayName)) jo.put(dayName, new JSONObject());
-        				if(!((JSONObject) jo.get(dayName)).containsKey(hour.toString())) ((JSONObject) jo.get(dayName)).put(hour.toString(), new JSONObject());
-        				((JSONObject) ((JSONObject) jo.get(dayName)).get(hour.toString())).put(roomName, roomSchedule[day][hour]);
+        				if(!((JSONObject) jo.get(dayName)).containsKey(Integer.toString(hour+8))) ((JSONObject) jo.get(dayName)).put(Integer.toString(hour+8), new JSONObject());
+        				((JSONObject) ((JSONObject) jo.get(dayName)).get(Integer.toString(hour+8))).put(roomName, roomSchedule[day][hour]);
         			}
         		}
         	}

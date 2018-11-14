@@ -57,9 +57,9 @@ public class CtrlSchedule {
 	
 	// ************************************************************************
 	
-	public void generateSchedule(Map<String, Set<UnaryRestriction>> unaryRestrictions, Set<NaryRestriction> naryRestrictions, 
+	public boolean generateSchedule(Map<String, Set<UnaryRestriction>> unaryRestrictions, Set<NaryRestriction> naryRestrictions, 
 					    Map<String, Group> groups, Map<String, Room> rooms, Map<String, Subject> subjects, Map<String, 
-					    Lecture> lectures, Integer midDay) {
+					    Lecture> lectures, Integer midDay, Schedule schedule) {
 		//TODO: Implementar la restriction de que un grup no vagi en un dia o hora concrets
 		//Filter possible rooms hours and days for each group according to room capacity, PC's, day period and restrictions of days / hours
 		//posAssig te
@@ -114,18 +114,15 @@ public class CtrlSchedule {
 				}
 			}
 		}
-		
-		Schedule schedule = new Schedule();
-		
-	
-		
+
 		boolean exists = generate(schedule, pq, subjects, groups, lectures,  shrek, naryRestrictions);
 		
-		if (exists) {
+		/**if (exists) {
 			System.out.println(schedule.toJsonString());
 		} else {
 			System.out.println("error");
-		}
+		}**/
+		return exists;
 	}
 	
 	
