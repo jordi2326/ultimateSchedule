@@ -21,12 +21,12 @@ public class SubjectLevelRestriction extends NaryRestriction{
 		//Get level from subject of inserted lecture
 		String subjectLevel = subjects.get(subject).getLevel();
 		//Get group code from inserted lecture
-		String groupCode = groups.get(group).getCode();
+		String groupParentCode = groups.get(group).getParentGroupCode();
 		//Yweak every lecture of a group with same code and subject with same level. WE don't iterate all over shrek :) so efficient
 		for (Subject sub : subjects.values()) {
 			if (sub.getLevel().equals(subjectLevel)) {
 				for (String gr : sub.getGroups()) {
-					if (groups.get(gr).getCode().equals(groupCode)) {
+					if (groups.get(gr).getParentGroupCode().equals(groupParentCode) && !sub.toString().equals(subject)) {
 						for (String lec : groups.get(gr).getLectures()) {
 							//If same level and same code, then l cannot be in the same day and hour as lecture
 							if (shrek.containsKey(lec)) {

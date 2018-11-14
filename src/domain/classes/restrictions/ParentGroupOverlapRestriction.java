@@ -31,7 +31,10 @@ public class ParentGroupOverlapRestriction extends NaryRestriction{
 			//erase from other "children" lectures so that these don't overlap
 			for (String g : subjects.get(subject).getGroups()) {
 				Group posGroup = groups.get(g);
-				if (posGroup.getParentGroupCode().equals(groupCode)) {
+				if (posGroup.getParentGroupCode().equals(groupCode) 
+					|| posGroup.getParentGroupCode().equals(posGroup.getCode())) {
+					//Mirem si tenen com a pare el grup que avabem d'inserir o
+					//Si son grups pares de la mateixa assignatura (M2 10 i M2 30 no s'han de solapar)
 					for (String lec : posGroup.getLectures()) {
 						if (shrek.containsKey(lec)) {
 							if (shrek.get(lec).hasDay(day)) {
@@ -58,7 +61,7 @@ public class ParentGroupOverlapRestriction extends NaryRestriction{
 		}
 		//else if it is not a parent group
 		else {
-			//We want to erase from parent Group so that it doesn't overlap woth this child group
+			//We want to erase from parent Group so that it doesn't overlap with this child group
 			for (String g : subjects.get(subject).getGroups()) {
 				Group posGroup = groups.get(g);
 				if (posGroup.getCode().equals(parentGroupCode)) {
