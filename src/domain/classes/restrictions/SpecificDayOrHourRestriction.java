@@ -18,7 +18,7 @@ public class SpecificDayOrHourRestriction extends UnaryRestriction{
 		else if (this.hour == null) {
 			return day != this.day;
 		}
-		else return (day != this.day) !! (hour != this.hour);
+		else return (day != this.day) || (hour != this.hour);
 	}
 
 }
