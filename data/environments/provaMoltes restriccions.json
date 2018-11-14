@@ -20,6 +20,21 @@
         "code": "C6S103",
         "capacity": 26,
         "hasComputers": true
+      },
+      {
+        "code": "zzz1",
+        "capacity": 80,
+        "hasComputers": false
+      },
+      {
+        "code": "PUTURRUDEFUA",
+        "capacity": 35,
+        "hasComputers": true
+      },
+      {
+        "code": "I'MGONNACUUUUUM",
+        "capacity": 26,
+        "hasComputers": true
       }
     ],
     "subjects": 
@@ -111,6 +126,38 @@
               "type": "PROBLEMS",
               "dayPeriod": "MORNING",
               "lecturesDuration": [1]
+            },
+            {
+              "code": "40",
+              "numPeople": 3,
+              "parentGroupCode": "40",
+              "type": "THEORY",
+              "dayPeriod": "MORNING",
+              "lecturesDuration": [1]
+            },
+            {
+              "code": "41",
+              "numPeople": 3,
+              "parentGroupCode": "40",
+              "type": "PROBLEMS",
+              "dayPeriod": "MORNING",
+              "lecturesDuration": [1]
+            },
+            {
+              "code": "10",
+              "numPeople": 3,
+              "parentGroupCode": "10",
+              "type": "THEORY",
+              "dayPeriod": "MORNING",
+              "lecturesDuration": [1,2,1,3]
+            },
+            {
+              "code": "12",
+              "numPeople": 3,
+              "parentGroupCode": "10",
+              "type": "PROBLEMS",
+              "dayPeriod": "MORNING",
+              "lecturesDuration": [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
             }
         ] 
     }
