@@ -17,7 +17,7 @@ public class DayPeriodRestriction extends UnaryRestriction{
 		if ((dayPeriod.equals(Group.DayPeriod.MORNING)) && (hour + duration > midDay)) {
 			return false;
 		}
-		if ((dayPeriod.equals(Group.DayPeriod.AFTERNOON)) && (hour < midDay || hour+duration > 11)) {
+		if ((dayPeriod.equals(Group.DayPeriod.AFTERNOON)) && (hour < midDay || hour+duration > 12)) {
 			return false;
 		}
 		return true;
