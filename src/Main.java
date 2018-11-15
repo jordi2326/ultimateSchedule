@@ -33,10 +33,9 @@ public class Main {
 	    }
 	}
 	
-	private static void printLoadEnvironmentMenu(List<String> filenames) {
-		System.out.print(
-	            "Load Environment\n"
-	            + "--------------------------\n");
+	private static void printLoadFileMenu(String title, List<String> filenames) {
+		System.out.println(title);
+		System.out.print("--------------------------\n");
 		for (int i = 0; i < filenames.size(); i++) {
 			System.out.println(i + "| "+ filenames.get(i));
 		}
@@ -46,7 +45,7 @@ public class Main {
 	
 	public static void loadEnvironmentMenu(){
 		List<String> filenames = ctDomain.getEnvironmentFilesList();
-		printLoadEnvironmentMenu(filenames);
+		printLoadFileMenu("Load Environment", filenames);
 	    int n = sc.nextInt();
 	    try {
 	    	String filename = filenames.get(n);
@@ -100,7 +99,7 @@ public class Main {
 	
 	public static void loadSchedulesMenu(){
 		List<String> filenames = ctDomain.getScheduleFilesList();
-		printLoadEnvironmentMenu(filenames);
+		printLoadFileMenu("Load Schedule", filenames);
 	    int n = sc.nextInt();
 	    try {
 	    	String filename = filenames.get(n);
