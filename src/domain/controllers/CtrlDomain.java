@@ -208,7 +208,7 @@ public class CtrlDomain {
         		
         		String gcode = (String) group.get("code");
         		for(int i = 0; i < durations.size(); i++){
-        			Lecture l = new Lecture(i, scode + gcode + group.get("type"), durations.get(i).intValue());
+        			Lecture l = new Lecture(i, scode +"-"+ gcode +"-"+ group.get("type"), durations.get(i).intValue());
         			lectures.put(l.toString(), l);
         			ls.add(l.toString());
         		}
