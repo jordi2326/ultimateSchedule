@@ -93,14 +93,10 @@ public class CtrlSchedule {
 							//Afegim combinacio de dia hora aula per contar les possibilitats totals
 							//Com que es un set, si afegim varios cops la mateixa combinacio, nomes conta com a 1
 							//No ens cal mirar els grups INDIFERENT
-							if (g.getDayPeriod().equals(Group.DayPeriod.MORNING)) {
-								mor += 1;
-								for (String r : newRoomSet) {
+							for (String r : newRoomSet) {
+								if (g.getDayPeriod().equals(Group.DayPeriod.MORNING)) {
 									totalDifferentDayHourRoomMorning.add(day+"-"+hour+"-"+r);
-								}
-							} else if (g.getDayPeriod().equals(Group.DayPeriod.AFTERNOON)) {
-								aft += 1;
-								for (String r : newRoomSet) {
+								} else if (g.getDayPeriod().equals(Group.DayPeriod.AFTERNOON)) {
 									totalDifferentDayHourRoomAfternoon.add(day+"-"+hour+"-"+r);
 								}
 							}
@@ -115,6 +111,13 @@ public class CtrlSchedule {
 					shrek.put(lecture, pa);
 					Map.Entry<Integer, String> pair = new AbstractMap.SimpleEntry<Integer, String>(totalGroupRooms, lecture);
 					pq.add(pair);
+				} 
+				else return false; //Si una lecture no te aules possibles cap dia i hora, directament no podem generar horari
+				
+				if (g.getDayPeriod().equals(Group.DayPeriod.MORNING)) {
+					mor += 1;
+				} else if (g.getDayPeriod().equals(Group.DayPeriod.AFTERNOON)) {
+					aft += 1;
 				}
 			}
 		}
