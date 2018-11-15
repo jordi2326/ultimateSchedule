@@ -1,4 +1,4 @@
-package domain.classes;
+driverspackage domain.classes;
 
 /** Representa una "lecture". Una classe setmanal d'un grup.
  * @author XX
@@ -6,19 +6,19 @@ package domain.classes;
 
 public class Lecture {
 	
-	/** Codi identificador de la sessió dins del grup en el que està.
+	/** Codi identificador de la sessiÃ³ dins del grup en el que estÃ .
 	*/
 	private Integer id;
 	
-	/** Grup al qual pertany la sessió.
+	/** Grup al qual pertany la sessiÃ³.
 	*/
 	private String group;
 	
-	/** Duració de la sessió.
+	/** DuraciÃ³ de la sessiÃ³.
 	*/
 	private Integer duration;
 	
-	/** Constructora estàndard.
+	/** Constructora estÃ ndard.
 	*/
 	public Lecture(Integer id, String group, Integer duration) {
 		this.id = id;
@@ -27,7 +27,7 @@ public class Lecture {
 	}
 	
 	/**
-	 * Retorna el grup al qual pertany la sessió.
+	 * Retorna el grup al qual pertany la sessiÃ³.
 	 * @return {@link Lecture#group}
 	 */
 	public String getGroup() {
@@ -35,7 +35,7 @@ public class Lecture {
 	}
 	
 	/**
-	 * Retorna la duració de la sessió.
+	 * Retorna la duraciÃ³ de la sessiÃ³.
 	 * @return {@link Lecture#duration}
 	 */
 	public Integer getDuration() {
@@ -43,10 +43,10 @@ public class Lecture {
 	}
 	
 	/**
-	 * @return El String que identifica la sessió.
+	 * @return El String que identifica la sessiÃ³.
 	 */
 	@Override
 	public String toString() {
-		return group + id;
+		return group + "-" +id;
 	}
 }
