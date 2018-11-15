@@ -1,0 +1,83 @@
+{
+    "rooms":
+    [
+      {
+        "code": "A6001",
+        "capacity": 90,
+        "hasComputers": true
+      },
+      {
+        "code": "A6002",
+        "capacity": 90,
+        "hasComputers": true
+      },
+      {
+        "code": "A6003",
+        "capacity": 90,
+        "hasComputers": false
+      },
+      {
+        "code": "A6004",
+        "capacity": 90,
+        "hasComputers": true
+      },
+      {
+        "code": "A6005",
+        "capacity": 90,
+        "hasComputers": false
+      }
+    ],
+    "subjects": 
+    [
+      {
+          "code": "PRO1",
+          "name": "Programaci√≥ 1",
+          "level": "1",
+          "coreqs": [],
+          "groups": 
+          [
+              {
+                "code": "10",
+                "numPeople": 90,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              }
+          ] 
+      },
+      {
+          "code": "FM",
+          "name": "Fonaments Matem‡tics",
+          "level": "1",
+          "coreqs": [],
+          "groups": 
+          [
+              {
+                "code": "10",
+                "numPeople": 90,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [3]
+              },
+              {
+                "code": "11",
+                "numPeople": 90,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "20",
+                "numPeople": 90,
+                "parentGroupCode": "20",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [1]
+              }
+          ] 
+      }
+    ]
+}

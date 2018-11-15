@@ -9,7 +9,7 @@
       {
         "code": "C6201",
         "capacity": 900,
-        "hasComputers": true
+        "hasComputers": false
       },
       {
         "code": "C6205",
@@ -25,31 +25,6 @@
     "subjects": 
     [
       {
-	      "code": "PRO1",
-	      "name": "Programació 1",
-	      "level": "1",
-	      "coreqs": ["M2"],
-	      "groups": 
-	      [
-	          {
-	            "code": "11",
-	            "numPeople": 90,
-	            "parentGroupCode": "10",
-	            "type": "LABORATORY",
-	            "dayPeriod": "MORNING",
-	            "lecturesDuration": [2]
-	          },
-	          {
-	            "code": "31",
-	            "numPeople": 90,
-	            "parentGroupCode": "30",
-	            "type": "LABORATORY",
-	            "dayPeriod": "MORNING",
-	            "lecturesDuration": [2]
-	          }
-	      ] 
-      },
-      {
         "code": "M2",
         "name": "Matemàtiques 2",
         "level": "2",
@@ -57,17 +32,33 @@
         "groups": 
         [
             {
-              "code": "19",
+              "code": "30",
               "numPeople": 10,
-              "parentGroupCode": "10",
+              "parentGroupCode": "30",
+              "type": "THEORY",
+              "dayPeriod": "MORNING",
+              "lecturesDuration": [2]
+            },
+            {
+              "code": "33",
+              "numPeople": 10,
+              "parentGroupCode": "30",
               "type": "LABORATORY",
               "dayPeriod": "MORNING",
               "lecturesDuration": [2]
             },
             {
-              "code": "30",
+              "code": "43",
               "numPeople": 10,
-              "parentGroupCode": "30",
+              "parentGroupCode": "40",
+              "type": "LABORATORY",
+              "dayPeriod": "MORNING",
+              "lecturesDuration": [2]
+            },
+            {
+              "code": "40",
+              "numPeople": 10,
+              "parentGroupCode": "40",
               "type": "THEORY",
               "dayPeriod": "MORNING",
               "lecturesDuration": [2]

@@ -77,9 +77,8 @@ public class Main {
 	        switch (n) {
 	            case 1:
 	            	if(ctDomain.generateSchedule()){
-	            		printSchedule();
-	            		System.out.println("|---------------------------------------------------------------------------------------------------------------|");
-	            		ctDomain.printSchedule();
+	            		// printSchedule();
+	            		ctDomain.printScheduleV1();
 	            		scheduleMenu();
 
 	            	}else{

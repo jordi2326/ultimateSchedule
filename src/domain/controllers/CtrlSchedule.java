@@ -167,7 +167,7 @@ public class CtrlSchedule {
 					
 					for (String room : Rooms) {
 						Group g = groups.get(group);
-						if ((hour + duration <= 11) && ((g.getDayPeriod().equals(DayPeriod.MORNING) && hour + duration <= 5) || (!g.getDayPeriod().equals(DayPeriod.MORNING)))) {
+						if ((hour + duration <= 12) && ((g.getDayPeriod().equals(DayPeriod.MORNING) && hour + duration <= 6) || (!g.getDayPeriod().equals(DayPeriod.MORNING)))) {
 							// 4.	Afegir-lo al schedule (Map<String, String[][]>)
 							Integer h = 0;
 							while (h < duration) {

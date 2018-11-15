@@ -1,0 +1,59 @@
+{
+    "rooms":
+    [
+      {
+        "code": "A6001",
+        "capacity": 90,
+        "hasComputers": false
+      },
+      {
+        "code": "A6002",
+        "capacity": 90,
+        "hasComputers": true
+      }
+    ],
+    "subjects": 
+    [
+      {
+          "code": "PRO1",
+          "name": "Programació 1",
+          "level": "1",
+          "coreqs": [],
+          "groups": 
+          [
+              {
+                "code": "10",
+                "numPeople": 90,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "11",
+                "numPeople": 30,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "12",
+                "numPeople": 25,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "13",
+                "numPeople": 27,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [3]
+              }
+          ] 
+      }
+    ]
+}
