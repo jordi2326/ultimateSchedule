@@ -31,7 +31,7 @@ public class RoomDriver {
 	    n = sc.nextInt();
 	    switch (n) {
 	    	case 1:
-	    		loadRoomMenu();
+	    		loadTestMenu();
 	            break;
 	        case 2:
 	        	newRoomMenu();
@@ -49,7 +49,7 @@ public class RoomDriver {
 		System.out.print("--------------------------\n");
     }
 	
-	public static void loadRoomMenu(){
+	public static void loadTestMenu(){
 		String path = "data/driverTests/room/";
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();

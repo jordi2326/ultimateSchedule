@@ -10,17 +10,18 @@ import domain.classes.Lecture;
 public class LectureDriver {
 	private static Scanner sc;
 	private static Lecture l;
+	private static boolean silent = false;
 	
 	private static void printMain() {
 		System.out.print(
 	            "Lecture Driver\n"
 	            + "---------------------\n"
-	            + "Opciones\n"
-	            + " 1| Cargar Lecture de un archivo\n"
-	            + " 2| Definir Lecture manualmente\n"
-	            + " 0| Salir\n"
-	            + "---------------------\n"
-	            );
+	    	    + "Opciones\n"
+	    	    + " 1| Test Automatico\n"
+	    	    + " 2| Probar Manualmente\n"
+	    	    + " 0| Salir\n"
+	    	    + "---------------------\n"
+	    	    );  
 	                    
     }
 	
@@ -31,7 +32,7 @@ public class LectureDriver {
 	    n = sc.nextInt();
 	    switch (n) {
 	    	case 1:
-	    		loadLectureMenu();
+	    		loadTestMenu();
 	            break;
 	        case 2:
 	        	newRoomMenu();
@@ -39,10 +40,9 @@ public class LectureDriver {
 	    }
 	}
 	
-	private static void printLoadFileMenu(List<String> filenames) {
-		System.out.print(
-	            "Cargar Archivo\n"
-	            + "--------------------------\n");
+	private static void printLoadFileMenu(String title, List<String> filenames) {
+		System.out.println(title);
+		System.out.print("--------------------------\n");
 		for (int i = 0; i < filenames.size(); i++) {
 			System.out.println(i + "| "+ filenames.get(i));
 		}
@@ -50,8 +50,8 @@ public class LectureDriver {
 		System.out.print("--------------------------\n");
     }
 	
-	public static void loadLectureMenu(){
-		String path = "data/driverTests/lectures/";
+	public static void loadTestMenu(){
+		String path = "data/driverTests/lecture/";
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
 		List<String> filenames = new ArrayList<String>();
@@ -61,13 +61,13 @@ public class LectureDriver {
 		    	filenames.add(file.getName());
 		    }
 		}
-		printLoadFileMenu(filenames);
+		printLoadFileMenu("Cargar Test", filenames);
 	    int n = sc.nextInt();
 	    try {
 	    	String filename = filenames.get(n);
-	    	Scanner in = new Scanner(new FileReader(new File(path+filename)));
-	    	l = new Lecture(in.nextInt(), in.next(), in.nextInt());
-	    	in.close();
+	    	sc = new Scanner(new FileReader(new File(path+filename)));
+	    	l = new Lecture(sc.nextInt(), sc.next(), sc.nextInt());
+	    	silent = true;
 	    	subMenu();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -117,7 +117,7 @@ public class LectureDriver {
 	
 	public static void subMenu() {
 		int n;
-		printSubMenu();
+		if(!silent) printSubMenu();
 	    n = sc.nextInt();
 	    while (n != 0) {
 	        switch (n) {

@@ -38,8 +38,8 @@ classes: $(CLASSES:.java=.class)
 run: $(BIN)$(MAIN).class
 	$(JVM) -cp $(RCPATHS) $(MAIN)
 
-run-driver-schedule:
-	$(JVM) -cp $(RCPATHS) domain.drivers.ScheduleDriver
+run-driver-subject:
+	$(JVM) -cp $(RCPATHS) domain.drivers.SubjectDriver
 
 run-driver-group:
 	$(JVM) -cp $(RCPATHS) domain.drivers.GroupDriver
@@ -52,6 +52,9 @@ run-driver-lecture:
 
 run-driver-schedule:
 	$(JVM) -cp $(RCPATHS) domain.drivers.ScheduleDriver
+
+run-driver-posassig:
+	$(JVM) -cp $(RCPATHS) domain.drivers.PosAssigDriver
 
 clean:
 	$(RM) -rf $(BIN)*

@@ -1,0 +1,22 @@
+Prova 1
+Objectius: Provar la consulta d'informació d'un objecte de la classe Group 
+Probarem totes les funcions de la classe Group
+
+Instruccions:
+*Executar el GroupDriver (make run-driver-group)
+*Entrar al mode 'Test Automatico' (0)
+*Carregar l'arxiu 'test_groupA.inp'
+
+Sortida esperada:
+-----------------
+43
+INDIFERENT
+[1, 1, 2]
+20
+40
+PROP
+LABORATORY
+PROP-43-LABORATORY
+-----------------
+
+Resultat de la prova: ok

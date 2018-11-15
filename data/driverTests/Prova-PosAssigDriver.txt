@@ -1,0 +1,29 @@
+﻿Prova 1
+Objectius: Provar la consulta i modificació d'informació d'un objecte de la classe PossAssig
+Probarem totes les funcions de la classe PosAssig
+
+Instruccions:
+*Executar el PosAssigDriver (make run-driver-posassig)
+*Entrar al mode 'Test Automatico' (0)
+*Carregar l'arxiu 'test_posAssigA.inp'
+
+Sortida esperada:
+-----------------
+false
+{2={16=[A6101, A5101, A5102, A6102], 17=[A6101, A5101, A5102, A6102], 10=[A6101, A5101, A5102, A6102], 11=[A6101, A5101, A5102, A6102]}, 4={16=[A6101, A6102], 17=[A5101, A5102], 10=[A6101, A6102], 11=[A5101, A5102]}}
+false
+true
+false
+true
+false
+true
+false
+Dia eliminado
+false
+Hora eliminada
+false
+Aula eliminada
+false
+-----------------
+
+Resultat de la prova: ok

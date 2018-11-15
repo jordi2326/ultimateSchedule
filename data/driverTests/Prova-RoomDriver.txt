@@ -1,0 +1,18 @@
+Prova 1
+Objectius: Provar la consulta d'informació d'un objecte de la classe Room 
+Probarem totes les funcions de la classe Room
+
+Instruccions:
+*Executar el RoomDriver (make run-driver-room)
+*Entrar al mode 'Test Automatico' (0)
+*Carregar l'arxiu 'test_roomA.inp'
+
+Sortida esperada:
+-----------------
+60
+A6101
+false
+A6101
+-----------------
+
+Resultat de la prova: ok

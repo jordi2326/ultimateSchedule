@@ -34,7 +34,7 @@ public class GroupDriver {
 	    n = sc.nextInt();
 	    switch (n) {
 	    	case 1:
-	    		loadGroupMenu();
+	    		loadTestMenu();
 	            break;
 	        case 2:
 	        	newGroupMenu();
@@ -52,7 +52,7 @@ public class GroupDriver {
 		System.out.print("--------------------------\n");
     }
 	
-	public static void loadGroupMenu(){
+	public static void loadTestMenu(){
 		String path = "data/driverTests/group/";
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();

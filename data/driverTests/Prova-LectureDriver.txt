@@ -1,0 +1,16 @@
+Prova 1
+Objectius: Provar la consulta d'informació d'un objecte de la classe Lecture 
+Probarem totes les funcions de la classe Lecture
+
+Instruccions:
+*Executar el LectureDriver (make run-driver-lecture)
+*Entrar al mode 'Test Automatico' (0)
+*Carregar l'arxiu 'test_lectureA.inp'
+
+Sortida esperada:
+-----------------
+1
+LP40THEORY
+-----------------
+
+Resultat de la prova: ok

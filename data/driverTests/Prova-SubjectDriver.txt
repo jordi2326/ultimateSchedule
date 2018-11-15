@@ -1,0 +1,20 @@
+Prova 1
+Objectius: Provar la consulta d'informació d'un objecte de la classe Subject 
+Probarem totes les funcions de la classe Subject
+
+Instruccions:
+*Executar el SubjectDriver (make run-driver-subject)
+*Entrar al mode 'Test Automatico' (0)
+*Carregar l'arxiu 'test_subjectA.inp'
+
+Sortida esperada:
+-----------------
+M1
+[FM]
+[M141THEORY, M141LABORATORY]
+Q5
+Matematiques 1
+M1
+-----------------
+
+Resultat de la prova: ok
