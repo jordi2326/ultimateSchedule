@@ -63,7 +63,6 @@ public class CtrlDomain {
 		naryRestrictions.put(slr.toString(), slr);
 		LectureFromSameGroupOverlapRestriction lfgor = new LectureFromSameGroupOverlapRestriction();
 		naryRestrictions.put(lfgor.toString(), lfgor);
-		
 	}
 	
 	public static CtrlDomain getInstance() {
@@ -83,13 +82,33 @@ public class CtrlDomain {
 	public boolean generateSchedule() {
 		CtrlSchedule ctS = CtrlSchedule.getInstance();
 		schedule = new Schedule();
-		return ctS.generateSchedule(unaryRestrictions, naryRestrictions, groups, rooms, subjects, lectures, schedule);
+		//Filtrem restriccions unaries
+		Map<String, Map<String, UnaryRestriction>> enabledUnaryRestrictions = new HashMap<String, Map<String, UnaryRestriction>>();
+		for (String g : unaryRestrictions.keySet()) {
+			Map<String, UnaryRestriction> restrictions = new HashMap<String, UnaryRestriction>();
+			for (UnaryRestriction r : unaryRestrictions.get(g).values()) {
+				if (r.isEnabled()) {
+					restrictions.put(r.toString(), r);
+				}
+			}
+			if (!restrictions.isEmpty()) {
+				enabledUnaryRestrictions.put(g, restrictions);
+			}
+		}
+		//Filtrem restriccions naries
+		Map<String, NaryRestriction> enabledNaryRestrictions = new HashMap<String, NaryRestriction>();
+		for (NaryRestriction r : naryRestrictions.values()) {
+			if (r.isEnabled()) {
+				enabledNaryRestrictions.put(r.toString(), r);
+			}
+		}
+		return ctS.generateSchedule(enabledUnaryRestrictions, enabledNaryRestrictions, groups, rooms, subjects, lectures, schedule);
 	}
 	
 	public String scheduleToJsonString() {
 		return schedule.toJsonString();
 	}
-
+	
 	public void printSchedule() {
 		Map<String, String[][]> SCH = new HashMap<String, String[][]>(schedule.getSchedule());
 		System.out.println("|      |      MONDAY        |      TUESDAY       |     WEDNESDAY      |      THURSDAY      |        FRIDAY      |");
@@ -251,7 +270,7 @@ public class CtrlDomain {
         		jsonGroup.put("subject", group.getSubject());
         		jsonGroup.put("type", group.getType().toString());
         		jsonGroup.put("dayPeriod", group.getDayPeriod().toString());
-        		//jsonGroup.put("lecturesDuration", ); //TODO
+        		//jsonGroup.put("lecturesDuration", ); 
         		jsonGroups.add(jsonGroup);
         	}
         	

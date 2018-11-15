@@ -11,7 +11,7 @@ import domain.classes.Subject;
 public class LectureFromSameGroupOverlapRestriction extends NaryRestriction{
 	
 	public LectureFromSameGroupOverlapRestriction() {
-		super(true); //negotiable
+		super(false); //negotiable
 	}
 	
 	public String toString() {

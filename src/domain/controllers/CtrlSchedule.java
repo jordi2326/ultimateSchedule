@@ -49,7 +49,7 @@ public class CtrlSchedule {
 	
 	// ************************************************************************
 	
-	public boolean generateSchedule(Map<String, Set<UnaryRestriction>> unaryRestrictions, Set<NaryRestriction> naryRestrictions, 
+	public boolean generateSchedule(Map<String, Map<String, UnaryRestriction>> unaryRestrictions, Map<String, NaryRestriction> naryRestrictions, 
 					    Map<String, Group> groups, Map<String, Room> rooms, Map<String, Subject> subjects, Map<String, 
 					    Lecture> lectures, Schedule schedule) {
 		//TODO: Implementar la restriction de que un grup no vagi en un dia o hora concrets
@@ -80,7 +80,7 @@ public class CtrlSchedule {
 					for (int hour = 0; hour < 12; ++hour) {	
 						boolean valid = true;
 						if(unaryRestrictions.containsKey(g.toString())){
-							for (UnaryRestriction restr : unaryRestrictions.get(g.toString())) {
+							for (UnaryRestriction restr : unaryRestrictions.get(g.toString()).values()) {
 								if (!restr.validate(day, hour, lectures.get(lecture).getDuration())) {
 									valid = false;
 								}
@@ -116,8 +116,8 @@ public class CtrlSchedule {
 	
 	
 	private static boolean forwardCheck(String lecture, String room, Integer day, Integer hour, Map<String, Subject> subjects,
-			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek, Set<NaryRestriction> naryRestrictions) {
-		for (NaryRestriction restr : naryRestrictions) {
+			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek, Map<String, NaryRestriction> naryRestrictions) {
+		for (NaryRestriction restr : naryRestrictions.values()) {
 			if (!restr.validate(lecture, room, day, hour, subjects, groups, lectures, shrek)) {
 				return false;
 			}
@@ -126,7 +126,7 @@ public class CtrlSchedule {
 	}
 
 	private static boolean backjumping(Schedule schedule, PriorityQueue<Map.Entry<Integer, String>> heuristica, Map<String, Subject> subjects,
-			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek, Set<NaryRestriction> naryRestrictions) {
+			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek, Map<String, NaryRestriction> naryRestrictions) {
 		{ // Canviar nom de la PQ si volem xD		
 		// Pre: a shrek hi tenim nomï¿½s les Lectures que falten afegir i les assignacions possibles que li podem donar. Nomï¿½s les possibles! (forward checking)
 		// Pre: a mï¿½s, per com estï¿½ feta la funciï¿½ podar, no hi ha cap Lecture amb 0 possibles assignacions

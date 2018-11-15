@@ -12,7 +12,7 @@ import domain.classes.Subject;
 public class OccupiedRoomRestriction extends NaryRestriction{
 	
 	public OccupiedRoomRestriction() {
-		super(true); //negotiable
+		super(false); //negotiable
 	}
 	
 	public String toString() {
