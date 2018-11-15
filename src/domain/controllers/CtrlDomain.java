@@ -4,12 +4,7 @@ import java.util.Map;
 import java.util.Set;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.DayOfWeek;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -26,7 +21,6 @@ import domain.classes.Schedule;
 import domain.classes.Subject;
 import domain.classes.restrictions.CorequisitRestriction;
 import domain.classes.restrictions.LectureFromSameGroupOverlapRestriction;
-import domain.classes.restrictions.SpecificDayOrHourRestriction;
 import domain.classes.restrictions.SubjectLevelRestriction;
 import domain.classes.restrictions.NaryRestriction;
 import domain.classes.restrictions.OccupiedRoomRestriction;
@@ -81,40 +75,17 @@ public class CtrlDomain {
 		return new ArrayList<String>(subjects.keySet());
 	}
 	
-	public ArrayList<Room> getRooms() {
-		ArrayList<Room> roomsArray = new ArrayList<Room>();
-		for (Room room : rooms.values()) {
-			roomsArray.add(room);
-		}
-		return roomsArray;
-	}
-	
-	
-	public Subject getSubject(String s){
-		return subjects.get(s);
-	}
-	
-	public Group getGroup(String g){
-		return groups.get(g);
-	}
-	
-	public Set<String> getGroups() {
-		return groups.keySet();
-	}
-	
 	public boolean generateSchedule() {
 		CtrlSchedule ctS = CtrlSchedule.getInstance();
 		schedule = new Schedule();
 		return ctS.generateSchedule(unaryRestrictions, naryRestrictions, groups, rooms, subjects, lectures, 6, schedule);
-		
 	}
 	
 	public String scheduleToJsonString() {
 		return schedule.toJsonString();
 	}
 	
-	
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public boolean importEnvironment(String filename) throws ParseException, IOException   {
 		 String jsonData = dataController.readEnvironment(filename);
 		 Object obj = new JSONParser().parse(jsonData);
@@ -148,8 +119,7 @@ public class CtrlDomain {
         			lectures.put(l.toString(), l);
         			ls.add(l.toString());
         		}
-    			@SuppressWarnings("unchecked")
-				Group g = new Group(
+    			Group g = new Group(
     					gcode,
     					((Long) group.get("numPeople")).intValue(),
     					(String) group.get("parentGroupCode"),
@@ -160,8 +130,7 @@ public class CtrlDomain {
     			groups.put(g.toString(), g);
     			groupsToString.add(g.toString());
         	}
-        	@SuppressWarnings("unchecked")
-			Subject s = new Subject(
+        	Subject s = new Subject(
 				scode,
 				(String) subject.get("name"),
 				(String) subject.get("level"),
@@ -190,6 +159,8 @@ public class CtrlDomain {
 		return true;
 	}
 	
+	/**Not used anywhere
+	 * 
 	@SuppressWarnings("unchecked")
 	public boolean exportEnvironment(String filename) throws IOException {
 		// creating JSONObject 
@@ -242,6 +213,16 @@ public class CtrlDomain {
         //Send to data controller to write
         return dataController.writeEnvironment(filename, jo.toJSONString(0));        
 	}
+	private ArrayList<Group> getGroupsFromSubject(String subject) {
+		Subject auxSubject = subjects.get(subject);
+		ArrayList<String> subjectGroupsToString = auxSubject.getGroups();
+		ArrayList<Group> groupsFromSubject = new ArrayList<Group>();
+		for (String groupToString : subjectGroupsToString) {
+			groupsFromSubject.add(groups.get(groupToString));
+		}
+		return groupsFromSubject;
+	}
+	**/
 	
 	public boolean importSchedule(String filename) throws ParseException, FileNotFoundException {
 		String jsonData = dataController.readSchedule(filename);
@@ -251,16 +232,6 @@ public class CtrlDomain {
 	
 	public boolean exportSchedule(String filename) throws IOException  {
         return dataController.writeSchedule(filename, schedule.toJsonString());
-	}
-	
-	private ArrayList<Group> getGroupsFromSubject(String subject) {
-		Subject auxSubject = subjects.get(subject);
-		ArrayList<String> subjectGroupsToString = auxSubject.getGroups();
-		ArrayList<Group> groupsFromSubject = new ArrayList<Group>();
-		for (String groupToString : subjectGroupsToString) {
-			groupsFromSubject.add(groups.get(groupToString));
-		}
-		return groupsFromSubject;
 	}
 	
 	public List<String> getEnvironmentFilesList(){

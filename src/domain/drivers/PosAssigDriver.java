@@ -10,7 +10,6 @@ import java.util.Scanner;
 import java.util.Set;
 
 import domain.classes.PosAssig;
-import domain.classes.Room;
 
 public class PosAssigDriver {
 	private static Scanner sc;

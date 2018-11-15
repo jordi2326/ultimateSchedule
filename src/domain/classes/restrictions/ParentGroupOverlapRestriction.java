@@ -1,8 +1,6 @@
 package domain.classes.restrictions;
 
-import java.util.ArrayList;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import domain.classes.Group;
 import domain.classes.Lecture;

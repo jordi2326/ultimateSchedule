@@ -29,6 +29,7 @@ public class Schedule {
 	/** Constructora a partir d'un String Json.
 	*	@param json	Text Json que descriu l'horari.
 	*/
+	@SuppressWarnings("unchecked")
 	public Schedule(String json) {
 		schedule = new HashMap<String, String[][]>();
 		try {
@@ -81,6 +82,7 @@ public class Schedule {
 	*	@param room		Blaaaa
 	*	@return blaaa
 	*/
+	@SuppressWarnings("unchecked")
 	public String toJsonString(){
 		DayOfWeek[] dayNames = DayOfWeek.values();
         JSONObject jo = new JSONObject();

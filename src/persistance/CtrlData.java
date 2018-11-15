@@ -45,7 +45,9 @@ public class CtrlData {
 			FileReader fr = new FileReader("data/"+filename);
 			Scanner scan = new Scanner(fr);
 			scan.useDelimiter("\\Z");
-			return scan.next();
+			String out = scan.next();
+			scan.close();
+			return out;
 	}
 	
 	private boolean writeData(String filename, String content) throws FileNotFoundException {
