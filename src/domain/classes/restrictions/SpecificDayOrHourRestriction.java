@@ -10,8 +10,12 @@ public class SpecificDayOrHourRestriction extends UnaryRestriction{
 		this.hour = hour;
 	}
 	
+	public String toString() {
+		return SpecificDayOrHourRestriction.class.toString() + "-" + day + "-" + hour;
+	}
+	
 	@Override
-	public boolean validate(Integer day, Integer hour) {
+	public boolean validate(Integer day, Integer hour, Integer duration) {
 		if (this.day == null) {
 			return hour != this.hour;
 		}

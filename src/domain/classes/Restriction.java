@@ -1,29 +1,29 @@
 package domain.classes;
 
-/** Representa una restricció que es pot aplicar a l'hora de generar un horari.
+/** Representa una restricciï¿½ que es pot aplicar a l'hora de generar un horari.
  * @author XX
 */
 
 public abstract class Restriction {
 	
-	/** Indica si la restricció és negociable.
+	/** Indica si la restricciï¿½ ï¿½s negociable.
 	*/
 	private boolean negotiable;
 	
-	/** Indica si la restricció està activada.
+	/** Indica si la restricciï¿½ estï¿½ activada.
 	*/
 	private boolean enabled = true;
 	
 	
-	/** Constructora estàndard.
-	 * @param negotiable Indica si és o no negociable.
+	/** Constructora estï¿½ndard.
+	 * @param negotiable Indica si ï¿½s o no negociable.
 	*/
 	public Restriction(boolean negotiable) {
 		this.negotiable = negotiable;
 	}
 	
 	/**
-	 * Retorna si la restricció és negociable.
+	 * Retorna si la restricciï¿½ ï¿½s negociable.
 	 * @return {@link Restriction#negotiable}
 	 */
 	public boolean isNegotiable() {
@@ -31,22 +31,31 @@ public abstract class Restriction {
 	}
 	
 	/**
-	 * Retorna si la restricció està activada.
+	 * Retorna si la restricciï¿½ estï¿½ activada.
 	 * @return {@link Restriction#enabled}
 	 */
 	public boolean isEnabled() {
 		return enabled;
 	}
 	
-	/** Activa la restricció.
-	 */
-	public void enable() {
-		enabled = true;
+	public boolean enable() {
+		if (negotiable) {
+			enabled = true;
+			return true;
+		}
+		return false;
 	}
 	
-	/** Desactiva la restricció.
-	 */
-	public void disable() {
-		enabled = false;
+	public boolean disable() {
+		if (negotiable) {
+			enabled = false;
+			return true;
+		}
+		return false;
 	}
+	
+	public abstract String toString();
+	
+	
+	
 }

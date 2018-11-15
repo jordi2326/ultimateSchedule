@@ -11,7 +11,11 @@ import domain.classes.Subject;
 public class ParentGroupOverlapRestriction extends NaryRestriction{
 	
 	public ParentGroupOverlapRestriction() {
-		super(true); //negotiable
+		super(false); //negotiable
+	}
+	
+	public String toString() {
+		return ParentGroupOverlapRestriction.class.toString();
 	}
 	
 	//Per cada lecture mirem totes les aules de totes les hores de tots els dies i les borrem si estaran ocupades per la lecture inserida

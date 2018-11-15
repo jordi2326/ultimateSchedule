@@ -11,10 +11,14 @@ import domain.classes.Subject;
 public class LectureFromSameGroupOverlapRestriction extends NaryRestriction{
 	
 	public LectureFromSameGroupOverlapRestriction() {
-		super(true); //negotiable
+		super(false); //negotiable
 	}
 	
-	//Si la assignatura A �s correq de B, llavors hi ha d'haver alguna combinaci� en que algun grup de A i un grup que pot ser diferent de B no es solapen
+	public String toString() {
+		return LectureFromSameGroupOverlapRestriction.class.toString();
+	}
+	
+	//All lectures from M2 30P can't go to the same day hour
 	public boolean validate(String lecture, String room, Integer day, Integer hour, Map<String, Subject> subjects,
 			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek) {
 		String group = lectures.get(lecture).getGroup();

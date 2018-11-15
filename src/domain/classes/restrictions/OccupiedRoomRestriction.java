@@ -12,7 +12,11 @@ import domain.classes.Subject;
 public class OccupiedRoomRestriction extends NaryRestriction{
 	
 	public OccupiedRoomRestriction() {
-		super(true); //negotiable
+		super(false); //negotiable
+	}
+	
+	public String toString() {
+		return OccupiedRoomRestriction.class.toString();
 	}
 	
 	//Per cada lecture mirem totes les aules de totes les hores de tots els dies i les borrem si estaran ocupades per la lecture inserida

@@ -15,6 +15,10 @@ public class CorequisitRestriction extends NaryRestriction{
 		super(true); //negotiable
 	}
 	
+	public String toString() {
+		return CorequisitRestriction.class.toString();
+	}
+	
 	//Si la assignatura A �s correq de B, llavors hi ha d'haver alguna combinaci� en que algun grup de A i un grup que pot ser diferent de B no es solapen
 	public boolean validate(String lecture, String room, Integer day, Integer hour, Map<String, Subject> subjects,
 			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek) {

@@ -24,6 +24,7 @@ import domain.classes.Subject;
 import domain.classes.Group.DayPeriod;
 import domain.classes.Group.Type;
 import domain.classes.restrictions.CorequisitRestriction;
+import domain.classes.restrictions.DayPeriodRestriction;
 import domain.classes.restrictions.LectureFromSameGroupOverlapRestriction;
 import domain.classes.restrictions.SubjectLevelRestriction;
 import domain.classes.restrictions.NaryRestriction;
@@ -44,8 +45,8 @@ public class CtrlDomain {
 	private Map<String, Lecture> lectures;
 	private Schedule schedule;
 	//Restrictions for every group
-	private Map<String, Set<UnaryRestriction>> unaryRestrictions; //Key = group.toString()
-	private Set<NaryRestriction> naryRestrictions;
+	private Map<String, Map<String, UnaryRestriction>> unaryRestrictions; //Key = group.toString()
+	private Map<String, NaryRestriction> naryRestrictions;
 	
 	
 	private CtrlDomain() {
@@ -54,17 +55,19 @@ public class CtrlDomain {
 		rooms = new HashMap<String, Room>();
 		groups = new HashMap<String, Group>();
 		lectures = new HashMap<String, Lecture>();
-		unaryRestrictions = new HashMap<String, Set<UnaryRestriction>>();
-		naryRestrictions = new HashSet<NaryRestriction>();
-		naryRestrictions.add(new OccupiedRoomRestriction());
+		unaryRestrictions = new HashMap<String, Map<String, UnaryRestriction>>();
+		naryRestrictions = new HashMap<String, NaryRestriction>();
 		
-		naryRestrictions.add(new ParentGroupOverlapRestriction());
-		naryRestrictions.add(new CorequisitRestriction());
-		naryRestrictions.add(new SubjectLevelRestriction());
-		naryRestrictions.add(new LectureFromSameGroupOverlapRestriction());
-		/*Set<UnaryRestriction> unary = new HashSet<UnaryRestriction>();
-		unary.add(new SpecificDayOrHourRestriction(0, 0));
-		unaryRestrictions.put("PRO110THEORY", unary);*/
+		OccupiedRoomRestriction ocrr = new OccupiedRoomRestriction();
+		naryRestrictions.put(ocrr.toString(), ocrr);
+		ParentGroupOverlapRestriction pgor = new ParentGroupOverlapRestriction();
+		naryRestrictions.put(pgor.toString(), pgor);
+		CorequisitRestriction cr = new CorequisitRestriction();
+		naryRestrictions.put(cr.toString(), cr);
+		SubjectLevelRestriction slr = new SubjectLevelRestriction();
+		naryRestrictions.put(slr.toString(), slr);
+		LectureFromSameGroupOverlapRestriction lfgor = new LectureFromSameGroupOverlapRestriction();
+		naryRestrictions.put(lfgor.toString(), lfgor);
 	}
 	
 	public static CtrlDomain getInstance() {
@@ -84,7 +87,27 @@ public class CtrlDomain {
 	public boolean generateSchedule() {
 		CtrlSchedule ctS = CtrlSchedule.getInstance();
 		schedule = new Schedule();
-		return ctS.generateSchedule(unaryRestrictions, naryRestrictions, groups, rooms, subjects, lectures, 6, schedule);
+		//Filtrem restriccions unaries
+		Map<String, Map<String, UnaryRestriction>> enabledUnaryRestrictions = new HashMap<String, Map<String, UnaryRestriction>>();
+		for (String g : unaryRestrictions.keySet()) {
+			Map<String, UnaryRestriction> restrictions = new HashMap<String, UnaryRestriction>();
+			for (UnaryRestriction r : unaryRestrictions.get(g).values()) {
+				if (r.isEnabled()) {
+					restrictions.put(r.toString(), r);
+				}
+			}
+			if (!restrictions.isEmpty()) {
+				enabledUnaryRestrictions.put(g, restrictions);
+			}
+		}
+		//Filtrem restriccions naries
+		Map<String, NaryRestriction> enabledNaryRestrictions = new HashMap<String, NaryRestriction>();
+		for (NaryRestriction r : naryRestrictions.values()) {
+			if (r.isEnabled()) {
+				enabledNaryRestrictions.put(r.toString(), r);
+			}
+		}
+		return ctS.generateSchedule(enabledUnaryRestrictions, enabledNaryRestrictions, groups, rooms, subjects, lectures, schedule);
 	}
 	
 	public String scheduleToJsonString() {
@@ -199,6 +222,16 @@ public class CtrlDomain {
     					ls);
     			groups.put(g.toString(), g);
     			groupsToString.add(g.toString());
+    			//Afegim la restriccio d'aquest grup de mati o tarda o indiferent
+    			
+    			Map<String, UnaryRestriction> restrictions = new HashMap<String, UnaryRestriction>();
+    			//Potser cal fer lo de clonarlo amb collection stream perque no siguin el mateix
+    			DayPeriodRestriction dpr = new DayPeriodRestriction(6, g.getDayPeriod());
+    			if (!g.getDayPeriod().equals(Group.DayPeriod.INDIFERENT)) {
+    				restrictions.put(dpr.toString(), dpr);
+    			}
+    			unaryRestrictions.put(g.toString(), restrictions); 
+        		
         	}
         	Subject s = new Subject(
 				scode,
@@ -256,7 +289,7 @@ public class CtrlDomain {
         		jsonGroup.put("subject", group.getSubject());
         		jsonGroup.put("type", group.getType().toString());
         		jsonGroup.put("dayPeriod", group.getDayPeriod().toString());
-        		//jsonGroup.put("lecturesDuration", ); //TODO
+        		//jsonGroup.put("lecturesDuration", ); 
         		jsonGroups.add(jsonGroup);
         	}
         	
