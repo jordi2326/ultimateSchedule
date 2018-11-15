@@ -1,0 +1,374 @@
+{
+    "rooms":
+    [
+      {
+        "code": "AAAAAAAAAAAAA",
+        "capacity": 90,
+        "hasComputers": true
+      },
+      {
+        "code": "BBBBBBBBBBBBBBBBBBB",
+        "capacity": 90,
+        "hasComputers": true
+      },
+      {
+        "code": "CCCCCCCCCCCCCCCCC",
+        "capacity": 90,
+        "hasComputers": false
+      },
+      {
+        "code": "DDDDDDDDDDDDDDDDDDDDDDDD",
+        "capacity": 90,
+        "hasComputers": false
+      },
+      {
+        "code": "A1S101",
+        "capacity": 90,
+        "hasComputers": true
+      },
+      {
+        "code": "A1S102",
+        "capacity": 90,
+        "hasComputers": true
+      },
+      {
+        "code": "A5102",
+        "capacity": 90,
+        "hasComputers": false
+      },
+      {
+        "code": "A6001",
+        "capacity": 90,
+        "hasComputers": false
+      },
+      {
+        "code": "A5001",
+        "capacity": 90,
+        "hasComputers": false
+      },
+      {
+        "code": "A5002",
+        "capacity": 90,
+        "hasComputers": false
+      },
+      {
+        "code": "A5102",
+        "capacity": 90,
+        "hasComputers": false
+      },
+      {
+        "code": "A6001",
+        "capacity": 90,
+        "hasComputers": false
+      }
+    ],
+    "subjects": 
+    [
+      {
+          "code": "F",
+          "name": "Física",
+          "level": "1",
+          "coreqs": [],
+          "groups": 
+          [
+              {
+                "code": "10",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "11",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "12",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "13",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "14",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "20",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "21",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "22",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "23",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "24",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "30",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "31",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "32",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "33",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "34",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "40",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "41",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "42",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "43",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "44",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [2]
+              }
+          ] 
+      },
+      {
+          "code": "FM",
+          "name": "Fonaments Matemàtics",
+          "level": "1",
+          "coreqs": [],
+          "groups": 
+          [
+              {
+                "code": "10",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "11",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "12",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "13",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "20",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "21",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "22",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "23",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "30",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "31",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "32",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "33",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "40",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "41",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "42",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "43",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              }
+           ]
+      }
+    ]
+}

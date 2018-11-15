@@ -174,43 +174,45 @@ public class CtrlSchedule {
 					Set<String> Rooms = HR.getValue();
 					
 					for (String room : Rooms) {
-						// 4.	Afegir-lo al schedule (Map<String, String[][]>)
-						Integer h = 0;
-						while (h < duration) {
-							schedule.putLecture(room, day, hour+h, group);
-							++h;
-						}
-						
-						// 5.	Podar
-						boolean podat = forwardCheck(lecture.toString(), room, day, hour, subjects,
-								groups, lectures, copyShrek, naryRestrictions); // Funci� d'en Laca (passant-li copyShrek)
-						
-						if (podat) {
-							boolean possible = generate(schedule, heuristica, subjects, groups, lectures,  copyShrek, naryRestrictions); // True => �s possible generar l'horari
-																											// False => No �s possible
-							if (possible) return true;
-							else {
+						Group g = groups.get(group);
+						if ((hour + duration <= 11) && ((g.getDayPeriod().equals(DayPeriod.MORNING) && hour + duration <= 5) || (!g.getDayPeriod().equals(DayPeriod.MORNING)))) {
+							// 4.	Afegir-lo al schedule (Map<String, String[][]>)
+							Integer h = 0;
+							while (h < duration) {
+								schedule.putLecture(room, day, hour+h, group);
+								++h;
+							}
+							// 5.	Podar
+							boolean podat = forwardCheck(lecture.toString(), room, day, hour, subjects,
+									groups, lectures, copyShrek, naryRestrictions); // Funci� d'en Laca (passant-li copyShrek)
+							
+							if (podat) {
+								boolean possible = generate(schedule, heuristica, subjects, groups, lectures,  copyShrek, naryRestrictions); // True => �s possible generar l'horari
+																												// False => No �s possible
+								if (possible) return true;
+								else {
+									// Borrar de l'schedule i seguir iterant per les possibles assignacions
+									h = 0;
+									while (h < duration) {
+										schedule.removeLecture(room, day, hour+h);
+										++h;
+									}
+								}
+							} else {
 								// Borrar de l'schedule i seguir iterant per les possibles assignacions
 								h = 0;
 								while (h < duration) {
 									schedule.removeLecture(room, day, hour+h);
 									++h;
 								}
+								
+								// Backtracking => Fa falta aqu�? Crec que no
+								/*shrek.put(lecture.toString(), possibleAssignacions);
+								Pair<Integer, Lecture> p = new Pair<Integer, Lecture>(firstCandidate.getKey(), lecture); // Canvair nom si volem
+								heuristica.add(p);
+								
+								return false;*/
 							}
-						} else {
-							// Borrar de l'schedule i seguir iterant per les possibles assignacions
-							h = 0;
-							while (h < duration) {
-								schedule.removeLecture(room, day, hour+h);
-								++h;
-							}
-							
-							// Backtracking => Fa falta aqu�? Crec que no
-							/*shrek.put(lecture.toString(), possibleAssignacions);
-							Pair<Integer, Lecture> p = new Pair<Integer, Lecture>(firstCandidate.getKey(), lecture); // Canvair nom si volem
-							heuristica.add(p);
-							
-							return false;*/
 						}
 					}
 				}

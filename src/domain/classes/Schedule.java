@@ -20,6 +20,10 @@ public class Schedule {
 		schedule = new HashMap<String, String[][]>(); //String es codi del grup 
 	}
 	
+	public Map<String, String[][]> getSchedule() {
+		return schedule;
+	}
+	
 	public Schedule(String json) {
 		schedule = new HashMap<String, String[][]>();
 		try {

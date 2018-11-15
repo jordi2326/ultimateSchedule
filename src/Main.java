@@ -76,6 +76,8 @@ public class Main {
 	            case 1:
 	            	if(ctDomain.generateSchedule()){
 	            		System.out.println(ctDomain.scheduleToJsonString());
+	            		System.out.println("|---------------------------------------------------------------------------------------------------------------|");
+	            		ctDomain.printSchedule();
 	            	}else{
 	            		System.out.println("Error. No Valid Schedule Found");
 	            	}

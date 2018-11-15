@@ -1,0 +1,341 @@
+{
+    "rooms":
+    [
+      {
+        "code": "A4002",
+        "capacity": 90,
+        "hasComputers": false
+      },
+      {
+        "code": "A4102",
+        "capacity": 90,
+        "hasComputers": false
+      },
+      {
+        "code": "A5S105",
+        "capacity": 90,
+        "hasComputers": true
+      },
+      {
+        "code": "A5S104",
+        "capacity": 90,
+        "hasComputers": true
+      },
+      {
+        "code": "A5002",
+        "capacity": 90,
+        "hasComputers": false
+      },
+      {
+        "code": "A5201",
+        "capacity": 90,
+        "hasComputers": false
+      },
+      {
+        "code": "A5102",
+        "capacity": 90,
+        "hasComputers": false
+      },
+      {
+        "code": "A5104",
+        "capacity": 90,
+        "hasComputers": false
+      },
+      {
+        "code": "A5006",
+        "capacity": 90,
+        "hasComputers": false
+      },
+      {
+        "code": "C6S301",
+        "capacity": 90,
+        "hasComputers": true
+      },
+      {
+        "code": "C6S302",
+        "capacity": 90,
+        "hasComputers": true
+      },
+      {
+        "code": "C6S306",
+        "capacity": 90,
+        "hasComputers": true
+      },
+      {
+        "code": "C6S309",
+        "capacity": 90,
+        "hasComputers": true
+      }
+    ],
+    "subjects": 
+    [
+      {
+          "code": "EC",
+          "name": "Estructures de Computadors",
+          "level": "2",
+          "coreqs": [],
+          "groups": 
+          [
+              {
+                "code": "10",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "11",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [3]
+              },
+              {
+                "code": "12",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [3]
+              },
+              {
+                "code": "13",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [3]
+              },
+              {
+                "code": "40",
+                "numPeople": 20,
+                "parentGroupCode": "40",
+                "type": "THEORY",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "41",
+                "numPeople": 20,
+                "parentGroupCode": "40",
+                "type": "LABORATORY",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [3]
+              },
+              {
+                "code": "42",
+                "numPeople": 20,
+                "parentGroupCode": "40",
+                "type": "LABORATORY",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [3]
+              },
+              {
+                "code": "43",
+                "numPeople": 20,
+                "parentGroupCode": "40",
+                "type": "LABORATORY",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [3]
+              }
+          ] 
+      },
+      {
+          "code": "M1",
+          "name": "Matemàtiques 1",
+          "level": "2",
+          "coreqs": [],
+          "groups": 
+          [
+              {
+                "code": "10",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "11",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "PROBLEMS",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "12",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "PROBLEMS",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "13",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "PROBLEMS",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "40",
+                "numPeople": 20,
+                "parentGroupCode": "40",
+                "type": "THEORY",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "42",
+                "numPeople": 20,
+                "parentGroupCode": "40",
+                "type": "PROBLEMS",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [2]
+              }
+          ] 
+      },
+      {
+          "code": "M2",
+          "name": "Matemàtiques 2",
+          "level": "2",
+          "coreqs": [],
+          "groups": 
+          [
+              {
+                "code": "10",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "11",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "PROBLEMS",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "12",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "PROBLEMS",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "13",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "PROBLEMS",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "40",
+                "numPeople": 20,
+                "parentGroupCode": "40",
+                "type": "THEORY",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "41",
+                "numPeople": 20,
+                "parentGroupCode": "40",
+                "type": "PROBLEMS",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "42",
+                "numPeople": 20,
+                "parentGroupCode": "40",
+                "type": "PROBLEMS",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [2]
+              }
+          ] 
+      },
+      {
+          "code": "PRO2",
+          "name": "Programació 2",
+          "level": "2",
+          "coreqs": [],
+          "groups": 
+          [
+              {
+                "code": "10",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "11",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "12",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "13",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "14",
+                "numPeople": 20,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "40",
+                "numPeople": 20,
+                "parentGroupCode": "40",
+                "type": "THEORY",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "41",
+                "numPeople": 20,
+                "parentGroupCode": "40",
+                "type": "LABORATORY",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [2]
+              },
+              {
+                "code": "42",
+                "numPeople": 20,
+                "parentGroupCode": "40",
+                "type": "LABORATORY",
+                "dayPeriod": "AFTERNOON",
+                "lecturesDuration": [2]
+              }
+          ] 
+      }
+    ]
+}
