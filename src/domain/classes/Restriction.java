@@ -1,5 +1,9 @@
 package domain.classes;
 
+/** Representa una restricció que es pot aplicar a l'hora de generar un horari.
+ * @author XX
+*/
+
 public abstract class Restriction {
 	private boolean negotiable;
 	private boolean enabled = true;

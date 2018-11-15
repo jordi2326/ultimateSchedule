@@ -109,7 +109,6 @@ public class LectureDriver {
 	            + "Opciones\n"
 	            + " 1| getDuration\n"
 	            + " 2| getGroup\n"
-	            + " 3| getId\n"
 	            + " 0| Salir\n"
 	            + "---------------------\n"
 	            );
@@ -128,9 +127,6 @@ public class LectureDriver {
 	            case 2:
 	            	testGetGroup();
 	                break;
-	            case 3:
-	            	testGetId();
-	                break;
 	        }
 	        n = sc.nextInt();
 	    }
@@ -147,15 +143,6 @@ public class LectureDriver {
 		public static void testGetGroup(){
 			try {
 	            String x = l.getGroup();
-	            System.out.println(x);
-	        } catch (Exception e) {
-	            System.out.println(e);
-	        }
-		}
-		
-		public static void testGetId(){
-			try {
-	            Integer x = l.getId();
 	            System.out.println(x);
 	        } catch (Exception e) {
 	            System.out.println(e);

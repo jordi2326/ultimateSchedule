@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/** Representa un conjunt d'assignacions candidates (aules i hores/dies) per quan es genera un horari.
+ * @author XX
+*/
+
 public class PosAssig {
 	Map<Integer, Map< Integer, Set<String>>> shrek;
 	//   Dia		    Hora		Aula

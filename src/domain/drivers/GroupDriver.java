@@ -78,10 +78,14 @@ public class GroupDriver {
 	
 	private static ArrayList<String> readStringList(Scanner in){
 		ArrayList<String> l = new ArrayList<String>();
-		l.add(in.next());
+		String s = in.next();
+		while(!s.equals("-1")) {
+			l.add(s);
+			s = in.next();
+		}
 		return l;
 	}
-
+	
 	private static void newGroupMenu() {
 		try {
 	    	System.out.println("Definir nuevo Grupo");
@@ -128,7 +132,7 @@ public class GroupDriver {
 	        }while (int_type < 0 || int_type>=types.length);
 	        DayPeriod dayPeriod = DayPeriod.values()[int_dayPeriod];
 	        
-	        g = new Group(code, numPeople, "", subject, type, dayPeriod, null);
+	        g = new Group(code, numPeople, "parent", subject, type, dayPeriod, new ArrayList<String>());
 	        System.out.println("Nuevo Grupo definido");
 	        subMenu();
 	    } catch (Exception e) {
