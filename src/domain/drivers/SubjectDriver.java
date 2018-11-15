@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import domain.classes.Room;
 import domain.classes.Subject;
 
 public class SubjectDriver {

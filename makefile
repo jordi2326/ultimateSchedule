@@ -1,6 +1,6 @@
 JFLAGS = -g
-#JC = javac
-JC = /usr/java/jdk1.8.0_45/bin/javac
+JC = javac
+#JC = /usr/java/jdk1.8.0_45/bin/javac
 JVM= java
 
 BIN = ./exe/
@@ -41,6 +41,15 @@ run-driver-schedule:
 
 run-driver-group:
 	$(JVM) -cp $(RCPATHS) domain.drivers.GroupDriver
+
+run-driver-room:
+	$(JVM) -cp $(RCPATHS) domain.drivers.RoomDriver
+
+run-driver-lecture:
+	$(JVM) -cp $(RCPATHS) domain.drivers.LectureDriver
+
+run-driver-schedule:
+	$(JVM) -cp $(RCPATHS) domain.drivers.ScheduleDriver
 
 clean:
 	$(RM) -rf $(BIN)*

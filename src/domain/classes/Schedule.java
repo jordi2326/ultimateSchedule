@@ -13,17 +13,27 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+/** Representa un horari.
+ * @author XX
+*/
+
 public class Schedule {
 	Map<String, String[][]> schedule;
 	
+	/** Constructora estàndard.
+	*/
 	public Schedule() {
 		schedule = new HashMap<String, String[][]>(); //String es codi del grup 
 	}
-	
+
 	public Map<String, String[][]> getSchedule() {
 		return schedule;
 	}
-	
+
+	/** Constructora a partir d'un String Json.
+	*	@param json	Text Json que descriu l'horari.
+	*/
+	@SuppressWarnings("unchecked")
 	public Schedule(String json) {
 		schedule = new HashMap<String, String[][]>();
 		try {
@@ -40,6 +50,13 @@ public class Schedule {
 		}
 	}
 	
+	/** Blabla
+	*	@param room		Blaaaa
+	*	@param day		Blaaaa
+	*	@param hour		Blaaaa
+	*	@param group	Blaaaa
+	*	@return blaaa
+	*/
 	public boolean putLecture(String room, int day, int hour, String group) {
 		if(!schedule.containsKey(room)){
 			String[][] ls = new String[5][12];
@@ -51,6 +68,12 @@ public class Schedule {
 		return true;
 	}
 	
+	/** Blabla
+	*	@param room		Blaaaa
+	*	@param day		Blaaaa
+	*	@param hour		Blaaaa
+	*	@return blaaa
+	*/
 	public boolean removeLecture(String room, int day, int hour) {
 		if(schedule.containsKey(room)){
 			schedule.get(room)[day][hour]=null;
@@ -59,6 +82,11 @@ public class Schedule {
 		return false;
 	}
 	
+	/** 
+	*	@param room		Blaaaa
+	*	@return blaaa
+	*/
+	@SuppressWarnings("unchecked")
 	public String toJsonString(){
 		DayOfWeek[] dayNames = DayOfWeek.values();
         JSONObject jo = new JSONObject();

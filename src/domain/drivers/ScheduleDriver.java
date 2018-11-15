@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import domain.classes.Lecture;
 import domain.classes.Schedule;
 
 public class ScheduleDriver {

@@ -1,8 +1,5 @@
-
-domain
+domain.classes
+domain.classes.restrictions
 domain.controllers
-domain.drivers
-domain.drivers.stubs
-domain.restrictions
 persistance
 presentation

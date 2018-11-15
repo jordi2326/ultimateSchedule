@@ -2,9 +2,11 @@ package domain.classes;
 
 import java.util.ArrayList;
 
+/** Representa un grup.
+ * @author XX
+*/
+
 public class Group {
-	
-	//TODO: Afegir override del hash per totes les classes que ho necessitin
 	
 	public enum Type {
 		LABORATORY, THEORY, PROBLEMS, PRACTICES
@@ -14,23 +16,17 @@ public class Group {
 		MORNING, AFTERNOON, INDIFERENT
 	}
 	
+	/**TODO javadoc dels atributs vv**/
 	private String code; //nomes numero
 	private Integer numPeople;
 	private String parentGroupCode;
 	private String subject; //Es el code del subject, que es el mateix que el subject.toString()
 	private Type type;
 	private DayPeriod dayPeriod;
-	private ArrayList<String> lectures; // durations[i] = duration of lecture i
+	private ArrayList<String> lectures;
 	
-	/**
-	 * @param code
-	 * @param numPeople
-	 * @param parentGroupCode
-	 * @param subject
-	 * @param type
-	 * @param dayPeriod
-	 * @param durations
-	 */
+	/** Constructora estàndard.
+	*/
 	public Group(String code, Integer numPeople, String parentGroupCode, String subject, Type type, DayPeriod dayPeriod, ArrayList<String> lectures) {
 		this.code = code;
 		this.numPeople = numPeople;
@@ -42,55 +38,64 @@ public class Group {
 	}
 
 	/**
-	 * @return the code
+	 * Retorna el codi del grup.
+	 * @return {@link Group#code}
 	 */
 	public String getCode() {
 		return code;
 	}
 
 	/**
-	 * @return the number of people
+	 * Retorna el núm. de persones del grup.
+	 * @return {@link Group#numPeople}
 	 */
 	public Integer getNumOfPeople() {
 		return numPeople;
 	}
 
 	/**
-	 * @return the code of the parent group
+	 * Retorna el codi del grup pare.
+	 * @return {@link Group#parentGroupCode}
 	 */
 	public String getParentGroupCode() {
 		return parentGroupCode;
 	}
 
 	/**
-	 * @return the type
+	 * Retorna el tipus de classe del grup.
+	 * @return {@link Group#type}
 	 */
 	public Type getType() {
 		return type;
 	}
 	
 	/**
-	 * @return the dayPeriod
+	 * Retorna el període del dia en que aquest grup pot fer classe.
+	 * @return {@link Group#dayPeriod}
 	 */
 	public DayPeriod getDayPeriod() {
 		return dayPeriod;
 	}
 	
 	/**
-	 * @return the subject
+	 * Retorna el codi de l'assignatura del grup.
+	 * @return {@link Group#subject}
 	 */
 	public String getSubject() {
 		return subject;
 	}
 
 	/**
-	 * @return array of lectures of lectures
+	 * Retorna la llista de lectures del grup.
+	 * @return {@link Group#lectures}
 	 */
 	public ArrayList<String> getLectures() {
 		return lectures;
 	}
 	
-
+	/**
+	 * @return El String que identifica el grup.
+	 */
 	@Override
 	public String toString() {
 		return subject + code + type;

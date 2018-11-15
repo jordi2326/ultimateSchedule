@@ -1,31 +1,23 @@
 package domain.controllers;
 
 import domain.classes.Group;
+import domain.classes.Group.DayPeriod;
 import domain.classes.Lecture;
 import domain.classes.PosAssig;
 import domain.classes.Room;
 import domain.classes.Schedule;
 import domain.classes.Subject;
-import domain.classes.Group.DayPeriod;
-import domain.classes.Group.Type;
-import domain.controllers.CtrlDomain;
 import domain.classes.restrictions.NaryRestriction;
 import domain.classes.restrictions.UnaryRestriction;
 
-import java.time.DayOfWeek;
 import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.stream.Collectors;
-// import java.util.Calendar; No s'utilitza ja
 import java.util.HashMap;
 import java.util.HashSet;
-
-
-//TODO: Fer que subject tingui String[] groups en comptes de ArrayList<String>. Fer el mateix amb Group, etc.
 
 class groupHeuristicComparator implements Comparator<Map.Entry<Integer, String>>{ 
     
@@ -109,7 +101,7 @@ public class CtrlSchedule {
 				PosAssig pa = new PosAssig(dayHourRooms);
 				for (String lecture : g.getLectures()) {
 					shrek.put(lecture, pa);
-					Map.Entry<Integer, String> pair = new AbstractMap.SimpleEntry(totalGroupRooms, lecture);
+					Map.Entry<Integer, String> pair = new AbstractMap.SimpleEntry<Integer, String>(totalGroupRooms, lecture);
 					pq.add(pair);
 				}
 			}
