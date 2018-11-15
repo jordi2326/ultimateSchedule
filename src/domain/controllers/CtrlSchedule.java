@@ -52,13 +52,14 @@ public class CtrlSchedule {
 	public boolean generateSchedule(Map<String, Map<String, UnaryRestriction>> unaryRestrictions, Map<String, NaryRestriction> naryRestrictions, 
 					    Map<String, Group> groups, Map<String, Room> rooms, Map<String, Subject> subjects, Map<String, 
 					    Lecture> lectures, Schedule schedule) {
-		//TODO: Implementar la restriction de que un grup no vagi en un dia o hora concrets
 		//Filter possible rooms hours and days for each group according to room capacity, PC's, day period and restrictions of days / hours
 		//posAssig te
 		//Map<Integer,<Map <Integer, Set<String>>>>
 		Map<String, PosAssig> shrek = new HashMap<String, PosAssig>(); //String = Lecture.toString()
 		PriorityQueue<Map.Entry<Integer, String>> pq = new PriorityQueue<Map.Entry<Integer, String>>(new groupHeuristicComparator()); // PriorityQueue<Pair<Int, Lecture.toString()>>
-		
+		Set<String> totalDifferentDayHourRoomMorning = new HashSet<String>();
+		Set<String> totalDifferentDayHourRoomAfternoon = new HashSet<String>();
+		int mor = 0, aft = 0;
 		for (Group g : groups.values()) {
 			
 			Integer totalGroupRooms = 0;
@@ -89,6 +90,20 @@ public class CtrlSchedule {
 						if (valid) {
 							Set<String> newRoomSet = roomSet.stream().collect(Collectors.toSet()); // Clona el set de rooms per lo de que sinó sempre apunta tot al mateix set.
 							hourRooms.put(hour, newRoomSet);
+							//Afegim combinacio de dia hora aula per contar les possibilitats totals
+							//Com que es un set, si afegim varios cops la mateixa combinacio, nomes conta com a 1
+							//No ens cal mirar els grups INDIFERENT
+							if (g.getDayPeriod().equals(Group.DayPeriod.MORNING)) {
+								mor += 1;
+								for (String r : newRoomSet) {
+									totalDifferentDayHourRoomMorning.add(day+"-"+hour+"-"+r);
+								}
+							} else if (g.getDayPeriod().equals(Group.DayPeriod.AFTERNOON)) {
+								aft += 1;
+								for (String r : newRoomSet) {
+									totalDifferentDayHourRoomAfternoon.add(day+"-"+hour+"-"+r);
+								}
+							}
 						}
 					}
 					if (!hourRooms.isEmpty()) {
@@ -103,7 +118,7 @@ public class CtrlSchedule {
 				}
 			}
 		}
-
+		if(totalDifferentDayHourRoomMorning.size() < mor || totalDifferentDayHourRoomAfternoon.size() < aft) return false; //No hi cabran
 		boolean exists = backjumping(schedule, pq, subjects, groups, lectures,  shrek, naryRestrictions);
 		
 		/**if (exists) {
