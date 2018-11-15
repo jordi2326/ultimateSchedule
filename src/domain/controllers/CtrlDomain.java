@@ -89,67 +89,15 @@ public class CtrlDomain {
 		return schedule.toJsonString();
 	}
 	
-	public String firstOf(Type dp) {
+	private String firstOf(Type dp) {
 		if (dp.equals(Type.LABORATORY)) return "L";
 		if (dp.equals(Type.THEORY)) return "T";
 		if (dp.equals(Type.PROBLEMS)) return "P";
 		if (dp.equals(Type.PRACTICES)) return "PRAC";
 		return "";
 	}
-	
-	public void printScheduleV1() {
-		Map<String, String[][]> SCH = new HashMap<String, String[][]>(schedule.getSchedule());
-		System.out.println("|---------------------------------------------------------------------------------------------------------------|");
-		System.out.println("|      |      MONDAY        |      TUESDAY       |     WEDNESDAY      |      THURSDAY      |       FRIDAY       |");
-		System.out.println("|------+--------------------+--------------------+--------------------+--------------------+--------------------|");
-		boolean after = false;
-		ArrayList<Integer> posL = new ArrayList<Integer>();
-		posL.add(20);
-		for (int i = 0; i < 12; i++) {
-			if (after) {
-				i--;
-				System.out.print("|      |");
-			} else {
-				if (i + 8 < 10) System.out.print("|0" + (i + 8) + ":00 |");
-				else System.out.print("|" + (i + 8) + ":00 |");
-			}
-			after = false;
-			for (int j = 0; j < 5; j++) {
-				boolean found = false;
-				for (Map.Entry<String, String[][]> entry : SCH.entrySet()) {
-					if (!found) {
-						// String room = entry.getKey();
-						String lecture = entry.getValue()[j][i];
-						if (lecture != null) {
-							found = true;
-							if (j == 0) {
-								System.out.print("  " + lecture);
-								for (int k = (2 + lecture.length()); k < 20; ++k) System.out.print(" ");
-								System.out.print("|");
-							} else {
-								System.out.print("  " + lecture);
-								for (int k = (2 + lecture.length()); k < 20; ++k) System.out.print(" ");
-								System.out.print("|");
-							}
-							entry.getValue()[j][i] = null;
-						}
-					} else if (!after) {
-						// String room = entry.getKey();
-						String lecture = entry.getValue()[j][i];
-						if (lecture != null) {
-							after = true;
-						}
-					}
-				}
-				if (!found) System.out.print("                    |");
-			}
-			System.out.println("");
-			if (!after) System.out.println("|------+--------------------+--------------------+--------------------+--------------------+--------------------|");
-		}
-		System.out.println("|---------------------------------------------------------------------------------------------------------------|");
-	}
 
-	public void printScheduleV2() {
+	public void printSchedule() {
 		Map<String, String[][]> SCH = new HashMap<String, String[][]>(schedule.getSchedule());
 		System.out.println("|---------------------------------------------------------------------------------------------------------------|");
 		System.out.println("|      |      MONDAY        |      TUESDAY       |     WEDNESDAY      |      THURSDAY      |       FRIDAY       |");
