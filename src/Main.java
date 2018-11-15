@@ -77,10 +77,8 @@ public class Main {
 	        switch (n) {
 	            case 1:
 	            	if(ctDomain.generateSchedule()){
-	            		// printSchedule();
 	            		ctDomain.printSchedule();
 	            		scheduleMenu();
-
 	            	}else{
 	            		System.out.println("Error. No Valid Schedule Found");
 	            	}
@@ -107,7 +105,7 @@ public class Main {
 	    try {
 	    	String filename = filenames.get(n);
 			ctDomain.importSchedule(filename);
-			printSchedule();
+			ctDomain.printSchedule();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -133,11 +131,6 @@ public class Main {
 	        break;
 	    }
 	}
-	
-	private static void printSchedule() {
-		System.out.println("--------------------------");
-		System.out.println(ctDomain.scheduleToJsonString());
-    }
 	
 	private static void printScheduleMenu() {
 		System.out.print(

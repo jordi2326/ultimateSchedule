@@ -10,18 +10,18 @@ import domain.classes.Room;
 public class RoomDriver {
 	private static Scanner sc;
 	private static Room r;
+	private static boolean silent = false;
 	
 	private static void printMain() {
 		System.out.print(
 	            "Room Driver\n"
 	            + "---------------------\n"
-	            + "Opciones\n"
-	            + " 1| Cargar Room de un archivo\n"
-	            + " 2| Definir Room manualmente\n"
-	            + " 0| Salir\n"
-	            + "---------------------\n"
-	            );
-	                    
+	    	    + "Opciones\n"
+	    	    + " 1| Test Automatico\n"
+	    	    + " 2| Probar Manualmente\n"
+	    	    + " 0| Salir\n"
+	    	    + "---------------------\n"
+				);        
     }
 	
 	public static void main(String[] args) throws Exception {
@@ -39,10 +39,9 @@ public class RoomDriver {
 	    }
 	}
 	
-	private static void printLoadFileMenu(List<String> filenames) {
-		System.out.print(
-	            "Cargar Archivo\n"
-	            + "--------------------------\n");
+	private static void printLoadFileMenu(String title, List<String> filenames) {
+		System.out.println(title);
+		System.out.print("--------------------------\n");
 		for (int i = 0; i < filenames.size(); i++) {
 			System.out.println(i + "| "+ filenames.get(i));
 		}
@@ -51,7 +50,7 @@ public class RoomDriver {
     }
 	
 	public static void loadRoomMenu(){
-		String path = "data/driverTests/rooms/";
+		String path = "data/driverTests/room/";
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
 		List<String> filenames = new ArrayList<String>();
@@ -61,13 +60,13 @@ public class RoomDriver {
 		    	filenames.add(file.getName());
 		    }
 		}
-		printLoadFileMenu(filenames);
+		printLoadFileMenu("Cargar Test", filenames);
 	    int n = sc.nextInt();
 	    try {
 	    	String filename = filenames.get(n);
-	    	Scanner in = new Scanner(new FileReader(new File(path+filename)));
-	    	r = new Room(in.next(), in.nextInt(), in.nextBoolean());
-	    	in.close();
+	    	sc = new Scanner(new FileReader(new File(path+filename)));
+	    	r = new Room(sc.next(), sc.nextInt(), sc.nextBoolean());
+	    	silent = true;
 	    	subMenu();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -122,7 +121,7 @@ public class RoomDriver {
 	
 	public static void subMenu() {
 		int n;
-		printSubMenu();
+		if(!silent) printSubMenu();
 	    n = sc.nextInt();
 	    while (n != 0) {
 	        switch (n) {

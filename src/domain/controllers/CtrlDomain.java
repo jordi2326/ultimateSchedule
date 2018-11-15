@@ -2,6 +2,7 @@ package domain.controllers;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import org.json.simple.parser.*;
 
 import domain.classes.Group;
 import domain.classes.Lecture;
+import domain.classes.PosAssig;
 import domain.classes.Room;
 import domain.classes.Schedule;
 import domain.classes.Subject;
@@ -98,7 +100,9 @@ public class CtrlDomain {
 	}
 
 	public void printSchedule() {
-		Map<String, String[][]> SCH = new HashMap<String, String[][]>(schedule.getSchedule());
+		Schedule copy = new Schedule(schedule.toJsonString());
+		
+		Map<String, String[][]> SCH = new HashMap<String, String[][]>(copy.getSchedule());
 		System.out.println("|---------------------------------------------------------------------------------------------------------------|");
 		System.out.println("|      |      MONDAY        |      TUESDAY       |     WEDNESDAY      |      THURSDAY      |       FRIDAY       |");
 		System.out.println("|------+--------------------+--------------------+--------------------+--------------------+--------------------|");

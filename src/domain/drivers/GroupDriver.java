@@ -12,17 +12,18 @@ import domain.classes.Group.Type;
 public class GroupDriver {
 	private static Scanner sc;
 	private static Group g;
+	private static boolean silent = false;
 	
 	private static void printMain() {
 		System.out.print(
 	            "Group Driver\n"
 	            + "---------------------\n"
-	            + "Opciones\n"
-	            + " 1| Cargar Group de un archivo\n"
-	            + " 2| Definir Group manualmente\n"
-	            + " 0| Salir\n"
-	            + "---------------------\n"
-	            );
+	    	    + "Opciones\n"
+	    	    + " 1| Test Automatico\n"
+	    	    + " 2| Probar Manualmente\n"
+	    	    + " 0| Salir\n"
+	    	    + "---------------------\n"
+	    	    );  
 	                    
     }
 	
@@ -41,10 +42,9 @@ public class GroupDriver {
 	    }
 	}
 	
-	private static void printLoadFileMenu(List<String> filenames) {
-		System.out.print(
-	            "Cargar Archivo\n"
-	            + "--------------------------\n");
+	private static void printLoadFileMenu(String title, List<String> filenames) {
+		System.out.println(title);
+		System.out.print("--------------------------\n");
 		for (int i = 0; i < filenames.size(); i++) {
 			System.out.println(i + "| "+ filenames.get(i));
 		}
@@ -53,7 +53,7 @@ public class GroupDriver {
     }
 	
 	public static void loadGroupMenu(){
-		String path = "data/driverTests/groups/";
+		String path = "data/driverTests/group/";
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
 		List<String> filenames = new ArrayList<String>();
@@ -63,25 +63,25 @@ public class GroupDriver {
 		    	filenames.add(file.getName());
 		    }
 		}
-		printLoadFileMenu(filenames);
+		printLoadFileMenu("Cargar Test", filenames);
 	    int n = sc.nextInt();
 	    try {
 	    	String filename = filenames.get(n);
-	    	Scanner in = new Scanner(new FileReader(new File(path+filename)));
-	    	g = new Group(in.next(), in.nextInt(), in.next(), in.next(), Type.valueOf(in.next()), DayPeriod.valueOf(in.next()), readStringList(in));
-	    	in.close();
+	    	sc = new Scanner(new FileReader(new File(path+filename)));
+	    	g = new Group(sc.next(), sc.nextInt(), sc.next(), sc.next(), Type.valueOf(sc.next()), DayPeriod.valueOf(sc.next()), readStringList());
+	    	silent = true;
 	    	subMenu();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private static ArrayList<String> readStringList(Scanner in){
+	private static ArrayList<String> readStringList(){
 		ArrayList<String> l = new ArrayList<String>();
-		String s = in.next();
+		String s = sc.next();
 		while(!s.equals("-1")) {
 			l.add(s);
-			s = in.next();
+			s = sc.next();
 		}
 		return l;
 	}
@@ -161,7 +161,7 @@ public class GroupDriver {
 	
 	public static void subMenu () {
 		int n;
-        printSubMenu();
+		if(!silent) printSubMenu();
 	    n = sc.nextInt();
 	    while (n != 0) {
 	        switch (n) {
