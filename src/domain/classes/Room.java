@@ -9,14 +9,19 @@ public class Room {
 	/** Codi identificador únic.
 	*/
 	private String code;
+	
 	/** Núm. màxim d’estudiants que hi caben.
 	*/
 	private Integer capacity;
+	
 	/** Indica si l’aula disposa d’ordinadors per als alumnes.
 	*/
 	private Boolean hasComputers;
 	
 	/** Constructora estàndard.
+	 * @param code			Codi de l'aula.
+	 * @param capacity 		Capacitat de l'aula.
+	 * @param hasComputers 	Indica si l'aula té ordinadors o no.
 	*/
 	public Room(String code, Integer capacity, Boolean hasComputers) {
 		this.code = code;

@@ -16,16 +16,44 @@ public class Group {
 		MORNING, AFTERNOON, INDIFERENT
 	}
 	
-	/**TODO javadoc dels atributs vv**/
+	/** Codi identificador únic. Ex: 10, 20
+	*/
 	private String code; //nomes numero
+	
+	/** Num. persones que pertanyen al grup.
+	*/
 	private Integer numPeople;
+	
+	/** Codi del grup pare al qual pertany.
+	 * Ex: Si {@link Group#code} és 10, aleshores {@link Group#parentGroupCode} és 10
+	 * Ex: Si {@link Group#code} és 12, aleshores {@link Group#parentGroupCode} és 10
+	*/
 	private String parentGroupCode;
+	
+	/** Assignatura a la qual pertany.
+	*/
 	private String subject; //Es el code del subject, que es el mateix que el subject.toString()
+	
+	/** Tipus de grup. Ex: "THEORY"
+	*/
 	private Type type;
+	
+	/** Període del dia en que ha d'anar el grup. Ex: "MORNING"
+	*/
 	private DayPeriod dayPeriod;
+	
+	/** Conjunt de sessions del grup per cada setmana.
+	*/
 	private ArrayList<String> lectures;
 	
 	/** Constructora estàndard.
+	 * @param code				Codi del grup.
+	 * @param numPeople			Núm. persones en el grup.
+	 * @param parentGroupCode	Codi del grup pare.
+	 * @param subject			Assignatura a la que pertany.
+	 * @param type				Tipus de grup.
+	 * @param dayPeriod			Període del dia.
+	 * @param lectures			Conjunt de sessions del grup.
 	*/
 	public Group(String code, Integer numPeople, String parentGroupCode, String subject, Type type, DayPeriod dayPeriod, ArrayList<String> lectures) {
 		this.code = code;

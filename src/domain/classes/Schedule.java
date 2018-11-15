@@ -18,6 +18,9 @@ import org.json.simple.parser.ParseException;
 */
 
 public class Schedule {
+	
+	/** Horari
+	*/
 	Map<String, String[][]> schedule;
 	
 	/** Constructora estàndard.
@@ -26,11 +29,15 @@ public class Schedule {
 		schedule = new HashMap<String, String[][]>(); //String es codi del grup 
 	}
 
+	/**
+	 * Retorna l'horari.
+	 * @return {@link Schedule#shrek}
+	 */
 	public Map<String, String[][]> getSchedule() {
 		return schedule;
 	}
 
-	/** Constructora a partir d'un String Json.
+	/** Constructora a partir d'un String JSON.
 	*	@param json	Text Json que descriu l'horari.
 	*/
 	@SuppressWarnings("unchecked")
@@ -50,12 +57,12 @@ public class Schedule {
 		}
 	}
 	
-	/** Blabla
-	*	@param room		Blaaaa
-	*	@param day		Blaaaa
-	*	@param hour		Blaaaa
-	*	@param group	Blaaaa
-	*	@return blaaa
+	/** Associa un grup amb una aula, dia i hora determinades.
+	*	@param room		Aula on afagirem el grup.
+	*	@param day		Dia on afegirem el grup.
+	*	@param hour		Hora on afegirem el grup.
+	*	@param group	Grup a afegir a l'horari.
+	*	@return L'horari amb el grup afegit a l'aula room al dia day i hora hour.
 	*/
 	public boolean putLecture(String room, int day, int hour, String group) {
 		if(!schedule.containsKey(room)){
@@ -68,11 +75,11 @@ public class Schedule {
 		return true;
 	}
 	
-	/** Blabla
-	*	@param room		Blaaaa
-	*	@param day		Blaaaa
-	*	@param hour		Blaaaa
-	*	@return blaaa
+	/** Elimina un grup d'una aula, dia i hora determinades.
+	*	@param room		Aula on eliminarem el grup.
+	*	@param day		Dia on eliminarem el grup.
+	*	@param hour		Hora on eliminarem el grup.
+	*	@return Si existeix l'aula, eliminem el grup en qüestió i retornem true. Fals en cas contrari.
 	*/
 	public boolean removeLecture(String room, int day, int hour) {
 		if(schedule.containsKey(room)){
@@ -83,8 +90,8 @@ public class Schedule {
 	}
 	
 	/** 
-	*	@param room		Blaaaa
-	*	@return blaaa
+	*	Transforma l'horari en un String en format JSON.
+	*	@return L'horari en format Json.
 	*/
 	@SuppressWarnings("unchecked")
 	public String toJsonString(){

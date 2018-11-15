@@ -78,7 +78,7 @@ public class Main {
 	            case 1:
 	            	if(ctDomain.generateSchedule()){
 	            		// printSchedule();
-	            		ctDomain.printScheduleV1();
+	            		ctDomain.printScheduleV2();
 	            		scheduleMenu();
 
 	            	}else{

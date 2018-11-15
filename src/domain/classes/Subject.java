@@ -11,20 +11,29 @@ public class Subject {
 	/** Codi identificador únic. Ex: "PROP", "M2"
 	*/
 	private String code;
+	
 	/** Nom complet. Ex: "Projectes de Programació", "Matemàtiques 2"
 	*/
 	private String name;
+	
 	/** Nivell de l’assignatura en el pla docent. Ex: "Q1", "Q5"
 	*/
 	private String level;
-	/** Codis de les assignatures que son corequisit d’aquesta. Ex: "['FM', 'M1']"
+	
+	/** Codis dels grups de l'assignatura. Ex: "['PROP40T', 'PROP41L', 'PROP42L']"
 	*/
 	private ArrayList<String> groups;
-	/** Codis dels grups de l'assignatura. Ex: "['PROP40T', 'PROP41L', 'PROP42L']"
+	
+	/** Codis de les assignatures que son corequisit d’aquesta. Ex: "['FM', 'M1']"
 	*/
 	private ArrayList<String> coreqs;
 
 	/** Constructora estàndard.
+	 * @param code		Codi de l'assignatura.
+	 * @param name		Nom complet de l'assignatura.
+	 * @param level		Nivell de l'assignatura.
+	 * @param groups	Grups de l'assignatura.
+	 * @param coreqs	Assignatues corequisites de l'assignatura que estem creant.
 	*/
 	public Subject(String code, String name, String level, ArrayList<String> groups, ArrayList<String> coreqs) {
 		this.code = code;
