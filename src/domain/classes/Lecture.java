@@ -1,4 +1,4 @@
-driverspackage domain.classes;
+package domain.classes;
 
 /** Representa una "lecture". Una classe setmanal d'un grup.
  * @author XX
