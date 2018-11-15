@@ -11,7 +11,7 @@ public class SpecificDayOrHourRestriction extends UnaryRestriction{
 	}
 	
 	@Override
-	public boolean validate(Integer day, Integer hour) {
+	public boolean validate(Integer day, Integer hour, Integer duration) {
 		if (this.day == null) {
 			return hour != this.hour;
 		}

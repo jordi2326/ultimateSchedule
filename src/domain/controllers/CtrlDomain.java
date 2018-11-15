@@ -20,6 +20,7 @@ import domain.classes.Room;
 import domain.classes.Schedule;
 import domain.classes.Subject;
 import domain.classes.restrictions.CorequisitRestriction;
+import domain.classes.restrictions.DayPeriodRestriction;
 import domain.classes.restrictions.LectureFromSameGroupOverlapRestriction;
 import domain.classes.restrictions.SubjectLevelRestriction;
 import domain.classes.restrictions.NaryRestriction;
@@ -78,7 +79,7 @@ public class CtrlDomain {
 	public boolean generateSchedule() {
 		CtrlSchedule ctS = CtrlSchedule.getInstance();
 		schedule = new Schedule();
-		return ctS.generateSchedule(unaryRestrictions, naryRestrictions, groups, rooms, subjects, lectures, 6, schedule);
+		return ctS.generateSchedule(unaryRestrictions, naryRestrictions, groups, rooms, subjects, lectures, schedule);
 	}
 	
 	public String scheduleToJsonString() {
@@ -179,6 +180,14 @@ public class CtrlDomain {
     					ls);
     			groups.put(g.toString(), g);
     			groupsToString.add(g.toString());
+    			//Afegim la restricció d'aquest grup de mati o tarda o indiferent
+    			
+    			Set<UnaryRestriction> restrictions = new HashSet<UnaryRestriction>();
+    			if (!g.getDayPeriod().equals(Group.DayPeriod.INDIFERENT)) {
+    				restrictions.add(new DayPeriodRestriction(6, g.getDayPeriod()));
+    			}
+    			unaryRestrictions.put(g.toString(), restrictions); 
+        		
         	}
         	Subject s = new Subject(
 				scode,

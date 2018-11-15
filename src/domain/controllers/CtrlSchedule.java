@@ -51,7 +51,7 @@ public class CtrlSchedule {
 	
 	public boolean generateSchedule(Map<String, Set<UnaryRestriction>> unaryRestrictions, Set<NaryRestriction> naryRestrictions, 
 					    Map<String, Group> groups, Map<String, Room> rooms, Map<String, Subject> subjects, Map<String, 
-					    Lecture> lectures, Integer midDay, Schedule schedule) {
+					    Lecture> lectures, Schedule schedule) {
 		//TODO: Implementar la restriction de que un grup no vagi en un dia o hora concrets
 		//Filter possible rooms hours and days for each group according to room capacity, PC's, day period and restrictions of days / hours
 		//posAssig te
@@ -72,34 +72,31 @@ public class CtrlSchedule {
 					}
 				}
 			}
-			Map<Integer, Map <Integer, Set<String>>> dayHourRooms = new HashMap<Integer, Map <Integer, Set< String>>>();
-			for (int day = 0; day < 5; ++day) {
-				Map <Integer, Set<String>> hourRooms = new HashMap<Integer, Set<String>>();
-				for (int hour = 0; hour < 12; ++hour) {	
-					if (g.getDayPeriod().equals(Group.DayPeriod.INDIFERENT)
-					     	|| (g.getDayPeriod().equals(Group.DayPeriod.MORNING) && hour < midDay)
-						|| (g.getDayPeriod().equals(Group.DayPeriod.AFTERNOON) && hour >= midDay)) {
+			
+			for (String lecture : g.getLectures()) {
+				Map<Integer, Map <Integer, Set<String>>> dayHourRooms = new HashMap<Integer, Map <Integer, Set< String>>>();
+				for (int day = 0; day < 5; ++day) {
+					Map <Integer, Set<String>> hourRooms = new HashMap<Integer, Set<String>>();
+					for (int hour = 0; hour < 12; ++hour) {	
 						boolean valid = true;
 						if(unaryRestrictions.containsKey(g.toString())){
 							for (UnaryRestriction restr : unaryRestrictions.get(g.toString())) {
-								if (!restr.validate(day, hour)) {
+								if (!restr.validate(day, hour, lectures.get(lecture).getDuration())) {
 									valid = false;
 								}
 							}
 						}
 						if (valid) {
-							Set<String> newSet = roomSet.stream().collect(Collectors.toSet());
-							hourRooms.put(hour, newSet);
+							Set<String> newRoomSet = roomSet.stream().collect(Collectors.toSet()); // Clona el set de rooms per lo de que sinó sempre apunta tot al mateix set.
+							hourRooms.put(hour, newRoomSet);
 						}
 					}
+					if (!hourRooms.isEmpty()) {
+						dayHourRooms.put(day, hourRooms);
+					}
 				}
-				if (!hourRooms.isEmpty()) {
-					dayHourRooms.put(day, hourRooms);
-				}
-			}
-			if (!dayHourRooms.isEmpty()) {
-				PosAssig pa = new PosAssig(dayHourRooms);
-				for (String lecture : g.getLectures()) {
+				if (!dayHourRooms.isEmpty()) {
+					PosAssig pa = new PosAssig(dayHourRooms);
 					shrek.put(lecture, pa);
 					Map.Entry<Integer, String> pair = new AbstractMap.SimpleEntry<Integer, String>(totalGroupRooms, lecture);
 					pq.add(pair);
@@ -107,7 +104,7 @@ public class CtrlSchedule {
 			}
 		}
 
-		boolean exists = generate(schedule, pq, subjects, groups, lectures,  shrek, naryRestrictions);
+		boolean exists = backjumping(schedule, pq, subjects, groups, lectures,  shrek, naryRestrictions);
 		
 		/**if (exists) {
 			System.out.println(schedule.toJsonString());
@@ -128,7 +125,7 @@ public class CtrlSchedule {
 		return true;
 	}
 
-	private static boolean generate(Schedule schedule, PriorityQueue<Map.Entry<Integer, String>> heuristica, Map<String, Subject> subjects,
+	private static boolean backjumping(Schedule schedule, PriorityQueue<Map.Entry<Integer, String>> heuristica, Map<String, Subject> subjects,
 			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek, Set<NaryRestriction> naryRestrictions) {
 		{ // Canviar nom de la PQ si volem xD		
 		// Pre: a shrek hi tenim nomï¿½s les Lectures que falten afegir i les assignacions possibles que li podem donar. Nomï¿½s les possibles! (forward checking)
@@ -179,7 +176,7 @@ public class CtrlSchedule {
 									groups, lectures, copyShrek, naryRestrictions); // Funciï¿½ d'en Laca (passant-li copyShrek)
 							
 							if (podat) {
-								boolean possible = generate(schedule, heuristica, subjects, groups, lectures,  copyShrek, naryRestrictions); // True => ï¿½s possible generar l'horari
+								boolean possible = backjumping(schedule, heuristica, subjects, groups, lectures,  copyShrek, naryRestrictions); // True => ï¿½s possible generar l'horari
 																												// False => No ï¿½s possible
 								if (possible) return true;
 								else {

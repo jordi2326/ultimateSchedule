@@ -20,12 +20,20 @@ public abstract class Restriction {
 		return enabled;
 	}
 	
-	public void enable() {
-		enabled = true;
+	public boolean enable() {
+		if (negotiable) {
+			enabled = true;
+			return true;
+		}
+		return false;
 	}
 	
-	public void disable() {
-		enabled = false;
+	public boolean disable() {
+		if (negotiable) {
+			enabled = false;
+			return true;
+		}
+		return false;
 	}
 	
 }
