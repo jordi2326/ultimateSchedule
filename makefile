@@ -8,7 +8,9 @@ BIN = ./exe/
 .SUFFIXES: .java .class
 
 .java.class:
-	$(JC) $(JFLAGS) $*.java -cp $(CCPATHS) -d $(BIN)
+	#$(JC) $(JFLAGS) $*.java -cp $(CCPATHS) -d $(BIN)
+	#$(JC) $(JFLAGS) $*.java -cp $(CCPATHS) -encoding utf-8 -d $(BIN)
+	$(JC) $(JFLAGS) $*.java -cp $(CCPATHS) -encoding iso-8859-1 -d $(BIN)
 
 CCPATHS = ./src:$(JARS)
 RCPATHS = $(BIN):$(JARS)
