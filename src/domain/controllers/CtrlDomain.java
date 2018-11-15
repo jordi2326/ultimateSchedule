@@ -40,8 +40,8 @@ public class CtrlDomain {
 	private Map<String, Lecture> lectures;
 	private Schedule schedule;
 	//Restrictions for every group
-	private Map<String, Set<UnaryRestriction>> unaryRestrictions; //Key = group.toString()
-	private Set<NaryRestriction> naryRestrictions;
+	private Map<String, Map<String, UnaryRestriction>> unaryRestrictions; //Key = group.toString()
+	private Map<String, NaryRestriction> naryRestrictions;
 	
 	
 	private CtrlDomain() {
@@ -50,16 +50,20 @@ public class CtrlDomain {
 		rooms = new HashMap<String, Room>();
 		groups = new HashMap<String, Group>();
 		lectures = new HashMap<String, Lecture>();
-		unaryRestrictions = new HashMap<String, Set<UnaryRestriction>>();
-		naryRestrictions = new HashSet<NaryRestriction>();
-		naryRestrictions.add(new OccupiedRoomRestriction());
-		naryRestrictions.add(new ParentGroupOverlapRestriction());
-		naryRestrictions.add(new CorequisitRestriction());
-		naryRestrictions.add(new SubjectLevelRestriction());
-		naryRestrictions.add(new LectureFromSameGroupOverlapRestriction());
-		// Set<UnaryRestriction> unary = new HashSet<UnaryRestriction>();
-		// unary.add(new SpecificDayOrHourRestriction(0, 0));
-		// unaryRestrictions.put("PRO111THEORY", unary);
+		unaryRestrictions = new HashMap<String, Map<String, UnaryRestriction>>();
+		naryRestrictions = new HashMap<String, NaryRestriction>();
+		
+		OccupiedRoomRestriction ocrr = new OccupiedRoomRestriction();
+		naryRestrictions.put(ocrr.toString(), ocrr);
+		ParentGroupOverlapRestriction pgor = new ParentGroupOverlapRestriction();
+		naryRestrictions.put(pgor.toString(), pgor);
+		CorequisitRestriction cr = new CorequisitRestriction();
+		naryRestrictions.put(cr.toString(), cr);
+		SubjectLevelRestriction slr = new SubjectLevelRestriction();
+		naryRestrictions.put(slr.toString(), slr);
+		LectureFromSameGroupOverlapRestriction lfgor = new LectureFromSameGroupOverlapRestriction();
+		naryRestrictions.put(lfgor.toString(), lfgor);
+		
 	}
 	
 	public static CtrlDomain getInstance() {
@@ -180,11 +184,13 @@ public class CtrlDomain {
     					ls);
     			groups.put(g.toString(), g);
     			groupsToString.add(g.toString());
-    			//Afegim la restricció d'aquest grup de mati o tarda o indiferent
+    			//Afegim la restriccio d'aquest grup de mati o tarda o indiferent
     			
-    			Set<UnaryRestriction> restrictions = new HashSet<UnaryRestriction>();
+    			Map<String, UnaryRestriction> restrictions = new HashMap<String, UnaryRestriction>();
+    			//Potser cal fer lo de clonarlo amb collection stream perque no siguin el mateix
+    			DayPeriodRestriction dpr = new DayPeriodRestriction(6, g.getDayPeriod());
     			if (!g.getDayPeriod().equals(Group.DayPeriod.INDIFERENT)) {
-    				restrictions.add(new DayPeriodRestriction(6, g.getDayPeriod()));
+    				restrictions.put(dpr.toString(), dpr);
     			}
     			unaryRestrictions.put(g.toString(), restrictions); 
         		

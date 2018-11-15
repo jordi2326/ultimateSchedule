@@ -1,6 +1,6 @@
 package domain.classes;
 
-/** Representa una restricció que es pot aplicar a l'hora de generar un horari.
+/** Representa una restricciï¿½ que es pot aplicar a l'hora de generar un horari.
  * @author XX
 */
 
@@ -35,5 +35,9 @@ public abstract class Restriction {
 		}
 		return false;
 	}
+	
+	public abstract String toString();
+	
+	
 	
 }

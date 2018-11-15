@@ -12,6 +12,10 @@ public class DayPeriodRestriction extends UnaryRestriction{
 		this.dayPeriod = dayPeriod;
 	}
 	
+	public String toString() {
+		return DayPeriodRestriction.class.toString() + "-" + midDay + "-" + dayPeriod;
+	}
+	
 	@Override
 	public boolean validate(Integer day, Integer hour, Integer duration) {
 		if ((dayPeriod.equals(Group.DayPeriod.MORNING)) && (hour + duration > midDay)) {

@@ -13,6 +13,10 @@ public class SubjectLevelRestriction extends NaryRestriction{
 		super(true); //negotiable
 	}
 	
+	public String toString() {
+		return SubjectLevelRestriction.class.toString();
+	}
+	
 	@Override
 	public boolean validate(String lecture, String room, Integer day, Integer hour, Map<String, Subject> subjects,
 			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek) {

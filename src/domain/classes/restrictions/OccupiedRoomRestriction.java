@@ -15,6 +15,10 @@ public class OccupiedRoomRestriction extends NaryRestriction{
 		super(true); //negotiable
 	}
 	
+	public String toString() {
+		return OccupiedRoomRestriction.class.toString();
+	}
+	
 	//Per cada lecture mirem totes les aules de totes les hores de tots els dies i les borrem si estaran ocupades per la lecture inserida
 	public boolean validate(String lecture, String room, Integer day, Integer hour, Map<String, Subject> subjects,
 			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek) {
