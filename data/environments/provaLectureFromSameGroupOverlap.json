@@ -1,0 +1,35 @@
+{
+    "rooms":
+    [
+      {
+        "code": "A6001",
+        "capacity": 90,
+        "hasComputers": false
+      },
+      {
+        "code": "C6201",
+        "capacity": 90,
+        "hasComputers": true
+      }
+    ],
+    "subjects": 
+    [
+      {
+        "code": "M2",
+        "name": "Matem¨¤tiques 2",
+        "level": "2",
+        "coreqs": ["PRO1"]
+        "groups": 
+        [
+            {
+              "code": "30",
+              "numPeople": 10,
+              "parentGroupCode": "30",
+              "type": "THEORY",
+              "dayPeriod": "MORNING",
+              "lecturesDuration": [1,1]
+            },
+        ] 
+    }
+    ]
+}

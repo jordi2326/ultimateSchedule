@@ -1,0 +1,30 @@
+{
+    "rooms":
+    [
+      {
+        "code": "A6001",
+        "capacity": 90,
+        "hasComputers": true
+      }
+    ],
+    "subjects": 
+    [
+      {
+          "code": "PRO1",
+          "name": "Programaci¨® 1",
+          "level": "Q1",
+          "coreqs": [],
+          "groups": 
+          [
+              {
+                "code": "10",
+                "numPeople": 60,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [5,5,5,5,5,6]
+              }
+          ] 
+      }
+    ]
+}
