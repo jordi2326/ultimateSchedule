@@ -13,9 +13,9 @@ public class TestEquals {
 		schedule.putLecture("A5S102", 4, 2, "FM-10-THEORY");
 		
 		Schedule SCFinal = new Schedule();
-		SCFinal.putLecture("A6005", 1, 10, "FM-10-LABORATORY");
-		SCFinal.putLecture("A6002", 4, 2, "FM-10-THEORY");
+		SCFinal.putLecture("A6001", 1, 10, "FM-10-LABORATORY");
+		SCFinal.putLecture("A5S102", 4, 2, "FM-10-THEORY");
 		
-		assertTrue(!SCFinal.equals(schedule));
+		assertTrue(SCFinal.equals(schedule));
 	}
 }

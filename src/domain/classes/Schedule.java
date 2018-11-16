@@ -3,6 +3,8 @@
  */
 package domain.classes;
 
+import static org.junit.Assert.assertTrue;
+
 import java.time.DayOfWeek;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,10 +16,22 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 /** Representa un horari.
- * @author XX
+ * @author Carlos Bergillos Varela
 */
 
 public class Schedule {
+	
+	public static void main(String[] args) {
+		Schedule schedule = new Schedule();
+		schedule.putLecture("A6001", 1, 10, "FM-10-LABORATORY");
+		schedule.putLecture("A5S102", 4, 2, "FM-10-THEORY");
+		
+		Schedule SCFinal = new Schedule();
+		SCFinal.putLecture("A6001", 1, 10, "FM-10-LABORATORY");
+		SCFinal.putLecture("A5S102", 4, 2, "FM-10-THEORY");
+		
+		System.out.println(schedule.equals(SCFinal)); // Vaig a un lloc del mapa que no existeix (0, 0)
+	}
 	
 	/** Horari
 	*/
@@ -114,5 +128,28 @@ public class Schedule {
         }
         
         return jo.toJSONString(0);        
+	}
+	
+	public boolean equals(Schedule sc) {
+		for (String room : this.getSchedule().keySet()) {
+			if (!sc.getSchedule().containsKey(room)) return false;
+			if (this.getSchedule().get(room).length == sc.getSchedule().get(room).length) {
+				for (int i = 0; i < this.getSchedule().get(room).length; i++) {
+					if (this.getSchedule().get(room)[i].length == sc.getSchedule().get(room)[i].length) {
+						for (int j = 0; j < this.getSchedule().get(room)[i].length; ++j) {
+							if (this.getSchedule().get(room)[i][j] == null && sc.getSchedule().get(room)[i][j] == null) {
+								
+							} else {
+								if (this.getSchedule().get(room)[i][j] == null && sc.getSchedule().get(room)[i][j] != null) return false;
+								if (this.getSchedule().get(room)[i][j] != null && sc.getSchedule().get(room)[i][j] == null) return false;
+								if (!this.getSchedule().get(room)[i][j].equals(sc.getSchedule().get(room)[i][j])) return false;
+							}	
+						}
+					} else return false;
+					
+				}
+			} else return false;
+		}
+		return true;
 	}
 }
