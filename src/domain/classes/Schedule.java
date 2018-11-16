@@ -129,8 +129,8 @@ public class Schedule {
 	}
 	
 	/** Compara dos schedules
-	*	@param sc Paràmetre a comparar
-	*	@return True si sc és igual que this.
+	*	@param sc Paràmetre a comparar.
+	*	@return True si sc és igual que this. False en cas contrari.
 	*/
 	public boolean equals(Schedule sc) {
 		for (String room : this.getSchedule().keySet()) {
