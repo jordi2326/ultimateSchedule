@@ -9,7 +9,7 @@ import domain.classes.Restriction;
 import domain.classes.Subject;
 
 /** Classe que engloba totes les restriccions n-àries.
- * @author XX
+ * @author Xavier Lacasa Curto
 */
 
 public abstract class NaryRestriction extends Restriction {
@@ -34,6 +34,6 @@ public abstract class NaryRestriction extends Restriction {
 	 * Les aules que s'eliminaran dependran de la restricció que estiguem validant.
 	*/
 	public abstract boolean validate(String lecture, String room, Integer day, Integer hour, Map<String, Subject> subjects,
-			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek);
+			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> pAssigMap);
 
 }

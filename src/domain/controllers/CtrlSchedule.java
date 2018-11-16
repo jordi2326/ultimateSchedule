@@ -31,10 +31,18 @@ class groupHeuristicComparator implements Comparator<Map.Entry<Integer, String>>
         } 
 } 
 
+/** Controlador de Schedule.
+ * @author Xavier Mart�n Ballesteros i Xavier Lacasa Curto
+*/
 public class CtrlSchedule {
 	
 	private static CtrlSchedule instance;
 	
+
+	/**
+	 * Retorna la instancia d'aquesta classe.
+	 * @return {@link CtrlSchedule#instance}
+	 */
 	public static CtrlSchedule getInstance() {
 		if (instance == null)
 			instance = new CtrlSchedule();
@@ -42,7 +50,6 @@ public class CtrlSchedule {
 	}
 	
 	private CtrlSchedule() {
-		// TODO Auto-generated constructor stub
 	}
 
 	

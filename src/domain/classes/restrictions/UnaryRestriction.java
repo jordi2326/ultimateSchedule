@@ -3,7 +3,7 @@ package domain.classes.restrictions;
 import domain.classes.Restriction;
 
 /** Classe que engloba totes les restriccions un-àries.
- * @author XX
+ * @author Xavier Lacasa Curto
 */
 
 public abstract class UnaryRestriction extends Restriction {

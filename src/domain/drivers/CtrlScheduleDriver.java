@@ -19,7 +19,7 @@ public class CtrlScheduleDriver {
 	            + "--------------------------\n"
 	            );         
     }
-
+	
 	public static void main(String[] args) throws Exception {
 		sc = new Scanner(System.in);
 		ctDomain = CtrlDomain.getInstance();

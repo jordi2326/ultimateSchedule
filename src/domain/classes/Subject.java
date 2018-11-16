@@ -3,7 +3,7 @@ package domain.classes;
 import java.util.ArrayList;
 
 /** Representa una assignatura.
- * @author XX
+ * @author Xavier Martín Ballesteros
 */
 
 public class Subject {
