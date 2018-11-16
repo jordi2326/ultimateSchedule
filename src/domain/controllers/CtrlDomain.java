@@ -34,8 +34,14 @@ import domain.classes.restrictions.SpecificDayOrHourRestriction;
 import domain.classes.restrictions.UnaryRestriction;
 import persistance.CtrlData;
 
+/** Controlador principal de domini de l'aplicació.
+ * @author XX
+*/
+
 public class CtrlDomain {
 	
+	/** Instancia d'aquesta classe.
+	*/
 	private static CtrlDomain instance;
 	private CtrlData dataController;
 	//The keys of these Maps are always the value.toString() result. Ex: the key of a subject is thatSubject.toString()

@@ -12,108 +12,108 @@ public class PosAssig {
 	/** Mapa de les possibles assignacions d'una sessió d'un grup en concret.
 	 *  El mapa té de key els dies i, per cada dia, té un mapa amb les hores com a clau i les aules que poden anar-hi com a valor.
 	*/
-	Map<Integer, Map< Integer, Set<String>>> shrek;
+	Map<Integer, Map< Integer, Set<String>>> assigMap;
 	//   Dia		    Hora		Aula
 	
 	/** Constructora estàndard.
 	*/
 	public PosAssig() {
-		shrek = new HashMap<Integer, Map< Integer, Set<String>>>();
+		assigMap = new HashMap<Integer, Map< Integer, Set<String>>>();
 	}
 	
 	/** Constructora estàndard.
-	 * @param shrek Conjunt de possibles assignacions.
+	 * @param assigMap Conjunt de possibles assignacions.
 	*/
-	public PosAssig(Map<Integer,Map <Integer, Set<String>>> shrek) {
-		this.shrek = shrek;
+	public PosAssig(Map<Integer,Map <Integer, Set<String>>> assigMap) {
+		this.assigMap = assigMap;
 	}
 	
 	/**
 	 * Retorna les possibles assignacions.
-	 * @return {@link PosAssig#shrek}
+	 * @return {@link PosAssig#assigMap}
 	 */
 	public Map<Integer, Map< Integer, Set<String>>> getMap() {
-		return shrek;
+		return assigMap;
 	}
 
 	/**
-	 * Indica si un dia concret està a {@link PosAssig#shrek} o no.
+	 * Indica si un dia concret està a {@link PosAssig#assigMap} o no.
 	 * @param day Dia a mirar.
 	 * @return Retorna true si hi ha una possible assignació en un dia concret. Fals en cas contrari.
 	 */
 	public boolean hasDay(Integer day) {
-		return shrek.containsKey(day);
+		return assigMap.containsKey(day);
 	}
 	
 	/**
-	 * Indica si hour està a {@link PosAssig#shrek} en un dia concret o no.
-	 * Pre: day sí que està dins {@link PosAssig#shrek}.
+	 * Indica si hour està a {@link PosAssig#assigMap} en un dia concret o no.
+	 * Pre: day sí que està dins {@link PosAssig#assigMap}.
 	 * @param day  Dia a mirar.
 	 * @param hour Hora a mirar.
 	 * @return Retorna true si hi ha una possible assignació en un dia i hora concrets. Fals en cas contrari.
 	 */
 	public boolean hasHourFromDay(Integer day, Integer hour) {
-		return shrek.get(day).containsKey(hour);
+		return assigMap.get(day).containsKey(hour);
 	}
 	
 	/**
-	 * Indica si a {@link PosAssig#shrek}, a un dia determinat no hi ha possibles assignacions.
+	 * Indica si a {@link PosAssig#assigMap}, a un dia determinat no hi ha possibles assignacions.
 	 * @param day  Dia a mirar.
 	 * @return Retorna true si no hi ha possibles assignacions a day. Fals en cas contrari.
 	 */
 	public boolean dayIsEmpty(Integer day) {
-		return shrek.get(day).isEmpty();
+		return assigMap.get(day).isEmpty();
 	}
 	
 	/**
-	 * Indica si a {@link PosAssig#shrek} no hi ha possibles assignacions.
+	 * Indica si a {@link PosAssig#assigMap} no hi ha possibles assignacions.
 	 * @return Retorna true si no hi ha possibles assignacions. Fals en cas contrari.
 	 */
 	public boolean hasNoDays() {
-		return shrek.isEmpty();
+		return assigMap.isEmpty();
 	}
 	
 	/**
-	 * Elimina de {@link PosAssig#shrek} totes les possibles assignacions per un dia i hora concrets.
+	 * Elimina de {@link PosAssig#assigMap} totes les possibles assignacions per un dia i hora concrets.
 	 * @param day	Dia on eliminar les possibles assignacions.
 	 * @param hour	Hora on eliminar les possibles assignacions.
-	 * @return {@link PosAssig#shrek} amb totes les possibles assignacions a day i hour eliminats.
+	 * @return {@link PosAssig#assigMap} amb totes les possibles assignacions a day i hour eliminats.
 	 */
 	public void removeHourFromDay(Integer day, Integer hour) {
-		shrek.get(day).remove(hour);
+		assigMap.get(day).remove(hour);
 	}
 	
 	/**
-	 * Elimina de {@link PosAssig#shrek} totes les possibles assignacions per un dia concret.
+	 * Elimina de {@link PosAssig#assigMap} totes les possibles assignacions per un dia concret.
 	 * @param day	Dia on eliminar les possibles assignacions.
-	 * @return {@link PosAssig#shrek} amb totes les possibles assignacions a day eliminats.
+	 * @return {@link PosAssig#assigMap} amb totes les possibles assignacions a day eliminats.
 	 */
 	public void removeDay(Integer day) {
-		shrek.remove(day);
+		assigMap.remove(day);
 	}
 	
 	/**
-	 * Indica si a {@link PosAssig#shrek} en un dia i hora concrets hi ha una aula concreta.
+	 * Indica si a {@link PosAssig#assigMap} en un dia i hora concrets hi ha una aula concreta.
 	 * @param day	Dia on buscar l'aula.
 	 * @param hour	Hora on buscar l'aula.
 	 * @param room	Aula que volem buscar.
-	 * @return Retorna true si a {@link PosAssig#shrek} apareix room a day i hour. Fals en cas contrari.
+	 * @return Retorna true si a {@link PosAssig#assigMap} apareix room a day i hour. Fals en cas contrari.
 	 */
 	public boolean hasRoomFromDayAndHour(Integer day, Integer hour, String room) {
-		return shrek.get(day).get(hour).contains(room);
+		return assigMap.get(day).get(hour).contains(room);
 	}
 	
 	/**
-	 * Elimina de {@link PosAssig#shrek} una aula concreta en una dia i hora determinats.
+	 * Elimina de {@link PosAssig#assigMap} una aula concreta en una dia i hora determinats.
 	 * @param day	Dia on eliminar l'aula.
 	 * @param hour	Hora on eliminar l'aula.
 	 * @param room	Aula que volem eliminar.
-	 * @return {@link PosAssig#shrek} amb la room eliminada a day i hour. Si un cop eliminada la room a day i hour no queden possibles assignacions, també eliminarem hour.
+	 * @return {@link PosAssig#assigMap} amb la room eliminada a day i hour. Si un cop eliminada la room a day i hour no queden possibles assignacions, també eliminarem hour.
 	 */
 	public void removeRoomFromHourAndDay(Integer day, Integer hour, String room) {
-		shrek.get(day).get(hour).remove(room);
-		if (shrek.get(day).get(hour).isEmpty()) {
-			shrek.get(day).remove(hour);
+		assigMap.get(day).get(hour).remove(room);
+		if (assigMap.get(day).get(hour).isEmpty()) {
+			assigMap.get(day).remove(hour);
 		}
 	}
 }
