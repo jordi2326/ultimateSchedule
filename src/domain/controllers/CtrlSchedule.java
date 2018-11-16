@@ -55,7 +55,6 @@ public class CtrlSchedule {
 	private CtrlSchedule() {
 	}
 
-	
 	/**
 	 * Funció principal que genera un horari amb les dades donades.
 	 * @param unaryRestrictions Conjunt de restriccions unaries a tenir en compte.
@@ -151,7 +150,7 @@ public class CtrlSchedule {
 	}
 	
 	/**
-	 * Funció de Forward Checking que comprova la validesa de l'última signació i reduix les possibles assignacions si es possible.
+	 * Funció de Forward Checking que comprova la validesa de l'última assignació i reduiex les possibles assignacions si es possible.
 	 * @param lecture Última 'lecture' que s'ha assignat a l'horari, i es vol comprovar la seva validesa.
 	 * @param room Aula en la qual s'ha assignat la 'lecture'.
 	 * @param day Dia en el que s'ha assignat la 'lecture'.
@@ -161,7 +160,7 @@ public class CtrlSchedule {
 	 * @param lectures Conjunt de 'lectures' que es volen incloure en l'horari.
 	 * @param shrek Map que conté les possibles assignacions de cada 'lecture'.
 	 * @param naryRestrictions Conjunt de restriccions n-aries a tenir en compte.
-	 * @return true si l'assigació a comprovar es valida, sino false.
+	 * @return True si l'assigació a comprovar es valida, sino false.
 	 */
 	private static boolean forwardCheck(String lecture, String room, Integer day, Integer hour, Map<String, Subject> subjects,
 			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek, Map<String, NaryRestriction> naryRestrictions) {
@@ -174,7 +173,7 @@ public class CtrlSchedule {
 	}
 
 	/**
-	 * Funció que fa Back Jumping, utilitzat en l'algoritme que genera un horari.
+	 * Funció que fa Backjumping, utilitzat en l'algoritme que genera un horari.
 	 * @param schedule Objecte de la classe Schedule que contindrà l'horari generat al finalitzar l'algoritme.
 	 * @param heuristica Priority Queue de 'lectures', on les que tenen menor nombre de possibles assignacions estàn a dalt.  
 	 * @param subjects Conjunt de assignatures que tenen algun grup que es vol incloure a l'horari.
@@ -182,11 +181,10 @@ public class CtrlSchedule {
 	 * @param lectures Conjunt de 'lectures' que es volen incloure en l'horari.
 	 * @param shrek Map que conté les possibles assignacions de cada 'lecture'.
 	 * @param naryRestrictions Conjunt de restriccions n-aries a tenir en compte.
-	 * @return true si s'ha generat correctament, false si no s'ha pogut generar cap horari valid.
+	 * @return True si s'ha generat correctament. False si no s'ha pogut generar cap horari valid.
 	 */
 	private static boolean backjumping(Schedule schedule, PriorityQueue<Map.Entry<Integer, String>> heuristica, Map<String, Subject> subjects,
-			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek, Map<String, NaryRestriction> naryRestrictions) {
-		{ // Canviar nom de la PQ si volem xD		
+			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek, Map<String, NaryRestriction> naryRestrictions) {		
 		// Pre: a shrek hi tenim nomÃ¯Â¿Â½s les Lectures que falten afegir i les assignacions possibles que li podem donar. NomÃ¯Â¿Â½s les possibles! (forward checking)
 		// Pre: a mÃ¯Â¿Â½s, per com estÃ¯Â¿Â½ feta la funciÃ¯Â¿Â½ podar, no hi ha cap Lecture amb 0 possibles assignacions
 		
@@ -293,5 +291,4 @@ public class CtrlSchedule {
 				solucion.borrar(vactual)
 			retorna solucion.fallo()
 */
-}
 }

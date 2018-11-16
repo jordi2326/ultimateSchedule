@@ -43,27 +43,35 @@ public class CtrlDomain {
 	/** Instancia d'aquesta classe.
 	*/
 	private static CtrlDomain instance;
+	
 	/** Controlador de dades.
 	*/
 	private CtrlData dataController;
+	
 	/** Conjunt d'assignatures de l'entorn.
 	*/
 	private Map<String, Subject> subjects;
+	
 	/** Conjunt d'aules de l'entorn.
 	*/
 	private Map<String, Room> rooms;
+	
 	/** Conjunt de grups de l'entorn.
 	*/
 	private Map<String, Group> groups;
+	
 	/** Conjunt de 'lectures' de l'entorn.
 	*/
 	private Map<String, Lecture> lectures;
+	
 	/** Horari 
 	*/
 	private Schedule schedule;
+	
 	/** Map de restriccions unaries de l'entorn  
 	*/
 	private Map<String, Map<String, UnaryRestriction>> unaryRestrictions; //Key = group.toString()
+	
 	/** Map de restriccions n-aries de l'entorn  
 	*/
 	private Map<String, NaryRestriction> naryRestrictions;
@@ -134,8 +142,8 @@ public class CtrlDomain {
 	}
 	
 	/**
-	 * Retorna una llista de codis de les restriccions n-àries de l'entorn del domini.
-	 * @return Retorna la llista de codis de les restriccions n-àries de l'entorn del domini.
+	 * Borra les restriccions un-àries.
+	 * @return Retorna el map de restriccions un-àries buit.
 	 */
 	public void erase() {
 		//naryRestrictions = new HashMap<String, NaryRestriction>();
@@ -430,7 +438,7 @@ public class CtrlDomain {
 	 * Retorna una llista de noms d'arxius d'entorn disponibles.
 	 * @return Una llista de noms d'arxius d'entorn disponibles.
 	 */
-	public List<String> getEnvironmentFilesList(){
+	public List<String> getEnvironmentFilesList() {
 		return dataController.getEnvironmentFilesList();
 	}
 	
@@ -438,8 +446,7 @@ public class CtrlDomain {
 	 * Retorna una llista de noms d'arxius d'horari disponibles.
 	 * @return Una llista de noms d'arxius d'horari disponibles.
 	 */
-	public List<String> getScheduleFilesList(){
+	public List<String> getScheduleFilesList() {
 		return dataController.getScheduleFilesList();
 	}
-	
 }

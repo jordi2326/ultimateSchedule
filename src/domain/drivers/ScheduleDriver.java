@@ -8,6 +8,10 @@ import java.util.Scanner;
 
 import domain.classes.Schedule;
 
+/**
+ * @author Carlos Bergillos Varela
+*/
+
 public class ScheduleDriver {
 	private static Scanner sc;
 	private static Schedule sch;

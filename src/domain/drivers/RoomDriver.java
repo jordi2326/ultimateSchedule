@@ -1,4 +1,5 @@
 package domain.drivers;
+
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -6,6 +7,10 @@ import java.util.List;
 import java.util.Scanner;
 
 import domain.classes.Room;
+
+/**
+ * @author Carlos Bergillos Varela
+*/
 
 public class RoomDriver {
 	private static Scanner sc;

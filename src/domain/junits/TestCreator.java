@@ -7,6 +7,10 @@ import domain.classes.Schedule;
 
 import java.util.HashMap;
 
+/**
+ * @author Xavier Martín Ballesteros
+*/
+
 public class TestCreator {
 	@Test
 	public void testCreator1() {

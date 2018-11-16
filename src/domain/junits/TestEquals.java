@@ -5,6 +5,10 @@ import org.junit.Test;
 
 import domain.classes.Schedule;
 
+/**
+ * @author Xavier Martín Ballesteros
+*/
+
 public class TestEquals {
 	@Test
 	public void testEquals1() {

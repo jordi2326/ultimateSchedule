@@ -1,4 +1,5 @@
 package domain.drivers;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,6 +10,10 @@ import java.util.Scanner;
 import org.json.simple.parser.ParseException;
 
 import domain.controllers.CtrlDomain;
+
+/**
+ * @author Carlos Bergillos Varela
+*/
 
 public class CtrlDomainDriver {
 	private static Scanner sc;

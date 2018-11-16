@@ -18,19 +18,6 @@ import org.json.simple.parser.ParseException;
 */
 
 public class Schedule {
-	
-	public static void main(String[] args) {
-		Schedule schedule = new Schedule();
-		schedule.putLecture("A6001", 1, 10, "FM-10-LABORATORY");
-		schedule.putLecture("A5S102", 4, 2, "FM-10-THEORY");
-		
-		Schedule SCFinal = new Schedule();
-		SCFinal.putLecture("A6001", 1, 10, "FM-10-LABORATORY");
-		SCFinal.putLecture("A5S102", 4, 2, "FM-10-THEORY");
-		
-		System.out.println(schedule.equals(SCFinal)); // Vaig a un lloc del mapa que no existeix (0, 0)
-	}
-	
 	/** Horari
 	*/
 	Map<String, String[][]> schedule;
@@ -43,7 +30,7 @@ public class Schedule {
 
 	/**
 	 * Retorna l'horari.
-	 * @return {@link Schedule#shrek}
+	 * @return {@link Schedule#schedule}
 	 */
 	public Map<String, String[][]> getSchedule() {
 		return schedule;

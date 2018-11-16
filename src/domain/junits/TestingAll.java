@@ -4,6 +4,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+/**
+ * @author Xavier Martín Ballesteros
+*/
+
 @RunWith(value = Suite.class)
 @SuiteClasses(value = { TestCreator.class, 
                         TestGetSchedule.class, 

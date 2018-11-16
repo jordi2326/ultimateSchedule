@@ -9,6 +9,10 @@ import org.junit.Test;
 
 import domain.classes.Schedule;
 
+/**
+ * @author Xavier Martín Ballesteros
+*/
+
 public class TestToJSONString {
 	@Test //toJsonString
 	public void testToJSONString1() throws ParseException {

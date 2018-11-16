@@ -1,7 +1,7 @@
 package domain.classes;
 
 /** Representa una restricciï¿½ que es pot aplicar a l'hora de generar un horari.
- * @author XX
+ * @author Xavier Lacasa Curto
 */
 
 public abstract class Restriction {
@@ -38,6 +38,10 @@ public abstract class Restriction {
 		return enabled;
 	}
 	
+	/**
+	 * Activa la restricció.
+	 * @return True si la restricció és negociable. False en cas contrari.
+	 */
 	public boolean enable() {
 		if (negotiable) {
 			enabled = true;
@@ -46,6 +50,10 @@ public abstract class Restriction {
 		return false;
 	}
 	
+	/**
+	 * Desactiva la restricció.
+	 * @return True si la restricció és negociable. False en cas contrari.
+	 */
 	public boolean disable() {
 		if (negotiable) {
 			enabled = false;
@@ -54,8 +62,8 @@ public abstract class Restriction {
 		return false;
 	}
 	
+	/**
+	 * @return El String que identifica la restricció.
+	 */
 	public abstract String toString();
-	
-	
-	
 }

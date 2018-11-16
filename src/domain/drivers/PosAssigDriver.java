@@ -1,4 +1,5 @@
 package domain.drivers;
+
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -10,6 +11,10 @@ import java.util.Scanner;
 import java.util.Set;
 
 import domain.classes.PosAssig;
+
+/**
+ * @author Carlos Bergillos Varela
+*/
 
 public class PosAssigDriver {
 	private static Scanner sc;

@@ -11,7 +11,7 @@ import java.util.Scanner;
 import domain.controllers.CtrlDomain;
 
 /** Controlador principal de dades de l'aplicació.
- * @author XX
+ * @author Xavier Martín Ballesteros
 */
 
 public class CtrlData {
@@ -99,7 +99,7 @@ public class CtrlData {
 	 * Retorna una llista de noms d'arxius d'entorn disponibles.
 	 * @return Una llista de noms d'arxius d'entorn disponibles.
 	 */
-	public List<String> getEnvironmentFilesList(){
+	public List<String> getEnvironmentFilesList() {
 		return getFilesList("data/environments");
 	}
 	
@@ -107,7 +107,7 @@ public class CtrlData {
 	 * Retorna una llista de noms d'arxius d'horari disponibles.
 	 * @return Una llista de noms d'arxius d'horari disponibles.
 	 */
-	public List<String> getScheduleFilesList(){
+	public List<String> getScheduleFilesList() {
 		return getFilesList("data/schedules");
 	}
 	
@@ -116,7 +116,7 @@ public class CtrlData {
 	 * @param path Adreça de la carpeta.
 	 * @return Una llista de noms d'arxius que es troben dins de la carpeta donada.
 	 */
-	private List<String> getFilesList(String path){
+	private List<String> getFilesList(String path) {
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
 		List<String> results = new ArrayList<String>();

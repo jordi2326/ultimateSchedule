@@ -12,6 +12,10 @@ import domain.classes.Group.DayPeriod;
 import domain.classes.Group.Type;
 import domain.controllers.CtrlDomain;
 
+/** Representa un grup.
+ * @author Carlos Bergillos Varela
+*/
+
 public class Main {
 	private static Scanner sc;
 	private static CtrlDomain ctDomain;

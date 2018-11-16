@@ -29,7 +29,7 @@ public abstract class NaryRestriction extends Restriction {
 	 * @param subjects	Conjunt d'assignatures de l'entorn.
 	 * @param groups	Conjunt de grups de l'entorn.
 	 * @param lectures	Conjunt de sessions de l'entorn.
-	 * @param shrek		Conjunt de possibles assignacions per a cada sessió.
+	 * @param pAssigMap		Conjunt de possibles assignacions per a cada sessió.
 	 * @return True si, un cop eliminat les aules en les que cada sessió no podia anar, totes les sessions restant poden anar com a mínim a una aula. False en cas contrari.
 	 * Les aules que s'eliminaran dependran de la restricció que estiguem validant.
 	*/

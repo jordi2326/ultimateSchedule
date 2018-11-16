@@ -1,4 +1,5 @@
 package domain.drivers;
+
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -20,6 +21,9 @@ import domain.classes.restrictions.UnaryRestriction;
 import domain.controllers.CtrlDomain;
 import domain.classes.restrictions.NaryRestriction;
 
+/**
+ * @author Xavier Lacasa Curto
+*/
 
 public class RestrictionDriver {
 	private static Restriction r;

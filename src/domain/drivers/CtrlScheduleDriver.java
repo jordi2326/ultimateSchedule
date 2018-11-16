@@ -8,6 +8,10 @@ import java.util.Scanner;
 
 import domain.controllers.CtrlDomain;
 
+/**
+ * @author Xavier Lacasa Curto
+*/
+
 public class CtrlScheduleDriver {
 	private static Scanner sc = new Scanner(System.in);
 	private static CtrlDomain ctDomain;

@@ -19,6 +19,9 @@ public class Lecture {
 	private Integer duration;
 	
 	/** Constructora estÃ ndard.
+	 * @param id		Identificació de la sessió.
+	 * @param group		Grup al qual pertany.
+	 * @param duration	Duració de la sessió.
 	*/
 	public Lecture(Integer id, String group, Integer duration) {
 		this.id = id;

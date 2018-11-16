@@ -6,6 +6,10 @@ import org.junit.Test;
 import domain.classes.Room;
 import domain.classes.Schedule;
 
+/**
+ * @author Xavier Martín Ballesteros
+*/
+
 public class TestPutLecture {
 	@Test
 	public void testPutLecture1() {

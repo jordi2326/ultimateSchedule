@@ -1,4 +1,5 @@
 package domain.drivers;
+
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -7,6 +8,10 @@ import java.util.List;
 import java.util.Scanner;
 
 import domain.classes.Subject;
+
+/**
+ * @author Carlos Bergillos Varela
+*/
 
 public class SubjectDriver {
 	private static Scanner sc;

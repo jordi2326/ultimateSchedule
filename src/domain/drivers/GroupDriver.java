@@ -1,4 +1,5 @@
 package domain.drivers;
+
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -8,6 +9,10 @@ import java.util.Scanner;
 import domain.classes.Group;
 import domain.classes.Group.DayPeriod;
 import domain.classes.Group.Type;
+
+/**
+ * @author Carlos Bergillos Varela
+*/
 
 public class GroupDriver {
 	private static Scanner sc;
