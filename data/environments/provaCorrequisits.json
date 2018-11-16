@@ -71,6 +71,15 @@
               "type": "THEORY",
               "dayPeriod": "MORNING",
               "lecturesDuration": [2]
+            },
+            ,
+            {
+              "code": "50",
+              "numPeople": 10,
+              "parentGroupCode": "50",
+              "type": "THEORY",
+              "dayPeriod": "INDIFERENT",
+              "lecturesDuration": [13]
             }
         ] 
     }

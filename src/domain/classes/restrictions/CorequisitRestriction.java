@@ -8,6 +8,11 @@ import domain.classes.Lecture;
 import domain.classes.PosAssig;
 import domain.classes.Subject;
 
+/** Restricció sobre els correquisits de les assignatures.
+ *  Dos grups d'assignatures del mateix nivell no poden anar al mateix dia i hora si tenen el mateix codi i són del mateix tipus.
+ *  	Ex: FM 10 T no pot anar al mateix dia i hora que PRO1 10 T, però sí pot anar amb PRO1 11 L i PRO1 20 T.
+ * @author XX
+*/
 
 public class CorequisitRestriction extends NaryRestriction{
 	

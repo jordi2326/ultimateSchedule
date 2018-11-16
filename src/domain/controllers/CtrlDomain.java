@@ -61,13 +61,13 @@ public class CtrlDomain {
 		OccupiedRoomRestriction ocrr = new OccupiedRoomRestriction();
 		naryRestrictions.put(ocrr.toString(), ocrr);
 		ParentGroupOverlapRestriction pgor = new ParentGroupOverlapRestriction();
-		naryRestrictions.put(pgor.toString(), pgor);
+		//naryRestrictions.put(pgor.toString(), pgor);
 		CorequisitRestriction cr = new CorequisitRestriction();
 		naryRestrictions.put(cr.toString(), cr);
 		SubjectLevelRestriction slr = new SubjectLevelRestriction();
-		naryRestrictions.put(slr.toString(), slr);
+		//naryRestrictions.put(slr.toString(), slr);
 		LectureFromSameGroupOverlapRestriction lfgor = new LectureFromSameGroupOverlapRestriction();
-		naryRestrictions.put(lfgor.toString(), lfgor);
+		//naryRestrictions.put(lfgor.toString(), lfgor);
 	}
 	
 	public static CtrlDomain getInstance() {
