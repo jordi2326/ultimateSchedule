@@ -26,6 +26,8 @@ public class RestrictionDriver {
 	private static Scanner sc;
 	private static boolean silent = false;
 	
+	//TODO: Fer que el joc de proves estigui be. Crec que lo de fer-ho automatic ja va
+	
 	private static void menu() {
 		System.out.print(
 	            "Room Driver\n"
@@ -58,7 +60,7 @@ public class RestrictionDriver {
 	public static void main (String [] args) throws Exception {
 		sc = new Scanner(System.in);
 		int n;
-	    printMain();
+	    if (!silent) printMain();
 	    n = sc.nextInt();
 	    switch (n) {
 	    	case 1:
@@ -97,17 +99,16 @@ public class RestrictionDriver {
 	    try {
 	    	String filename = filenames.get(n);
 	    	sc = new Scanner(new FileReader(new File(path+filename)));
-	    	l = new Lecture(sc.nextInt(), sc.next(), sc.nextInt());
+	
 	    	silent = true;
-	    	subMenu();
+	    	loadTestMenu();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static void loadTestMenu() throws Exception {
-		Scanner sc = new Scanner(System.in);
 	
+	public static void loadTestMenu() throws Exception {
 		int n;
 	    menu();
 	    n = sc.nextInt();
@@ -132,18 +133,18 @@ public class RestrictionDriver {
 	            	testValidate(sc);
 	            	break;
 	        }
-	        menu();
+	        if (!silent) menu();
 	        n = sc.nextInt();
 	    }
 	}
 	
 	public static void testValidate(Scanner sc) {
 		if (r instanceof UnaryRestriction) {
-			System.out.println("Introduzca dia y/o hora en este orden.\n");
+			if (!silent) System.out.println("Introduzca dia y/o hora en este orden.\n");
         	Integer day, hour;
         	day = sc.nextInt();
         	hour = sc.nextInt();
-        	System.out.println("Introduzca duracion de la Lecture:\n");
+        	if (!silent) System.out.println("Introduzca duracion de la Lecture:\n");
         	Integer duration = sc.nextInt();
 			boolean x = ((UnaryRestriction) r).validate(day, hour, duration);
 			if (x) System.out.println("Tu combinacion de dia-hora-clase es valida segun la ultima restriccion creada");
@@ -175,7 +176,7 @@ public class RestrictionDriver {
 		public static void testConstructor(Scanner sc){
 		    try {
 		    	System.out.println("Escoger restriccion a crear. Solo se guarda la ultima restriccion creada.\n");
-		    	listRestrictions();
+		    	if (!silent)listRestrictions();
 		    	int n;
 			    n = sc.nextInt();
 			    while (n != 0) {
@@ -185,10 +186,10 @@ public class RestrictionDriver {
 					        System.out.println("Nueva Restriccion ( " + r.toString() + " ) definida\n");
 			                break;
 			            case 2:
-			            	System.out.println("Introduzca la hora que quiere usar para el mediodia:\n");
+			            	if (!silent) System.out.println("Introduzca la hora que quiere usar para el mediodia:\n");
 			            	Integer midDay = sc.nextInt();
 			            	Group.DayPeriod dp = null;
-			            	System.out.println("Escoja el periodo de clases del grupo:\n"
+			            	if (!silent) System.out.println("Escoja el periodo de clases del grupo:\n"
 			            			+"---------------------\n"
 			    		            + "Opciones\n"
 			    		            + " 1| MORNING\n"
@@ -224,7 +225,7 @@ public class RestrictionDriver {
 			            	System.out.println("Nueva Restriccion ( " + r.toString() + " ) definida\n");
 			                break;
 			            case 6:
-			            	System.out.println("Introduzca dia y/o hora en este orden.\n"
+			            	if (!silent) System.out.println("Introduzca dia y/o hora en este orden.\n"
             						+"en caso de solo dia o hora, introduzca -1 en el campo que no requiera.\n");
 			            	Integer day, hour;
 			            	day = sc.nextInt();
@@ -239,7 +240,7 @@ public class RestrictionDriver {
 			            	System.out.println("Nueva Restriccion ( " + r.toString() + " ) definida\n");
 			            	break;
 			        }
-			        listRestrictions();
+			        if (!silent) listRestrictions();
 			        n = sc.nextInt();
 			    }
 		    } catch (Exception e) {
