@@ -10,7 +10,7 @@ import domain.classes.Subject;
 
 /** Restricció sobre la disponibilitat de les aules.
  *  Un grup no pot anar a una aula ocupada.
- * @author XX
+ * @author Xavier Lacasa Curto
 */
 
 public class OccupiedRoomRestriction extends NaryRestriction{

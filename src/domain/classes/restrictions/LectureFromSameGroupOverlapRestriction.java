@@ -10,7 +10,7 @@ import domain.classes.Subject;
 /** Restricció sobre un mateix grup.
  *  Diverses sessions d'un mateix grup no poden anar en el mateix dia i hora.
  *  	Ex: FM 10 T de 2 hores no pot anar al mateix dia i hora que FM 10 T de 1 hora.
- * @author XX
+ * @author Xavier Lacasa Curto
 */
 
 public class LectureFromSameGroupOverlapRestriction extends NaryRestriction{

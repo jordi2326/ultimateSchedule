@@ -3,7 +3,7 @@ package domain.classes;
 import java.util.ArrayList;
 
 /** Representa un grup.
- * @author XX
+ * @author Xavier Martín Ballesteros
 */
 
 public class Group {

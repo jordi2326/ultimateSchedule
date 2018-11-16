@@ -9,7 +9,7 @@ import domain.classes.Restriction;
 import domain.classes.Subject;
 
 /** Classe que engloba totes les restriccions n-àries.
- * @author XX
+ * @author Xavier Lacasa Curto
 */
 
 public abstract class NaryRestriction extends Restriction {

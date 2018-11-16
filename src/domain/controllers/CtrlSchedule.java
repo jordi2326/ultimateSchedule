@@ -32,7 +32,7 @@ class groupHeuristicComparator implements Comparator<Map.Entry<Integer, String>>
 } 
 
 /** Controlador de Schedule.
- * @author XX
+ * @author Xavier Martín Ballesteros i Xavier Lacasa Curto
 */
 public class CtrlSchedule {
 	
@@ -42,7 +42,7 @@ public class CtrlSchedule {
 	
 	/**
 	 * Retorna la instancia d'aquesta classe.
-	 * @return {@link CtrlDomain#instance}
+	 * @return {@link CtrlSchedule#instance}
 	 */
 	public static CtrlSchedule getInstance() {
 		if (instance == null)

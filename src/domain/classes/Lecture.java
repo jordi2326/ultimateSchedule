@@ -1,7 +1,7 @@
 package domain.classes;
 
 /** Representa una "lecture". Una classe setmanal d'un grup.
- * @author XX
+ * @author Xavier Martín Ballesteros
 */
 
 public class Lecture {

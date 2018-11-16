@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 /** Representa un conjunt d'assignacions candidates (aules i hores/dies) per quan es genera un horari.
- * @author XX
+ * @author Carlos Bergillos Varela
 */
 
 public class PosAssig {

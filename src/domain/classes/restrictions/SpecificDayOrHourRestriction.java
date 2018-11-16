@@ -3,7 +3,7 @@ package domain.classes.restrictions;
 /** Restricció sobre el dia i l'hora dels grups.
  *  Un grup no podrà anar a un dia i hora que es digui.
  *  	Ex: FM 10 T no pot anar Dilluns a les 09:00.
- * @author XX
+ * @author Xavier Lacasa Curto
 */
 
 public class SpecificDayOrHourRestriction extends UnaryRestriction{

@@ -10,7 +10,7 @@ import domain.classes.Subject;
 /** Restricció sobre els grups.
  *  Un subgrup (31, 45...) no pot anar al mateix dia i hora que el seu grup pare (30, 40...).
  *  	Ex: FM 11 L no pot anar al mateix dia i hora que FM 10 T, però sí pot anar amb FM 12 L.
- * @author XX
+ * @author Xavier Lacasa Curto
 */
 
 public class ParentGroupOverlapRestriction extends NaryRestriction {

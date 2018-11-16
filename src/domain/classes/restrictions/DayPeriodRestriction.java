@@ -5,7 +5,7 @@ import domain.classes.Group;
 /** Restricció sobre el nivell de les assignatures.
  *  Dos grups d'assignatures del mateix nivell no poden anar al mateix dia i hora si tenen el mateix codi i són del mateix tipus.
  *  	Ex: FM 10 T no pot anar al mateix dia i hora que PRO1 10 T, però sí pot anar amb PRO1 11 L i PRO1 20 T.
- * @author XX
+ * @author Xavier Lacasa Curto
 */
 
 public class DayPeriodRestriction extends UnaryRestriction{

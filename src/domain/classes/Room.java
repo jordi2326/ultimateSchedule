@@ -1,7 +1,7 @@
 package domain.classes;
 
 /** Representa una aula.
- * @author XX
+ * @author Xavier Martín Ballesteros
 */
 
 public class Room {

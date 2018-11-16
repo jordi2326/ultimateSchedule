@@ -11,7 +11,7 @@ import domain.classes.Subject;
 /** Restricció sobre els correquisits de les assignatures.
  *  Dos grups amb el mateix parentCode de dues assignatures correquisites entre elles no poden anar a un mateix dia i hora.
  *  	Ex: PROP 10 T no pot anar al mateix dia i hora que TC 15 P, però sí pot anar amb F 11 L i FM 10 T.
- * @author XX
+ * @author Xavier Lacasa Curto
 */
 
 public class CorequisitRestriction extends NaryRestriction{

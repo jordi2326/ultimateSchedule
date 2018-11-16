@@ -35,7 +35,7 @@ import domain.classes.restrictions.UnaryRestriction;
 import persistance.CtrlData;
 
 /** Controlador principal de domini de l'aplicació.
- * @author XX
+ * @author Carlos Bergillos Varela
 */
 
 public class CtrlDomain {
@@ -43,18 +43,33 @@ public class CtrlDomain {
 	/** Instancia d'aquesta classe.
 	*/
 	private static CtrlDomain instance;
+	/** Controlador de dades.
+	*/
 	private CtrlData dataController;
-	//The keys of these Maps are always the value.toString() result. Ex: the key of a subject is thatSubject.toString()
+	/** Conjunt d'assignatures de l'entorn.
+	*/
 	private Map<String, Subject> subjects;
+	/** Conjunt d'aules de l'entorn.
+	*/
 	private Map<String, Room> rooms;
+	/** Conjunt de grups de l'entorn.
+	*/
 	private Map<String, Group> groups;
+	/** Conjunt de 'lectures' de l'entorn.
+	*/
 	private Map<String, Lecture> lectures;
+	/** Horari 
+	*/
 	private Schedule schedule;
-	//Restrictions for every group
+	/** Map de restriccions unaries de l'entorn  
+	*/
 	private Map<String, Map<String, UnaryRestriction>> unaryRestrictions; //Key = group.toString()
+	/** Map de restriccions n-aries de l'entorn  
+	*/
 	private Map<String, NaryRestriction> naryRestrictions;
 	
-	
+	/** Constructora estandard.
+	*/
 	private CtrlDomain() {
 		dataController = CtrlData.getInstance();
 		subjects = new HashMap<String, Subject>();
@@ -76,20 +91,37 @@ public class CtrlDomain {
 		//naryRestrictions.put(lfgor.toString(), lfgor);
 	}
 	
+	/**
+	 * Retorna la instancia d'aquesta classe.
+	 * @return {@link CtrlDomain#instance}
+	 */
 	public static CtrlDomain getInstance() {
 		if (instance == null)
 			instance = new CtrlDomain();
 		return instance;
 	}
 	
+	/**
+	 * Retorna una llista de codis de les aules de l'entorn del domini.
+	 * @return Retorna la llista de codis de les aules de l'entorn del domini.
+	 */
 	public ArrayList<String> getRoomNamesList() {
 		return new ArrayList<String>(rooms.keySet());
 	}
 	
+	/**
+	 * Retorna una llista de codis d'assignatures de l'entorn del domini.
+	 * @return Retorna la llista de codis d'assignatures de l'entorn del domini.
+	 */
 	public ArrayList<String> getSubjectNamesList() {
 		return new ArrayList<String>(subjects.keySet());
 	}
 	
+	
+	/**
+	 * Genera un horari amb les condicions de l'entorn.
+	 * @return true si s'ha trobat un horari valid, sino false.
+	 */
 	public boolean generateSchedule() {
 		CtrlSchedule ctS = CtrlSchedule.getInstance();
 		schedule = new Schedule();
@@ -116,6 +148,10 @@ public class CtrlDomain {
 		return ctS.generateSchedule(enabledUnaryRestrictions, enabledNaryRestrictions, groups, rooms, subjects, lectures, schedule);
 	}
 	
+	/**
+	 * Retorna l'horari del domini converit en Json.
+	 * @return L'horari del domini converit en String Json.
+	 */
 	public String scheduleToJsonString() {
 		return schedule.toJsonString();
 	}
@@ -128,6 +164,9 @@ public class CtrlDomain {
 		return "";
 	}
 
+	/**
+	 * Imprimeix l'horari en una taula.
+	 */
 	public void printSchedule() {
 		Schedule copy = new Schedule(schedule.toJsonString());
 		
@@ -184,6 +223,11 @@ public class CtrlDomain {
 		System.out.println("|---------------------------------------------------------------------------------------------------------------|");
 	}
 
+	/**
+	 * Importa un entorn (aules, assignatures, aules) desde un arxiu.
+	 * @param filename Nom de l'entorn a importar.
+	 * @return true si s'ha important	 correctament.
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public boolean importEnvironment(String filename) throws ParseException, IOException   {
 		 String jsonData = dataController.readEnvironment(filename);
