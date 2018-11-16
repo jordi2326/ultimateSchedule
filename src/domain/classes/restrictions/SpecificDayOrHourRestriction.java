@@ -1,7 +1,7 @@
 package domain.classes.restrictions;
 
-/** Restricció sobre el dia i l'hora dels grups.
- *  Un grup no podrà anar a un dia i hora que es digui.
+/** Restricciï¿½ sobre el dia i l'hora dels grups.
+ *  Un grup no podrï¿½ anar a un dia i hora que es digui.
  *  	Ex: FM 10 T no pot anar Dilluns a les 09:00.
  * @author Xavier Lacasa Curto
 */
@@ -16,7 +16,7 @@ public class SpecificDayOrHourRestriction extends UnaryRestriction{
 	*/
 	private Integer hour;
 	
-	/** Constructora estàndard.
+	/** Constructora estï¿½ndard.
 	 * @param day	Dia
 	 * @param hour	Hora
 	*/
@@ -27,18 +27,18 @@ public class SpecificDayOrHourRestriction extends UnaryRestriction{
 	}
 	
 	/**
-	 * @return El String que identifica la restricció.
+	 * @return El String que identifica la restricciï¿½.
 	 */
 	public String toString() {
 		return SpecificDayOrHourRestriction.class.getSimpleName() + "-" + day + "-" + hour;
 	}
 	
 	/**
-	 * Validació de la restricció.
+	 * Validaciï¿½ de la restricciï¿½.
 	 * @param day		Dia en que, combinat amb l'hora, no pot anar el grup.
 	 * @param hour		Hora en que, combinada amb el dia, no pot anar el grup.
-	 * @param duration	Duració del grup.
-	 * @return True si day i hour són el dia i l'hora en el que el grup no pot anar. False en cas contrari.
+	 * @param duration	Duraciï¿½ del grup.
+	 * @return True si day i hour sï¿½n el dia i l'hora en el que el grup no pot anar. False en cas contrari.
 	 */
 	@Override
 	public boolean validate(Integer day, Integer hour, Integer duration) {

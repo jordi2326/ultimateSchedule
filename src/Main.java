@@ -1,5 +1,7 @@
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import domain.controllers.CtrlDomain;
 
@@ -65,6 +67,7 @@ public class Main {
 	          	+ " 3| View Subjects\n"
 	          	+ " 4| View Rooms\n"
 	          	+ " 5| View Restrictions\n"
+	          	+ " 6| View Groups\n"
 	          	+ " 0| Back\n"
 	            + "--------------------------\n"
 	            );         
@@ -92,6 +95,13 @@ public class Main {
 	            case 4:
 	            	genericListMenu("Rooms", ctDomain.getRoomNamesList());
 	                break;
+	            case 5:
+	            	genericListMenuMap("Un-ary restrictions", ctDomain.getUnaryRestrictions());
+	            	genericListMenu("N-ary restrictions", ctDomain.getNaryRestrictions());
+	            	break;
+	            case 6:
+	            	genericListMenu("Groups", ctDomain.getGroupNamesList());
+	            	break;
 	        }
 	        printEnvironmentMenu(envName);
 	        n = sc.nextInt();
@@ -157,5 +167,14 @@ public class Main {
 		printGenericListMenu(title, items);
 	    int n = sc.nextInt();
 	    while (n != 0) n = sc.nextInt();
+	}
+	
+	public static void genericListMenuMap(String title, Map<String, String> map){
+		System.out.println(title);
+		System.out.print("--------------------------\n");
+		for (String group : map.keySet()) {
+			System.out.println("  | " + group + ": " + map.get(group));
+		}
+		System.out.println("");
 	}
 }
