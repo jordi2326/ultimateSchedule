@@ -21,7 +21,6 @@ CLASSES = \
 	src/domain/classes/restrictions/*.java \
 	src/domain/controllers/*.java \
 	src/domain/drivers/*.java \
-	src/domain/drivers/stubs/*.java \
 	src/persistance/*.java
 
 JARS = ./externalClasses/json-simple-1.1c.jar
@@ -58,6 +57,13 @@ run-driver-posAssig:
 
 run-driver-ctrlDomain:
 	$(JVM) -cp $(RCPATHS) domain.drivers.CtrlDomainDriver
+
+run-driver-ctrlSchedule:
+	$(JVM) -cp $(RCPATHS) domain.drivers.CtrlScheduleDriver
+
+run-driver-restriction:
+	$(JVM) -cp $(RCPATHS) domain.drivers.RestrictionDriver
+
 
 clean:
 	$(RM) -rf $(BIN)*

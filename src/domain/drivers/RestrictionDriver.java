@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 import domain.classes.Group;
 import domain.classes.Restriction;
+import domain.classes.Subject;
 import domain.classes.restrictions.CorequisitRestriction;
 import domain.classes.restrictions.DayPeriodRestriction;
 import domain.classes.restrictions.LectureFromSameGroupOverlapRestriction;
@@ -11,6 +12,7 @@ import domain.classes.restrictions.ParentGroupOverlapRestriction;
 import domain.classes.restrictions.SpecificDayOrHourRestriction;
 import domain.classes.restrictions.SubjectLevelRestriction;
 import domain.classes.restrictions.UnaryRestriction;
+import domain.controllers.CtrlDomain;
 import domain.classes.restrictions.NaryRestriction;
 
 
@@ -61,6 +63,7 @@ public class RestrictionDriver {
 	            	testValidate(sc);
 	            	break;
 	        }
+	        menu();
 	        n = sc.nextInt();
 	    }
 	}
@@ -74,11 +77,13 @@ public class RestrictionDriver {
         	System.out.println("Introduzca duracion de la Lecture:\n");
         	Integer duration = sc.nextInt();
 			boolean x = ((UnaryRestriction) r).validate(day, hour, duration);
-			if (x) System.out.println("Your day-hour-duration combination is valid according to the restrictions");
-			else System.out.println("Your day-hour-duration combination is NOT valid according to the restrictions");
+			if (x) System.out.println("Tu combinacion de dia-hora-clase es valida segun la ultima restriccion creada");
+			else System.out.println("Tu combinacion de dia-hora-clase NO es valida segun la ultima restriccion creada");
 		}
 		else {
-			boolean x = ((NaryRestriction) r).validate();
+			System.out.println("Debido a que la restriccion que quieres validar es N-aria y necesita\n"
+					+ "tener un escenario cargado, esta restriccion se comprueba en el driver de Ctrl Schedule,\n"
+					+ "que usa las restricciones para generar horarios.\n");
 		}
 	}
 	
@@ -91,8 +96,8 @@ public class RestrictionDriver {
 		            + " 3| LectureFromSameGroupOverlap\n"
 		            + " 4| OccupiedRoomRestriction\n"
 		            + " 5| ParentGroupOverlapRestriction\n"
-		            + " 6| SpecificDayOrHourRestriction"
-		            + " 7| SubjectLevelRestriction"
+		            + " 6| SpecificDayOrHourRestriction\n"
+		            + " 7| SubjectLevelRestriction\n"
 		            + " 0| Salir\n"
 		            + "---------------------\n"
 		            );
@@ -135,6 +140,7 @@ public class RestrictionDriver {
 			            			break;
 			            	}
 			            	r = new DayPeriodRestriction(midDay, dp);
+			            	System.out.println("Nueva Restriccion ( " + r.toString() + " ) definida\n");
 			                break;
 			            case 3:
 			            	r = new LectureFromSameGroupOverlapRestriction();
@@ -164,6 +170,8 @@ public class RestrictionDriver {
 			            	System.out.println("Nueva Restriccion ( " + r.toString() + " ) definida\n");
 			            	break;
 			        }
+			        listRestrictions();
+			        n = sc.nextInt();
 			    }
 		    } catch (Exception e) {
 		        System.out.println(e);
@@ -202,8 +210,8 @@ public class RestrictionDriver {
 		public static void testIsNegotiable(Scanner sc){
 			try {
 	            Boolean x = r.isNegotiable();
-	            if (x) System.out.println("La restriccion ( \" + r.toString() + \" ) es negociable.\n");
-	            else  System.out.println("La restriccion ( \" + r.toString() + \" ) NO es negociable.\n");
+	            if (x) System.out.println("La restriccion ( " + r.toString() + " ) es negociable.\n");
+	            else  System.out.println("La restriccion ( " + r.toString() + " ) NO es negociable.\n");
 	        } catch (Exception e) {
 	            System.out.println(e);
 	        }
