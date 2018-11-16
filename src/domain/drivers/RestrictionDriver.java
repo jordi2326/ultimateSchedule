@@ -11,6 +11,7 @@ import domain.classes.restrictions.ParentGroupOverlapRestriction;
 import domain.classes.restrictions.SpecificDayOrHourRestriction;
 import domain.classes.restrictions.SubjectLevelRestriction;
 import domain.classes.restrictions.UnaryRestriction;
+import domain.classes.restrictions.NaryRestriction;
 
 
 public class RestrictionDriver {
@@ -72,10 +73,12 @@ public class RestrictionDriver {
         	hour = sc.nextInt();
         	System.out.println("Introduzca duracion de la Lecture:\n");
         	Integer duration = sc.nextInt();
-			((UnaryRestriction) r).validate(day, hour, duration);
+			boolean x = ((UnaryRestriction) r).validate(day, hour, duration);
+			if (x) System.out.println("Your day-hour-duration combination is valid according to the restrictions");
+			else System.out.println("Your day-hour-duration combination is NOT valid according to the restrictions");
 		}
 		else {
-			
+			boolean x = ((NaryRestriction) r).validate();
 		}
 	}
 	
