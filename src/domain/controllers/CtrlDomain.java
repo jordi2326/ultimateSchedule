@@ -82,13 +82,13 @@ public class CtrlDomain {
 		OccupiedRoomRestriction ocrr = new OccupiedRoomRestriction();
 		naryRestrictions.put(ocrr.toString(), ocrr);
 		ParentGroupOverlapRestriction pgor = new ParentGroupOverlapRestriction();
-		//naryRestrictions.put(pgor.toString(), pgor);
+		naryRestrictions.put(pgor.toString(), pgor);
 		CorequisitRestriction cr = new CorequisitRestriction();
 		naryRestrictions.put(cr.toString(), cr);
 		SubjectLevelRestriction slr = new SubjectLevelRestriction();
-		//naryRestrictions.put(slr.toString(), slr);
+		naryRestrictions.put(slr.toString(), slr);
 		LectureFromSameGroupOverlapRestriction lfgor = new LectureFromSameGroupOverlapRestriction();
-		//naryRestrictions.put(lfgor.toString(), lfgor);
+		naryRestrictions.put(lfgor.toString(), lfgor);
 	}
 	
 	/**
@@ -156,14 +156,6 @@ public class CtrlDomain {
 		return schedule.toJsonString();
 	}
 	
-	private String firstOf(Type dp) {
-		if (dp.equals(Type.LABORATORY)) return "L";
-		if (dp.equals(Type.THEORY)) return "T";
-		if (dp.equals(Type.PROBLEMS)) return "P";
-		if (dp.equals(Type.PRACTICES)) return "PRAC";
-		return "";
-	}
-
 	/**
 	 * Imprimeix l'horari en una taula.
 	 */
@@ -190,21 +182,14 @@ public class CtrlDomain {
 				boolean found = false;
 				for (Map.Entry<String, String[][]> entry : SCH.entrySet()) {
 					if (!found) {
-						// String room = entry.getKey();
-						String lecture = entry.getValue()[j][i];
-						//Lecture l = lectures.get(lecture.toString());
-						Group g = groups.get(lecture);
-						if (lecture != null) {
+						String text = entry.getValue()[j][i];
+						if (text!=null && !text.isEmpty()) {
 							found = true;
-							if (j == 0) {
-								System.out.print("      " + g.getSubject() + " " + g.getCode() + " " + firstOf(g.getType()));
-								for (int k = (8 + g.getSubject().length() + g.getCode().length() + 1); k < 20; ++k) System.out.print(" ");
+								String[] split = text.split("-");
+								String ntext = split[0]+" "+split[1]+split[2].substring(0, 1);
+								System.out.print("  " + entry.getKey()+ ": " + ntext);
+								for (int k = (2 + entry.getKey().length() + 2 + ntext.length()); k < 20; ++k) System.out.print(" ");
 								System.out.print("|");
-							} else {
-								System.out.print("      " + g.getSubject() + " " + g.getCode() + " " + firstOf(g.getType()));
-								for (int k = (8 + g.getSubject().length() + g.getCode().length() + 1); k < 20; ++k) System.out.print(" ");
-								System.out.print("|");
-							}
 							entry.getValue()[j][i] = null;
 						}
 					} else if (!after) {
@@ -218,7 +203,7 @@ public class CtrlDomain {
 				if (!found) System.out.print("                    |");
 			}
 			System.out.println("");
-			if (!after) System.out.println("|------+--------------------+--------------------+--------------------+--------------------+--------------------|");
+			if (!after && i != 11) System.out.println("|------+--------------------+--------------------+--------------------+--------------------+--------------------|");
 		}
 		System.out.println("|---------------------------------------------------------------------------------------------------------------|");
 	}
