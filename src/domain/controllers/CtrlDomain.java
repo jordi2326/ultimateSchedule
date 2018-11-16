@@ -226,7 +226,7 @@ public class CtrlDomain {
 	/**
 	 * Importa un entorn (aules, assignatures, aules) desde un arxiu.
 	 * @param filename Nom de l'entorn a importar.
-	 * @return true si s'ha important	 correctament.
+	 * @return true si s'ha importat correctament, sino false.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public boolean importEnvironment(String filename) throws ParseException, IOException   {
@@ -382,20 +382,38 @@ public class CtrlDomain {
 	}
 	**/
 	
+	/**
+	 * Importa un horari desde un arxiu.
+	 * @param filename Nom de l'arxiu d'horari a importar.
+	 * @return true si s'ha importat correctament, sino false
+	 */
 	public boolean importSchedule(String filename) throws ParseException, FileNotFoundException {
 		String jsonData = dataController.readSchedule(filename);
 		schedule = new Schedule(jsonData);
 	   	return true;
 	}
 	
+	/**
+	 * Guarda l'horari de l'entorn a un arxiu.
+	 * @param filename Nom amb el que guardar l'horari.
+	 * @return true si s'ha guardat correctament.
+	 */
 	public boolean exportSchedule(String filename) throws IOException  {
         return dataController.writeSchedule(filename, schedule.toJsonString());
 	}
 	
+	/**
+	 * Retorna una llista de noms d'arxius d'entorn disponibles.
+	 * @return Una llista de noms d'arxius d'entorn disponibles.
+	 */
 	public List<String> getEnvironmentFilesList(){
 		return dataController.getEnvironmentFilesList();
 	}
 	
+	/**
+	 * Retorna una llista de noms d'arxius d'horari disponibles.
+	 * @return Una llista de noms d'arxius d'horari disponibles.
+	 */
 	public List<String> getScheduleFilesList(){
 		return dataController.getScheduleFilesList();
 	}
