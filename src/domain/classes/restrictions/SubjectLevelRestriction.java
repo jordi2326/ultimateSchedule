@@ -25,7 +25,7 @@ public class SubjectLevelRestriction extends NaryRestriction {
 	 * @return El String que identifica la restricció.
 	 */
 	public String toString() {
-		return SubjectLevelRestriction.class.toString();
+		return "SubjectLevelRestriction";//.class.toString();
 	}
 	
 	/** Validació de la restricció.

@@ -34,7 +34,7 @@ public class DayPeriodRestriction extends UnaryRestriction{
 	 * @return El String que identifica la restricció.
 	 */
 	public String toString() {
-		return DayPeriodRestriction.class.toString() + "-" + midDay + "-" + dayPeriod;
+		return "DayPeriodRestriction"/*.class.toString()*/ + "-" + midDay + "-" + dayPeriod;
 	}
 	
 	/**

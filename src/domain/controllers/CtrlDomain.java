@@ -110,6 +110,14 @@ public class CtrlDomain {
 	}
 	
 	/**
+	 * Retorna una llista de codis dels grups de l'entorn del domini.
+	 * @return Retorna una llista de codis dels grups de l'entorn del domini.
+	 */
+	public ArrayList<String> getGroupNamesList() {
+		return new ArrayList<String>(groups.keySet());
+	}
+	
+	/**
 	 * Retorna una llista de codis d'assignatures de l'entorn del domini.
 	 * @return Retorna la llista de codis d'assignatures de l'entorn del domini.
 	 */
@@ -117,6 +125,28 @@ public class CtrlDomain {
 		return new ArrayList<String>(subjects.keySet());
 	}
 	
+	/**
+	 * Retorna una llista de codis de les restriccions n-àries de l'entorn del domini.
+	 * @return Retorna la llista de codis de les restriccions n-àries de l'entorn del domini.
+	 */
+	public ArrayList<String> getNaryRestrictions() {
+		return new ArrayList<String>(naryRestrictions.keySet());
+	}
+	
+	/**
+	 * Retorna una llista de codis de les restriccions un-àries de l'entorn del domini.
+	 * @return Retorna la llista de codis de les restriccions un-àries de l'entorn del domini.
+	 */
+	public Map<String, String> getUnaryRestrictions() {
+		Map<String, String> result = new HashMap<String, String>();
+		for (String group : unaryRestrictions.keySet()) {
+			for (String name : unaryRestrictions.get(group).keySet()) {
+				result.put(group, name);
+			}
+		}
+		
+		return result;
+	}
 	
 	/**
 	 * Genera un horari amb les condicions de l'entorn.

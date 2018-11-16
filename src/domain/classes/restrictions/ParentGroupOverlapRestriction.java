@@ -25,7 +25,7 @@ public class ParentGroupOverlapRestriction extends NaryRestriction {
 	 * @return El String que identifica la restricció.
 	 */
 	public String toString() {
-		return ParentGroupOverlapRestriction.class.toString();
+		return "ParentGroupOverlapRestriction";//.class.toString();
 	}
 	
 	/** Validació de la restricció.
