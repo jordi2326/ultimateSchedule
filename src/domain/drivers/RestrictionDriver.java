@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 import domain.classes.Group;
 import domain.classes.Restriction;
+import domain.classes.Subject;
 import domain.classes.restrictions.CorequisitRestriction;
 import domain.classes.restrictions.DayPeriodRestriction;
 import domain.classes.restrictions.LectureFromSameGroupOverlapRestriction;
@@ -11,6 +12,7 @@ import domain.classes.restrictions.ParentGroupOverlapRestriction;
 import domain.classes.restrictions.SpecificDayOrHourRestriction;
 import domain.classes.restrictions.SubjectLevelRestriction;
 import domain.classes.restrictions.UnaryRestriction;
+import domain.controllers.CtrlDomain;
 import domain.classes.restrictions.NaryRestriction;
 
 
@@ -74,11 +76,13 @@ public class RestrictionDriver {
         	System.out.println("Introduzca duracion de la Lecture:\n");
         	Integer duration = sc.nextInt();
 			boolean x = ((UnaryRestriction) r).validate(day, hour, duration);
-			if (x) System.out.println("Your day-hour-duration combination is valid according to the restrictions");
-			else System.out.println("Your day-hour-duration combination is NOT valid according to the restrictions");
+			if (x) System.out.println("Tu combinacion de dia-hora-clase es valida segun la ultima restriccion creada");
+			else System.out.println("Tu combinacion de dia-hora-clase NO es valida segun la ultima restriccion creada");
 		}
 		else {
-			boolean x = ((NaryRestriction) r).validate();
+			System.out.println("Debido a que la restriccion que quieres validar es N-aria y necesita\n"
+					+ "tener un escenario cargado, esta restriccion se comprueba en el driver de Ctrl Schedule,\n"
+					+ "que usa las restricciones para generar horarios.\n");
 		}
 	}
 	
