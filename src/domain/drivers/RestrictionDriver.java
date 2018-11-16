@@ -134,7 +134,8 @@ public class RestrictionDriver {
 	            	break;
 	        }
 	        if (!silent) menu();
-	        n = sc.nextInt();
+	        if (sc.hasNext()) n = sc.nextInt();
+	        else return;
 	    }
 	}
 	
