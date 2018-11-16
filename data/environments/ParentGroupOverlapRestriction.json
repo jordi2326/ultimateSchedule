@@ -9,7 +9,7 @@
       {
         "code": "C6201",
         "capacity": 900,
-        "hasComputers": false
+        "hasComputers": true
       },
       {
         "code": "C6205",
@@ -41,6 +41,14 @@
             },
             {
               "code": "33",
+              "numPeople": 10,
+              "parentGroupCode": "30",
+              "type": "LABORATORY",
+              "dayPeriod": "MORNING",
+              "lecturesDuration": [2]
+            },
+            {
+              "code": "34",
               "numPeople": 10,
               "parentGroupCode": "30",
               "type": "LABORATORY",

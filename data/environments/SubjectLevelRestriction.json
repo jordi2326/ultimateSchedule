@@ -25,6 +25,11 @@
         "code": "A6005",
         "capacity": 90,
         "hasComputers": false
+      },
+      {
+        "code": "AS105",
+        "capacity": 90,
+        "hasComputers": true
       }
     ],
     "subjects": 
@@ -40,6 +45,23 @@
                 "code": "10",
                 "numPeople": 90,
                 "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [3]
+              },
+              ,
+              {
+                "code": "11",
+                "numPeople": 90,
+                "parentGroupCode": "10",
+                "type": "LABORATORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2]
+              }
+              {
+                "code": "20",
+                "numPeople": 90,
+                "parentGroupCode": "20",
                 "type": "THEORY",
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
@@ -59,7 +81,7 @@
                 "parentGroupCode": "10",
                 "type": "THEORY",
                 "dayPeriod": "MORNING",
-                "lecturesDuration": [3]
+                "lecturesDuration": [4]
               },
               {
                 "code": "11",
@@ -75,7 +97,7 @@
                 "parentGroupCode": "20",
                 "type": "THEORY",
                 "dayPeriod": "MORNING",
-                "lecturesDuration": [1]
+                "lecturesDuration": [2]
               }
           ] 
       }

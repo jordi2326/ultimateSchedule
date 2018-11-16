@@ -15,6 +15,16 @@
         "code": "A6003",
         "capacity": 90,
         "hasComputers": false
+      },
+      {
+        "code": "A6004",
+        "capacity": 90,
+        "hasComputers": true
+      },
+      {
+        "code": "A6005",
+        "capacity": 90,
+        "hasComputers": false
       }
     ],
     "subjects": 
@@ -30,6 +40,31 @@
                 "code": "10",
                 "numPeople": 90,
                 "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2, 1, 1, 1, 1, 1]
+              },
+              {
+                "code": "11",
+                "numPeople": 90,
+                "parentGroupCode": "10",
+                "type": "THEORY",
+                "dayPeriod": "MORNING",
+                "lecturesDuration": [2, 1, 1, 1, 1, 1]
+              }
+          ] 
+      },
+      {
+          "code": "FM",
+          "name": "Fonaments Matemàtics",
+          "level": "1",
+          "coreqs": [],
+          "groups": 
+          [
+              {
+                "code": "11",
+                "numPeople": 90,
+                "parentGroupCode": "11",
                 "type": "THEORY",
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2, 1, 1, 1, 1, 1]
