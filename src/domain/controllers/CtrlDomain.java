@@ -134,6 +134,15 @@ public class CtrlDomain {
 	}
 	
 	/**
+	 * Retorna una llista de codis de les restriccions n-àries de l'entorn del domini.
+	 * @return Retorna la llista de codis de les restriccions n-àries de l'entorn del domini.
+	 */
+	public void erase() {
+		//naryRestrictions = new HashMap<String, NaryRestriction>();
+		unaryRestrictions = new HashMap<String, Map<String, UnaryRestriction>>();
+	}
+	
+	/**
 	 * Retorna una llista de codis de les restriccions un-àries de l'entorn del domini.
 	 * @return Retorna la llista de codis de les restriccions un-àries de l'entorn del domini.
 	 */
