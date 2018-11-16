@@ -26,7 +26,7 @@ public class CorequisitRestriction extends NaryRestriction{
 	 * @return El String que identifica la restricció.
 	 */
 	public String toString() {
-		return CorequisitRestriction.class.toString();
+		return CorequisitRestriction.class.getSimpleName();
 	}
 	
 	/** Validació de la restricció.

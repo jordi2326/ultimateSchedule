@@ -30,7 +30,7 @@ public class SpecificDayOrHourRestriction extends UnaryRestriction{
 	 * @return El String que identifica la restricció.
 	 */
 	public String toString() {
-		return SpecificDayOrHourRestriction.class.toString() + "-" + day + "-" + hour;
+		return SpecificDayOrHourRestriction.class.getSimpleName() + "-" + day + "-" + hour;
 	}
 	
 	/**

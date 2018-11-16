@@ -14,15 +14,13 @@ Instruccions:
 
 Sortida esperada:
 -----------------------------------------------------------------------------------------------------------------
-Nueva Restriccion ( class domain.classes.restrictions.CorequisitRestriction ) definida
+La restriccion ( CorequisitRestriction ) ha sido desactivada.
 
-La restriccion ( class domain.classes.restrictions.CorequisitRestriction ) ha sido desactivada.
+La restriccion ( CorequisitRestriction ) ha sido activada.
 
-La restriccion ( class domain.classes.restrictions.CorequisitRestriction ) ha sido activada.
+La restriccion ( CorequisitRestriction ) esta ACTIVADA.
 
-La restriccion ( class domain.classes.restrictions.CorequisitRestriction ) esta ACTIVADA.
-
-La restriccion ( class domain.classes.restrictions.CorequisitRestriction ) es negociable.
+La restriccion ( CorequisitRestriction ) es negociable.
 
 Debido a que la restriccion que quieres validar es N-aria y necesita
 tener un escenario cargado, esta restriccion se comprueba en el driver de Ctrl Schedule,
@@ -30,44 +28,28 @@ que usa las restricciones para generar horarios.
 
 Escoger restriccion a crear. Solo se guarda la ultima restriccion creada.
 
-Nueva Restriccion ( class domain.classes.restrictions.DayPeriodRestriction-6-MORNING ) definida
+Nueva Restriccion ( DayPeriodRestriction-6-MORNING ) definida
 
-La restriccion ( class domain.classes.restrictions.DayPeriodRestriction-6-MORNING ) ha sido desactivada.
+La restriccion ( DayPeriodRestriction-6-MORNING ) ha sido desactivada.
 
-La restriccion ( class domain.classes.restrictions.DayPeriodRestriction-6-MORNING ) ha sido activada.
+La restriccion ( DayPeriodRestriction-6-MORNING ) ha sido activada.
 
-La restriccion ( class domain.classes.restrictions.DayPeriodRestriction-6-MORNING ) esta ACTIVADA.
+La restriccion ( DayPeriodRestriction-6-MORNING ) esta ACTIVADA.
 
-La restriccion ( class domain.classes.restrictions.DayPeriodRestriction-6-MORNING ) es negociable.
+La restriccion ( DayPeriodRestriction-6-MORNING ) es negociable.
 
 Tu combinacion de dia-hora-clase NO es valida segun la ultima restriccion creada
 Escoger restriccion a crear. Solo se guarda la ultima restriccion creada.
 
-Nueva Restriccion ( class domain.classes.restrictions.LectureFromSameGroupOverlapRestriction ) definida
+Nueva Restriccion ( LectureFromSameGroupOverlapRestriction ) definida
 
-La restriccion ( class domain.classes.restrictions.LectureFromSameGroupOverlapRestriction ) no se puede desactivar porque no es negociable.
+La restriccion ( LectureFromSameGroupOverlapRestriction ) no se puede desactivar porque no es negociable.
 
-La restriccion ( class domain.classes.restrictions.LectureFromSameGroupOverlapRestriction ) esta siempre activada porque no es negociable.
+La restriccion ( LectureFromSameGroupOverlapRestriction ) esta siempre activada porque no es negociable.
 
-La restriccion ( class domain.classes.restrictions.LectureFromSameGroupOverlapRestriction ) esta ACTIVADA.
+La restriccion ( LectureFromSameGroupOverlapRestriction ) esta ACTIVADA.
 
-La restriccion ( class domain.classes.restrictions.LectureFromSameGroupOverlapRestriction ) NO es negociable.
-
-Debido a que la restriccion que quieres validar es N-aria y necesita
-tener un escenario cargado, esta restriccion se comprueba en el driver de Ctrl Schedule,
-que usa las restricciones para generar horarios.
-
-Escoger restriccion a crear. Solo se guarda la ultima restriccion creada.
-
-Nueva Restriccion ( class domain.classes.restrictions.OccupiedRoomRestriction ) definida
-
-La restriccion ( class domain.classes.restrictions.OccupiedRoomRestriction ) no se puede desactivar porque no es negociable.
-
-La restriccion ( class domain.classes.restrictions.OccupiedRoomRestriction ) esta siempre activada porque no es negociable.
-
-La restriccion ( class domain.classes.restrictions.OccupiedRoomRestriction ) esta ACTIVADA.
-
-La restriccion ( class domain.classes.restrictions.OccupiedRoomRestriction ) NO es negociable.
+La restriccion ( LectureFromSameGroupOverlapRestriction ) NO es negociable.
 
 Debido a que la restriccion que quieres validar es N-aria y necesita
 tener un escenario cargado, esta restriccion se comprueba en el driver de Ctrl Schedule,
@@ -75,15 +57,15 @@ que usa las restricciones para generar horarios.
 
 Escoger restriccion a crear. Solo se guarda la ultima restriccion creada.
 
-Nueva Restriccion ( class domain.classes.restrictions.ParentGroupOverlapRestriction ) definida
+Nueva Restriccion ( OccupiedRoomRestriction ) definida
 
-La restriccion ( class domain.classes.restrictions.ParentGroupOverlapRestriction ) no se puede desactivar porque no es negociable.
+La restriccion ( OccupiedRoomRestriction ) no se puede desactivar porque no es negociable.
 
-La restriccion ( class domain.classes.restrictions.ParentGroupOverlapRestriction ) esta siempre activada porque no es negociable.
+La restriccion ( OccupiedRoomRestriction ) esta siempre activada porque no es negociable.
 
-La restriccion ( class domain.classes.restrictions.ParentGroupOverlapRestriction ) esta ACTIVADA.
+La restriccion ( OccupiedRoomRestriction ) esta ACTIVADA.
 
-La restriccion ( class domain.classes.restrictions.ParentGroupOverlapRestriction ) NO es negociable.
+La restriccion ( OccupiedRoomRestriction ) NO es negociable.
 
 Debido a que la restriccion que quieres validar es N-aria y necesita
 tener un escenario cargado, esta restriccion se comprueba en el driver de Ctrl Schedule,
@@ -91,28 +73,44 @@ que usa las restricciones para generar horarios.
 
 Escoger restriccion a crear. Solo se guarda la ultima restriccion creada.
 
-Nueva Restriccion ( class domain.classes.restrictions.SpecificDayOrHourRestriction-null-5 ) definida
+Nueva Restriccion ( ParentGroupOverlapRestriction ) definida
 
-La restriccion ( class domain.classes.restrictions.SpecificDayOrHourRestriction-null-5 ) ha sido desactivada.
+La restriccion ( ParentGroupOverlapRestriction ) no se puede desactivar porque no es negociable.
 
-La restriccion ( class domain.classes.restrictions.SpecificDayOrHourRestriction-null-5 ) ha sido activada.
+La restriccion ( ParentGroupOverlapRestriction ) esta siempre activada porque no es negociable.
 
-La restriccion ( class domain.classes.restrictions.SpecificDayOrHourRestriction-null-5 ) esta ACTIVADA.
+La restriccion ( ParentGroupOverlapRestriction ) esta ACTIVADA.
 
-La restriccion ( class domain.classes.restrictions.SpecificDayOrHourRestriction-null-5 ) es negociable.
+La restriccion ( ParentGroupOverlapRestriction ) NO es negociable.
+
+Debido a que la restriccion que quieres validar es N-aria y necesita
+tener un escenario cargado, esta restriccion se comprueba en el driver de Ctrl Schedule,
+que usa las restricciones para generar horarios.
+
+Escoger restriccion a crear. Solo se guarda la ultima restriccion creada.
+
+Nueva Restriccion ( SpecificDayOrHourRestriction-null-5 ) definida
+
+La restriccion ( SpecificDayOrHourRestriction-null-5 ) ha sido desactivada.
+
+La restriccion ( SpecificDayOrHourRestriction-null-5 ) ha sido activada.
+
+La restriccion ( SpecificDayOrHourRestriction-null-5 ) esta ACTIVADA.
+
+La restriccion ( SpecificDayOrHourRestriction-null-5 ) es negociable.
 
 Tu combinacion de dia-hora-clase NO es valida segun la ultima restriccion creada
 Escoger restriccion a crear. Solo se guarda la ultima restriccion creada.
 
-Nueva Restriccion ( class domain.classes.restrictions.SubjectLevelRestriction ) definida
+Nueva Restriccion ( SubjectLevelRestriction ) definida
 
-La restriccion ( class domain.classes.restrictions.SubjectLevelRestriction ) ha sido desactivada.
+La restriccion ( SubjectLevelRestriction ) ha sido desactivada.
 
-La restriccion ( class domain.classes.restrictions.SubjectLevelRestriction ) ha sido activada.
+La restriccion ( SubjectLevelRestriction ) ha sido activada.
 
-La restriccion ( class domain.classes.restrictions.SubjectLevelRestriction ) esta ACTIVADA.
+La restriccion ( SubjectLevelRestriction ) esta ACTIVADA.
 
-La restriccion ( class domain.classes.restrictions.SubjectLevelRestriction ) es negociable.
+La restriccion ( SubjectLevelRestriction ) es negociable.
 
 Debido a que la restriccion que quieres validar es N-aria y necesita
 tener un escenario cargado, esta restriccion se comprueba en el driver de Ctrl Schedule,

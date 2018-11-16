@@ -25,7 +25,7 @@ public class OccupiedRoomRestriction extends NaryRestriction{
 	 * @return El String que identifica la restricció.
 	 */
 	public String toString() {
-		return OccupiedRoomRestriction.class.toString();
+		return OccupiedRoomRestriction.class.getSimpleName();
 	}
 	
 	/** Validació de la restricció.

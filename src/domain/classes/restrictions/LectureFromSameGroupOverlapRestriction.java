@@ -25,7 +25,7 @@ public class LectureFromSameGroupOverlapRestriction extends NaryRestriction{
 	 * @return El String que identifica la restricció.
 	 */
 	public String toString() {
-		return LectureFromSameGroupOverlapRestriction.class.toString();
+		return LectureFromSameGroupOverlapRestriction.class.getSimpleName();
 	}
 	
 	/** Validació de la restricció.
