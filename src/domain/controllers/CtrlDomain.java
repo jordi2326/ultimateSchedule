@@ -226,10 +226,9 @@ public class CtrlDomain {
     			
     			Map<String, UnaryRestriction> restrictions = new HashMap<String, UnaryRestriction>();
     			
-    			if (!g.getDayPeriod().equals(Group.DayPeriod.INDIFERENT)) {
-    				DayPeriodRestriction dpr = new DayPeriodRestriction(6, g.getDayPeriod());
-    				restrictions.put(dpr.toString(), dpr);
-    			}
+			DayPeriodRestriction dpr = new DayPeriodRestriction(6, g.getDayPeriod());
+			restrictions.put(dpr.toString(), dpr);
+  
 			/*
     			if (g.toString().equals("FM-10-THEORY")) {
     				SpecificDayOrHourRestriction sdohr = new SpecificDayOrHourRestriction(2, 2);
