@@ -230,10 +230,12 @@ public class CtrlDomain {
     				DayPeriodRestriction dpr = new DayPeriodRestriction(6, g.getDayPeriod());
     				restrictions.put(dpr.toString(), dpr);
     			}
+			/*
     			if (g.toString().equals("FM-10-THEORY")) {
     				SpecificDayOrHourRestriction sdohr = new SpecificDayOrHourRestriction(2, 2);
     				restrictions.put(sdohr.toString(), sdohr);
     			}
+			*/
     			unaryRestrictions.put(g.toString(), restrictions); 
         		
         	}
