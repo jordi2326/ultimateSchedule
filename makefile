@@ -8,8 +8,6 @@ BIN = ./exe/
 .SUFFIXES: .java .class
 
 .java.class:
-	#$(JC) $(JFLAGS) $*.java -cp $(CCPATHS) -d $(BIN)
-	#$(JC) $(JFLAGS) $*.java -cp $(CCPATHS) -encoding utf-8 -d $(BIN)
 	$(JC) $(JFLAGS) $*.java -cp $(CCPATHS) -encoding iso-8859-1 -d $(BIN)
 
 CCPATHS = ./src:$(JARS)
@@ -21,10 +19,10 @@ CLASSES = \
 	src/domain/classes/restrictions/*.java \
 	src/domain/controllers/*.java \
 	src/domain/drivers/*.java \
-	src/persistance/*.java
+	src/persistance/*.java \
 	src/domain/junits/*.java
 
-JARS = ./externalClasses/json-simple-1.1c.jar
+JARS = ./externalClasses/json-simple-1.1c.jar:./externalClasses/junit-4.12.jar:./externalClasses/hamcrest-core-1.3.jar
 
 MAIN = Main
 
@@ -65,8 +63,8 @@ run-driver-ctrlSchedule:
 run-driver-restriction:
 	$(JVM) -cp $(RCPATHS) domain.drivers.RestrictionDriver
 
-run-driver-junit:
-	$(JVM) -cp $(RCPATHS) domain.junit.TestingAll
+run-junit:
+	$(JVM) -cp $(RCPATHS) org.junit.runner.JUnitCore domain.junits.TestingAll
 
 clean:
 	$(RM) -rf $(BIN)*
