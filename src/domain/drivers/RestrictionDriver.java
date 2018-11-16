@@ -1,7 +1,12 @@
 package domain.drivers;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import domain.classes.Group;
+import domain.classes.Lecture;
 import domain.classes.Restriction;
 import domain.classes.Subject;
 import domain.classes.restrictions.CorequisitRestriction;
@@ -18,6 +23,8 @@ import domain.classes.restrictions.NaryRestriction;
 
 public class RestrictionDriver {
 	private static Restriction r;
+	private static Scanner sc;
+	private static boolean silent = false;
 	
 	private static void menu() {
 		System.out.print(
@@ -36,7 +43,69 @@ public class RestrictionDriver {
 	                    
     }
 	
+	private static void printMain() {
+		System.out.print(
+	            "Lecture Driver\n"
+	            + "---------------------\n"
+	    	    + "Opciones\n"
+	    	    + " 1| Test Automatico\n"
+	    	    + " 2| Probar Manualmente\n"
+	    	    + " 0| Salir\n"
+	    	    + "---------------------\n"
+	    	    );                     
+    }
+	
 	public static void main (String [] args) throws Exception {
+		sc = new Scanner(System.in);
+		int n;
+	    printMain();
+	    n = sc.nextInt();
+	    switch (n) {
+	    	case 1:
+	    		automaticTestMenu();
+	            break;
+	        case 2:
+	        	loadTestMenu();
+	            break;
+	    }
+	}
+	
+	private static void printLoadFileMenu(String title, List<String> filenames) {
+		System.out.println(title);
+		System.out.print("--------------------------\n");
+		for (int i = 0; i < filenames.size(); i++) {
+			System.out.println(i + "| "+ filenames.get(i));
+		}
+		
+		System.out.print("--------------------------\n");
+    }
+	
+	
+	public static void automaticTestMenu(){
+		String path = "data/driverTests/restriction/";
+		File folder = new File(path);
+		File[] listOfFiles = folder.listFiles();
+		List<String> filenames = new ArrayList<String>();
+		
+		for (File file : listOfFiles) {
+		    if (file.isFile()) {
+		    	filenames.add(file.getName());
+		    }
+		}
+		printLoadFileMenu("Cargar Test", filenames);
+	    int n = sc.nextInt();
+	    try {
+	    	String filename = filenames.get(n);
+	    	sc = new Scanner(new FileReader(new File(path+filename)));
+	    	l = new Lecture(sc.nextInt(), sc.next(), sc.nextInt());
+	    	silent = true;
+	    	subMenu();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void loadTestMenu() throws Exception {
 		Scanner sc = new Scanner(System.in);
 	
 		int n;

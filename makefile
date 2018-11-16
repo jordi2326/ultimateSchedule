@@ -21,6 +21,7 @@ CLASSES = \
 	src/domain/classes/restrictions/*.java \
 	src/domain/controllers/*.java \
 	src/domain/drivers/*.java \
+	src/domain/junits/*.java \
 	src/persistance/*.java
 
 JARS = ./externalClasses/json-simple-1.1c.jar
@@ -63,6 +64,9 @@ run-driver-ctrlSchedule:
 
 run-driver-restriction:
 	$(JVM) -cp $(RCPATHS) domain.drivers.RestrictionDriver
+
+run-driver-junit:
+	$(JVM) -cp $(RCPATHS) domain.junits.TestingAll
 
 
 clean:
