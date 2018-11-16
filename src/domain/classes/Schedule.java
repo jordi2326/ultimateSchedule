@@ -3,8 +3,6 @@
  */
 package domain.classes;
 
-import static org.junit.Assert.assertTrue;
-
 import java.time.DayOfWeek;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +35,7 @@ public class Schedule {
 	*/
 	Map<String, String[][]> schedule;
 	
-	/** Constructora estàndard.
+	/** Constructora estï¿½ndard.
 	*/
 	public Schedule() {
 		schedule = new HashMap<String, String[][]>(); //String es codi del grup 
@@ -93,7 +91,7 @@ public class Schedule {
 	*	@param room		Aula on eliminarem el grup.
 	*	@param day		Dia on eliminarem el grup.
 	*	@param hour		Hora on eliminarem el grup.
-	*	@return Si existeix l'aula, eliminem el grup en qüestió i retornem true. Fals en cas contrari.
+	*	@return Si existeix l'aula, eliminem el grup en qï¿½estiï¿½ i retornem true. Fals en cas contrari.
 	*/
 	public boolean removeLecture(String room, int day, int hour) {
 		if(schedule.containsKey(room)){
@@ -130,6 +128,10 @@ public class Schedule {
         return jo.toJSONString(0);        
 	}
 	
+	/** Compara dos schedules
+	*	@param sc ParÃ metre a comparar
+	*	@return True si sc Ã©s igual que this.
+	*/
 	public boolean equals(Schedule sc) {
 		for (String room : this.getSchedule().keySet()) {
 			if (!sc.getSchedule().containsKey(room)) return false;
