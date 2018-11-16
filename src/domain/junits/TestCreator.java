@@ -22,6 +22,7 @@ public class TestCreator {
 		schedule.putLecture("A5S102", 4, 2, "FM-10-THEORY");
 		
 		Schedule SCFinal = new Schedule(schedule.toJsonString());
-		assertTrue(SCFinal.equals(schedule)); // Vaig a un lloc del mapa que no existeix (0, 0)
+		
+		assertTrue(schedule.equals(SCFinal));
 	}
 }
