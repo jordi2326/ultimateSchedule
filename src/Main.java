@@ -64,6 +64,7 @@ public class Main {
 	          	+ " 2| View Saved Schedule\n"
 	          	+ " 3| View Subjects\n"
 	          	+ " 4| View Rooms\n"
+	          	+ " 5| View Restrictions\n"
 	          	+ " 0| Back\n"
 	            + "--------------------------\n"
 	            );         

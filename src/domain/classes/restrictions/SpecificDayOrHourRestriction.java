@@ -17,12 +17,12 @@ public class SpecificDayOrHourRestriction extends UnaryRestriction{
 	@Override
 	public boolean validate(Integer day, Integer hour, Integer duration) {
 		if (this.day == null) {
-			return hour != this.hour;
+			return (hour > this.hour || hour+duration <= this.hour);
 		}
 		else if (this.hour == null) {
 			return day != this.day;
 		}
-		else return (day != this.day) || (hour != this.hour);
+		else return (day != this.day) || (hour > this.hour || hour+duration <= this.hour);
 	}
 
 }
