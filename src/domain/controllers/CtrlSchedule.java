@@ -1,7 +1,6 @@
 package domain.controllers;
 
 import domain.classes.Group;
-import domain.classes.Group.DayPeriod;
 import domain.classes.Lecture;
 import domain.classes.PosAssig;
 import domain.classes.Room;
@@ -32,23 +31,42 @@ class groupHeuristicComparator implements Comparator<Map.Entry<Integer, String>>
         } 
 } 
 
+/** Controlador de Schedule.
+ * @author XX
+*/
 public class CtrlSchedule {
 	
+	/** Instancia d'aquesta classe.
+	*/
 	private static CtrlSchedule instance;
 	
+	/**
+	 * Retorna la instancia d'aquesta classe.
+	 * @return {@link CtrlDomain#instance}
+	 */
 	public static CtrlSchedule getInstance() {
 		if (instance == null)
 			instance = new CtrlSchedule();
 		return instance;
 	}
 	
+	/** Constructora estàndard.
+	*/
 	private CtrlSchedule() {
-		// TODO Auto-generated constructor stub
 	}
 
 	
-	// ************************************************************************
-	
+	/**
+	 * Funció principal que genera un horari amb les dades donades.
+	 * @param unaryRestrictions Conjunt de restriccions unaries a tenir en compte.
+	 * @param naryRestrictions Conjunt de restriccions n-aries a tenir en compte.
+	 * @param groups Conjunt de grups que es volen incloure en l'horari.
+	 * @param rooms Conjunt d'aules que es volen incloure en l'horari.
+	 * @param subjects Conjunt de assignatures que tenen algun grup que es vol incloure a l'horari.
+	 * @param lectures Conjunt de 'lectures' que es volen incloure en l'horari.
+	 * @param schedule Objecte de la classe Schedule que contindrà l'horari generat al finalitzar l'algoritme.
+	 * @return  true si s'ha trobat un horari valid, sino false.
+	 */
 	public boolean generateSchedule(Map<String, Map<String, UnaryRestriction>> unaryRestrictions, Map<String, NaryRestriction> naryRestrictions, 
 					    Map<String, Group> groups, Map<String, Room> rooms, Map<String, Subject> subjects, Map<String, 
 					    Lecture> lectures, Schedule schedule) {
@@ -132,7 +150,19 @@ public class CtrlSchedule {
 		return exists;
 	}
 	
-	
+	/**
+	 * Funció de Forward Checking que comprova la validesa de l'última signació i reduix les possibles assignacions si es possible.
+	 * @param lecture Última 'lecture' que s'ha assignat a l'horari, i es vol comprovar la seva validesa.
+	 * @param room Aula en la qual s'ha assignat la 'lecture'.
+	 * @param day Dia en el que s'ha assignat la 'lecture'.
+	 * @param hour Hora en la que s'ha assignat la 'lecture'.
+	 * @param subjects Conjunt de assignatures que tenen algun grup que es vol incloure a l'horari.
+	 * @param groups Conjunt de grups que es volen incloure en l'horari.
+	 * @param lectures Conjunt de 'lectures' que es volen incloure en l'horari.
+	 * @param shrek Map que conté les possibles assignacions de cada 'lecture'.
+	 * @param naryRestrictions Conjunt de restriccions n-aries a tenir en compte.
+	 * @return true si l'assigació a comprovar es valida, sino false.
+	 */
 	private static boolean forwardCheck(String lecture, String room, Integer day, Integer hour, Map<String, Subject> subjects,
 			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek, Map<String, NaryRestriction> naryRestrictions) {
 		for (NaryRestriction restr : naryRestrictions.values()) {
@@ -143,6 +173,17 @@ public class CtrlSchedule {
 		return true;
 	}
 
+	/**
+	 * Funció que fa Back Jumping, utilitzat en l'algoritme que genera un horari.
+	 * @param schedule Objecte de la classe Schedule que contindrà l'horari generat al finalitzar l'algoritme.
+	 * @param heuristica Priority Queue de 'lectures', on les que tenen menor nombre de possibles assignacions estàn a dalt.  
+	 * @param subjects Conjunt de assignatures que tenen algun grup que es vol incloure a l'horari.
+	 * @param groups Conjunt de grups que es volen incloure en l'horari.
+	 * @param lectures Conjunt de 'lectures' que es volen incloure en l'horari.
+	 * @param shrek Map que conté les possibles assignacions de cada 'lecture'.
+	 * @param naryRestrictions Conjunt de restriccions n-aries a tenir en compte.
+	 * @return true si s'ha generat correctament, false si no s'ha pogut generar cap horari valid.
+	 */
 	private static boolean backjumping(Schedule schedule, PriorityQueue<Map.Entry<Integer, String>> heuristica, Map<String, Subject> subjects,
 			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek, Map<String, NaryRestriction> naryRestrictions) {
 		{ // Canviar nom de la PQ si volem xD		

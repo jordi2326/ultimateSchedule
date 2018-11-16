@@ -1,16 +1,83 @@
 package domain.drivers;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.json.simple.parser.ParseException;
+
 import domain.controllers.CtrlDomain;
 
 public class CtrlDomainDriver {
 	private static Scanner sc;
 	private static CtrlDomain cD;
+	private static boolean silent = false;
 	
-	private static void menu() {
+	private static void printMain() {
+		System.out.print(
+	            "CtrlDomain Driver\n"
+	            + "---------------------\n"
+	    	    + "Opciones\n"
+	    	    + " 1| Test Automatico\n"
+	    	    + " 2| Probar Manualmente\n"
+	    	    + " 0| Salir\n"
+	    	    + "---------------------\n"
+	    	    );  
+	                    
+    }
+	
+	public static void main (String [] args) throws Exception {
+		cD = CtrlDomain.getInstance();
+		sc = new Scanner(System.in);
+		int n;
+	    printMain();
+	    n = sc.nextInt();
+	    switch (n) {
+	    	case 1:
+	    		loadTestMenu();
+	            break;
+	        case 2:
+	        	subMenu();
+	            break;
+	    }
+	}
+	
+	private static void printLoadFileMenu(String title, List<String> filenames) {
+		System.out.println(title);
+		System.out.print("--------------------------\n");
+		for (int i = 0; i < filenames.size(); i++) {
+			System.out.println(i + "| "+ filenames.get(i));
+		}
+		
+		System.out.print("--------------------------\n");
+    }
+	
+	private static void loadTestMenu(){
+		String path = "data/driverTests/ctrlDomain/";
+		File folder = new File(path);
+		File[] listOfFiles = folder.listFiles();
+		List<String> filenames = new ArrayList<String>();
+		
+		for (File file : listOfFiles) {
+		    if (file.isFile()) {
+		    	filenames.add(file.getName());
+		    }
+		}
+		printLoadFileMenu("Cargar Test", filenames);
+	    int n = sc.nextInt();
+	    try {
+	    	String filename = filenames.get(n);
+	    	sc = new Scanner(new FileReader(new File(path+filename)));
+	    	silent = true;
+	    	subMenu();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void printSubMenu() {
 		System.out.print(
 	            "Subject Driver\n"
 	            + "---------------------\n"
@@ -23,19 +90,17 @@ public class CtrlDomainDriver {
 	            + " 6| getSubjectNamesList\n"
 	            + " 7| importEnvironment\n"
 	            + " 8| importSchedule\n"
-	            + " 9| scheduleToJsonString\n"
+	            + " 9| printSchedule\n"
+	            + "10| scheduleToJsonString\n"
 	            + " 0| Salir\n"
 	            + "---------------------\n"
 	            );
 	                    
     }
 	
-	public static void main (String [] args) {
-		sc = new Scanner(System.in);
-		cD = CtrlDomain.getInstance();
-		
+	private static void subMenu () {	
 		int n;
-	    menu();
+		if(!silent) printSubMenu();
 	    n = sc.nextInt();
 	    while (n != 0) {
 	        switch (n) {
@@ -64,6 +129,9 @@ public class CtrlDomainDriver {
 	        		testImportSchedule();
 	        		break;
 	        	case 9:
+	        		testPrintSchedule();
+	        		break;
+	        	case 10:
 	        		testScheduleToJsonString();
 	        		break;
 	        }
@@ -128,8 +196,9 @@ public class CtrlDomainDriver {
 	
 	
 	private static void testImportEnvironment() {
+		if(!silent) System.out.println(">Introduzca Nombre de Archivo");
+		String filename = sc.next();
 		try {
-			String filename = "basic.json";
 			cD.importEnvironment(filename);
 			System.out.println("Imported "+filename);
 		} catch (ParseException | IOException e) {
@@ -138,11 +207,20 @@ public class CtrlDomainDriver {
 	}
 	
 	private static void testImportSchedule() {
+		if(!silent) System.out.println(">Introduzca Nombre de Archivo");
+		String filename = sc.next();
 		try {
-			String filename = "scheduleA.json";
 			cD.importSchedule(filename);
 			System.out.println("Imported "+filename);
 		} catch (ParseException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void testPrintSchedule() {
+		try {
+			cD.printSchedule();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

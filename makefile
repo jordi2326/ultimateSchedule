@@ -53,8 +53,11 @@ run-driver-lecture:
 run-driver-schedule:
 	$(JVM) -cp $(RCPATHS) domain.drivers.ScheduleDriver
 
-run-driver-posassig:
+run-driver-posAssig:
 	$(JVM) -cp $(RCPATHS) domain.drivers.PosAssigDriver
+
+run-driver-ctrlDomain:
+	$(JVM) -cp $(RCPATHS) domain.drivers.CtrlDomainDriver
 
 clean:
 	$(RM) -rf $(BIN)*

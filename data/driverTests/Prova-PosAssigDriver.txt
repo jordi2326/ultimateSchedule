@@ -3,7 +3,7 @@ Objectius: Provar la consulta i modificació d'informació d'un objecte de la cl
 Probarem totes les funcions de la classe PosAssig
 
 Instruccions:
-*Executar el PosAssigDriver (make run-driver-posassig)
+*Executar el PosAssigDriver (make run-driver-posAssig)
 *Entrar al mode 'Test Automatico' (0)
 *Carregar l'arxiu 'test_posAssigA.inp'
 
