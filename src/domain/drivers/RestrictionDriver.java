@@ -10,6 +10,7 @@ import domain.classes.restrictions.OccupiedRoomRestriction;
 import domain.classes.restrictions.ParentGroupOverlapRestriction;
 import domain.classes.restrictions.SpecificDayOrHourRestriction;
 import domain.classes.restrictions.SubjectLevelRestriction;
+import domain.classes.restrictions.UnaryRestriction;
 
 
 public class RestrictionDriver {
@@ -64,7 +65,18 @@ public class RestrictionDriver {
 	}
 	
 	public static void testValidate(Scanner sc) {
-		
+		if (r instanceof UnaryRestriction) {
+			System.out.println("Introduzca dia y/o hora en este orden.\n");
+        	Integer day, hour;
+        	day = sc.nextInt();
+        	hour = sc.nextInt();
+        	System.out.println("Introduzca duracion de la Lecture:\n");
+        	Integer duration = sc.nextInt();
+			((UnaryRestriction) r).validate(day, hour, duration);
+		}
+		else {
+			
+		}
 	}
 	
 		public static void listRestrictions() {
