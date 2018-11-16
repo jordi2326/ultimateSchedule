@@ -15,6 +15,7 @@ import domain.classes.Subject;
 public abstract class NaryRestriction extends Restriction {
 	
 	/** Constructora estàndard.
+	 * @param negotiable Indica si la restricció que estem mirant és negociable o no.
 	 */
 	public NaryRestriction(boolean negotiable) {
 		super(negotiable);

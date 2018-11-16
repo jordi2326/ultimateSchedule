@@ -42,7 +42,7 @@ public class DayPeriodRestriction extends UnaryRestriction{
 	 * @param day		Dia en que, combinat amb l'hora, no pot anar el grup.
 	 * @param hour		Hora en que, combinada amb el dia, no pot anar el grup.
 	 * @param duration	Duració del grup.
-	 * @return True <br>
+	 * @return True si<br>
 	 * <ul>
 	 * 		<li> El grup ha d'anar de matins i hour + duration <= midDay.</li>
 	 * 		<li> El grup ha d'anar de tardes i midDay < (hour + duration) <= Última hora de classes del dia.</li>

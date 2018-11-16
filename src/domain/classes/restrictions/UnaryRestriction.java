@@ -9,6 +9,7 @@ import domain.classes.Restriction;
 public abstract class UnaryRestriction extends Restriction {
 
 	/** Constructora estàndard.
+	 * @param negotiable Indica si la restricció que estem mirant és negociable o no.
 	 */
 	public UnaryRestriction(boolean negotiable) {
 		super(negotiable);
