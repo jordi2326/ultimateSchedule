@@ -343,13 +343,13 @@ Sortida esperada:
 Objectius: Mirar que el llistat de restriccions d'un entorn sigui el correcte.
 
 Carregarem l'arxiu 'provaNoTime2.json'
-Hi ha un sol grup que pot anar només de matins. Aquesta serà l'única restricció unària.
-De restricció n-àries tindrem les que ho comproven tot:
-  · ParentGroupOverlapRestriction
-  · LectureFromSameGroupOverlapRestriction
-  · OccupiedRoomRestriction
-  · CorrequisitRestriction
-  · SubjectLevelRestriction
+Hi ha un sol grup que pot anar nomï¿½s de matins. Aquesta serï¿½ l'ï¿½nica restricciï¿½ unï¿½ria.
+De restricciï¿½ n-ï¿½ries tindrem les que ho comproven tot:
+  ï¿½ ParentGroupOverlapRestriction
+  ï¿½ LectureFromSameGroupOverlapRestriction
+  ï¿½ OccupiedRoomRestriction
+  ï¿½ CorrequisitRestriction
+  ï¿½ SubjectLevelRestriction
 
 Sortida esperada:
 Un-ary restrictions
@@ -371,7 +371,7 @@ N-ary restrictions
 Objectius: Mirar que el llistat de grups d'un entorn sigui el correcte.
 
 Carregarem l'arxiu 'provaSubjectLevel.json'
-En aquest entorn només hi ha 2 grups.
+En aquest entorn nomï¿½s hi ha 2 grups.
 
 Sortida esperada:
 Groups
@@ -386,7 +386,7 @@ Groups
 Objectius: Mirar que el llistat d'assignatures d'un entorn sigui el correcte.
 
 Carregarem l'arxiu 'provaSubjectLevel.json'
-En aquest entorn només hi ha 2 assignatures.
+En aquest entorn nomï¿½s hi ha 2 assignatures.
 
 Sortida esperada:
 Subjects
@@ -401,7 +401,7 @@ Subjects
 Objectius: Mirar que el llistat d'aules d'un entorn sigui el correcte.
 
 Carregarem l'arxiu 'provaSubjectLevel.json'
-En aquest entorn només hi ha 2 aules.
+En aquest entorn nomï¿½s hi ha 2 aules.
 
 Sortida esperada:
 Rooms
@@ -483,9 +483,7 @@ Sortida esperada:
 |------+--------------------+--------------------+--------------------+--------------------+--------------------|
 |19:00 |                    |                    |                    |                    |                    |
 |---------------------------------------------------------------------------------------------------------------|
-
 Saved 'Prova 14.json'
-
 |---------------------------------------------------------------------------------------------------------------|
 |      |      MONDAY        |      TUESDAY       |     WEDNESDAY      |      THURSDAY      |       FRIDAY       |
 |------+--------------------+--------------------+--------------------+--------------------+--------------------|

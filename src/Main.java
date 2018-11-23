@@ -186,9 +186,10 @@ public class Main {
 	public static void loadSchedulesMenu(){
 		List<String> filenames = ctDomain.getScheduleFilesList();
 		printLoadFileMenu("Load Schedule", filenames);
-	    int n = sc.nextInt();
+		sc.nextLine();
+		String n = sc.nextLine();
 	    try {
-	    	String filename = filenames.get(n);
+	    	String filename = n;
 			ctDomain.importSchedule(filename);
 			ctDomain.printSchedule();
 		} catch (Exception e) {
