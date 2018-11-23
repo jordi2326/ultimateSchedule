@@ -23,7 +23,7 @@ public class Main {
 	
 	private static void printMain() {
 		if (!silent) System.out.print(
-	            "Group Driver\n"
+	            "Welcome to UltimateSchedule\n"
 	            + "---------------------\n"
 	    	    + "Opciones\n"
 	    	    + " 1| Test Automatico\n"
@@ -123,11 +123,11 @@ public class Main {
 		List<String> filenames = ctDomain.getEnvironmentFilesList();
 		printLoadFileMenu("Load Environment", filenames);
 		ctDomain.erase();
-	    int n = sc.nextInt();
+		sc.nextLine();
+	    String s = sc.nextLine();
 	    try {
-	    	String filename = filenames.get(n);
-			ctDomain.importEnvironment(filename);
-			environmentMenu(filename);
+			ctDomain.importEnvironment(s);
+			environmentMenu(s);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
