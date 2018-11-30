@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -114,7 +115,9 @@ public class CtrlDomain {
 	 * @return Retorna la llista de codis de les aules de l'entorn del domini.
 	 */
 	public ArrayList<String> getRoomNamesList() {
-		return new ArrayList<String>(rooms.keySet());
+		ArrayList<String> list = new ArrayList<String>(rooms.keySet());
+		Collections.sort(list);
+		return list;
 	}
 	
 	/**
