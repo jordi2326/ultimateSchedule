@@ -4,7 +4,7 @@ import presentation.CtrlPresentation;
 import presentation.MainView;
 
 public class RealMain {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		/**javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
