@@ -452,4 +452,8 @@ public class CtrlDomain {
 	public List<String> getScheduleFilesList() {
 		return dataController.getScheduleFilesList();
 	}
+	
+	public String[][] getScheduleMatrix() {
+		return (String[][]) schedule.getSchedule().values().toArray()[0];
+	}
 }
