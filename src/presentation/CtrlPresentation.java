@@ -1,6 +1,11 @@
 package presentation;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import org.json.simple.parser.ParseException;
+
 import domain.controllers.CtrlDomain;
 
 public class CtrlPresentation {
@@ -26,20 +31,27 @@ public class CtrlPresentation {
 	}
 	
 	public String[][] getScheduleMatrix(){
+		String[][] table = new String[12][5];
+		for (String[] row: table)
+		    Arrays.fill(row, "");
 		String[][] data = ctrlDomain.getScheduleMatrix();
 		if (data.length > 0) {
-			String[][] transposed = new String[data[0].length][data.length];
             for (int i = 0; i < data[0].length; i++) {
                 for (int j = 0; j < data.length; j++) {
-                	transposed[i][j] = data[j][i];
+                	table[i][j] = data[j][i];
                 }
             }
-            return transposed;
 		}
-		return new String[][]{};
+		return table;
 	}
+	
 	public ArrayList<String> getAllRooms() {
 		return ctrlDomain.getRoomNamesList();
+	}
+	
+	public boolean importSchedule(String filename)
+		throws FileNotFoundException, ParseException {
+		return ctrlDomain.importSchedule(filename);
 	}
 
 }

@@ -98,6 +98,8 @@ public class CtrlDomain {
 		naryRestrictions.put(slr.toString(), slr);
 		LectureFromSameGroupOverlapRestriction lfgor = new LectureFromSameGroupOverlapRestriction();
 		naryRestrictions.put(lfgor.toString(), lfgor);
+		
+		schedule = new Schedule();
 	}
 	
 	/**
@@ -174,7 +176,6 @@ public class CtrlDomain {
 	 */
 	public boolean generateSchedule() {
 		CtrlSchedule ctS = CtrlSchedule.getInstance();
-		schedule = new Schedule();
 		//Filtrem restriccions unaries
 		Map<String, Map<String, UnaryRestriction>> enabledUnaryRestrictions = new HashMap<String, Map<String, UnaryRestriction>>();
 		for (String g : unaryRestrictions.keySet()) {
@@ -454,6 +455,8 @@ public class CtrlDomain {
 	}
 	
 	public String[][] getScheduleMatrix() {
-		return (String[][]) schedule.getSchedule().values().toArray()[0];
+		Object[] data = (Object[]) schedule.getSchedule().values().toArray();
+		if(data.length > 0) return (String[][]) data[0];
+		return new String[][] {};
 	}
 }
