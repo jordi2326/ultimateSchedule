@@ -16,6 +16,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject; 
 import org.json.simple.parser.*;
 
+import domain.classes.Environment;
 import domain.classes.Group;
 import domain.classes.Lecture;
 import domain.classes.PosAssig;
@@ -81,12 +82,6 @@ public class CtrlDomain {
 	*/
 	private CtrlDomain() {
 		dataController = CtrlData.getInstance();
-		subjects = new HashMap<String, Subject>();
-		rooms = new HashMap<String, Room>();
-		groups = new HashMap<String, Group>();
-		lectures = new HashMap<String, Lecture>();
-		unaryRestrictions = new HashMap<String, Map<String, UnaryRestriction>>();
-		naryRestrictions = new HashMap<String, NaryRestriction>();
 		
 		OccupiedRoomRestriction ocrr = new OccupiedRoomRestriction();
 		naryRestrictions.put(ocrr.toString(), ocrr);
@@ -266,6 +261,9 @@ public class CtrlDomain {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public boolean importEnvironment(String filename) throws ParseException, IOException   {
+		
+		 Environment env = Environment.getInstance();
+		 
 		 String jsonData = dataController.readEnvironment(filename);
 		 Object obj = new JSONParser().parse(jsonData);
 		 
@@ -295,7 +293,8 @@ public class CtrlDomain {
         		String gcode = (String) group.get("code");
         		for(int i = 0; i < durations.size(); i++){
         			Lecture l = new Lecture(i, scode +"-"+ gcode +"-"+ group.get("type"), durations.get(i).intValue());
-        			lectures.put(l.toString(), l);
+        			//lectures.put(l.toString(), l);
+        			env.addLecture(l);
         			ls.add(l.toString());
         		}
     			Group g = new Group(
@@ -306,7 +305,8 @@ public class CtrlDomain {
     					Group.Type.valueOf((String) group.get("type")),
     					Group.DayPeriod.valueOf((String) group.get("dayPeriod")),
     					ls);
-    			groups.put(g.toString(), g);
+    			//groups.put(g.toString(), g);
+    			env.addGroup(g);    			
     			groupsToString.add(g.toString());
     			//Afegim la restriccio d'aquest grup de mati o tarda o indiferent
     			
@@ -331,7 +331,8 @@ public class CtrlDomain {
 				groupsToString,
 				(ArrayList<String>) subject.get("coreqs")
     			);
-        	subjects.put(s.toString(), s);
+        	//subjects.put(s.toString(), s);
+        	env.addSubject(s);
         }
         // getting rooms 
         JSONArray jsonRooms = (JSONArray) jo.get("rooms");
@@ -344,7 +345,8 @@ public class CtrlDomain {
         			((Long) room.get("capacity")).intValue(),
         			(Boolean) room.get("hasComputers")
         			);
-        	rooms.put(r.toString(), r);
+        	//rooms.put(r.toString(), r);
+        	env.addRoom(r);
         }
         
         this.subjects = subjects;

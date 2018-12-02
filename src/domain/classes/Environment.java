@@ -1,6 +1,7 @@
 package domain.classes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import domain.classes.restrictions.NaryRestriction;
@@ -35,8 +36,28 @@ public class Environment {
 	*/
 	private Map<String, NaryRestriction> naryRestrictions;
 	
+	private Environment() {
+		subjects = new HashMap<String, Subject>();
+		rooms = new HashMap<String, Room>();
+		groups = new HashMap<String, Group>();
+		lectures = new HashMap<String, Lecture>();
+		unaryRestrictions = new HashMap<String, Map<String, UnaryRestriction>>();
+		naryRestrictions = new HashMap<String, NaryRestriction>();
+	}
+	
+	public static Environment getInstance() {
+		if (instance == null) {
+			instance = new Environment();
+		}
+		return instance;
+	}	
 	
 	/////////////// GROUPS //////////////////////////////
+	
+	public void addGroup(Group g) {
+		groups.put(g.toString(), g);
+	}
+	
 	public String getGroupSubject(String g) {
 		return groups.get(g).getSubject();
 	}
@@ -67,6 +88,10 @@ public class Environment {
 	
 	/////////////// SUBJECTS //////////////////////////////
 	
+	public void addSubject(Subject s) {
+		subjects.put(s.toString(), s);
+	}
+	
 	public String getSubjectCode(String s) {
 		return subjects.get(s).getCode();
 	}
@@ -89,6 +114,10 @@ public class Environment {
 	
 	/////////////// LECTURE //////////////////////////////
 	
+	public void addLecture(Lecture l) {
+		lectures.put(l.toString(), l);
+	}
+	
 	public Integer getLectureDuration(String l) {
 		return lectures.get(l).getDuration();
 	}
@@ -100,6 +129,9 @@ public class Environment {
 	
 	/////////////// ROOM //////////////////////////////
 	
+	public void addRoom(Room r) {
+		rooms.put(r.toString(), r);
+	}
 	
 	public String getRoomCode(String r) {
 		return rooms.get(r).getCode();
