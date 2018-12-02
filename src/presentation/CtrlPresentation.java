@@ -30,19 +30,8 @@ public class CtrlPresentation {
 		mainView.setVisible(true);
 	}
 	
-	public String[][] getScheduleMatrix(){
-		String[][] table = new String[12][5];
-		for (String[] row: table)
-		    Arrays.fill(row, "");
-		String[][] data = ctrlDomain.getScheduleMatrix();
-		if (data.length > 0) {
-            for (int i = 0; i < data[0].length; i++) {
-                for (int j = 0; j < data.length; j++) {
-                	table[i][j] = data[j][i];
-                }
-            }
-		}
-		return table;
+	public ArrayList<String>[][] getScheduleMatrix(){
+		return ctrlDomain.getScheduleMatrix();
 	}
 	
 	public ArrayList<String> getAllRooms() {

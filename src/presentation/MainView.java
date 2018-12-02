@@ -19,6 +19,8 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
+
 import javax.swing.JTabbedPane;
 import javax.swing.JTree;
 import javax.swing.ScrollPaneConstants;
@@ -143,7 +145,7 @@ public class MainView extends JFrame {
 	}
 	
 	private void redrawScheduleMatrix() {
-		String data[][] = ctrlPresentation.getScheduleMatrix();
+		ArrayList<String>[][] data = ctrlPresentation.getScheduleMatrix();
 		table.changeData(data);
 	}
 

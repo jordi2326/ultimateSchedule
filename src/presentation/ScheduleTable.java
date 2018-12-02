@@ -2,12 +2,15 @@ package presentation;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EventObject;
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -19,17 +22,23 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import javax.swing.event.CellEditorListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 public class ScheduleTable extends JScrollPane{
 	
 	private JTable table;
+	private JList rowHeader;
 	private static String[] colNames = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
 	private static String[] rowNames = {"08:00 - 09:00", "09:00 - 10:00", "10:00 - 11:00", "11:00 - 12:00", "12:00 - 13:00", "13:00 - 14:00", "14:00 - 15:00", "15:00 - 16:00", "16:00 - 17:00", "17:00 - 18:00", "18:00 - 19:00", "19:00 - 20:00"};
+	int[] heights = new int[12];
 	
 	public ScheduleTable(Object[][] data){
 		super();
@@ -43,49 +52,26 @@ public class ScheduleTable extends JScrollPane{
 		header.setFont(header.getFont().deriveFont(Font.BOLD, 14f));
 		table.setFillsViewportHeight(true);
 		table.setRowHeight(40);
+		Arrays.fill(heights, 40);
 		table.setRowSelectionAllowed(false);
-		table.setDefaultRenderer(String.class, new CellRenderer());
-		//table.setGridColor(Color.decode("#c5cae9"));
 		table.setGridColor(Color.decode("#ebedf2"));
 		table.setShowGrid(false);
+		table.getTableHeader().setReorderingAllowed(false);
 		
-		final JPopupMenu popupMenu = new JPopupMenu();
-        JMenuItem removeLec = new JMenuItem("Remove Lecture");
-        
-        JMenuItem moveLec = new JMenuItem("Move Lecture");
-        moveLec.addActionListener(new ActionListener() {
+		CellRenderer renderer = new CellRenderer();
+		table.setDefaultRenderer(Object.class, renderer);
+		table.setDefaultEditor(Object.class, renderer);
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(ScheduleTable.this, "Duuuuuuuuude no..");
-            }
-        });
-        
-        removeLec.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(ScheduleTable.this, "Duuuuuuuuude really?");
-            }
-        });
-        
-        popupMenu.add(moveLec);
-        popupMenu.add(removeLec);
-        table.setComponentPopupMenu(popupMenu);
-        table.addMouseListener(new MouseAdapter() {
-            @Override
+		table.addMouseListener(new MouseAdapter() {
+			@Override
             public void mousePressed(MouseEvent e) {
-                int r = table.rowAtPoint(e.getPoint());
+				int r = table.rowAtPoint(e.getPoint());
                 int c = table.columnAtPoint(e.getPoint());
-                if (table.getValueAt(r, c)!=null && !((String) table.getValueAt(r, c)).isEmpty() && r >= 0 && r < table.getRowCount() && c >= 0 && c < table.getColumnCount()) {
-                    table.setRowSelectionInterval(r, r);
-                    table.setColumnSelectionInterval(c, c);
-                } else {
-                    table.clearSelection();
+                if (table.getValueAt(r, c)!=null && !((ArrayList<String>) table.getValueAt(r, c)).isEmpty() && r >= 0 && r < table.getRowCount() && c >= 0 && c < table.getColumnCount()) {
+                	table.editCellAt(r, c);
                 }
-                
-            }
-        });
+			}
+		});
 		
 		ListModel lm = new AbstractListModel() {
 		      @Override
@@ -98,15 +84,14 @@ public class ScheduleTable extends JScrollPane{
 		        return rowNames[index];
 		      }
 		    };
-		JList rowHeader = new JList(lm);
+		    
+		rowHeader = new JList(lm);
 	    rowHeader.setFixedCellWidth(100);
-	    rowHeader.setFixedCellHeight(table.getRowHeight());
 	    rowHeader.setCellRenderer(new RowHeaderRenderer(table));
 	    rowHeader.setOpaque(false);
 	    
 	    this.setViewportView(table);
 		this.setRowHeaderView(rowHeader);
-		
 		this.getViewport().setOpaque(false);
 	    this.setOpaque(false);
 		table.setOpaque(false);
@@ -139,24 +124,11 @@ public class ScheduleTable extends JScrollPane{
 	    }
 
 	    @Override
-		public Class getColumnClass(int c) {
-	        //return getValueAt(0, c).getClass();
-	    	return String.class;
-	    }
+		public Class getColumnClass(int c) {return String.class;}
 
-	    /*
-	     * Don't need to implement this method unless your table's
-	     * editable.
-	     */
 	    @Override
-		public boolean isCellEditable(int row, int col) {
-	        return false;
-	    }
+		public boolean isCellEditable(int row, int col) {return true;}
 
-	    /*
-	     * Don't need to implement this method unless your table's
-	     * data can change.
-	     */
 	    @Override
 		public void setValueAt(Object value, int row, int col) {
 	        data[row][col] = value;
@@ -169,39 +141,110 @@ public class ScheduleTable extends JScrollPane{
 	    }
 	}
 	
-	private class CellRenderer extends JLabel implements TableCellRenderer {
+	private class CellRenderer implements TableCellRenderer, TableCellEditor {
+		JList list;
+		JList list_ed;
+		public CellRenderer() {
+			list = new JList();
+			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			list.setLayoutOrientation(JList.VERTICAL);
+			list.setFixedCellHeight(30);
+			list.setCellRenderer(new LectureRenderer());
+			
+			list_ed = new JList();
+			list_ed.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			list_ed.setLayoutOrientation(JList.VERTICAL);
+			list_ed.setFixedCellHeight(list.getFixedCellHeight());
+			list_ed.setCellRenderer(new LectureRenderer());
+			
+			
+			final JPopupMenu popupMenu = new JPopupMenu();
+	        JMenuItem removeLec = new JMenuItem("Remove Lecture");
+	        
+	        JMenuItem moveLec = new JMenuItem("Move Lecture");
+	        moveLec.addActionListener(new ActionListener() {
+
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                JOptionPane.showMessageDialog(ScheduleTable.this, "Duuuuuuuuude no.." + list_ed.getSelectedValue());
+	            }
+	        });
+	        
+	        removeLec.addActionListener(new ActionListener() {
+
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                JOptionPane.showMessageDialog(ScheduleTable.this, "Duuuuuuuuude really? " + list_ed.getSelectedValue());
+	            }
+	        });
+	        
+	        popupMenu.add(moveLec);
+	        popupMenu.add(removeLec);
+	        
+			list_ed.addMouseListener(new MouseAdapter(){   
+	            public void mouseReleased(MouseEvent e) {
+	            	int i = list_ed.locationToIndex(e.getPoint());
+	            	if(list_ed.getCellBounds(i, i).contains(e.getPoint())) 	list_ed.setSelectedIndex(i);
+					stopCellEditing();
+					if(SwingUtilities.isRightMouseButton(e)) {
+                    	popupMenu.show(e.getComponent(), e.getX(), e.getY());
+                    }
+	            }});  
+		}
+		
+		public Component getComponent(JList l, JTable table, Object value, boolean isSelected, boolean hasFocus, int rowIndex, int colIndex) {
+			if(rowIndex%2==0) l.setBackground(Color.decode("#fcfcfc")); 
+	    	else l.setBackground(Color.decode("#ebedf2"));
+		    if(value == null) {
+		    	l.setListData(new String[] {});   	
+		    }else {
+		    	int height = Math.max(l.getFixedCellHeight()*((ArrayList<String>) value).size(), table.getRowHeight(rowIndex));
+				table.setRowHeight(rowIndex, height);
+				heights[rowIndex] = height;
+				
+				rowHeader.setListData(rowNames);
+				l.setListData(((ArrayList<String>) value).toArray());
+		    	
+		    }
+		    return l;
+		}
+		
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int rowIndex, int colIndex) {
+		    return getComponent(list, table, value, isSelected, hasFocus, rowIndex, colIndex);
+		}
+		
+		@Override
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int rowIndex, int colIndex) {
+		    return getComponent(list_ed, table, value, isSelected, true, rowIndex, colIndex);
+		}
 
 		@Override
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int rowIndex, int vColIndex) {
-			setOpaque(true);
-		    if(value == null || ((String) value).isEmpty()) {
-		    	setText("");
-		    	setToolTipText("");
-		    	if(rowIndex%2==0) setBackground(Color.decode("#fcfcfc")); 
-		    	else setBackground(Color.decode("#ebedf2"));
-		    	setBorder(BorderFactory.createEmptyBorder());
-		    }else {
-		    	setText((String) value);
-		    	setToolTipText((String) value);
-		    	//setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-		    	Border padding = BorderFactory.createEmptyBorder(4,4,4,4);
-		    	Border dec = new LineBorder(Color.decode("#fcfcfc"),2);
-		    	if(rowIndex%2!=0) dec = new LineBorder(Color.decode("#ebedf2"),2);
-		    	if(table.getSelectedColumn()==vColIndex && table.getSelectedRow()==rowIndex) {
-		    		dec = new LineBorder(Color.decode("#49599a"),2);
-			    }
-		    	setBorder(BorderFactory.createCompoundBorder(dec, padding));
-		    	setForeground(Color.decode("#e8eaf6"));
-		    	setBackground(Color.decode("#7986cb"));
-		    }
-		    
-		    
-		    return this;
-		}
+		public void addCellEditorListener(CellEditorListener arg0) {}
+
+		@Override
+		public void cancelCellEditing() {}
+
+		@Override
+		public Object getCellEditorValue() {return null;}
+
+		@Override
+		public boolean isCellEditable(EventObject arg0) {return true;}
+
+		@Override
+		public void removeCellEditorListener(CellEditorListener arg0) {}
+
+		@Override
+		public boolean shouldSelectCell(EventObject arg0) {return true;}
+
+		@Override
+		public boolean stopCellEditing() {return true;}
+
+		
 	}
 	
 	private class RowHeaderRenderer extends JLabel implements ListCellRenderer {
-
+		  
 		  RowHeaderRenderer(JTable table) {
 		    JTableHeader header = table.getTableHeader();
 		    setOpaque(true);
@@ -211,11 +254,35 @@ public class ScheduleTable extends JScrollPane{
 		    setBackground(Color.decode("#9499b7"));
 		    setFont(header.getFont().deriveFont(Font.BOLD, 12f));
 		  }
-
+		  
 		  @Override
-		public Component getListCellRendererComponent(JList list, Object value,
-		      int index, boolean isSelected, boolean cellHasFocus) {
+		  public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 		    setText((value == null) ? "" : value.toString());
+		    setPreferredSize(new Dimension(0, heights[index]));
+		    
+		    return this;
+		  }
+	}
+	
+	private class LectureRenderer extends JLabel implements ListCellRenderer {
+		@Override
+		public Component getListCellRendererComponent(JList list, Object value,int index, boolean isSelected, boolean cellHasFocus) {
+			  if(value == null || ((String) value).isEmpty()) {
+			    	setText("");
+				  	setOpaque(false);
+			    	setBorder(BorderFactory.createEmptyBorder());
+			    }else {
+			    	setText((String) value);
+			    	setOpaque(true);
+			    	Border padding = BorderFactory.createEmptyBorder(4,4,4,4);
+			    	Border dec = new LineBorder(Color.decode("#fcfcfc"),2);
+			    	if(isSelected) {
+			    		dec = new LineBorder(Color.decode("#49599a"),3);
+				    }
+			    	setBorder(BorderFactory.createCompoundBorder(dec, padding));
+			    	setForeground(Color.decode("#e8eaf6"));
+			    	setBackground(Color.decode("#7986cb"));
+			    }
 		    return this;
 		  }
 	}
