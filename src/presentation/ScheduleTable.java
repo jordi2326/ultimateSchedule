@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EventObject;
+import java.util.HashSet;
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -38,15 +39,26 @@ public class ScheduleTable extends JScrollPane{
 	private JList rowHeader;
 	private static String[] colNames = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
 	private static String[] rowNames = {"08:00 - 09:00", "09:00 - 10:00", "10:00 - 11:00", "11:00 - 12:00", "12:00 - 13:00", "13:00 - 14:00", "14:00 - 15:00", "15:00 - 16:00", "16:00 - 17:00", "17:00 - 18:00", "18:00 - 19:00", "19:00 - 20:00"};
-	int[] heights = new int[12];
-	
+	private int[] heights = new int[12];
+	private HashSet<String> rooms_filter = new HashSet<String>();
+	private HashSet<String> groups_filter = new HashSet<String>();
 	public ScheduleTable(Object[][] data){
 		super();
+		
+		rooms_filter.add("A6002");
+		rooms_filter.add("A5104");
+		rooms_filter.add("A5109");
+		rooms_filter.add("A5S01");
+		rooms_filter.add("A5S104");
+		rooms_filter.add("A5S105");
+		rooms_filter.add("A5S109");
+		rooms_filter.add("C6S306");
+		rooms_filter.add("C6S308");
+		
 		table = new JTable(new ScheduleTableModel(data));
 		JTableHeader header = table.getTableHeader();
 		header.setOpaque(true);
 		header.setBackground(Color.decode("#9499b7"));
-		//header.setBorder(new LineBorder(Color.decode("#646997"),1));
 		header.setBorder(new LineBorder(Color.decode("#646997"),1));
 		header.setForeground(Color.white);
 		header.setFont(header.getFont().deriveFont(Font.BOLD, 14f));
@@ -184,11 +196,13 @@ public class ScheduleTable extends JScrollPane{
 			list_ed.addMouseListener(new MouseAdapter(){   
 	            public void mouseReleased(MouseEvent e) {
 	            	int i = list_ed.locationToIndex(e.getPoint());
-	            	if(list_ed.getCellBounds(i, i).contains(e.getPoint())) 	list_ed.setSelectedIndex(i);
-					stopCellEditing();
-					if(SwingUtilities.isRightMouseButton(e)) {
-                    	popupMenu.show(e.getComponent(), e.getX(), e.getY());
-                    }
+	            	if(list_ed.getCellBounds(i, i).contains(e.getPoint())) {
+	            		list_ed.setSelectedIndex(i);
+	            		stopCellEditing();
+						if(SwingUtilities.isRightMouseButton(e)) {
+	                    	popupMenu.show(e.getComponent(), e.getX(), e.getY());
+	                    }
+	            	}
 	            }});  
 		}
 		
@@ -196,15 +210,17 @@ public class ScheduleTable extends JScrollPane{
 			if(rowIndex%2==0) l.setBackground(Color.decode("#fcfcfc")); 
 	    	else l.setBackground(Color.decode("#ebedf2"));
 		    if(value == null) {
-		    	l.setListData(new String[] {});   	
+		    	l.setListData(new String[][] {});   	
 		    }else {
-		    	int height = Math.max(l.getFixedCellHeight()*((ArrayList<String>) value).size(), table.getRowHeight(rowIndex));
+				//((ArrayList<String[]>) value).removeIf(x -> groups_whitelist.contains(x[0]) || rooms_whitelist.contains(x[1]));
+		    	ArrayList<String[]> filtered = (ArrayList<String[]>) ((ArrayList<String[]>) value).clone();
+		    	filtered.removeIf(x -> !rooms_filter.contains(x[1]));
+				l.setListData(filtered.toArray());
+				
+				int height = Math.max(l.getFixedCellHeight()*filtered.size(), table.getRowHeight(rowIndex));
 				table.setRowHeight(rowIndex, height);
 				heights[rowIndex] = height;
-				
-				rowHeader.setListData(rowNames);
-				l.setListData(((ArrayList<String>) value).toArray());
-		    	
+				rowHeader.setListData(rowNames); //to force reddraw
 		    }
 		    return l;
 		}
@@ -267,18 +283,16 @@ public class ScheduleTable extends JScrollPane{
 	private class LectureRenderer extends JLabel implements ListCellRenderer {
 		@Override
 		public Component getListCellRendererComponent(JList list, Object value,int index, boolean isSelected, boolean cellHasFocus) {
-			  if(value == null || ((String) value).isEmpty()) {
+			  if(value == null || ((String[]) value).length==0) {
 			    	setText("");
 				  	setOpaque(false);
 			    	setBorder(BorderFactory.createEmptyBorder());
 			    }else {
-			    	setText((String) value);
+			    	setText(((String[]) value)[0] + "  [" + ((String[]) value)[1] + "]");
 			    	setOpaque(true);
 			    	Border padding = BorderFactory.createEmptyBorder(4,4,4,4);
 			    	Border dec = new LineBorder(Color.decode("#fcfcfc"),2);
-			    	if(isSelected) {
-			    		dec = new LineBorder(Color.decode("#49599a"),3);
-				    }
+			    	if(isSelected) dec = new LineBorder(Color.decode("#49599a"), 3);
 			    	setBorder(BorderFactory.createCompoundBorder(dec, padding));
 			    	setForeground(Color.decode("#e8eaf6"));
 			    	setBackground(Color.decode("#7986cb"));
@@ -289,5 +303,19 @@ public class ScheduleTable extends JScrollPane{
 
 	public void changeData(Object[][] data) {
 		((ScheduleTableModel) table.getModel()).changeData(data);
+	}
+	
+	public void stopEditing() {
+		table.removeEditor();
+	}
+	
+	public void filterRoomIn(String roomName){
+		rooms_filter.add(roomName);
+		((AbstractTableModel) table.getModel()).fireTableDataChanged();
+	}
+	
+	public void filterRoomOut(String roomName){
+		rooms_filter.remove(roomName);
+		((AbstractTableModel) table.getModel()).fireTableDataChanged();
 	}
 }

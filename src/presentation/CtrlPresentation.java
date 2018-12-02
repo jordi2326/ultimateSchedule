@@ -30,7 +30,7 @@ public class CtrlPresentation {
 		mainView.setVisible(true);
 	}
 	
-	public ArrayList<String>[][] getScheduleMatrix(){
+	public ArrayList<String[]>[][] getScheduleMatrix(){
 		return ctrlDomain.getScheduleMatrix();
 	}
 	

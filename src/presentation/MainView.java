@@ -1,7 +1,6 @@
 package presentation;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -9,23 +8,23 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
-
-import domain.controllers.CtrlDomain;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.ArrayList;
-
 import javax.swing.JTabbedPane;
 import javax.swing.JTree;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashSet;
+import domain.controllers.CtrlDomain;
 
 public class MainView extends JFrame {
 
@@ -42,7 +41,7 @@ public class MainView extends JFrame {
 		//TODO: Remove
 		CtrlDomain ctrlDomain = CtrlDomain.getInstance();
 		try {
-			ctrlDomain.importEnvironment("Q1+Q2.json");
+			//ctrlDomain.importEnvironment("Q1+Q2.json");
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -106,21 +105,60 @@ public class MainView extends JFrame {
 		JScrollPane scollPnlSubjects = new JScrollPane(treeSubjects, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		tabbedPane.addTab("Subjects", null, scollPnlSubjects, null);
 		
-		JTree treeRooms = new JTree();
+		JCheckBoxTree treeRooms = new JCheckBoxTree();
 		JScrollPane scollPnlRooms = new JScrollPane(treeRooms, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		tabbedPane.addTab("Rooms", null, scollPnlRooms, null);
 		
 		DefaultTreeModel model =(DefaultTreeModel) treeRooms.getModel();
 		
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode("All Rooms");
 		model.setRoot(root);
-		for(String room : ctrlPresentation.getAllRooms()) {
+
+		HashSet<String> rooms = new HashSet<String>();
+		rooms.add("A6002");
+		rooms.add("A5104");
+		rooms.add("A5109");
+		rooms.add("A5S01");
+		rooms.add("A5S104");
+		rooms.add("A5S105");
+		rooms.add("A5S109");
+		rooms.add("C6S306");
+		rooms.add("C6S308");
+		//for(String room : ctrlPresentation.getAllRooms()) {
+		for(String room : rooms) {
 			DefaultMutableTreeNode child = new DefaultMutableTreeNode(room);
 			root.add(child);
 		}
-		treeRooms.expandPath(new TreePath(root.getPath()));
-		treeRooms.setRootVisible(false);
 		
+		treeRooms.addCheckChangeEventListener(new JCheckBoxTree.CheckChangeEventListener() {
+            public void checkStateChanged(JCheckBoxTree.CheckChangeEvent event) {
+            	table.stopEditing();
+            	DefaultMutableTreeNode  tn = ((DefaultMutableTreeNode ) event.getPath().getLastPathComponent());
+            	if(tn.isLeaf()) {
+            		String roomName = (String) tn.getUserObject();
+            		if(event.getChecked()) {
+            			table.filterRoomIn(roomName);
+            		}else{
+            			table.filterRoomOut(roomName);
+            		}
+            	}else { //is root
+            		Enumeration<TreeNode> childs = tn.children();
+            		while(childs.hasMoreElements()) {
+            			DefaultMutableTreeNode tnn = (DefaultMutableTreeNode) childs.nextElement();
+            			if(event.getChecked()) {
+                			table.filterRoomIn((String) tnn.getUserObject());
+                		}else{
+                			table.filterRoomOut((String) tnn.getUserObject());
+                		}
+            		}
+            	}
+            }           
+        });
+		
+		treeRooms.expandPath(new TreePath(root.getPath()));
+		//treeRooms.setRootVisible(false);
+		treeRooms.setModel(model);
+		treeRooms.checkSubTree(new TreePath(root.getPath()), true);
 		
 		table = new ScheduleTable(ctrlPresentation.getScheduleMatrix());
 		contentPanel.add(table, BorderLayout.CENTER);
@@ -145,7 +183,7 @@ public class MainView extends JFrame {
 	}
 	
 	private void redrawScheduleMatrix() {
-		ArrayList<String>[][] data = ctrlPresentation.getScheduleMatrix();
+		ArrayList<String[]>[][] data = ctrlPresentation.getScheduleMatrix();
 		table.changeData(data);
 	}
 
