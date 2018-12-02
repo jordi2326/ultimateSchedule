@@ -169,7 +169,6 @@ public class ScheduleTable extends JScrollPane{
 			list_ed.setFixedCellHeight(list.getFixedCellHeight());
 			list_ed.setCellRenderer(new LectureRenderer());
 			
-			
 			final JPopupMenu popupMenu = new JPopupMenu();
 	        JMenuItem removeLec = new JMenuItem("Remove Lecture");
 	        
@@ -203,7 +202,8 @@ public class ScheduleTable extends JScrollPane{
 	                    	popupMenu.show(e.getComponent(), e.getX(), e.getY());
 	                    }
 	            	}
-	            }});  
+	            }
+	         });
 		}
 		
 		public Component getComponent(JList l, JTable table, Object value, boolean isSelected, boolean hasFocus, int rowIndex, int colIndex) {

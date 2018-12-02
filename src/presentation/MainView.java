@@ -3,8 +3,10 @@ package presentation;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -16,10 +18,14 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTree;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.JScrollPane;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -170,6 +176,42 @@ public class MainView extends JFrame {
 				JOptionPane.showMessageDialog(MainView.this, "wtf duuuude", "really?", JOptionPane.WARNING_MESSAGE);
 			}
 		});
+        
+		treeRooms.addMouseListener(new MouseAdapter() {
+		     public void mousePressed(MouseEvent e) {
+		    	 if(SwingUtilities.isRightMouseButton(e)) {
+                 	int selRow = treeRooms.getRowForLocation(e.getX(), e.getY());
+	   		        TreePath selPath = treeRooms.getPathForLocation(e.getX(), e.getY());
+	   		        treeRooms.clearSelection();
+	   		        treeRooms.setSelectionPath(selPath);
+	   		        if(selRow != -1 && ((DefaultMutableTreeNode) selPath.getLastPathComponent()).isLeaf()) {
+	   		        	final JPopupMenu popupMenu = new JPopupMenu();
+		   		         JMenuItem editRoom = new JMenuItem("Edit Room");
+		   		         JMenuItem deleteRoom = new JMenuItem("Delete Room");
+		   		         editRoom.addActionListener(new ActionListener() {
+	
+		   		             @Override
+		   		             public void actionPerformed(ActionEvent e) {
+		   		                 JOptionPane.showMessageDialog(MainView.this, "Duuuuuuuuude no.." + selPath);
+		   		             }
+		   		         });
+		   		         
+		   		         deleteRoom.addActionListener(new ActionListener() {
+	
+		   		             @Override
+		   		             public void actionPerformed(ActionEvent e) {
+		   		                 JOptionPane.showMessageDialog(MainView.this, "Duuuuuuuuude really? " + selPath);
+		   		             }
+		   		         });
+		   		         
+		   		        popupMenu.add(editRoom);
+		   		        popupMenu.add(deleteRoom);
+	   		        	popupMenu.show(e.getComponent(), e.getX(), e.getY());
+	   		        }
+                 }
+		         
+		     }
+		 });
 	}
 	
 	private File loadLocalFile(File file) {
