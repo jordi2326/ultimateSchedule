@@ -470,10 +470,6 @@ public class CtrlDomain {
             }
 		}
 		
-		//Object[] data = (Object[]) schedule.getSchedule().values().toArray();
-		//if(data.length > 0) return (String[][]) data[0];
-		//return new String[][] {};
 		return data;
-		//return new String[][] {};
 	}
 }
