@@ -142,7 +142,7 @@ public class CtrlSchedule {
 				}
 			}
 		}
-		return this.backjumping(schedule, numPossibleAlloc, assignations, referencedRooms);
+		return backjumping(schedule, numPossibleAlloc, assignations, referencedRooms);
 	}
 	
 	/**
@@ -152,8 +152,22 @@ public class CtrlSchedule {
 	 * @param day Dia en el que s'ha assignat la 'lecture'.
 	 * @param hour Hora en la que s'ha assignat la 'lecture'.
 	 * @return True si l'assigació a comprovar es valida, sino false.
-	 */)
+	 */
 	private static boolean forwardCheck(String lecture, String room, Integer day, Integer hour, Map<String, Integer> numPossibleAlloc, Map<String, PosAssig> assignations, Map<String, Integer> referencedRooms) {
+		//Delete inserted lecture of course!
+		//UPDATE: numPossibleAllic, assignations, referencedRooms
+		//Maybe fer que les naries depenguin de lecture i no de Group
+		//Check aquí que les lectures del mateix grup no vagin just a continuació
+		
+		/* THINGS NEEDED
+		 * --------------
+		 * Subject from lecture (Corequisit) 
+		 * Group from Lecture (LectureFromSameGroupOverlap)
+		 * Room inserted (OccupiedRoom)
+		 * ParentGroup from Lecture (ParentGroupRestriction)
+		 * SubjectLevel from Lecture (SubjectLevelRestriction)
+		 */
+		
 		for (NaryRestriction restr : naryRestrictions.values()) {
 			if (!restr.validate(lecture, room, day, hour, subjects, groups, lectures, shrek)) {
 				return false;
@@ -166,7 +180,7 @@ public class CtrlSchedule {
 	 * Funció que fa Backjumping, utilitzat en l'algoritme que genera un horari.
 	 * @param schedule Objecte de la classe Schedule que contindrà l'horari generat al finalitzar l'algoritme.
 	 */
-	private boolean backjumping(Schedule schedule, Map<String, Integer> numPossibleAlloc, Map<String, PosAssig> assignations, Map<String, Integer> referencedRooms) {	
+	private static boolean backjumping(Schedule schedule, Map<String, Integer> numPossibleAlloc, Map<String, PosAssig> assignations, Map<String, Integer> referencedRooms) {	
 		Environment env = Environment.getInstance();
 		// All lectures have been inserted in Schedule
 		if (assignations.isEmpty()) {
@@ -174,7 +188,7 @@ public class CtrlSchedule {
 		}	
 		//Get lecture with the least amount of possibilities to insert it first
 		Integer minLecture = Integer.MAX_VALUE;
-		String lecture;
+		String lecture = null; //lo de null es per evitar que eclipse dongui errors
 		for (Map.Entry<String, Integer> entry : numPossibleAlloc.entrySet()) {
 			if (entry.getValue() < minLecture) {
 				minLecture = entry.getValue();
@@ -225,26 +239,4 @@ public class CtrlSchedule {
 		}
 		return generated;
 	}
-	
-	/* ********************** FORWARD CHECKING ******************
-	 * FunciÃ¯Â¿Â½n: forward checking (vfuturas, solucion)
-		si vfuturas.es_vacio?() entonces
-			retorna solucion
-		sino
-			vactual <- vfuturas.primero()
-			vfuturas.borrar_primero()
-				para cada v (pertany) vactual.valores() hacer
-				vactual.asignar(v)
-				solucion.anadir(vactual)
-				vfuturas.propagar_restricciones(vactual) // forward checking
-				si no vfuturas.algun_dominio_vacio?() entonces
-					solucion <- forward_checking(vfuturas,solucion)
-					si no solucion.es_fallo?() entonces
-						retorna solucion
-					sino
-						solucion.borrar(vactual)
-				sino
-				solucion.borrar(vactual)
-			retorna solucion.fallo()
-*/
 }
