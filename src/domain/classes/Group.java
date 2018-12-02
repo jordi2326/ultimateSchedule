@@ -34,6 +34,10 @@ public class Group {
 	*/
 	private String subject; //Es el code del subject, que es el mateix que el subject.toString()
 	
+	/** True si necessita ordinadors
+	*/
+	private Boolean needsComputers;
+	
 	/** Tipus de grup. Ex: "THEORY"
 	*/
 	private Type type;
@@ -55,11 +59,12 @@ public class Group {
 	 * @param dayPeriod			Període del dia.
 	 * @param lectures			Conjunt de sessions del grup.
 	*/
-	public Group(String code, Integer numPeople, String parentGroupCode, String subject, Type type, DayPeriod dayPeriod, ArrayList<String> lectures) {
+	public Group(String code, Integer numPeople, String parentGroupCode, String subject, Boolean needsComputers, Type type, DayPeriod dayPeriod, ArrayList<String> lectures) {
 		this.code = code;
 		this.numPeople = numPeople;
 		this.parentGroupCode = parentGroupCode;
 		this.subject = subject;
+		this.needsComputers = needsComputers;
 		this.type = type;
 		this.dayPeriod = dayPeriod;
 		this.lectures = lectures;
@@ -88,7 +93,15 @@ public class Group {
 	public String getParentGroupCode() {
 		return parentGroupCode;
 	}
-
+	
+	/**
+	 * Retorna true si necessita ordinadors.
+	 * @return {@link Group#needsComputers}
+	 */
+	public Boolean needsComputers() {
+		return needsComputers;
+	}
+	
 	/**
 	 * Retorna el tipus de classe del grup.
 	 * @return {@link Group#type}

@@ -1,6 +1,7 @@
 package domain.classes;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,6 +29,18 @@ public class PosAssig {
 		this.assigMap = assigMap;
 	}
 	
+	public Set<Integer> getAllDays() {
+		return assigMap.keySet();
+	}
+	
+	public Set<Integer> getAllHoursFromDay(Integer day) {
+		return assigMap.get(day).keySet();
+	}
+	
+	public Set<String> getAllRoomsFromHourAndDay(Integer day, Integer hour) {
+		return assigMap.get(day).get(hour);
+	}
+	
 	/**
 	 * Retorna les possibles assignacions.
 	 * @return {@link PosAssig#assigMap}
@@ -35,7 +48,7 @@ public class PosAssig {
 	public Map<Integer, Map< Integer, Set<String>>> getMap() {
 		return assigMap;
 	}
-
+	
 	/**
 	 * Indica si un dia concret està a {@link PosAssig#assigMap} o no.
 	 * @param day Dia a mirar.
@@ -69,7 +82,7 @@ public class PosAssig {
 	 * Indica si a {@link PosAssig#assigMap} no hi ha possibles assignacions.
 	 * @return Retorna true si no hi ha possibles assignacions. Fals en cas contrari.
 	 */
-	public boolean hasNoDays() {
+	public boolean isEmpty() {
 		return assigMap.isEmpty();
 	}
 	
@@ -81,6 +94,9 @@ public class PosAssig {
 	 */
 	public void removeHourFromDay(Integer day, Integer hour) {
 		assigMap.get(day).remove(hour);
+		if (assigMap.get(day).isEmpty()) {
+			assigMap.remove(day);
+		}
 	}
 	
 	/**
@@ -114,6 +130,25 @@ public class PosAssig {
 		assigMap.get(day).get(hour).remove(room);
 		if (assigMap.get(day).get(hour).isEmpty()) {
 			assigMap.get(day).remove(hour);
+			if (assigMap.get(day).isEmpty()) {
+				assigMap.remove(day);
+			}
 		}
+	}
+	
+	//Posa room a day i hour seleccionats. Si no existeixen els crea.
+	public void putRoomInDayAndHour(Integer day, Integer hour, String room) {
+		//Si no te day l'afegim
+		if (!assigMap.containsKey(day)) {
+			Map<Integer, Set<String>> hoursAndRooms = new HashMap<Integer, Set<String>>();
+			assigMap.put(day, hoursAndRooms);
+		}
+		//Si no te hour l'afegim
+		if (!assigMap.get(day).containsKey(hour)) {
+			Set<String> rooms = new HashSet<String>();
+			assigMap.get(day).put(hour, rooms);
+		}
+		//Afegim room
+		assigMap.get(day).get(hour).add(room);
 	}
 }

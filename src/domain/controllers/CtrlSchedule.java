@@ -1,5 +1,6 @@
 package domain.controllers;
 
+import domain.classes.Environment;
 import domain.classes.Group;
 import domain.classes.Lecture;
 import domain.classes.PosAssig;
@@ -18,6 +19,11 @@ import java.util.stream.Collectors;
 import java.util.HashMap;
 import java.util.HashSet;
 
+
+/** Controlador de Schedule.
+ * @author Xavier Mart�n Ballesteros i Xavier Lacasa Curto
+*/
+
 class groupHeuristicComparator implements Comparator<Map.Entry<Integer, String>>{ 
     
     // Overriding compare()method of Comparator  
@@ -31,9 +37,6 @@ class groupHeuristicComparator implements Comparator<Map.Entry<Integer, String>>
         } 
 } 
 
-/** Controlador de Schedule.
- * @author Xavier Mart�n Ballesteros i Xavier Lacasa Curto
-*/
 public class CtrlSchedule {
 	
 	/** Instancia d'aquesta classe.
@@ -54,99 +57,92 @@ public class CtrlSchedule {
 	*/
 	private CtrlSchedule() {
 	}
+	
+	private static String createKey(String room, Integer day, Integer hour) {
+		return room+"-"+hour+"-"+day;
+	}
+	
+	private static String getRoomFromKey(String key) {
+		return key.split("-")[0]; 
+	}
+	
+	private static Integer getHourFromKey(String key) {
+		return Integer.valueOf(key.split("-")[1]); 
+	}
+	
+	private static Integer getDayFromKey(String key) {
+		return Integer.valueOf(key.split("-")[2]); 
+	}
 
 	/**
 	 * Funci� principal que genera un horari amb les dades donades.
-	 * @param unaryRestrictions Conjunt de restriccions unaries a tenir en compte.
-	 * @param naryRestrictions Conjunt de restriccions n-aries a tenir en compte.
-	 * @param groups Conjunt de grups que es volen incloure en l'horari.
-	 * @param rooms Conjunt d'aules que es volen incloure en l'horari.
-	 * @param subjects Conjunt de assignatures que tenen algun grup que es vol incloure a l'horari.
-	 * @param lectures Conjunt de 'lectures' que es volen incloure en l'horari.
 	 * @param schedule Objecte de la classe Schedule que contindr� l'horari generat al finalitzar l'algoritme.
 	 * @return  true si s'ha trobat un horari valid, sino false.
 	 */
-	public boolean generateSchedule(Map<String, Map<String, UnaryRestriction>> unaryRestrictions, Map<String, NaryRestriction> naryRestrictions, 
-					    Map<String, Group> groups, Map<String, Room> rooms, Map<String, Subject> subjects, Map<String, 
-					    Lecture> lectures, Schedule schedule) {
+	public boolean generateSchedule(Schedule schedule) {
+		//To know how many possibilities has each lecture and be able to choose the one with less possibilities to place
+		Map<String, Integer> numPossibleAlloc = new HashMap<String, Integer>(); //Map<lecture.toString(), num possible rooms day hours>
+		//To keep track of which day hour rooms are poossible for each lecture
+		Map<String, PosAssig> assignations = new HashMap<String, PosAssig>(); //String = Lecture.toString()
+		//To keep track of day hour rooms that don't have any lecture as possible.
+		Map<String, Integer> referencedRooms = new HashMap<String, Integer>(); // Map<createKey(Room.toString(),day,hour), num of lectures that have this room hour day as possible>>
 		//Filter possible rooms hours and days for each group according to room capacity, PC's, day period and restrictions of days / hours
-		//posAssig te
-		//Map<Integer,<Map <Integer, Set<String>>>>
-		Map<String, PosAssig> shrek = new HashMap<String, PosAssig>(); //String = Lecture.toString()
-		PriorityQueue<Map.Entry<Integer, String>> pq = new PriorityQueue<Map.Entry<Integer, String>>(new groupHeuristicComparator()); // PriorityQueue<Pair<Int, Lecture.toString()>>
-		Set<String> totalDifferentDayHourRoomMorning = new HashSet<String>();
-		Set<String> totalDifferentDayHourRoomAfternoon = new HashSet<String>();
-		int mor = 0, aft = 0;
-		for (Group g : groups.values()) {
-			
-			Integer totalGroupRooms = 0;
+		Environment env = Environment.getInstance();
+		for (String g : env.getAllGroups()) {
+			int totalGroupRooms = 0;
 			Set<String> roomSet = new HashSet<String>();
-			for (Room r : rooms.values()) {
-				if (g.getNumOfPeople() <= r.getCapacity()) {
-					if ((g.getType() == Group.Type.LABORATORY && r.hasComputers())
-						|| (g.getType() != Group.Type.LABORATORY)) {
-						roomSet.add(r.toString());
-						totalGroupRooms += 1;
+			// get possible rooms for group g				
+			for (String r : env.getAllRooms()) {
+				if (env.getGroupNumOfPeople(g) <= env.getRoomCapacity(r)) {
+					//Group fits in room
+					if ((env.getGroupType(g).equals(Group.Type.LABORATORY) && env.roomHasComputers(r))
+						|| !env.getGroupType(g).equals(Group.Type.LABORATORY)) {
+							roomSet.add(r);
+							++totalGroupRooms;
 					}
 				}
 			}
-			
-			for (String lecture : g.getLectures()) {
-				Map<Integer, Map <Integer, Set<String>>> dayHourRooms = new HashMap<Integer, Map <Integer, Set< String>>>();
+			//now roomSet contains possible rooms for group
+			for (String l : env.getAllLectures()) {
+				//Initialize number of possible allocations to zero
+				numPossibleAlloc.put(l, 0);
+				int lecDuration = env.getLectureDuration(l);
 				for (int day = 0; day < 5; ++day) {
-					Map <Integer, Set<String>> hourRooms = new HashMap<Integer, Set<String>>();
-					for (int hour = 0; hour < 12; ++hour) {	
+					for (int hour = 0; hour < 12; ++hour) {
 						boolean valid = true;
-						if(unaryRestrictions.containsKey(g.toString())){
-							for (UnaryRestriction restr : unaryRestrictions.get(g.toString()).values()) {
-								if (!restr.validate(day, hour, lectures.get(lecture).getDuration())) {
+						if (env.groupHasUnaryRestrictions(g)) {
+							for (String restr : env.getGroupUnaryRestrictions(g)) {
+								if (!env.validateGroupUnaryRestriction(g, restr, day, hour, lecDuration)) {
 									valid = false;
+									break;
 								}
 							}
 						}
 						if (valid) {
-							Set<String> newRoomSet = roomSet.stream().collect(Collectors.toSet()); // Clona el set de rooms per lo de que sinó sempre apunta tot al mateix set.
-							hourRooms.put(hour, newRoomSet);
-							//Afegim combinacio de dia hora aula per contar les possibilitats totals
-							//Com que es un set, si afegim varios cops la mateixa combinacio, nomes conta com a 1
-							//No ens cal mirar els grups INDIFERENT
-							for (String r : newRoomSet) {
-								if (g.getDayPeriod().equals(Group.DayPeriod.MORNING)) {
-									totalDifferentDayHourRoomMorning.add(day+"-"+hour+"-"+r);
-								} else if (g.getDayPeriod().equals(Group.DayPeriod.AFTERNOON)) {
-									totalDifferentDayHourRoomAfternoon.add(day+"-"+hour+"-"+r);
-								}
+							//Add all rooms from that day and hour to total allocations of lecture l
+							numPossibleAlloc.put(l, numPossibleAlloc.get(l) + totalGroupRooms);
+							if (!assignations.containsKey(l)) {
+								PosAssig pa = new PosAssig();
+								assignations.put(l, pa);
 							}
+							for (String room : roomSet) {
+								//add one to the number of references of each room hour day
+								String key = createKey(room, day, hour);
+								if (!referencedRooms.containsKey(key)) {
+									referencedRooms.put(key, 0);
+								}
+								referencedRooms.put(key, referencedRooms.get(key)+1);
+								//Put rooms in possible assignations
+								assignations.get(l).putRoomInDayAndHour(day, hour, room);
+							}
+							//add the number of rooms to the number of possibilities of the lecture l
+							numPossibleAlloc.put(l, numPossibleAlloc.get(l)+roomSet.size());
 						}
 					}
-					if (!hourRooms.isEmpty()) {
-						dayHourRooms.put(day, hourRooms);
-					}
-				}
-				if (!dayHourRooms.isEmpty()) {
-					PosAssig pa = new PosAssig(dayHourRooms);
-					shrek.put(lecture, pa);
-					Map.Entry<Integer, String> pair = new AbstractMap.SimpleEntry<Integer, String>(totalGroupRooms, lecture);
-					pq.add(pair);
-				} 
-				else return false; //Si una lecture no te aules possibles cap dia i hora, directament no podem generar horari
-				
-				if (g.getDayPeriod().equals(Group.DayPeriod.MORNING)) {
-					mor += 1;
-				} else if (g.getDayPeriod().equals(Group.DayPeriod.AFTERNOON)) {
-					aft += 1;
 				}
 			}
 		}
-		if(totalDifferentDayHourRoomMorning.size() < mor || totalDifferentDayHourRoomAfternoon.size() < aft) return false; //No hi cabran
-		boolean exists = backjumping(schedule, pq, subjects, groups, lectures,  shrek, naryRestrictions);
-		
-		/**if (exists) {
-			System.out.println(schedule.toJsonString());
-		} else {
-			System.out.println("error");
-		}**/
-		return exists;
+		return this.backjumping(schedule, numPossibleAlloc, assignations, referencedRooms);
 	}
 	
 	/**
@@ -155,15 +151,9 @@ public class CtrlSchedule {
 	 * @param room Aula en la qual s'ha assignat la 'lecture'.
 	 * @param day Dia en el que s'ha assignat la 'lecture'.
 	 * @param hour Hora en la que s'ha assignat la 'lecture'.
-	 * @param subjects Conjunt de assignatures que tenen algun grup que es vol incloure a l'horari.
-	 * @param groups Conjunt de grups que es volen incloure en l'horari.
-	 * @param lectures Conjunt de 'lectures' que es volen incloure en l'horari.
-	 * @param shrek Map que cont� les possibles assignacions de cada 'lecture'.
-	 * @param naryRestrictions Conjunt de restriccions n-aries a tenir en compte.
 	 * @return True si l'assigaci� a comprovar es valida, sino false.
-	 */
-	private static boolean forwardCheck(String lecture, String room, Integer day, Integer hour, Map<String, Subject> subjects,
-			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek, Map<String, NaryRestriction> naryRestrictions) {
+	 */)
+	private static boolean forwardCheck(String lecture, String room, Integer day, Integer hour, Map<String, Integer> numPossibleAlloc, Map<String, PosAssig> assignations, Map<String, Integer> referencedRooms) {
 		for (NaryRestriction restr : naryRestrictions.values()) {
 			if (!restr.validate(lecture, room, day, hour, subjects, groups, lectures, shrek)) {
 				return false;
@@ -175,99 +165,65 @@ public class CtrlSchedule {
 	/**
 	 * Funci� que fa Backjumping, utilitzat en l'algoritme que genera un horari.
 	 * @param schedule Objecte de la classe Schedule que contindr� l'horari generat al finalitzar l'algoritme.
-	 * @param heuristica Priority Queue de 'lectures', on les que tenen menor nombre de possibles assignacions est�n a dalt.  
-	 * @param subjects Conjunt de assignatures que tenen algun grup que es vol incloure a l'horari.
-	 * @param groups Conjunt de grups que es volen incloure en l'horari.
-	 * @param lectures Conjunt de 'lectures' que es volen incloure en l'horari.
-	 * @param shrek Map que cont� les possibles assignacions de cada 'lecture'.
-	 * @param naryRestrictions Conjunt de restriccions n-aries a tenir en compte.
-	 * @return True si s'ha generat correctament. False si no s'ha pogut generar cap horari valid.
 	 */
-	private static boolean backjumping(Schedule schedule, PriorityQueue<Map.Entry<Integer, String>> heuristica, Map<String, Subject> subjects,
-			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> shrek, Map<String, NaryRestriction> naryRestrictions) {		
-		// Pre: a shrek hi tenim nomï¿½s les Lectures que falten afegir i les assignacions possibles que li podem donar. Nomï¿½s les possibles! (forward checking)
-		// Pre: a mï¿½s, per com estï¿½ feta la funciï¿½ podar, no hi ha cap Lecture amb 0 possibles assignacions
-		
-		// Cas base (CORRECTE) => shrek estï¿½ buit => No queda res per afegir
-		if (shrek.isEmpty() || heuristica.isEmpty()) {
+	private boolean backjumping(Schedule schedule, Map<String, Integer> numPossibleAlloc, Map<String, PosAssig> assignations, Map<String, Integer> referencedRooms) {	
+		Environment env = Environment.getInstance();
+		// All lectures have been inserted in Schedule
+		if (assignations.isEmpty()) {
 			return true;
-		} else { // Encara tenim Lectures per afegir
-			// 1.	Agafar la primera Lecture, que ha estat ordenat heruï¿½sticament
-			Map.Entry<Integer, String> firstCandidate = heuristica.poll(); // Tambï¿½ l'elimino de la PQ
-			Lecture lecture = lectures.get(firstCandidate.getValue()); // Lecture
+		}	
+		//Get lecture with the least amount of possibilities to insert it first
+		Integer minLecture = Integer.MAX_VALUE;
+		String lecture;
+		for (Map.Entry<String, Integer> entry : numPossibleAlloc.entrySet()) {
+			if (entry.getValue() < minLecture) {
+				minLecture = entry.getValue();
+				lecture = entry.getKey();
+			}
+		}
+		//Order room+hour+day from the lecture with less possibilities, in ascending number of references from other lectures
+		//Because the room with the least amount of references is most likely not gonna be used by any other lecture
+		PriorityQueue<Map.Entry<Integer, String>> pq = new PriorityQueue<Map.Entry<Integer, String>>(new groupHeuristicComparator()); // PriorityQueue<Pair<Int, room.toString()>>
+		for (Integer day : assignations.get(lecture).getAllDays()) {
+			for (Integer hour : assignations.get(lecture).getAllHoursFromDay(day)) {
+				for (String r : assignations.get(lecture).getAllRoomsFromHourAndDay(day, hour)) {
+					String key = createKey(r, day, hour);
+					Integer numRefs = referencedRooms.get(key);
+					Map.Entry<Integer, String> pair = new AbstractMap.SimpleEntry<Integer, String>(numRefs, key);
+					pq.add(pair);
+				}
+			}
+		}
+		//We should try to fit lecture in room+hour+day with less references
+		//If doesn't work, try next room+hour+day (might be another day or/and hour) 
+		Boolean generated = false;
+		while (!pq.isEmpty() && !generated) {
+			String key = pq.remove().getValue();
+			String room = getRoomFromKey(key);
+			Integer day = getDayFromKey(key);
+			Integer hour = getHourFromKey(key);
 			
-			String group = lecture.getGroup(); // Grup ///////////////////////////////////////////////////////////
-			Integer duration = lecture.getDuration(); // Duraciï¿½ de la Lecture ///////////////////////////////////
-
-			PosAssig possibleAssignacions = shrek.get(lecture.toString());
+			//Try forwardChecking and generating schedule before the insertion so that if it fails we don't have to delete lecture from schedule
+			Map<String, PosAssig> copyAssignations = assignations.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> new PosAssig(e.getValue().getMap())));
+			Map<String, Integer> copyReferencedRooms = referencedRooms.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+			Map<String, Integer> copyNumPossibleAlloc = numPossibleAlloc.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
 			
-			// 2.	Eliminar la lecture de shrek
-			shrek.remove(lecture.toString()); // Ara ha de ser shrek o copyShrek?????????????????????????????????
-			
-			// Faig cï¿½pia d'shrek perquï¿½ no se m'eliminin coses al passar-ho per referï¿½ncia
-			Map<String, PosAssig> copyShrek = shrek.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> new PosAssig(e.getValue().getMap())));
-
-
-			Map<Integer, Map<Integer, Set<String>>> posA = possibleAssignacions.getMap(); // Aixï¿½ ï¿½s el map de dia hora i aula
-			
-			// 3.	Iterem per totes les possible assignacions
-			for (Map.Entry<Integer, Map<Integer, Set<String>>> firstOfposAssig : posA.entrySet()) {
-				Integer day = firstOfposAssig.getKey(); // Dia ///////////////////////////////////////////////////
-				Map<Integer, Set<String>> hourRoom = firstOfposAssig.getValue(); // Hora i Aula
-				
-				for (Map.Entry<Integer, Set<String>> HR : hourRoom.entrySet()) {
-					Integer hour = HR.getKey(); // Hour //////////////////////////////////////////////////////////////
-					Set<String> Rooms = HR.getValue();
-					
-					for (String room : Rooms) {
-						Group g = groups.get(group);
-							// 4.	Afegir-lo al schedule (Map<String, String[][]>)
-							Integer h = 0;
-							while (h < duration) {
-								schedule.putLecture(room, day, hour+h, group);
-								++h;
-							}
-							// 5.	Podar
-							boolean podat = forwardCheck(lecture.toString(), room, day, hour, subjects,
-									groups, lectures, copyShrek, naryRestrictions); // Funciï¿½ d'en Laca (passant-li copyShrek)
-							
-							if (podat) {
-								boolean possible = backjumping(schedule, heuristica, subjects, groups, lectures,  copyShrek, naryRestrictions); // True => ï¿½s possible generar l'horari
-																												// False => No ï¿½s possible
-								if (possible) return true;
-								else {
-									// Borrar de l'schedule i seguir iterant per les possibles assignacions
-									h = 0;
-									while (h < duration) {
-										schedule.removeLecture(room, day, hour+h);
-										++h;
-									}
-								}
-							} else {
-								// Borrar de l'schedule i seguir iterant per les possibles assignacions
-								h = 0;
-								while (h < duration) {
-									schedule.removeLecture(room, day, hour+h);
-									++h;
-								}
-								
-								// Backtracking => Fa falta aquï¿½? Crec que no
-								/*shrek.put(lecture.toString(), possibleAssignacions);
-								Pair<Integer, Lecture> p = new Pair<Integer, Lecture>(firstCandidate.getKey(), lecture); // Canvair nom si volem
-								heuristica.add(p);
-								
-								return false;*/
-							}
+			if (forwardCheck(lecture, room, day, hour, copyNumPossibleAlloc, copyAssignations, copyReferencedRooms)) {
+				//Once checked there are still possibilities, try generating the rest of the schedule with
+				//the impossible combinations cut out by the forward checking
+				generated = backjumping(schedule, copyNumPossibleAlloc, copyAssignations, copyReferencedRooms);
+				if (generated) {
+					//If backjumping returned true, the schedule is possible, so insert the lecture
+					//All lectures from here on have been inserted recursively
+					Integer h = 0;
+					while (h < env.getLectureDuration(lecture)) {
+						schedule.putLecture(room, day, hour+h, env.getLectureGroup(lecture));
+						++h;
 					}
 				}
 			}
-			// Backtracking
-			shrek.put(lecture.toString(), possibleAssignacions);
-			Map.Entry<Integer, String> p = new AbstractMap.SimpleEntry<Integer, String>(firstCandidate.getKey(), lecture.toString()); // Canvair nom si volem
-			heuristica.add(p);
-			
-			return false;
 		}
+		return generated;
 	}
 	
 	/* ********************** FORWARD CHECKING ******************

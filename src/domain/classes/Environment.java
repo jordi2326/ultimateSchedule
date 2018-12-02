@@ -3,6 +3,7 @@ package domain.classes;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import domain.classes.restrictions.NaryRestriction;
 import domain.classes.restrictions.UnaryRestriction;
@@ -34,7 +35,7 @@ public class Environment {
 	
 	/** Map de restriccions n-aries de l'entorn  
 	*/
-	private Map<String, NaryRestriction> naryRestrictions;
+	private Map<String, Map<String, NaryRestriction>> naryRestrictions;
 	
 	private Environment() {
 		subjects = new HashMap<String, Subject>();
@@ -42,7 +43,7 @@ public class Environment {
 		groups = new HashMap<String, Group>();
 		lectures = new HashMap<String, Lecture>();
 		unaryRestrictions = new HashMap<String, Map<String, UnaryRestriction>>();
-		naryRestrictions = new HashMap<String, NaryRestriction>();
+		naryRestrictions = new HashMap<String, Map<String, NaryRestriction>>();
 	}
 	
 	public static Environment getInstance() {
@@ -51,6 +52,29 @@ public class Environment {
 		}
 		return instance;
 	}	
+	
+	/////////////// RESTRICTIONS //////////////////////////////
+	
+	public Boolean groupHasUnaryRestrictions(String g) {
+		return unaryRestrictions.containsKey(g);
+	}
+	
+	public Boolean groupHasNaryRestrictions(String g) {
+		return naryRestrictions.containsKey(g);
+	}
+	
+	public Set<String> getGroupUnaryRestrictions(String g) {
+		return unaryRestrictions.get(g).keySet();
+	}
+	
+	public Set<String> getGroupNaryRestrictions(String g) {
+		return naryRestrictions.get(g).keySet();
+	}
+	
+	public Boolean validateGroupUnaryRestriction(String g, String r, int day, int hour, int duration) {
+		return unaryRestrictions.get(g).get(r).validate(day, hour, duration);
+	}
+	
 	
 	/////////////// GROUPS //////////////////////////////
 	
@@ -82,8 +106,16 @@ public class Environment {
 		return groups.get(g).getParentGroupCode();
 	}
 	
+	public Boolean groupNeedsComputers(String g) {
+		return groups.get(g).needsComputers();
+	}
+	
 	public ArrayList<String> getGroupLectures(String g) {
 		return groups.get(g).getLectures();
+	}
+	
+	public Set<String> getAllGroups() {
+		return groups.keySet();
 	}
 	
 	/////////////// SUBJECTS //////////////////////////////
@@ -112,6 +144,10 @@ public class Environment {
 		return subjects.get(s).getGroups();
 	}
 	
+	public Set<String> getAllSubjects() {
+		return subjects.keySet();
+	}
+	
 	/////////////// LECTURE //////////////////////////////
 	
 	public void addLecture(Lecture l) {
@@ -126,6 +162,9 @@ public class Environment {
 		return lectures.get(l).getGroup();
 	}
 	
+	public Set<String> getAllLectures() {
+		return lectures.keySet();
+	}
 	
 	/////////////// ROOM //////////////////////////////
 	
@@ -145,7 +184,8 @@ public class Environment {
 		return rooms.get(r).hasComputers();
 	}
 	
-	
-	
+	public Set<String> getAllRooms() {
+		return rooms.keySet();
+	}
 	
 }

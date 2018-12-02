@@ -106,6 +106,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -114,6 +115,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -122,6 +124,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -130,6 +133,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -138,6 +142,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -146,6 +151,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "20",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -154,6 +160,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "20",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -162,6 +169,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "20",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -170,6 +178,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "20",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -178,6 +187,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "20",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -186,6 +196,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "30",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -194,6 +205,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "30",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -202,6 +214,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "30",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -210,6 +223,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "30",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -218,6 +232,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "30",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -226,6 +241,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -234,6 +250,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -242,6 +259,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -250,6 +268,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -258,6 +277,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -266,6 +286,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "50",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -274,6 +295,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "50",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -282,6 +304,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "50",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -290,6 +313,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "50",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -298,6 +322,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "50",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -306,6 +331,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "60",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -314,6 +340,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "60",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -322,6 +349,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "60",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -330,6 +358,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "60",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -338,6 +367,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "60",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -346,6 +376,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "70",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -354,6 +385,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "70",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -362,6 +394,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "70",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -370,6 +403,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "70",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -378,6 +412,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "70",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               }
@@ -395,6 +430,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -403,6 +439,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -411,6 +448,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -419,6 +457,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -427,6 +466,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "20",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -435,6 +475,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "20",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -443,6 +484,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "20",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -451,6 +493,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "20",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -459,6 +502,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "30",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -467,6 +511,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "30",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -475,6 +520,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "30",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -483,6 +529,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "30",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -491,6 +538,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -499,6 +547,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -507,6 +556,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -515,6 +565,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -523,6 +574,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "50",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -531,6 +583,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "50",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -539,6 +592,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "50",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -547,6 +601,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "50",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -555,6 +610,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "60",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -563,6 +619,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "60",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -571,6 +628,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "60",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -579,6 +637,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "60",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -587,6 +646,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "70",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -595,6 +655,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "70",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -603,6 +664,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "70",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -611,6 +673,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "70",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               }
@@ -628,6 +691,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -636,6 +700,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -644,6 +709,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -652,6 +718,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -660,6 +727,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -668,6 +736,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "20",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -676,6 +745,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "20",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -684,6 +754,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "20",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -692,6 +763,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "20",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -700,6 +772,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "20",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -708,6 +781,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "30",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -716,6 +790,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "30",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -724,6 +799,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "30",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -732,6 +808,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "30",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -740,6 +817,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "30",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -748,6 +826,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -756,6 +835,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -764,6 +844,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -772,6 +853,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -780,6 +862,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -788,6 +871,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "50",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -796,6 +880,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "50",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -804,6 +889,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "50",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -812,6 +898,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "50",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -820,6 +907,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "50",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -828,6 +916,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "60",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -836,6 +925,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "60",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -844,6 +934,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "60",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -852,6 +943,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "60",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -860,6 +952,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "60",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -868,6 +961,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "70",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -876,6 +970,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "70",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -884,6 +979,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "70",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -892,6 +988,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "70",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -900,6 +997,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "70",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               }
@@ -917,6 +1015,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -925,6 +1024,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [3]
               },
@@ -933,6 +1033,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [3]
               },
@@ -941,6 +1042,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [3]
               },
@@ -949,6 +1051,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "20",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -957,6 +1060,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "20",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [3]
               },
@@ -965,6 +1069,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "20",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [3]
               },
@@ -973,6 +1078,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "20",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [3]
               },
@@ -981,6 +1087,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "30",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -989,6 +1096,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "30",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [3]
               },
@@ -997,6 +1105,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "30",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [3]
               },
@@ -1005,6 +1114,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "30",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [3]
               },
@@ -1013,6 +1123,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -1021,6 +1132,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [3]
               },
@@ -1029,6 +1141,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [3]
               },
@@ -1037,6 +1150,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [3]
               },
@@ -1045,6 +1159,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "50",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -1053,6 +1168,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "50",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [3]
               },
@@ -1061,6 +1177,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "50",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [3]
               },
@@ -1069,6 +1186,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "50",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [3]
               },
@@ -1077,6 +1195,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "60",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -1085,6 +1204,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "60",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [3]
               },
@@ -1093,6 +1213,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "60",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [3]
               },
@@ -1101,6 +1222,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "60",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [3]
               },
@@ -1109,6 +1231,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "70",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -1117,6 +1240,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "70",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [3]
               },
@@ -1125,6 +1249,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "70",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [3]
               },
@@ -1133,6 +1258,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "70",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [3]
               }
@@ -1150,6 +1276,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -1158,6 +1285,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [3]
               },
@@ -1166,6 +1294,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [3]
               },
@@ -1174,6 +1303,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [3]
               },
@@ -1182,6 +1312,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -1190,6 +1321,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [3]
               },
@@ -1198,6 +1330,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [3]
               },
@@ -1206,6 +1339,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [3]
               }
@@ -1223,6 +1357,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -1231,6 +1366,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "PROBLEMS",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -1239,6 +1375,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "PROBLEMS",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -1247,6 +1384,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "PROBLEMS",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -1255,6 +1393,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -1263,6 +1402,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "PROBLEMS",
+								"needsComputers": false,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               }
@@ -1280,6 +1420,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -1288,6 +1429,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "PROBLEMS",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -1296,6 +1438,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "PROBLEMS",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -1304,6 +1447,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "PROBLEMS",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -1312,6 +1456,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -1320,6 +1465,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "PROBLEMS",
+								"needsComputers": false,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -1328,6 +1474,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "PROBLEMS",
+								"needsComputers": false,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               }
@@ -1345,6 +1492,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -1353,6 +1501,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -1361,6 +1510,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -1369,6 +1519,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -1377,6 +1528,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "10",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [2]
               },
@@ -1385,6 +1537,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "THEORY",
+								"needsComputers": false,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -1393,6 +1546,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               },
@@ -1401,6 +1555,7 @@
                 "numPeople": 20,
                 "parentGroupCode": "40",
                 "type": "LABORATORY",
+								"needsComputers": true,
                 "dayPeriod": "AFTERNOON",
                 "lecturesDuration": [2]
               }

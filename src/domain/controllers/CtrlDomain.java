@@ -50,22 +50,6 @@ public class CtrlDomain {
 	*/
 	private CtrlData dataController;
 	
-	/** Conjunt d'assignatures de l'entorn.
-	*/
-	private Map<String, Subject> subjects;
-	
-	/** Conjunt d'aules de l'entorn.
-	*/
-	private Map<String, Room> rooms;
-	
-	/** Conjunt de grups de l'entorn.
-	*/
-	private Map<String, Group> groups;
-	
-	/** Conjunt de 'lectures' de l'entorn.
-	*/
-	private Map<String, Lecture> lectures;
-	
 	/** Horari 
 	*/
 	private Schedule schedule;
@@ -78,10 +62,21 @@ public class CtrlDomain {
 	*/
 	private Map<String, NaryRestriction> naryRestrictions;
 	
+	public static void main(String[] args) throws Throwable, IOException {
+		CtrlDomain cd = CtrlDomain.getInstance();
+		cd.importEnvironment("Q1+Q2.json");
+		Environment env = Environment.getInstance();
+		
+		int i = 0;
+		
+	}
+	
 	/** Constructora estandard.
 	*/
 	private CtrlDomain() {
 		dataController = CtrlData.getInstance();
+		unaryRestrictions = new HashMap<String, Map<String, UnaryRestriction>>();
+		naryRestrictions = new HashMap<String, NaryRestriction>();
 		
 		OccupiedRoomRestriction ocrr = new OccupiedRoomRestriction();
 		naryRestrictions.put(ocrr.toString(), ocrr);
@@ -107,63 +102,6 @@ public class CtrlDomain {
 		return instance;
 	}
 	
-	/**
-	 * Retorna una llista de codis de les aules de l'entorn del domini.
-	 * @return Retorna la llista de codis de les aules de l'entorn del domini.
-	 */
-	public ArrayList<String> getRoomNamesList() {
-		ArrayList<String> list = new ArrayList<String>(rooms.keySet());
-		Collections.sort(list);
-		return list;
-	}
-	
-	/**
-	 * Retorna una llista de codis dels grups de l'entorn del domini.
-	 * @return Retorna una llista de codis dels grups de l'entorn del domini.
-	 */
-	public ArrayList<String> getGroupNamesList() {
-		return new ArrayList<String>(groups.keySet());
-	}
-	
-	/**
-	 * Retorna una llista de codis d'assignatures de l'entorn del domini.
-	 * @return Retorna la llista de codis d'assignatures de l'entorn del domini.
-	 */
-	public ArrayList<String> getSubjectNamesList() {
-		return new ArrayList<String>(subjects.keySet());
-	}
-	
-	/**
-	 * Retorna una llista de codis de les restriccions n-àries de l'entorn del domini.
-	 * @return Retorna la llista de codis de les restriccions n-àries de l'entorn del domini.
-	 */
-	public ArrayList<String> getNaryRestrictions() {
-		return new ArrayList<String>(naryRestrictions.keySet());
-	}
-	
-	/**
-	 * Borra les restriccions un-àries.
-	 * @return Retorna el map de restriccions un-àries buit.
-	 */
-	public void erase() {
-		//naryRestrictions = new HashMap<String, NaryRestriction>();
-		unaryRestrictions = new HashMap<String, Map<String, UnaryRestriction>>();
-	}
-	
-	/**
-	 * Retorna una llista de codis de les restriccions un-àries de l'entorn del domini.
-	 * @return Retorna la llista de codis de les restriccions un-àries de l'entorn del domini.
-	 */
-	public Map<String, String> getUnaryRestrictions() {
-		Map<String, String> result = new HashMap<String, String>();
-		for (String group : unaryRestrictions.keySet()) {
-			for (String name : unaryRestrictions.get(group).keySet()) {
-				result.put(group, name);
-			}
-		}
-		
-		return result;
-	}
 	
 	/**
 	 * Genera un horari amb les condicions de l'entorn.
@@ -191,7 +129,8 @@ public class CtrlDomain {
 				enabledNaryRestrictions.put(r.toString(), r);
 			}
 		}
-		return ctS.generateSchedule(enabledUnaryRestrictions, enabledNaryRestrictions, groups, rooms, subjects, lectures, schedule);
+		//return ctS.generateSchedule(enabledUnaryRestrictions, enabledNaryRestrictions, groups, rooms, subjects, lectures, schedule);
+		return false;
 	}
 	
 	/**
@@ -302,6 +241,7 @@ public class CtrlDomain {
     					((Long) group.get("numPeople")).intValue(),
     					(String) group.get("parentGroupCode"),
     					scode,
+    					(Boolean) group.get("needsComputers"), //hopefully aixi ja funcionara
     					Group.Type.valueOf((String) group.get("type")),
     					Group.DayPeriod.valueOf((String) group.get("dayPeriod")),
     					ls);
@@ -321,7 +261,7 @@ public class CtrlDomain {
     				restrictions.put(sdohr.toString(), sdohr);
     			}
 			*/
-    			unaryRestrictions.put(g.toString(), restrictions); 
+			unaryRestrictions.put(g.toString(), restrictions); 
         		
         	}
         	Subject s = new Subject(
@@ -348,10 +288,7 @@ public class CtrlDomain {
         	//rooms.put(r.toString(), r);
         	env.addRoom(r);
         }
-        
-        this.subjects = subjects;
-        this.groups = groups;
-        this.rooms = rooms;
+       
 		return true;
 	}
 	
