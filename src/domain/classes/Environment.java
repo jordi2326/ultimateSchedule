@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import domain.classes.restrictions.CorequisitRestriction;
 import domain.classes.restrictions.NaryRestriction;
 import domain.classes.restrictions.UnaryRestriction;
 
@@ -75,6 +76,23 @@ public class Environment {
 		return unaryRestrictions.get(g).get(r).validate(day, hour, duration);
 	}
 	
+	public Boolean validateGroupNaryRestriction(String g, String restr, String room, int day, int hour, String lecture, Integer d, Integer h, String r, String l) {
+		return naryRestrictions.get(g).get(restr).validate(room, day, hour, lecture, d, h, r, l);
+	}
+	
+	public void addUnaryRestriction(String g, UnaryRestriction restr) {
+		if (!unaryRestrictions.containsKey(g) ) {
+			unaryRestrictions.put(g, new HashMap<String, UnaryRestriction>());
+		}
+		unaryRestrictions.get(g).put(restr.toString(), restr);
+	}
+	
+	public void addNaryRestriction(String g, NaryRestriction restr) {
+		if (!naryRestrictions.containsKey(g) ) {
+			naryRestrictions.put(g, new HashMap<String, NaryRestriction>());
+		}
+		naryRestrictions.get(g).put(restr.toString(), restr);
+	}
 	
 	/////////////// GROUPS //////////////////////////////
 	

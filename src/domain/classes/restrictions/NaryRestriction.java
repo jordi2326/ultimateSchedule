@@ -33,7 +33,6 @@ public abstract class NaryRestriction extends Restriction {
 	 * @return True si, un cop eliminat les aules en les que cada sessió no podia anar, totes les sessions restant poden anar com a mínim a una aula. False en cas contrari.
 	 * Les aules que s'eliminaran dependran de la restricció que estiguem validant.
 	*/
-	public abstract boolean validate(String lecture, String room, Integer day, Integer hour, Map<String, Subject> subjects,
-			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> pAssigMap);
+	public abstract boolean validate(String room, Integer day, Integer hour, String lecture, Integer d, Integer h, String r, String l);
 
 }

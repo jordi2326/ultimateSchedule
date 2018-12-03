@@ -167,13 +167,70 @@ public class CtrlSchedule {
 		 * ParentGroup from Lecture (ParentGroupRestriction)
 		 * SubjectLevel from Lecture (SubjectLevelRestriction)
 		 */
-		
-		for (NaryRestriction restr : naryRestrictions.values()) {
-			if (!restr.validate(lecture, room, day, hour, subjects, groups, lectures, shrek)) {
-				return false;
+		Environment env = Environment.getInstance();
+		//Substract 1 to referenced rooms by the inserted lecture (this includes the inserted room)
+		for (Integer d : assignations.get(lecture).getAllDays()) {
+			for (Integer h : assignations.get(lecture).getAllHoursFromDay(day)) {
+				for (String r : assignations.get(lecture).getAllRoomsFromHourAndDay(day, hour)) {
+					String key = createKey(r, d, h);
+					referencedRooms.put(key, referencedRooms.get(key)-1);
+					//If that room+hour+day isn't referenced by any lecture, delete it
+					if (referencedRooms.get(key).equals(0)) {
+						referencedRooms.remove(key);
+					}
+				}
 			}
 		}
-		return true;
+		//Remove inserted lecture
+		numPossibleAlloc.remove(lecture);
+		assignations.remove(lecture);
+		
+		for (String l : assignations.keySet()) {
+			String g = env.getLectureGroup(l);
+			//If lecture l is from same group of lecture inserted, they souldn't 
+			//take place on the same day, so remove that day
+			/*
+			if (env.getLectureGroup(lecture).equals(env.getLectureGroup(l))) {
+				if (assignations.get(l).hasDay(day)) {
+					for (Integer h : assignations.get(l).getAllHoursFromDay(day)) {
+						for (String r : assignations.get(l).getAllRoomsFromHourAndDay(day, h)) {
+							//Substract 1 to referenced rooms because it's not ocmpatible with the insertion
+							String key = createKey(r, day, h);
+							referencedRooms.put(key, referencedRooms.get(key)-1);
+							//If that room+hour+day isn't referenced by any lecture, delete it
+							if (referencedRooms.get(key).equals(0)) {
+								referencedRooms.remove(key);
+							}
+							//Substract numPossibleAlloc
+							numPossibleAlloc.put(l, numPossibleAlloc.get(l)-1);
+						}
+					}
+				}
+				assignations.get(l).removeDay(day);
+				//If there are no assignations for lecture, return false
+				if (assignations.get(l).isEmpty()) return false;
+			} */
+			for (Integer d : assignations.get(lecture).getAllDays()) {
+				for (Integer h : assignations.get(lecture).getAllHoursFromDay(day)) {
+					for (String r : assignations.get(lecture).getAllRoomsFromHourAndDay(day, hour)) {	
+						Boolean isValid = true;
+						for (String restr : env.getGroupNaryRestrictions(g)) {
+							env.validateGroupNaryRestriction(g, restr, room, day, hour, lecture, d, h, r, l);
+						}
+						if (!isValid) {
+							//Substract 1 to referenced rooms because it's not ocmpatible with the insertion
+							String key = createKey(r, d, h);
+							referencedRooms.put(key, referencedRooms.get(key)-1);
+							//If that room+hour+day isn't referenced by any lecture, delete it
+							if (referencedRooms.get(key).equals(0)) {
+								referencedRooms.remove(key);
+							}
+						}
+					}
+				}
+			}
+		}
+		//COMPROVAR AL FINAL QUE HI HA IGUAL O MENYS LECTURES QUE REFERENCED ROOMS
 	}
 
 	/**

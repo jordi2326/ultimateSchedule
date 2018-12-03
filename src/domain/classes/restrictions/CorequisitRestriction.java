@@ -2,7 +2,9 @@ package domain.classes.restrictions;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Set;
 
+import domain.classes.Environment;
 import domain.classes.Group;
 import domain.classes.Lecture;
 import domain.classes.PosAssig;
@@ -34,52 +36,28 @@ public class CorequisitRestriction extends NaryRestriction{
 	 * @param room		Aula on hem afegit la sessi�.
 	 * @param day		Dia en el que hem afegit la sessi�.
 	 * @param hour		Hora en la que hem afegit la sessi�.
-	 * @param subjects	Conjunt d'assignatures de l'entorn.
-	 * @param groups	Conjunt de grups de l'entorn.
-	 * @param lectures	Conjunt de sessions de l'entorn.
-	 * @param pAssigMap		Conjunt de possibles assignacions per a cada sessi�.
 	 * @return True si, un cop eliminat les aules en les que cada sessi� no podia anar, totes les sessions restant poden anar com a m�nim a una aula. False en cas contrari.
 	 * Les aules que s'eliminen per cada sessi� restant s�n aquelles que farien anar dos grups (un de cada assignatura correquisites entre elles), amb mateix parentCode, en un dia i hora concrets.
 	*/
 	//Si la assignatura A �s correq de B, llavors hi ha d'haver alguna combinaci� en que algun grup de A i un grup que pot ser diferent de B no es solapen
-	public boolean validate(String lecture, String room, Integer day, Integer hour, Map<String, Subject> subjects,
-			Map<String, Group> groups, Map<String, Lecture> lectures, Map<String, PosAssig> pAssigMap) {
-		String group = lectures.get(lecture).getGroup();
-		String subject = groups.get(group).getSubject();
-		ArrayList<String> coreqs = subjects.get(subject).getCoreqs();
-		//Get group code from inserted lecture
-		String groupParentCode = groups.get(group).getParentGroupCode();
-		//Tweak every lecture of a group with same code and subject that is correq. 
-		for (Subject sub : subjects.values()) {
-			if (sub.getCoreqs().contains(subject) || coreqs.contains(sub.toString())) {
-				for (String gr : sub.getGroups()) {
-					if (groups.get(gr).getParentGroupCode().equals(groupParentCode)) {
-						for (String lec : groups.get(gr).getLectures()) {
-							//If coreq and same group code, then l cannot be in the same day and hour as lecture
-							if (pAssigMap.containsKey(lec)) {
-								if (pAssigMap.get(lec).hasDay(day)) {
-									Integer duration = lectures.get(lecture).getDuration(); //duration of lecture
-									Integer d = lectures.get(lec).getDuration(); //duration of l
-									Integer i = hour - d + 1;  //mirar foto del mobil per entendre si fa falta
-									while (i < hour+duration) { //mirar foto del mobil per entendre si fa falta
-										if(pAssigMap.get(lec).hasHourFromDay(day, i)) {
-											pAssigMap.get(lec).removeHourFromDay(day, i); //it returns a boolean that is false if the hour or day weren't in pAssigMap. But it's not needed here
-										}
-										++i;
-									}
-									if (pAssigMap.get(lec).dayIsEmpty(day)) {
-										pAssigMap.get(lec).removeDay(day);
-									}
-									if (pAssigMap.get(lec).hasNoDays()) {
-										return false;
-									}
-								}
-							}
-						}
-					}	
+	public boolean validate(String room, Integer day, Integer hour, String lecture, Integer d, Integer h, String r, String l) {
+		Environment env = Environment.getInstance();
+		//Get inserted lecture info
+		Integer duration = env.getLectureDuration(lecture);
+		String subject = env.getGroupSubject(env.getLectureGroup(lecture));
+		ArrayList<String> coreqs = env.getSubjectCoreqs(subject);
+		//get checking lecture (l) info
+		String s = env.getGroupSubject(env.getLectureGroup(l));
+		ArrayList<String> cqs = env.getSubjectCoreqs(s);
+		
+		Boolean sonCoreqs = false;
+		for (String c : cqs) {
+			for (String coreq : coreqs) {
+				if (coreq.equals(c)) {
+					sonCoreqs = true;
 				}
 			}
 		}
-		return true;
+		return !(h >= hour && h < hour+duration	&& sonCoreqs);
 	}
 }

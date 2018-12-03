@@ -273,7 +273,6 @@ public class CtrlDomain {
 				groupsToString,
 				(ArrayList<String>) subject.get("coreqs")
     			);
-        	//subjects.put(s.toString(), s);
         	env.addSubject(s);
         }
         // getting rooms 
