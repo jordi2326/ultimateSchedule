@@ -3,6 +3,7 @@ package domain.controllers;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -136,11 +137,11 @@ public class CtrlDomain {
 						String text = entry.getValue()[j][i];
 						if (text!=null && !text.isEmpty()) {
 							found = true;
-								String[] split = text.split("-");
-								String ntext = split[0]+" "+split[1]+split[2].substring(0, 1);
-								System.out.print("  " + entry.getKey()+ ": " + ntext);
-								for (int k = (2 + entry.getKey().length() + 2 + ntext.length()); k < 20; ++k) System.out.print(" ");
-								System.out.print("|");
+							String[] split = text.split("-");
+							String ntext = split[0]+" "+split[1]+split[2].substring(0, 1);
+							System.out.print("  " + entry.getKey()+ ": " + ntext);
+							for (int k = (2 + entry.getKey().length() + 2 + ntext.length()); k < 20; ++k) System.out.print(" ");
+							System.out.print("|");
 							entry.getValue()[j][i] = null;
 						}
 					} else if (!after) {
@@ -156,6 +157,39 @@ public class CtrlDomain {
 			System.out.println("");
 			if (!after && i != 11) System.out.println("|------+--------------------+--------------------+--------------------+--------------------+--------------------|");
 		}
+		
+		// Imprimir l'11
+		after = true;
+		while (after) {
+			System.out.print("|      |");
+			after = false;
+			for (int j = 0; j < 5; j++) {
+				boolean found = false;
+				for (Map.Entry<String, String[][]> entry : SCH.entrySet()) {
+					if (!found) {
+						String text = entry.getValue()[j][11];
+						if (text!=null && !text.isEmpty()) {
+							found = true;
+								String[] split = text.split("-");
+								String ntext = split[0]+" "+split[1]+split[2].substring(0, 1);
+								System.out.print("  " + entry.getKey()+ ": " + ntext);
+								for (int k = (2 + entry.getKey().length() + 2 + ntext.length()); k < 20; ++k) System.out.print(" ");
+								System.out.print("|");
+							entry.getValue()[j][11] = null;
+						}
+					} else if (!after) {
+						// String room = entry.getKey();
+						String lecture = entry.getValue()[j][11];
+						if (lecture != null) {
+							after = true;
+						}
+					}
+				}
+				if (!found) System.out.print("                    |");
+			}
+			System.out.println("");
+		}
+		
 		System.out.println("|---------------------------------------------------------------------------------------------------------------|");
 	}
 

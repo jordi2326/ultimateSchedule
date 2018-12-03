@@ -112,6 +112,14 @@ public class Environment {
 	
 	/////////////// RESTRICTIONS //////////////////////////////
 	
+	public Map<String, Map<String, UnaryRestriction>> getUnaryRestrictions() {
+		return unaryRestrictions;
+	}
+	
+	public Map<String, Map<String, NaryRestriction>> getNaryRestrictions() {
+		return naryRestrictions;
+	}
+	
 	public Boolean groupHasUnaryRestrictions(String g) {
 		return unaryRestrictions.containsKey(g);
 	}

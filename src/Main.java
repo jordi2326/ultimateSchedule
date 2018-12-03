@@ -130,6 +130,7 @@ public class Main {
 	    String s = sc.nextLine();
 	    try {
 			ctDomain.importEnvironment(s);
+			ctDomain.getRestrictionNames();
 			environmentMenu(s);
 		} catch (Exception e) {
 			e.printStackTrace();
