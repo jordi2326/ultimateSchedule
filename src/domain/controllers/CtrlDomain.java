@@ -402,4 +402,143 @@ public class CtrlDomain {
 		
 		return data;
 	}
+	
+	// Funcions per comunicar-se amb la capa de presentació
+	
+		// ROOM
+		public Set<String> getRoomNames() {
+			Environment env = Environment.getInstance();
+			return new TreeSet<String>(env.getAllRooms());
+		}
+		
+		String[] getRoomInfo(String room) {
+			 /* ********* ORDRE *********
+			  * param code			Codi de l'aula.
+			  * param capacity 		Capacitat de l'aula.
+			  * param hasComputers 	Indica si l'aula té ordinadors o no.
+			  * ************************* */
+			Environment env = Environment.getInstance();
+			
+			String[] infoRoom = new String[3];
+			infoRoom[0] = env.getRoomCode(room);
+			infoRoom[1] = env.getRoomCapacity(room).toString();
+			infoRoom[2] = env.roomHasComputers(room).toString();
+			
+			return infoRoom;
+		};
+		
+		// GROUP
+		public Set<String> getGroupNames() {
+			Environment env = Environment.getInstance();
+			return new TreeSet<String>(env.getAllGroups());
+		}
+		
+		String[] getGroupInfo(String group) {
+			 /* ********* ORDRE *********
+			  * param code				Codi del grup.
+			  * param numPeople			Núm. persones en el grup.
+			  * param parentGroupCode	Codi del grup pare.
+			  * param subject			Assignatura a la que pertany.
+			  * param type				Tipus de grup.
+			  * param dayPeriod			Període del dia.
+			  * param lectures			Conjunt de sessions del grup.
+			  * ************************* */
+			Environment env = Environment.getInstance();
+			
+			String[] infoGroup = new String[6];
+			infoGroup[0] = env.getGroupCode(group);
+			infoGroup[1] = env.getGroupNumOfPeople(group).toString();
+			infoGroup[2] = env.getGroupParentGroupCode(group);
+			infoGroup[3] = env.getGroupSubject(group);
+			infoGroup[4] = env.getGroupType(group).toString();
+			infoGroup[5] = env.getGroupDayPeriod(group).toString();
+			infoGroup[6] = env.groupNeedsComputers(group).toString();
+			
+			return infoGroup;
+		};
+		
+		// SUBJECT
+		public Set<String> getSubjectNames() {
+			Environment env = Environment.getInstance();
+			return new TreeSet<String>(env.getAllSubjects());
+		}
+		
+		Object[] getSubjectInfo(String sub) {
+			 /* ********* ORDRE *********
+			  * param code		Codi de l'assignatura.
+			  * param name		Nom complet de l'assignatura.
+			  * param level		Nivell de l'assignatura.
+			  * param groups	Grups de l'assignatura.
+			  * param coreqs	Assignatues corequisites de l'assignatura que estem creant.
+			  * ************************* */
+			Environment env = Environment.getInstance();
+			
+			Object[] infoSub = new Object[] {
+				env.getSubjectCode(sub),
+				env.getSubjectName(sub),
+				env.getSubjectLevel(sub),
+				env.getSubjectGroups(sub),
+				env.getSubjectCoreqs(sub)
+			};
+			
+			return infoSub;
+		};
+		
+		// RESTRICTION
+		public Set<String> getRestrictionNames() {
+			Environment env = Environment.getInstance();
+			
+			TreeSet<String> R = new TreeSet<String>();
+			
+			for (String group : env.getAllGroups()) {
+				if (env.groupHasUnaryRestrictions(group)) R.addAll(env.getGroupUnaryRestrictions(group));
+				if (env.groupHasNaryRestrictions(group)) R.addAll(env.getGroupNaryRestrictions(group));
+			}
+			
+			return R;
+		}
+		
+		String[] getRestrictionInfo(String res) {
+			 /* ********* ORDRE *********
+			  * param negotiable	Indica si la restricciï¿½ ï¿½s negociable.
+			  * param enabled		Indica si la restricciï¿½ estï¿½ activada.
+			  * ************************* */
+			Environment env = Environment.getInstance();
+			
+			String[] infoRes = new String[2];
+			
+			for (Map<String, UnaryRestriction> groupRes : env.getUnaryRestrictions().values()) {
+				for (String rest : groupRes.keySet()) {
+					if (rest == res) {
+						Boolean nego = groupRes.get(rest).isNegotiable();
+						infoRes[0] = nego.toString();
+						
+						Boolean ena = groupRes.get(rest).isEnabled();
+						infoRes[1] = ena.toString();
+						
+						return infoRes;
+					}
+				}
+			}
+			
+			for (Map<String, NaryRestriction> groupRes : env.getNaryRestrictions().values()) {
+				for (String rest : groupRes.keySet()) {
+					if (rest == res) {
+						Boolean nego = groupRes.get(rest).isNegotiable();
+						infoRes[0] = nego.toString();
+						
+						Boolean ena = groupRes.get(rest).isEnabled();
+						infoRes[1] = ena.toString();
+						
+						return infoRes;
+					}
+				}
+			}
+			
+			// No existeix (error)
+			//System.out.println("error");
+			
+			String[] error = new String[0];
+			return error;
+		};
 }
