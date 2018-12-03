@@ -44,20 +44,27 @@ public class CorequisitRestriction extends NaryRestriction{
 		Environment env = Environment.getInstance();
 		//Get inserted lecture info
 		Integer duration = env.getLectureDuration(lecture);
-		String subject = env.getGroupSubject(env.getLectureGroup(lecture));
+		String group = env.getLectureGroup(lecture);
+		String subject = env.getGroupSubject(group);
+		String groupParentCode = env.getGroupParentGroupCode(group);
 		ArrayList<String> coreqs = env.getSubjectCoreqs(subject);
 		//get checking lecture (l) info
-		String s = env.getGroupSubject(env.getLectureGroup(l));
+		String g = env.getLectureGroup(l);
+		String s = env.getGroupSubject(g);
+		String gpcode = env.getGroupParentGroupCode(g);
 		ArrayList<String> cqs = env.getSubjectCoreqs(s);
-		
+		//Nomes importa si son coreqs si tenen el mateix parent group
 		Boolean sonCoreqs = false;
-		for (String c : cqs) {
-			for (String coreq : coreqs) {
-				if (coreq.equals(c)) {
-					sonCoreqs = true;
+		if (gpcode.equals(groupParentCode)) {
+			for (String c : cqs) {
+				for (String coreq : coreqs) {
+					if (coreq.equals(c)) {
+						sonCoreqs = true;
+					}
 				}
 			}
 		}
+		
 		return !(day.equals(d) && h >= hour && h < hour+duration && sonCoreqs);
 	}
 }

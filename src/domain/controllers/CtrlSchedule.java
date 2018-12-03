@@ -22,7 +22,7 @@ import java.util.Iterator;
 
 
 /** Controlador de Schedule.
- * @author Xavier Martín Ballesteros i Xavier Lacasa Curto
+ * @author Xavier Martï¿½n Ballesteros i Xavier Lacasa Curto
 */
 
 class groupHeuristicComparator implements Comparator<Map.Entry<Integer, String>>{ 
@@ -54,7 +54,7 @@ public class CtrlSchedule {
 		return instance;
 	}
 	
-	/** Constructora estàndard.
+	/** Constructora estï¿½ndard.
 	*/
 	private CtrlSchedule() {
 	}
@@ -76,8 +76,8 @@ public class CtrlSchedule {
 	}
 
 	/**
-	 * Funció principal que genera un horari amb les dades donades.
-	 * @param schedule Objecte de la classe Schedule que contindrà l'horari generat al finalitzar l'algoritme.
+	 * Funciï¿½ principal que genera un horari amb les dades donades.
+	 * @param schedule Objecte de la classe Schedule que contindrï¿½ l'horari generat al finalitzar l'algoritme.
 	 * @return  true si s'ha trobat un horari valid, sino false.
 	 */
 	public boolean generateSchedule(Schedule schedule) {
@@ -156,14 +156,16 @@ public class CtrlSchedule {
 	}
 	
 	/**
-	 * Funció de Forward Checking que comprova la validesa de l'última assignació i reduiex les possibles assignacions si es possible.
-	 * @param lecture Última 'lecture' que s'ha assignat a l'horari, i es vol comprovar la seva validesa.
+	 * Funciï¿½ de Forward Checking que comprova la validesa de l'ï¿½ltima assignaciï¿½ i reduiex les possibles assignacions si es possible.
+	 * @param lecture ï¿½ltima 'lecture' que s'ha assignat a l'horari, i es vol comprovar la seva validesa.
 	 * @param room Aula en la qual s'ha assignat la 'lecture'.
 	 * @param day Dia en el que s'ha assignat la 'lecture'.
 	 * @param hour Hora en la que s'ha assignat la 'lecture'.
-	 * @return True si l'assigació a comprovar es valida, sino false.
+	 * @return True si l'assigaciï¿½ a comprovar es valida, sino false.
 	 */
-	private static boolean forwardCheck(String lecture, String room, Integer day, Integer hour, Map<String, Integer> numPossibleAlloc, Map<String, PosAssig> assignations, Map<String, Integer> referencedRooms) {
+	private static boolean forwardCheck(String lecture, String room, Integer day, Integer hour, 
+			Map<String, Integer> numPossibleAlloc, Map<String, PosAssig> assignations, Map<String, Integer> referencedRooms,
+			Map<String, Integer> numPossibleAllocChanges, Map<String, PosAssig>assigChanges, Map<String, Integer> referencedRoomsChanges) {
 		Environment env = Environment.getInstance();
 		//Substract 1 to referenced rooms by the inserted lecture (this includes the inserted room)
 		for (Integer d : assignations.get(lecture).getAllDays()) {
@@ -171,6 +173,11 @@ public class CtrlSchedule {
 				for (String r : assignations.get(lecture).getAllRoomsFromHourAndDay(day, hour)) {
 					String key = createKey(r, d, h);
 					referencedRooms.put(key, referencedRooms.get(key)-1);
+					//Guardar canvis
+					if (!referencedRoomsChanges.containsKey(key)) {
+						referencedRoomsChanges.put(key, 1);
+					}
+					referencedRoomsChanges.put(key, referencedRoomsChanges.get(key)+1);
 					//If that room+hour+day isn't referenced by any lecture, delete it
 					if (referencedRooms.get(key).equals(0)) {
 						referencedRooms.remove(key);
@@ -178,13 +185,15 @@ public class CtrlSchedule {
 				}
 			}
 		}
+		//Save changes
+		numPossibleAllocChanges.put(lecture, numPossibleAlloc.get(lecture));
+		assigChanges.put(lecture, assignations.get(lecture));
 		//Remove inserted lecture
+		//MIRAR SI FUNCIONA PER LODE SHALLOW COPY
 		numPossibleAlloc.remove(lecture);
 		assignations.remove(lecture);
-		
 		for (String l : assignations.keySet()) {
 			String g = env.getLectureGroup(l);
-			
 			for (int d = 0; d < 5; ++d) {
 				if (assignations.get(l).hasDay(d)) {
 					for (int h = 0; h < 12; ++h) {
@@ -202,11 +211,23 @@ public class CtrlSchedule {
 								if (!isValid) {
 									//Substract 1 to referenced rooms because it's not ocmpatible with the insertion
 									String key = createKey(r, d, h);
+									//Guardar canvis
+									if (!referencedRoomsChanges.containsKey(key)) {
+										referencedRoomsChanges.put(key, 1);
+									}
+									referencedRoomsChanges.put(key, referencedRoomsChanges.get(key)+1);
+									//Treure ref
 									referencedRooms.put(key, referencedRooms.get(key)-1);
 									//If that room+hour+day isn't referenced by any lecture, delete it
+									//Guardar canvis
 									if (referencedRooms.get(key).equals(0)) {
 										referencedRooms.remove(key);
 									}
+									referencedRoomsChanges.put(key, referencedRoomsChanges.get(key)+1);
+									if (!numPossibleAllocChanges.containsKey(l)) {
+										numPossibleAllocChanges.put(l, 1);
+									}
+									numPossibleAllocChanges.put(l, numPossibleAllocChanges.get(l)+1);
 									//Substract numPossibleAlloc
 									numPossibleAlloc.put(l, numPossibleAlloc.get(l)-1);
 									if (numPossibleAlloc.get(l).equals(0)) {
@@ -214,8 +235,14 @@ public class CtrlSchedule {
 										//numPossibleAlloc.remove(l);
 										return false;
 									}
-									//Remove from possible assignations
+									
 									iter.remove();
+									//Guardar canvis
+									if (!assigChanges.containsKey(l)) {
+										assigChanges.put(l, new PosAssig());
+									}
+									assigChanges.get(l).putRoomInDayAndHour(d, h, r);
+									//Remove from possible assignations
 									assignations.get(l).removeRoomFromHourAndDay(d, h, r);
 								}
 							}
@@ -233,8 +260,8 @@ public class CtrlSchedule {
 	}
 
 	/**
-	 * Funció que fa Backjumping, utilitzat en l'algoritme que genera un horari.
-	 * @param schedule Objecte de la classe Schedule que contindrà l'horari generat al finalitzar l'algoritme.
+	 * Funciï¿½ que fa Backjumping, utilitzat en l'algoritme que genera un horari.
+	 * @param schedule Objecte de la classe Schedule que contindrï¿½ l'horari generat al finalitzar l'algoritme.
 	 */
 	private static boolean backjumping(Schedule schedule, Map<String, Integer> numPossibleAlloc, Map<String, PosAssig> assignations, Map<String, Integer> referencedRooms) {	
 		Environment env = Environment.getInstance();
@@ -275,13 +302,13 @@ public class CtrlSchedule {
 		//We should try to fit lecture in room+hour+day with less references
 		//If doesn't work, try next room+hour+day (might be another day or/and hour) 
 		Boolean generated = false;
-		//while (!pq.isEmpty() && !generated) {
+		while (!pq.isEmpty() && !generated) {
 			String key = pq.remove().getValue();
 			String room = getRoomFromKey(key);
 			Integer day = getDayFromKey(key);
 			Integer hour = getHourFromKey(key);
 			
-			//Cas base
+			//Cas base Aixo hauria de ser molt mÃ©s bonic
 			if (assignations.size() == 1) {
 				Integer h = 0;
 				while (h < env.getLectureDuration(lecture)) {
@@ -290,16 +317,16 @@ public class CtrlSchedule {
 				}
 				return true;
 			}
-			//Try forwardChecking and generating schedule before the insertion so that if it fails we don't have to delete lecture from schedule
-			Map<String, PosAssig> copyAssignations = assignations.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> new PosAssig(e.getValue().getMap())));
-			Map<String, Integer> copyReferencedRooms = referencedRooms.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
-			Map<String, Integer> copyNumPossibleAlloc = numPossibleAlloc.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
-			
-			if (forwardCheck(lecture, room, day, hour, copyNumPossibleAlloc, copyAssignations, copyReferencedRooms)) {
+			//Try forwardChecking and generating schedule before the insertion so that if it fails we don't have to delete lecture from schedule	
+			Map<String, PosAssig> assigChanges = new HashMap<String, PosAssig>();
+			Map<String, Integer> numPossibleAllocChanges = new HashMap<String, Integer>();
+			Map<String, Integer> referencedRoomsChanges = new HashMap<String, Integer>();
+			if (forwardCheck(lecture, room, day, hour, numPossibleAlloc, assignations, referencedRooms, 
+					numPossibleAllocChanges, assigChanges, referencedRoomsChanges)) {
 				//Once checked there are still possibilities, try generating the rest of the schedule with
 				//the impossible combinations cut out by the forward checking
-				generated = backjumping(schedule, copyNumPossibleAlloc, copyAssignations, copyReferencedRooms);
-				//if (generated) {
+				generated = backjumping(schedule, numPossibleAlloc, assignations, referencedRooms);
+				if (generated) {
 					//If backjumping returned true, the schedule is possible, so insert the lecture
 					//All lectures from here on have been inserted recursively
 					Integer h = 0;
@@ -307,9 +334,41 @@ public class CtrlSchedule {
 						schedule.putLecture(room, day, hour+h, env.getLectureGroup(lecture));
 						++h;
 					}
-				//}
+				}
 			}
-		//}
+			if (!generated) {
+				//Desfer canvis assignations
+				for (String l : assigChanges.keySet()) {
+					if (!assignations.containsKey(l)) {
+						assignations.put(l, new PosAssig());
+					}
+					for (Integer d : assigChanges.get(l).getAllDays()) {
+						for (Integer h : assigChanges.get(l).getAllHoursFromDay(d)) {
+							for (String r : assigChanges.get(l).getAllRoomsFromHourAndDay(d, h)) {
+								assignations.get(l).putRoomInDayAndHour(d, h, r);
+							}
+						}
+					}
+				}
+				//Desfer canvis numPossibleAlloc
+				for (String l : numPossibleAllocChanges.keySet()) {
+					Integer addition = numPossibleAllocChanges.get(l);
+					if (!numPossibleAlloc.containsKey(l)) {
+						numPossibleAlloc.put(l, 0);
+					}
+					numPossibleAlloc.put(l, numPossibleAlloc.get(l) + addition);
+				}
+				
+				//Desfer canvis referencedRoomsChanges
+				for (String l : referencedRoomsChanges.keySet()) {
+					Integer addition = referencedRoomsChanges.get(l);
+					if (!referencedRooms.containsKey(l)) {
+						referencedRooms.put(l, 0);
+					}
+					referencedRooms.put(l, referencedRooms.get(l) + addition);
+				}
+			}
+		}
 		return generated;
 	}
 }

@@ -11,19 +11,19 @@ import java.util.stream.Collectors;
 */
 
 public class PosAssig {
-	/** Mapa de les possibles assignacions d'una sessió d'un grup en concret.
-	 *  El mapa té de key els dies i, per cada dia, té un mapa amb les hores com a clau i les aules que poden anar-hi com a valor.
+	/** Mapa de les possibles assignacions d'una sessiï¿½ d'un grup en concret.
+	 *  El mapa tï¿½ de key els dies i, per cada dia, tï¿½ un mapa amb les hores com a clau i les aules que poden anar-hi com a valor.
 	*/
 	Map<Integer, Map< Integer, Set<String>>> assigMap;
 	//   Dia		    Hora		Aula
 	
-	/** Constructora estàndard.
+	/** Constructora estï¿½ndard.
 	*/
 	public PosAssig() {
 		assigMap = new HashMap<Integer, Map< Integer, Set<String>>>();
 	}
 	
-	/** Constructora estàndard.
+	/** Constructora estï¿½ndard.
 	 * @param assigMap Conjunt de possibles assignacions.
 	*/
 	public PosAssig(Map<Integer,Map <Integer, Set<String>>> map) {
@@ -38,7 +38,8 @@ public class PosAssig {
 				aux1.put(hour, rooms);
 			}
 			assigMap.put(day, aux1);
-		}
+		} 
+		//assigMap = map;
 	}
 	
 	public Set<Integer> getAllDays() {
@@ -62,20 +63,20 @@ public class PosAssig {
 	}
 	
 	/**
-	 * Indica si un dia concret està a {@link PosAssig#assigMap} o no.
+	 * Indica si un dia concret estï¿½ a {@link PosAssig#assigMap} o no.
 	 * @param day Dia a mirar.
-	 * @return Retorna true si hi ha una possible assignació en un dia concret. Fals en cas contrari.
+	 * @return Retorna true si hi ha una possible assignaciï¿½ en un dia concret. Fals en cas contrari.
 	 */
 	public boolean hasDay(Integer day) {
 		return assigMap.containsKey(day);
 	}
 	
 	/**
-	 * Indica si hour està a {@link PosAssig#assigMap} en un dia concret o no.
-	 * Pre: day sí que està dins {@link PosAssig#assigMap}.
+	 * Indica si hour estï¿½ a {@link PosAssig#assigMap} en un dia concret o no.
+	 * Pre: day sï¿½ que estï¿½ dins {@link PosAssig#assigMap}.
 	 * @param day  Dia a mirar.
 	 * @param hour Hora a mirar.
-	 * @return Retorna true si hi ha una possible assignació en un dia i hora concrets. Fals en cas contrari.
+	 * @return Retorna true si hi ha una possible assignaciï¿½ en un dia i hora concrets. Fals en cas contrari.
 	 */
 	public boolean hasHourFromDay(Integer day, Integer hour) {
 		return (assigMap.containsKey(day) && assigMap.get(day).containsKey(hour));
@@ -136,7 +137,7 @@ public class PosAssig {
 	 * @param day	Dia on eliminar l'aula.
 	 * @param hour	Hora on eliminar l'aula.
 	 * @param room	Aula que volem eliminar.
-	 * @return {@link PosAssig#assigMap} amb la room eliminada a day i hour. Si un cop eliminada la room a day i hour no queden possibles assignacions, també eliminarem hour.
+	 * @return {@link PosAssig#assigMap} amb la room eliminada a day i hour. Si un cop eliminada la room a day i hour no queden possibles assignacions, tambï¿½ eliminarem hour.
 	 */
 	public void removeRoomFromHourAndDay(Integer day, Integer hour, String room) {
 		assigMap.get(day).get(hour).remove(room);

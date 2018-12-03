@@ -34,9 +34,9 @@ public class CtrlPresentation {
 		return ctrlDomain.getScheduleMatrix();
 	}
 	
-	public ArrayList<String> getAllRooms() {
+	/**public ArrayList<String> getAllRooms() {
 		return ctrlDomain.getRoomNamesList();
-	}
+	}**/
 	
 	public boolean importSchedule(String filename)
 		throws FileNotFoundException, ParseException {

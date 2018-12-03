@@ -1,6 +1,6 @@
 JFLAGS = -g
-JC = javac
-#JC = /usr/java/jdk1.8.0_45/bin/javac
+#JC = javac
+JC = /usr/java/jdk1.8.0_45/bin/javac
 JVM= java
 
 BIN = ./exe/
@@ -18,7 +18,7 @@ CLASSES = \
 	src/domain/classes/*.java \
 	src/domain/classes/restrictions/*.java \
 	src/domain/controllers/*.java \
-	src/domain/drivers/*.java \
+	#src/domain/drivers/*.java \
 	src/persistance/*.java \
 	src/domain/junits/*.java
 
