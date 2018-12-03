@@ -154,19 +154,6 @@ public class CtrlSchedule {
 	 * @return True si l'assigació a comprovar es valida, sino false.
 	 */
 	private static boolean forwardCheck(String lecture, String room, Integer day, Integer hour, Map<String, Integer> numPossibleAlloc, Map<String, PosAssig> assignations, Map<String, Integer> referencedRooms) {
-		//Delete inserted lecture of course!
-		//UPDATE: numPossibleAllic, assignations, referencedRooms
-		//Maybe fer que les naries depenguin de lecture i no de Group
-		//Check aquí que les lectures del mateix grup no vagin just a continuació
-		
-		/* THINGS NEEDED
-		 * --------------
-		 * Subject from lecture (Corequisit) 
-		 * Group from Lecture (LectureFromSameGroupOverlap)
-		 * Room inserted (OccupiedRoom)
-		 * ParentGroup from Lecture (ParentGroupRestriction)
-		 * SubjectLevel from Lecture (SubjectLevelRestriction)
-		 */
 		Environment env = Environment.getInstance();
 		//Substract 1 to referenced rooms by the inserted lecture (this includes the inserted room)
 		for (Integer d : assignations.get(lecture).getAllDays()) {
@@ -187,35 +174,15 @@ public class CtrlSchedule {
 		
 		for (String l : assignations.keySet()) {
 			String g = env.getLectureGroup(l);
-			//If lecture l is from same group of lecture inserted, they souldn't 
-			//take place on the same day, so remove that day
-			/*
-			if (env.getLectureGroup(lecture).equals(env.getLectureGroup(l))) {
-				if (assignations.get(l).hasDay(day)) {
-					for (Integer h : assignations.get(l).getAllHoursFromDay(day)) {
-						for (String r : assignations.get(l).getAllRoomsFromHourAndDay(day, h)) {
-							//Substract 1 to referenced rooms because it's not ocmpatible with the insertion
-							String key = createKey(r, day, h);
-							referencedRooms.put(key, referencedRooms.get(key)-1);
-							//If that room+hour+day isn't referenced by any lecture, delete it
-							if (referencedRooms.get(key).equals(0)) {
-								referencedRooms.remove(key);
-							}
-							//Substract numPossibleAlloc
-							numPossibleAlloc.put(l, numPossibleAlloc.get(l)-1);
-						}
-					}
-				}
-				assignations.get(l).removeDay(day);
-				//If there are no assignations for lecture, return false
-				if (assignations.get(l).isEmpty()) return false;
-			} */
 			for (Integer d : assignations.get(lecture).getAllDays()) {
 				for (Integer h : assignations.get(lecture).getAllHoursFromDay(day)) {
 					for (String r : assignations.get(lecture).getAllRoomsFromHourAndDay(day, hour)) {	
 						Boolean isValid = true;
 						for (String restr : env.getGroupNaryRestrictions(g)) {
-							env.validateGroupNaryRestriction(g, restr, room, day, hour, lecture, d, h, r, l);
+							if (!env.validateGroupNaryRestriction(g, restr, room, day, hour, lecture, d, h, r, l)) {
+								isValid = false;
+								break;
+							}
 						}
 						if (!isValid) {
 							//Substract 1 to referenced rooms because it's not ocmpatible with the insertion
@@ -225,12 +192,24 @@ public class CtrlSchedule {
 							if (referencedRooms.get(key).equals(0)) {
 								referencedRooms.remove(key);
 							}
+							//Substract numPossibleAlloc
+							numPossibleAlloc.put(l, numPossibleAlloc.get(l)-1);
+							//Remove from possible assignations
+							assignations.get(l).removeRoomFromHourAndDay(d, h, r);
 						}
 					}
 				}
 			}
+			//If the lecture can't be allocated anymore, return false
+			if (assignations.get(l).isEmpty()) {
+				return false;
+			}
 		}
 		//COMPROVAR AL FINAL QUE HI HA IGUAL O MENYS LECTURES QUE REFERENCED ROOMS
+		if (referencedRooms.size() < assignations.size()) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
