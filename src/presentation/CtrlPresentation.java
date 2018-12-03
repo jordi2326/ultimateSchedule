@@ -3,9 +3,12 @@ package presentation;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.json.simple.parser.ParseException;
 
+import domain.classes.Environment;
 import domain.controllers.CtrlDomain;
 
 public class CtrlPresentation {
@@ -34,9 +37,9 @@ public class CtrlPresentation {
 		return ctrlDomain.getScheduleMatrix();
 	}
 	
-	/**public ArrayList<String> getAllRooms() {
-		return ctrlDomain.getRoomNamesList();
-	}**/
+	public Set<String> getRoomNames() {
+		return ctrlDomain.getRoomNames();
+	}
 	
 	public boolean importSchedule(String filename)
 		throws FileNotFoundException, ParseException {

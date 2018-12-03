@@ -25,12 +25,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashSet;
+import java.util.Set;
+
 import domain.controllers.CtrlDomain;
+import presentation.ScheduleTable.LectureClickedEventListener;
 
 public class MainView extends JFrame {
 
@@ -47,7 +48,7 @@ public class MainView extends JFrame {
 		//TODO: Remove
 		CtrlDomain ctrlDomain = CtrlDomain.getInstance();
 		try {
-			//ctrlDomain.importEnvironment("Q1+Q2.json");
+			ctrlDomain.importEnvironment("Q1+Q2.json");
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -120,17 +121,8 @@ public class MainView extends JFrame {
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("All Rooms");
 		model.setRoot(root);
 
-		HashSet<String> rooms = new HashSet<String>();
-		rooms.add("A6002");
-		rooms.add("A5104");
-		rooms.add("A5109");
-		rooms.add("A5S01");
-		rooms.add("A5S104");
-		rooms.add("A5S105");
-		rooms.add("A5S109");
-		rooms.add("C6S306");
-		rooms.add("C6S308");
-		//for(String room : ctrlPresentation.getAllRooms()) {
+		Set<String> rooms = ctrlPresentation.getRoomNames();;
+
 		for(String room : rooms) {
 			DefaultMutableTreeNode child = new DefaultMutableTreeNode(room);
 			root.add(child);
@@ -168,6 +160,39 @@ public class MainView extends JFrame {
 		
 		table = new ScheduleTable(ctrlPresentation.getScheduleMatrix());
 		contentPanel.add(table, BorderLayout.CENTER);
+		
+		table.addLectureClickedEventListener(new LectureClickedEventListener() {
+			
+			@Override
+			public void lectureClicked(MouseEvent e, String[] value, int duration, int row, int col) {
+				if(SwingUtilities.isRightMouseButton(e)) {
+					final JPopupMenu popupMenu = new JPopupMenu();
+			        JMenuItem removeLec = new JMenuItem("Remove Lecture");
+			        
+			        JMenuItem moveLec = new JMenuItem("Move Lecture");
+			        moveLec.addActionListener(new ActionListener() {
+
+			            @Override
+			            public void actionPerformed(ActionEvent e) {
+			            	MoveLectureView mlView = new MoveLectureView(value[0], duration, col, row, value[1]);
+			            	mlView.makeVisible();
+			            }
+			        });
+			        
+			        removeLec.addActionListener(new ActionListener() {
+
+			            @Override
+			            public void actionPerformed(ActionEvent e) {
+			            }
+			        });
+			        
+			        popupMenu.add(moveLec);
+			        popupMenu.add(removeLec);
+                	popupMenu.show(e.getComponent(), e.getX(), e.getY());
+                }
+				
+			}
+		});
 		
 		btnLoadEnv.addActionListener(new ActionListener() {
 			

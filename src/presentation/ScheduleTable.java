@@ -4,42 +4,41 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EventListener;
 import java.util.EventObject;
 import java.util.HashSet;
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.event.CellEditorListener;
+import javax.swing.event.EventListenerList;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.tree.TreePath;
 
 public class ScheduleTable extends JScrollPane{
 	
 	private JTable table;
 	private JList rowHeader;
-	private static String[] colNames = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
-	private static String[] rowNames = {"08:00 - 09:00", "09:00 - 10:00", "10:00 - 11:00", "11:00 - 12:00", "12:00 - 13:00", "13:00 - 14:00", "14:00 - 15:00", "15:00 - 16:00", "16:00 - 17:00", "17:00 - 18:00", "18:00 - 19:00", "19:00 - 20:00"};
+	public static final String[] colNames = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+	public static final String[] rowNames = {"08:00 - 09:00", "09:00 - 10:00", "10:00 - 11:00", "11:00 - 12:00", "12:00 - 13:00", "13:00 - 14:00", "14:00 - 15:00", "15:00 - 16:00", "16:00 - 17:00", "17:00 - 18:00", "18:00 - 19:00", "19:00 - 20:00"};
+	public static final String[] startTimes = {"08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"};
 	private int[] heights = new int[12];
+	private String selectedLectureName;
 	private HashSet<String> rooms_filter = new HashSet<String>();
 	private HashSet<String> groups_filter = new HashSet<String>();
 	public ScheduleTable(Object[][] data){
@@ -63,8 +62,8 @@ public class ScheduleTable extends JScrollPane{
 		header.setForeground(Color.white);
 		header.setFont(header.getFont().deriveFont(Font.BOLD, 14f));
 		table.setFillsViewportHeight(true);
-		table.setRowHeight(40);
-		Arrays.fill(heights, 40);
+		table.setRowHeight(35);
+		Arrays.fill(heights, 35);
 		table.setRowSelectionAllowed(false);
 		table.setGridColor(Color.decode("#ebedf2"));
 		table.setShowGrid(false);
@@ -147,8 +146,13 @@ public class ScheduleTable extends JScrollPane{
 	        fireTableCellUpdated(row, col);
 	    }
 	    
+	    public Object[][] getData() {
+	        return this.data;
+	    }
+	    
 	    public void changeData(Object[][] data) {
 	        this.data = data;
+	        stopEditing();
 	        fireTableDataChanged();
 	    }
 	}
@@ -168,39 +172,24 @@ public class ScheduleTable extends JScrollPane{
 			list_ed.setLayoutOrientation(JList.VERTICAL);
 			list_ed.setFixedCellHeight(list.getFixedCellHeight());
 			list_ed.setCellRenderer(new LectureRenderer());
-			
-			final JPopupMenu popupMenu = new JPopupMenu();
-	        JMenuItem removeLec = new JMenuItem("Remove Lecture");
-	        
-	        JMenuItem moveLec = new JMenuItem("Move Lecture");
-	        moveLec.addActionListener(new ActionListener() {
-
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	                JOptionPane.showMessageDialog(ScheduleTable.this, "Duuuuuuuuude no.." + list_ed.getSelectedValue());
-	            }
-	        });
-	        
-	        removeLec.addActionListener(new ActionListener() {
-
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	                JOptionPane.showMessageDialog(ScheduleTable.this, "Duuuuuuuuude really? " + list_ed.getSelectedValue());
-	            }
-	        });
-	        
-	        popupMenu.add(moveLec);
-	        popupMenu.add(removeLec);
 	        
 			list_ed.addMouseListener(new MouseAdapter(){   
 	            public void mouseReleased(MouseEvent e) {
 	            	int i = list_ed.locationToIndex(e.getPoint());
-	            	if(list_ed.getCellBounds(i, i).contains(e.getPoint())) {
+	            	if(i != -1 && list_ed.getCellBounds(i, i).contains(e.getPoint())) {
 	            		list_ed.setSelectedIndex(i);
+	            		selectedLectureName = ((String[]) list_ed.getSelectedValue())[0];
+	            		int selectedLectureDuration = 0;
+	            		int selectedLectureStartTime = -1;
+	            		for(Object[] o : ((ScheduleTableModel) table.getModel()).getData()) {
+	            			if(selectedLectureDuration==0) selectedLectureStartTime++;
+	            			for(String[] s : ((ArrayList<String[]>) o[table.getSelectedColumn()])) {
+	            				if(Arrays.equals(s,(String[]) list_ed.getSelectedValue()))
+									selectedLectureDuration++;
+	            			}
+	            		}
 	            		stopCellEditing();
-						if(SwingUtilities.isRightMouseButton(e)) {
-	                    	popupMenu.show(e.getComponent(), e.getX(), e.getY());
-	                    }
+	            		fireLectureClickedEvent(e, (String[]) list_ed.getSelectedValue(), selectedLectureDuration, selectedLectureStartTime, table.getSelectedColumn());
 	            	}
 	            }
 	         });
@@ -288,6 +277,7 @@ public class ScheduleTable extends JScrollPane{
 				  	setOpaque(false);
 			    	setBorder(BorderFactory.createEmptyBorder());
 			    }else {
+			    	if(selectedLectureName!=null && selectedLectureName.equals(((String[]) value)[0])) isSelected = true;
 			    	setText(((String[]) value)[0] + "  [" + ((String[]) value)[1] + "]");
 			    	setOpaque(true);
 			    	Border padding = BorderFactory.createEmptyBorder(4,4,4,4);
@@ -318,4 +308,46 @@ public class ScheduleTable extends JScrollPane{
 		rooms_filter.remove(roomName);
 		((AbstractTableModel) table.getModel()).fireTableDataChanged();
 	}
+	
+	public interface LectureClickedEventListener extends EventListener {
+        public void lectureClicked(MouseEvent event, String[] value, int duration, int row, int col);
+    }
+	
+	public void addLectureClickedEventListener(LectureClickedEventListener listener) {
+        listenerList.add(LectureClickedEventListener.class, listener);
+    }
+	
+    public void removeLectureClickedEventListener(LectureClickedEventListener listener) {
+        listenerList.remove(LectureClickedEventListener.class, listener);
+    }
+    
+    public void fireLectureClickedEvent(MouseEvent evt, String[] value, int duration, int row, int col) {
+        Object[] listeners = listenerList.getListenerList();
+        for (int i = 0; i < listeners.length; i++) {
+            if (listeners[i] == LectureClickedEventListener.class) {
+                ((LectureClickedEventListener) listeners[i + 1]).lectureClicked(evt, value, duration, row, col);
+            }
+        }
+    }
+    
+    protected EventListenerList listenerList = new EventListenerList();
+
+    public class LectureClickEvent extends EventObject {     
+        private static final long serialVersionUID = -7070556751389843945L;
+        //private TreePath path;
+        //private boolean checked;
+        public LectureClickEvent(Object source, TreePath path, boolean checked) {
+            super(source);  
+            //this.path = path;
+            //this.checked = checked;
+        }
+        
+        /**public TreePath getPath() {
+        	return path;
+        }
+        
+        public boolean getChecked() {
+        	return checked;
+        }**/
+    }   
 }
