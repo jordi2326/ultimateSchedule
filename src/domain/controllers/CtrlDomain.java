@@ -56,14 +56,7 @@ public class CtrlDomain {
 	*/
 	private Schedule schedule;
 	
-	/** Map de restriccions unaries de l'entorn  
-	*/
-	private Map<String, Map<String, UnaryRestriction>> unaryRestrictions; //Key = group.toString()
-	
-	/** Map de restriccions n-aries de l'entorn  
-	*/
-	private Map<String, NaryRestriction> naryRestrictions;
-	
+	/*
 	public static void main(String[] args) throws Throwable, IOException {
 		CtrlDomain cd = CtrlDomain.getInstance();
 		cd.importEnvironment("Q1+Q2.json");
@@ -71,26 +64,12 @@ public class CtrlDomain {
 		
 		int i = 0;
 		
-	}
+	}*/
 	
 	/** Constructora estandard.
 	*/
 	private CtrlDomain() {
-		dataController = CtrlData.getInstance();
-		unaryRestrictions = new HashMap<String, Map<String, UnaryRestriction>>();
-		naryRestrictions = new HashMap<String, NaryRestriction>();
-		
-		OccupiedRoomRestriction ocrr = new OccupiedRoomRestriction();
-		naryRestrictions.put(ocrr.toString(), ocrr);
-		ParentGroupOverlapRestriction pgor = new ParentGroupOverlapRestriction();
-		naryRestrictions.put(pgor.toString(), pgor);
-		CorequisitRestriction cr = new CorequisitRestriction();
-		naryRestrictions.put(cr.toString(), cr);
-		SubjectLevelRestriction slr = new SubjectLevelRestriction();
-		naryRestrictions.put(slr.toString(), slr);
-		LectureFromSameGroupOverlapRestriction lfgor = new LectureFromSameGroupOverlapRestriction();
-		naryRestrictions.put(lfgor.toString(), lfgor);
-		
+		dataController = CtrlData.getInstance();	
 		schedule = new Schedule();
 	}
 	
@@ -112,27 +91,8 @@ public class CtrlDomain {
 	public boolean generateSchedule() {
 		CtrlSchedule ctS = CtrlSchedule.getInstance();
 		//Filtrem restriccions unaries
-		Map<String, Map<String, UnaryRestriction>> enabledUnaryRestrictions = new HashMap<String, Map<String, UnaryRestriction>>();
-		for (String g : unaryRestrictions.keySet()) {
-			Map<String, UnaryRestriction> restrictions = new HashMap<String, UnaryRestriction>();
-			for (UnaryRestriction r : unaryRestrictions.get(g).values()) {
-				if (r.isEnabled()) {
-					restrictions.put(r.toString(), r);
-				}
-			}
-			if (!restrictions.isEmpty()) {
-				enabledUnaryRestrictions.put(g, restrictions);
-			}
-		}
-		//Filtrem restriccions naries
-		Map<String, NaryRestriction> enabledNaryRestrictions = new HashMap<String, NaryRestriction>();
-		for (NaryRestriction r : naryRestrictions.values()) {
-			if (r.isEnabled()) {
-				enabledNaryRestrictions.put(r.toString(), r);
-			}
-		}
-		//return ctS.generateSchedule(enabledUnaryRestrictions, enabledNaryRestrictions, groups, rooms, subjects, lectures, schedule);
-		return false;
+		boolean a = ctS.generateSchedule(schedule);
+		return a;
 	}
 	
 	/**
@@ -141,6 +101,10 @@ public class CtrlDomain {
 	 */
 	public String scheduleToJsonString() {
 		return schedule.toJsonString();
+	}
+	
+	public void erase() {
+		schedule = new Schedule();
 	}
 	
 	/**
@@ -214,8 +178,6 @@ public class CtrlDomain {
         // getting subjects 
         JSONArray jsonSubjects = (JSONArray) jo.get("subjects");
         
-        Map<String, Subject> subjects = new HashMap<String, Subject>();
-    	Map<String, Group> groups = new HashMap<String, Group>();	
         
         Iterator itr1 = jsonSubjects.iterator(); 
 
@@ -251,11 +213,9 @@ public class CtrlDomain {
     			env.addGroup(g);    			
     			groupsToString.add(g.toString());
     			//Afegim la restriccio d'aquest grup de mati o tarda o indiferent
-    			
-    			Map<String, UnaryRestriction> restrictions = new HashMap<String, UnaryRestriction>();
-    			
+    						
 			DayPeriodRestriction dpr = new DayPeriodRestriction(6, g.getDayPeriod());
-			restrictions.put(dpr.toString(), dpr);
+			env.addUnaryRestriction(g.toString(), dpr);
   
 			/*
     			if (g.toString().equals("FM-10-THEORY")) {
@@ -263,7 +223,6 @@ public class CtrlDomain {
     				restrictions.put(sdohr.toString(), sdohr);
     			}
 			*/
-			unaryRestrictions.put(g.toString(), restrictions); 
         		
         	}
         	Subject s = new Subject(
@@ -292,6 +251,7 @@ public class CtrlDomain {
        
 		return true;
 	}
+	
 	
 	/**Not used anywhere
 	 * 

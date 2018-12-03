@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import domain.classes.Environment;
 import domain.classes.Group;
 import domain.classes.Group.DayPeriod;
 import domain.classes.Group.Type;
@@ -122,6 +123,8 @@ public class Main {
 	public static void loadEnvironmentMenu(){
 		List<String> filenames = ctDomain.getEnvironmentFilesList();
 		printLoadFileMenu("Load Environment", filenames);
+		Environment env = Environment.getInstance();
+		env.erase();
 		ctDomain.erase();
 		sc.nextLine();
 	    String s = sc.nextLine();
@@ -161,6 +164,7 @@ public class Main {
 	            		System.out.println("Error. No Valid Schedule Found");
 	            	}
 	                break;
+	                /*
 	            case 2:
 	            	loadSchedulesMenu();
 	                break;
@@ -177,6 +181,7 @@ public class Main {
 	            case 6:
 	            	genericListMenu("Groups", ctDomain.getGroupNamesList());
 	            	break;
+	            	*/
 	        }
 	        printEnvironmentMenu(envName);
 	        n = sc.nextInt();

@@ -66,7 +66,7 @@ public class PosAssig {
 	 * @return Retorna true si hi ha una possible assignació en un dia i hora concrets. Fals en cas contrari.
 	 */
 	public boolean hasHourFromDay(Integer day, Integer hour) {
-		return assigMap.get(day).containsKey(hour);
+		return (assigMap.containsKey(day) && assigMap.get(day).containsKey(hour));
 	}
 	
 	/**

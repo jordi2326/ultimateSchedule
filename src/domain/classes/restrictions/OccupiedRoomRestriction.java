@@ -41,6 +41,6 @@ public class OccupiedRoomRestriction extends NaryRestriction{
 	public boolean validate(String room, Integer day, Integer hour, String lecture, Integer d, Integer h, String r, String l) {
 		Environment env = Environment.getInstance();
 		Integer duration = env.getLectureDuration(lecture);
-		return !(h >= hour && h < hour+duration	&& room.equals(r));
+		return !(day.equals(d) && h >= hour && h < hour+duration && room.equals(r));
 	}
 }

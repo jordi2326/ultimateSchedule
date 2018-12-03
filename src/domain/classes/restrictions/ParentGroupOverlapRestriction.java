@@ -53,11 +53,11 @@ public class ParentGroupOverlapRestriction extends NaryRestriction {
 		//And also other parentGroups from same subject don't overlap
 		//Si son grups pares de la mateixa assignatura (M2 10 i M2 30 no s'han de solapar)
 		if (groupCode.equals(parentGroupCode)) {
-			return !(h >= hour && h < hour+duration && (gcode.equals(parentgcode) || parentgcode.equals(groupCode)));
+			return !(day.equals(d) && h >= hour && h < hour+duration && (gcode.equals(parentgcode) || parentgcode.equals(groupCode)));
 		}
 		else {
 			//check that l is not the parent group of lecture inserted
-			return !(h >= hour && h < hour+duration && (gcode.equals(parentGroupCode)));
+			return !(day.equals(d) && h >= hour && h < hour+duration && (gcode.equals(parentGroupCode)));
 		}
 	}
 }

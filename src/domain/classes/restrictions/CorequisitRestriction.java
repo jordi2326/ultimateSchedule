@@ -58,6 +58,6 @@ public class CorequisitRestriction extends NaryRestriction{
 				}
 			}
 		}
-		return !(h >= hour && h < hour+duration	&& sonCoreqs);
+		return !(day.equals(d) && h >= hour && h < hour+duration && sonCoreqs);
 	}
 }

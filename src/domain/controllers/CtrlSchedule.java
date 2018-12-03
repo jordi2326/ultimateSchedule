@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 
 
 /** Controlador de Schedule.
@@ -140,9 +141,18 @@ public class CtrlSchedule {
 						}
 					}
 				}
+				if (numPossibleAlloc.get(l).equals(0)) {
+					return false;
+				}
+				if (assignations.get(l).isEmpty()) return false;
+			}
+			//COMPROVAR AL FINAL QUE HI HA IGUAL O MENYS LECTURES QUE REFERENCED ROOMS
+			if (referencedRooms.size() < assignations.size()) {
+				return false;
 			}
 		}
-		return backjumping(schedule, numPossibleAlloc, assignations, referencedRooms);
+		boolean a = backjumping(schedule, numPossibleAlloc, assignations, referencedRooms);
+		return a;
 	}
 	
 	/**
@@ -174,36 +184,46 @@ public class CtrlSchedule {
 		
 		for (String l : assignations.keySet()) {
 			String g = env.getLectureGroup(l);
-			for (Integer d : assignations.get(lecture).getAllDays()) {
-				for (Integer h : assignations.get(lecture).getAllHoursFromDay(day)) {
-					for (String r : assignations.get(lecture).getAllRoomsFromHourAndDay(day, hour)) {	
-						Boolean isValid = true;
-						for (String restr : env.getGroupNaryRestrictions(g)) {
-							if (!env.validateGroupNaryRestriction(g, restr, room, day, hour, lecture, d, h, r, l)) {
-								isValid = false;
-								break;
+			
+			for (int d = 0; d < 5; ++d) {
+				if (assignations.get(l).hasDay(d)) {
+					for (int h = 0; h < 12; ++h) {
+						if (assignations.get(l).hasHourFromDay(d, h)) {
+							Set<String> rooms = assignations.get(l).getAllRoomsFromHourAndDay(d, h);
+							for (Iterator<String> iter = rooms.iterator(); iter.hasNext();) {	
+								Boolean isValid = true;
+								String r = iter.next();
+								for (String restr : env.getGroupNaryRestrictions(g)) {
+									if (!env.validateGroupNaryRestriction(g, restr, room, day, hour, lecture, d, h, r, l)) {
+										isValid = false;
+										break;
+									}
+								}
+								if (!isValid) {
+									//Substract 1 to referenced rooms because it's not ocmpatible with the insertion
+									String key = createKey(r, d, h);
+									referencedRooms.put(key, referencedRooms.get(key)-1);
+									//If that room+hour+day isn't referenced by any lecture, delete it
+									if (referencedRooms.get(key).equals(0)) {
+										referencedRooms.remove(key);
+									}
+									//Substract numPossibleAlloc
+									numPossibleAlloc.put(l, numPossibleAlloc.get(l)-1);
+									if (numPossibleAlloc.get(l).equals(0)) {
+										//If the lecture can't be allocated anymore, return fals
+										//numPossibleAlloc.remove(l);
+										return false;
+									}
+									//Remove from possible assignations
+									iter.remove();
+									assignations.get(l).removeRoomFromHourAndDay(d, h, r);
+								}
 							}
-						}
-						if (!isValid) {
-							//Substract 1 to referenced rooms because it's not ocmpatible with the insertion
-							String key = createKey(r, d, h);
-							referencedRooms.put(key, referencedRooms.get(key)-1);
-							//If that room+hour+day isn't referenced by any lecture, delete it
-							if (referencedRooms.get(key).equals(0)) {
-								referencedRooms.remove(key);
-							}
-							//Substract numPossibleAlloc
-							numPossibleAlloc.put(l, numPossibleAlloc.get(l)-1);
-							//Remove from possible assignations
-							assignations.get(l).removeRoomFromHourAndDay(d, h, r);
 						}
 					}
 				}
 			}
-			//If the lecture can't be allocated anymore, return false
-			if (assignations.get(l).isEmpty()) {
-				return false;
-			}
+			if (assignations.get(l).isEmpty()) return false;
 		}
 		//COMPROVAR AL FINAL QUE HI HA IGUAL O MENYS LECTURES QUE REFERENCED ROOMS
 		if (referencedRooms.size() < assignations.size()) {
@@ -234,6 +254,7 @@ public class CtrlSchedule {
 		//Order room+hour+day from the lecture with less possibilities, in ascending number of references from other lectures
 		//Because the room with the least amount of references is most likely not gonna be used by any other lecture
 		PriorityQueue<Map.Entry<Integer, String>> pq = new PriorityQueue<Map.Entry<Integer, String>>(new groupHeuristicComparator()); // PriorityQueue<Pair<Int, room.toString()>>
+		
 		for (Integer day : assignations.get(lecture).getAllDays()) {
 			for (Integer hour : assignations.get(lecture).getAllHoursFromDay(day)) {
 				for (String r : assignations.get(lecture).getAllRoomsFromHourAndDay(day, hour)) {

@@ -52,6 +52,6 @@ public class SubjectLevelRestriction extends NaryRestriction {
 		String s = env.getGroupSubject(g);
 		String slevel = env.getSubjectLevel(s);
 		//If groups have same parent (even though they are different subjects) and same subject level, they can't go together
-		return !(h >= hour && h < hour+duration	&& parentgcode.equals(parentGroupCode) && subjectLevel.equals(slevel));
+		return !(day.equals(d) && h >= hour && h < hour+duration	&& parentgcode.equals(parentGroupCode) && subjectLevel.equals(slevel));
 	}
 }
