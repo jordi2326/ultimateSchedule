@@ -164,4 +164,12 @@ public class PosAssig {
 		//Afegim room
 		assigMap.get(day).get(hour).add(room);
 	}
+	
+	public Map<Integer, Set<String>> getDayWithAll(Integer day) {
+		return assigMap.get(day);
+	}
+	
+	public void setDayWithAll(Integer day, Map<Integer, Set<String>> hoursAndRooms) {
+		assigMap.put(day, hoursAndRooms);
+	}
 }

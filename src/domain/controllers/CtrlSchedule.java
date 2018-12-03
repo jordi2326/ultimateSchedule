@@ -7,6 +7,7 @@ import domain.classes.PosAssig;
 import domain.classes.Room;
 import domain.classes.Schedule;
 import domain.classes.Subject;
+import domain.classes.restrictions.LectureFromSameGroupOverlapRestriction;
 import domain.classes.restrictions.NaryRestriction;
 import domain.classes.restrictions.UnaryRestriction;
 
@@ -194,60 +195,73 @@ public class CtrlSchedule {
 		assignations.remove(lecture);
 		for (String l : assignations.keySet()) {
 			String g = env.getLectureGroup(l);
-			for (int d = 0; d < 5; ++d) {
-				if (assignations.get(l).hasDay(d)) {
-					for (int h = 0; h < 12; ++h) {
-						if (assignations.get(l).hasHourFromDay(d, h)) {
-							Set<String> rooms = assignations.get(l).getAllRoomsFromHourAndDay(d, h);
-							for (Iterator<String> iter = rooms.iterator(); iter.hasNext();) {	
-								Boolean isValid = true;
-								String r = iter.next();
-								for (String restr : env.getGroupNaryRestrictions(g)) {
-									if (!env.validateGroupNaryRestriction(g, restr, room, day, hour, lecture, d, h, r, l)) {
-										isValid = false;
-										break;
-									}
+			String overlapRestr = LectureFromSameGroupOverlapRestriction.class.getSimpleName();
+			if (env.getGroupNaryRestrictions(g).contains(overlapRestr)
+					&& !env.validateGroupNaryRestriction(g, overlapRestr, room, day, hour, lecture, day, hour, room, l)) {
+				//Guardar canvis
+				if (!assigChanges.containsKey(l)) {
+					assigChanges.put(l, new PosAssig());
+				}
+				assigChanges.get(l).setDayWithAll(day, assigChanges.get(l).getDayWithAll(day));
+				assignations.get(l).removeDay(day);
+			}
+			Integer dur = env.getLectureDuration(l);
+			if (assignations.get(l).hasDay(day)) {
+				Integer h = Integer.max(0, hour - dur + 1);
+				Integer duration = env.getLectureDuration(l);
+				Integer end = Integer.min(12, hour + duration);
+				while (h < end) {
+					if (assignations.get(l).hasHourFromDay(day, h)) {
+						Set<String> rooms = assignations.get(l).getAllRoomsFromHourAndDay(day, h);
+						for (Iterator<String> iter = rooms.iterator(); iter.hasNext();) {	
+							Boolean isValid = true;
+							String r = iter.next();
+							for (String restr : env.getGroupNaryRestrictions(g)) {
+								if (!env.validateGroupNaryRestriction(g, restr, room, day, hour, lecture, day, h, r, l)) {
+									isValid = false;
+									break;
 								}
-								if (!isValid) {
-									//Substract 1 to referenced rooms because it's not ocmpatible with the insertion
-									String key = createKey(r, d, h);
-									//Guardar canvis
-									if (!referencedRoomsChanges.containsKey(key)) {
-										referencedRoomsChanges.put(key, 1);
-									}
-									referencedRoomsChanges.put(key, referencedRoomsChanges.get(key)+1);
-									//Treure ref
-									referencedRooms.put(key, referencedRooms.get(key)-1);
-									//If that room+hour+day isn't referenced by any lecture, delete it
-									//Guardar canvis
-									if (referencedRooms.get(key).equals(0)) {
-										referencedRooms.remove(key);
-									}
-									referencedRoomsChanges.put(key, referencedRoomsChanges.get(key)+1);
-									if (!numPossibleAllocChanges.containsKey(l)) {
-										numPossibleAllocChanges.put(l, 1);
-									}
-									numPossibleAllocChanges.put(l, numPossibleAllocChanges.get(l)+1);
-									//Substract numPossibleAlloc
-									numPossibleAlloc.put(l, numPossibleAlloc.get(l)-1);
-									if (numPossibleAlloc.get(l).equals(0)) {
-										//If the lecture can't be allocated anymore, return fals
-										//numPossibleAlloc.remove(l);
-										return false;
-									}
-									
-									iter.remove();
-									//Guardar canvis
-									if (!assigChanges.containsKey(l)) {
-										assigChanges.put(l, new PosAssig());
-									}
-									assigChanges.get(l).putRoomInDayAndHour(d, h, r);
-									//Remove from possible assignations
-									assignations.get(l).removeRoomFromHourAndDay(d, h, r);
+							}
+							if (!isValid) {
+								//Substract 1 to referenced rooms because it's not ocmpatible with the insertion
+								String key = createKey(r, day, h);
+								//Guardar canvis
+								if (!referencedRoomsChanges.containsKey(key)) {
+									referencedRoomsChanges.put(key, 1);
 								}
+								referencedRoomsChanges.put(key, referencedRoomsChanges.get(key)+1);
+								//Treure ref
+								referencedRooms.put(key, referencedRooms.get(key)-1);
+								//If that room+hour+day isn't referenced by any lecture, delete it
+								//Guardar canvis
+								if (referencedRooms.get(key).equals(0)) {
+									referencedRooms.remove(key);
+								}
+								referencedRoomsChanges.put(key, referencedRoomsChanges.get(key)+1);
+								if (!numPossibleAllocChanges.containsKey(l)) {
+									numPossibleAllocChanges.put(l, 1);
+								}
+								numPossibleAllocChanges.put(l, numPossibleAllocChanges.get(l)+1);
+								//Substract numPossibleAlloc
+								numPossibleAlloc.put(l, numPossibleAlloc.get(l)-1);
+								if (numPossibleAlloc.get(l).equals(0)) {
+									//If the lecture can't be allocated anymore, return fals
+									//numPossibleAlloc.remove(l);
+									return false;
+								}
+								
+								iter.remove();
+								//Guardar canvis
+								if (!assigChanges.containsKey(l)) {
+									assigChanges.put(l, new PosAssig());
+								}
+								assigChanges.get(l).putRoomInDayAndHour(day, h, r);
+								//Remove from possible assignations
+								assignations.get(l).removeRoomFromHourAndDay(day, h, r);
 							}
 						}
 					}
+					++h;
 				}
 			}
 			if (assignations.get(l).isEmpty()) return false;
