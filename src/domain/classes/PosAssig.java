@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /** Representa un conjunt d'assignacions candidates (aules i hores/dies) per quan es genera un horari.
  * @author Carlos Bergillos Varela
@@ -25,8 +26,19 @@ public class PosAssig {
 	/** Constructora estàndard.
 	 * @param assigMap Conjunt de possibles assignacions.
 	*/
-	public PosAssig(Map<Integer,Map <Integer, Set<String>>> assigMap) {
-		this.assigMap = assigMap;
+	public PosAssig(Map<Integer,Map <Integer, Set<String>>> map) {
+		assigMap = new HashMap<Integer, Map< Integer, Set<String>>>();
+		for (Integer day : map.keySet()) {
+			Map<Integer, Set<String>> aux1 = new HashMap<Integer, Set<String>>();
+			for (Integer hour : map.get(day).keySet()) {
+				Set<String> rooms = new HashSet<String>();
+				for (String room : map.get(day).get(hour)) {
+					rooms.add(new String(room));
+				}
+				aux1.put(hour, rooms);
+			}
+			assigMap.put(day, aux1);
+		}
 	}
 	
 	public Set<Integer> getAllDays() {

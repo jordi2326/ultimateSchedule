@@ -257,23 +257,39 @@ public class CtrlSchedule {
 		
 		for (Integer day : assignations.get(lecture).getAllDays()) {
 			for (Integer hour : assignations.get(lecture).getAllHoursFromDay(day)) {
+				String electedRoomKey = null;
+				Integer refs = Integer.MAX_VALUE;
+				//For each hour+day we will only choose 1 room, the one with less references
 				for (String r : assignations.get(lecture).getAllRoomsFromHourAndDay(day, hour)) {
 					String key = createKey(r, day, hour);
 					Integer numRefs = referencedRooms.get(key);
-					Map.Entry<Integer, String> pair = new AbstractMap.SimpleEntry<Integer, String>(numRefs, key);
-					pq.add(pair);
+					if (numRefs < refs) {
+						refs = numRefs;
+						electedRoomKey = key;
+					}
 				}
+				Map.Entry<Integer, String> pair = new AbstractMap.SimpleEntry<Integer, String>(refs, electedRoomKey);
+				pq.add(pair);
 			}
 		}
 		//We should try to fit lecture in room+hour+day with less references
 		//If doesn't work, try next room+hour+day (might be another day or/and hour) 
 		Boolean generated = false;
-		while (!pq.isEmpty() && !generated) {
+		//while (!pq.isEmpty() && !generated) {
 			String key = pq.remove().getValue();
 			String room = getRoomFromKey(key);
 			Integer day = getDayFromKey(key);
 			Integer hour = getHourFromKey(key);
 			
+			//Cas base
+			if (assignations.size() == 1) {
+				Integer h = 0;
+				while (h < env.getLectureDuration(lecture)) {
+					schedule.putLecture(room, day, hour+h, env.getLectureGroup(lecture));
+					++h;
+				}
+				return true;
+			}
 			//Try forwardChecking and generating schedule before the insertion so that if it fails we don't have to delete lecture from schedule
 			Map<String, PosAssig> copyAssignations = assignations.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> new PosAssig(e.getValue().getMap())));
 			Map<String, Integer> copyReferencedRooms = referencedRooms.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
@@ -283,7 +299,7 @@ public class CtrlSchedule {
 				//Once checked there are still possibilities, try generating the rest of the schedule with
 				//the impossible combinations cut out by the forward checking
 				generated = backjumping(schedule, copyNumPossibleAlloc, copyAssignations, copyReferencedRooms);
-				if (generated) {
+				//if (generated) {
 					//If backjumping returned true, the schedule is possible, so insert the lecture
 					//All lectures from here on have been inserted recursively
 					Integer h = 0;
@@ -291,9 +307,9 @@ public class CtrlSchedule {
 						schedule.putLecture(room, day, hour+h, env.getLectureGroup(lecture));
 						++h;
 					}
-				}
+				//}
 			}
-		}
+		//}
 		return generated;
 	}
 }
