@@ -31,6 +31,13 @@ public class CorequisitRestriction extends NaryRestriction{
 		return CorequisitRestriction.class.getSimpleName();
 	}
 	
+	/**
+	 * @return El String que es veura en pantalla.
+	 */
+	public String stringView() {
+		return "Corequisit Restriction";
+	}
+	
 	/** Validaci� de la restricci�.
 	 * @param lecture	Sessi� que hem afegit a l'horari.
 	 * @param room		Aula on hem afegit la sessi�.

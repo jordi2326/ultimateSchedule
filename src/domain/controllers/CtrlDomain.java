@@ -411,7 +411,7 @@ public class CtrlDomain {
 			return new TreeSet<String>(env.getAllRooms());
 		}
 		
-		String[] getRoomInfo(String room) {
+		public String[] getRoomInfo(String room) {
 			 /* ********* ORDRE *********
 			  * param code			Codi de l'aula.
 			  * param capacity 		Capacitat de l'aula.
@@ -433,7 +433,7 @@ public class CtrlDomain {
 			return new TreeSet<String>(env.getAllGroups());
 		}
 		
-		String[] getGroupInfo(String group) {
+		public String[] getGroupInfo(String group) {
 			 /* ********* ORDRE *********
 			  * param code				Codi del grup.
 			  * param numPeople			Núm. persones en el grup.
@@ -463,7 +463,7 @@ public class CtrlDomain {
 			return new TreeSet<String>(env.getAllSubjects());
 		}
 		
-		Object[] getSubjectInfo(String sub) {
+		public Object[] getSubjectInfo(String sub) {
 			 /* ********* ORDRE *********
 			  * param code		Codi de l'assignatura.
 			  * param name		Nom complet de l'assignatura.
@@ -498,7 +498,30 @@ public class CtrlDomain {
 			return R;
 		}
 		
-		String[] getRestrictionInfo(String res) {
+		public Set<String> getRestrictionNamesView() {
+			Environment env = Environment.getInstance();
+			
+			TreeSet<String> R = new TreeSet<String>();
+			
+			for (String group : env.getAllGroups()) {
+				if (env.groupHasUnaryRestrictions(group)) {
+					Map<String, Map<String, UnaryRestriction>> allUnary = env.getUnaryRestrictions();
+					for (UnaryRestriction unary : allUnary.get(group).values()) {
+						R.add(unary.stringView());
+					}
+				}
+				if (env.groupHasNaryRestrictions(group)) {
+					Map<String, Map<String, NaryRestriction>> allNary = env.getNaryRestrictions();
+					for (NaryRestriction nary : allNary.get(group).values()) {
+						R.add(nary.stringView());
+					}
+				}
+			}
+			
+			return R;
+		}
+		
+		public String[] getRestrictionInfo(String res) {
 			 /* ********* ORDRE *********
 			  * param negotiable	Indica si la restricciï¿½ ï¿½s negociable.
 			  * param enabled		Indica si la restricciï¿½ estï¿½ activada.

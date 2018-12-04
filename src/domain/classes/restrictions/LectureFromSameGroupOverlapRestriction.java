@@ -29,6 +29,13 @@ public class LectureFromSameGroupOverlapRestriction extends NaryRestriction{
 		return LectureFromSameGroupOverlapRestriction.class.getSimpleName();
 	}
 	
+	/**
+	 * @return El String que es veura en pantalla.
+	 */
+	public String stringView() {
+		return "Lecture From Same Group Overlap Restriction";
+	}
+	
 	/** Validaci� de la restricci�.
 	 * @param lecture	Sessi� que hem afegit a l'horari.
 	 * @param room		Aula on hem afegit la sessi�.
