@@ -49,6 +49,7 @@ public class CorequisitRestriction extends NaryRestriction{
 		String groupParentCode = env.getGroupParentGroupCode(group);
 		ArrayList<String> coreqs = env.getSubjectCoreqs(subject);
 		//get checking lecture (l) info
+		Integer dur = env.getLectureDuration(l);
 		String g = env.getLectureGroup(l);
 		String s = env.getGroupSubject(g);
 		String gpcode = env.getGroupParentGroupCode(g);
@@ -65,6 +66,6 @@ public class CorequisitRestriction extends NaryRestriction{
 			}
 		}
 		
-		return !(day.equals(d) && h >= hour && h < hour+duration && sonCoreqs);
+		return !(day.equals(d) && hour < h+dur && h < hour+duration && sonCoreqs);
 	}
 }

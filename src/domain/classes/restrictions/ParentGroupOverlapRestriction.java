@@ -47,6 +47,7 @@ public class ParentGroupOverlapRestriction extends NaryRestriction {
 		String parentGroupCode = env.getGroupParentGroupCode(group);
 		String subject = env.getGroupSubject(group);
 		//Info from checked lecture (l)
+		Integer dur = env.getLectureDuration(l);
 		String g = env.getLectureGroup(l);
 		String gcode = env.getGroupCode(g);
 		String parentgcode = env.getGroupParentGroupCode(g);
@@ -56,11 +57,11 @@ public class ParentGroupOverlapRestriction extends NaryRestriction {
 		//Si son grups pares de la mateixa assignatura (M2 10 i M2 30 no s'han de solapar)
 		if (s.equals(subject)) {
 			if (groupCode.equals(parentGroupCode)) {
-				return !(day.equals(d) && h >= hour && h < hour+duration && (gcode.equals(parentgcode) || parentgcode.equals(groupCode)));
+				return !(day.equals(d) && hour < h+dur && h < hour+duration && (gcode.equals(parentgcode) || parentgcode.equals(groupCode)));
 			}
 			else {
 				//check that l is not the parent group of lecture inserted
-				return !(day.equals(d) && h >= hour && h < hour+duration && (gcode.equals(parentGroupCode)));
+				return !(day.equals(d) && hour < h+dur && h < hour+duration && (gcode.equals(parentGroupCode)));
 			}
 		}
 		return true;

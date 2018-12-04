@@ -348,6 +348,7 @@ public class CtrlSchedule {
 						schedule.putLecture(room, day, hour+h, env.getLectureGroup(lecture));
 						++h;
 					}
+					return true;
 				}
 			}
 			if (!generated) {
