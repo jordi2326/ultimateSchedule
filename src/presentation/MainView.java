@@ -42,9 +42,12 @@ public class MainView extends JFrame {
 	
 	final private JFileChooser fc = new JFileChooser();
 	
+	private boolean environmentLoaded;
+	
 	public MainView(CtrlPresentation ctrlPresentation) {
 		this.ctrlPresentation = ctrlPresentation;
 		
+		environmentLoaded = false;
 		//TODO: Remove
 		CtrlDomain ctrlDomain = CtrlDomain.getInstance();
 		try {
@@ -70,16 +73,8 @@ public class MainView extends JFrame {
 		contentPanel.add(panel, BorderLayout.NORTH);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btn_genSchedule = new JButton("Generate Schedule");
-		panel.add(btn_genSchedule);
-		
-		btn_genSchedule.addActionListener(new ActionListener() {
-			
-			@Override	
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(MainView.this, "wtf");
-			}
-		});
+		JButton btnLoadEnv = new JButton("Load Environment");
+		panel.add(btnLoadEnv);
 		
 		JButton btnLoadSchedule = new JButton("Load Schedule");
 		panel.add(btnLoadSchedule);
@@ -101,8 +96,17 @@ public class MainView extends JFrame {
 			}
 		});
 		
-		JButton btnLoadEnv = new JButton("Load Environment");
-		panel.add(btnLoadEnv);
+		JButton btnGenSchedule = new JButton("Generate Schedule");
+		panel.add(btnGenSchedule);
+		btnGenSchedule.setEnabled(environmentLoaded);
+		
+		btnGenSchedule.addActionListener(new ActionListener() {
+			
+			@Override	
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(MainView.this, "wtf");
+			}
+		});
 		
 		JTabbedPane tabbedPane = new JTabbedPane(SwingConstants.TOP);
 		contentPanel.add(tabbedPane, BorderLayout.WEST);
