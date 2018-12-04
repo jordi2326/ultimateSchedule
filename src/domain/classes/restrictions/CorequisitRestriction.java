@@ -58,14 +58,16 @@ public class CorequisitRestriction extends NaryRestriction{
 		Boolean sonCoreqs = false;
 		if (gpcode.equals(groupParentCode)) {
 			for (String c : cqs) {
-				for (String coreq : coreqs) {
-					if (coreq.equals(c)) {
-						sonCoreqs = true;
-					}
+				if (c.equals(subject)) {
+					sonCoreqs = true;
+			}
+			for (String coreq : coreqs) {
+				if (coreq.equals(s)) {
+					sonCoreqs = true;
 				}
 			}
+			}
 		}
-		
-		return !(day.equals(d) && hour < h+dur && h < hour+duration && sonCoreqs);
+		return !(day.equals(d) && ((hour >= h && hour < h+dur) || (h >= hour && h < hour+duration)) && sonCoreqs);
 	}
 }

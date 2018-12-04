@@ -137,8 +137,6 @@ public class CtrlSchedule {
 								//Put rooms in possible assignations
 								assignations.get(l).putRoomInDayAndHour(day, hour, room);
 							}
-							//add the number of rooms to the number of possibilities of the lecture l
-							numPossibleAlloc.put(l, numPossibleAlloc.get(l)+roomSet.size());
 						}
 					}
 				}
@@ -152,8 +150,7 @@ public class CtrlSchedule {
 				return false;
 			}
 		}
-		Map<String, Set<String>> triedAndFailed = new HashMap<String, Set<String>>();
-		boolean a = backjumping(schedule, numPossibleAlloc, assignations, referencedRooms, triedAndFailed);
+		boolean a = backjumping(schedule, numPossibleAlloc, assignations, referencedRooms);
 		return a;
 	}
 	
@@ -171,8 +168,8 @@ public class CtrlSchedule {
 		Environment env = Environment.getInstance();
 		//Substract 1 to referenced rooms by the inserted lecture (this includes the inserted room)
 		for (Integer d : assignations.get(lecture).getAllDays()) {
-			for (Integer h : assignations.get(lecture).getAllHoursFromDay(day)) {
-				for (String r : assignations.get(lecture).getAllRoomsFromHourAndDay(day, hour)) {
+			for (Integer h : assignations.get(lecture).getAllHoursFromDay(d)) {
+				for (String r : assignations.get(lecture).getAllRoomsFromHourAndDay(d, h)) {
 					String key = createKey(r, d, h);
 					referencedRooms.put(key, referencedRooms.get(key)-1);
 					//Guardar canvis
@@ -209,7 +206,7 @@ public class CtrlSchedule {
 			Integer dur = env.getLectureDuration(l);
 			if (assignations.get(l).hasDay(day)) {
 				Integer h = Integer.max(0, hour - dur + 1);
-				Integer duration = env.getLectureDuration(l);
+				Integer duration = env.getLectureDuration(lecture);
 				Integer end = Integer.min(12, hour + duration);
 				while (h < end) {
 					if (assignations.get(l).hasHourFromDay(day, h)) {
@@ -278,8 +275,7 @@ public class CtrlSchedule {
 	 * Funci� que fa Backjumping, utilitzat en l'algoritme que genera un horari.
 	 * @param schedule Objecte de la classe Schedule que contindr� l'horari generat al finalitzar l'algoritme.
 	 */
-	private static boolean backjumping(Schedule schedule, Map<String, Integer> numPossibleAlloc, Map<String, PosAssig> assignations, Map<String, Integer> referencedRooms, 
-			Map<String, Set<String>> triedAndFailed) {	
+	private static boolean backjumping(Schedule schedule, Map<String, Integer> numPossibleAlloc, Map<String, PosAssig> assignations, Map<String, Integer> referencedRooms) {	
 		Environment env = Environment.getInstance();
 		// All lectures have been inserted in Schedule
 		if (assignations.isEmpty()) {
@@ -306,25 +302,19 @@ public class CtrlSchedule {
 				for (String r : assignations.get(lecture).getAllRoomsFromHourAndDay(day, hour)) {
 					String key = createKey(r, day, hour);
 					Integer numRefs = referencedRooms.get(key);
-					if (numRefs < refs)
-						/* &&	(!triedAndFailed.containsKey(lecture) || 
-									(triedAndFailed.containsKey(lecture) && !triedAndFailed.get(lecture).contains(key)))) */ {
+					if (numRefs < refs) {
 						refs = numRefs;
 						electedRoomKey = key;
 					}
 				}
-				if (electedRoomKey != null) {
-					Map.Entry<Integer, String> pair = new AbstractMap.SimpleEntry<Integer, String>(refs, electedRoomKey);
-					pq.add(pair);
-				}	
+				Map.Entry<Integer, String> pair = new AbstractMap.SimpleEntry<Integer, String>(refs, electedRoomKey);
+				pq.add(pair);
 			}
 		}
 		//We should try to fit lecture in room+hour+day with less references
 		//If doesn't work, try next room+hour+day (might be another day or/and hour) 
 		Boolean generated = false;
-		Integer roomsTried = 0;
 		while (!pq.isEmpty() && !generated) {
-			++roomsTried;
 			String key = pq.remove().getValue();
 			String room = getRoomFromKey(key);
 			Integer day = getDayFromKey(key);
@@ -347,8 +337,7 @@ public class CtrlSchedule {
 					numPossibleAllocChanges, assigChanges, referencedRoomsChanges)) {
 				//Once checked there are still possibilities, try generating the rest of the schedule with
 				//the impossible combinations cut out by the forward checking
-				System.out.println("succeeded: Queden " + assignations.size()+ " - Rooms intentades: " + roomsTried);
-				generated = backjumping(schedule, numPossibleAlloc, assignations, referencedRooms, triedAndFailed);
+				generated = backjumping(schedule, numPossibleAlloc, assignations, referencedRooms);
 				if (generated) {
 					//If backjumping returned true, the schedule is possible, so insert the lecture
 					//All lectures from here on have been inserted recursively
@@ -361,28 +350,17 @@ public class CtrlSchedule {
 				}
 			}
 			if (!generated) {
-				/*
-				if (!triedAndFailed.containsKey(lecture)) {
-					triedAndFailed.put(lecture, new HashSet<String>());
-				}
-				triedAndFailed.get(lecture).add(key);
-				*/
 				//Desfer canvis assignations
 				for (String l : assigChanges.keySet()) {
 					if (!assignations.containsKey(l)) {
 						assignations.put(l, new PosAssig());
 					}
 					for (Integer d : assigChanges.get(l).getAllDays()) {
-						if (assigChanges.get(l).hasDay(d)) {
-							for (Integer h : assigChanges.get(l).getAllHoursFromDay(d)) {
-								if (assigChanges.get(l).hasHourFromDay(d, h)) {
-									for (String r : assigChanges.get(l).getAllRoomsFromHourAndDay(d, h)) {
-										assignations.get(l).putRoomInDayAndHour(d, h, r);
-									}
-								}
+						for (Integer h : assigChanges.get(l).getAllHoursFromDay(d)) {
+							for (String r : assigChanges.get(l).getAllRoomsFromHourAndDay(d, h)) {
+								assignations.get(l).putRoomInDayAndHour(d, h, r);
 							}
 						}
-						
 					}
 				}
 				//Desfer canvis numPossibleAlloc
@@ -402,21 +380,8 @@ public class CtrlSchedule {
 					}
 					referencedRooms.put(l, referencedRooms.get(l) + addition);
 				}
-				//Treure els intents
-				/*
-				assignations.get(lecture).removeRoomFromHourAndDay(day, hour, room);
-				referencedRooms.put(key, referencedRooms.get(lecture)-1);
-				if (referencedRooms.get(key).equals(0)) {
-					referencedRooms.remove(key);
-				}
-				numPossibleAlloc.put(lecture, numPossibleAlloc.get(lecture)-1);
-				if (numPossibleAlloc.get(lecture).equals(0)) {
-					numPossibleAlloc.remove(lecture);
-				}
-				*/
 			}
 		}
-		if (!generated) System.out.println("failed: " + assignations.size());
 		return generated;
 	}
 }
