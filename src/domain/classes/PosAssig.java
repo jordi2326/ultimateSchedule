@@ -35,9 +35,9 @@ public class PosAssig {
 				for (String room : map.get(day).get(hour)) {
 					rooms.add(new String(room));
 				}
-				aux1.put(hour, rooms);
+				aux1.put(new Integer(hour), rooms);
 			}
-			assigMap.put(day, aux1);
+			assigMap.put(new Integer(day), aux1);
 		} 
 		//assigMap = map;
 	}
@@ -170,6 +170,6 @@ public class PosAssig {
 	}
 	
 	public void setDayWithAll(Integer day, Map<Integer, Set<String>> hoursAndRooms) {
-		assigMap.put(day, hoursAndRooms);
+		if (hoursAndRooms != null) assigMap.put(day, hoursAndRooms);
 	}
 }
