@@ -38,6 +38,16 @@ public class DayPeriodRestriction extends UnaryRestriction{
 	}
 	
 	/**
+	 * @return El String que es veura en pantalla.
+	 */
+	public String stringView() {
+		String res = "Day Period Restriction";
+		if (midDay < 10) res += (" (" + dayPeriod + " - 0" + midDay + ":00)");
+		else res += (" (" + dayPeriod + " - " + midDay + ":00)");
+		return res;
+	}
+	
+	/**
 	 * Validaci� de la restricci�.
 	 * @param day		Dia en que, combinat amb l'hora, no pot anar el grup.
 	 * @param hour		Hora en que, combinada amb el dia, no pot anar el grup.

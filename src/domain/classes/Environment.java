@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import domain.classes.Group.DayPeriod;
 import domain.classes.restrictions.CorequisitRestriction;
 import domain.classes.restrictions.LectureFromSameGroupOverlapRestriction;
 import domain.classes.restrictions.NaryRestriction;

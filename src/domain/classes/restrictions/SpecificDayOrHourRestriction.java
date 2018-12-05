@@ -34,6 +34,16 @@ public class SpecificDayOrHourRestriction extends UnaryRestriction{
 	}
 	
 	/**
+	 * @return El String que es veura en pantalla.
+	 */
+	public String stringView() {
+		String res = "Day Period Restriction";
+		if (hour < 10) res += (" (" + day + " - 0" + hour + ":00)");
+		else res += (" (" + day + " - " + hour + ":00)");
+		return res;
+	}
+	
+	/**
 	 * Validaci� de la restricci�.
 	 * @param day		Dia en que, combinat amb l'hora, no pot anar el grup.
 	 * @param hour		Hora en que, combinada amb el dia, no pot anar el grup.

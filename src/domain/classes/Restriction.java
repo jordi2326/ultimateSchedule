@@ -66,4 +66,9 @@ public abstract class Restriction {
 	 * @return El String que identifica la restricció.
 	 */
 	public abstract String toString();
+	
+	/**
+	 * @return El String que es veura en pantalla.
+	 */
+	public abstract String stringView();
 }

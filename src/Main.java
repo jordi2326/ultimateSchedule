@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 import domain.classes.Environment;
 import domain.classes.Group;
@@ -130,7 +131,14 @@ public class Main {
 	    String s = sc.nextLine();
 	    try {
 			ctDomain.importEnvironment(s);
-			ctDomain.getRestrictionNames();
+			/*Set<String> SR = ctDomain.getRestrictionNames();
+			for (String res : SR) {
+				System.out.println(res);
+				String[] R = ctDomain.getRestrictionInfo(res);
+				System.out.println("	negotiable: " + R[0]);
+				System.out.println("	enabled: " + R[1]);
+				System.out.println("");
+			}*/
 			environmentMenu(s);
 		} catch (Exception e) {
 			e.printStackTrace();
