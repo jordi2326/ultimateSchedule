@@ -56,6 +56,10 @@ public class CtrlPresentation {
 		return ctrlDomain.getGroupNames();
 	}
 	
+	public Set<String> getGroupsNamesFromSuject(String s) {
+		return ctrlDomain.getGroupsNamesFromSuject(s);
+	}
+	
 	public String[] getGroupInfo(String group) {
 		return ctrlDomain.getGroupInfo(group);
 	}

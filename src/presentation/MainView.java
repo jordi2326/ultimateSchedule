@@ -10,6 +10,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.JButton;
@@ -108,60 +109,7 @@ public class MainView extends JFrame {
 			}
 		});
 		
-		JTabbedPane tabbedPane = new JTabbedPane(SwingConstants.TOP);
-		contentPanel.add(tabbedPane, BorderLayout.WEST);
-		tabbedPane.setPreferredSize(new Dimension(300, 0));
-		
-		JTree treeSubjects = new JTree();
-		JScrollPane scollPnlSubjects = new JScrollPane(treeSubjects, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		tabbedPane.addTab("Subjects", null, scollPnlSubjects, null);
-		
-		JCheckBoxTree treeRooms = new JCheckBoxTree();
-		JScrollPane scollPnlRooms = new JScrollPane(treeRooms, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		tabbedPane.addTab("Rooms", null, scollPnlRooms, null);
-		
-		DefaultTreeModel model =(DefaultTreeModel) treeRooms.getModel();
-		
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode("All Rooms");
-		model.setRoot(root);
-
-		Set<String> rooms = ctrlPresentation.getRoomNames();;
-
-		for(String room : rooms) {
-			DefaultMutableTreeNode child = new DefaultMutableTreeNode(room);
-			root.add(child);
-		}
-		
-		treeRooms.addCheckChangeEventListener(new JCheckBoxTree.CheckChangeEventListener() {
-            public void checkStateChanged(JCheckBoxTree.CheckChangeEvent event) {
-            	table.stopEditing();
-            	DefaultMutableTreeNode  tn = ((DefaultMutableTreeNode ) event.getPath().getLastPathComponent());
-            	if(tn.isLeaf()) {
-            		String roomName = (String) tn.getUserObject();
-            		if(event.getChecked()) {
-            			table.filterRoomIn(roomName);
-            		}else{
-            			table.filterRoomOut(roomName);
-            		}
-            	}else { //is root
-            		Enumeration<TreeNode> childs = tn.children();
-            		while(childs.hasMoreElements()) {
-            			DefaultMutableTreeNode tnn = (DefaultMutableTreeNode) childs.nextElement();
-            			if(event.getChecked()) {
-                			table.filterRoomIn((String) tnn.getUserObject());
-                		}else{
-                			table.filterRoomOut((String) tnn.getUserObject());
-                		}
-            		}
-            	}
-            }           
-        });
-		
-		treeRooms.expandPath(new TreePath(root.getPath()));
-		//treeRooms.setRootVisible(false);
-		treeRooms.setModel(model);
-		treeRooms.checkSubTree(new TreePath(root.getPath()), true);
-		
+		Set<String> rooms = ctrlPresentation.getRoomNames();
 		table = new ScheduleTable(ctrlPresentation.getScheduleMatrix());
 		contentPanel.add(table, BorderLayout.CENTER);
 		
@@ -197,6 +145,62 @@ public class MainView extends JFrame {
 				
 			}
 		});
+		
+		JTabbedPane tabbedPane = new JTabbedPane(SwingConstants.TOP);
+		contentPanel.add(tabbedPane, BorderLayout.WEST);
+		tabbedPane.setPreferredSize(new Dimension(300, 0));
+		
+		JCheckBoxTree treeGroups = new JCheckBoxTree();
+		JScrollPane scollPnlGroups = new JScrollPane(treeGroups, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		tabbedPane.addTab("Groups", null, scollPnlGroups, null);
+		DefaultMutableTreeNode groupsRoot = new DefaultMutableTreeNode("All Subjects");
+		DefaultTreeModel treeGroupsModel = new DefaultTreeModel(groupsRoot);
+		for(String subject : ctrlPresentation.getSubjectNames()) {
+			DefaultMutableTreeNode s = new DefaultMutableTreeNode(subject);
+			for(String group : ctrlPresentation.getGroupsNamesFromSuject(subject)) {
+				s.add(new DefaultMutableTreeNode(group));
+			}
+			groupsRoot.add(s);
+			
+		}
+		treeGroups.addCheckChangeEventListener(new JCheckBoxTree.CheckChangeEventListener() {
+            public void checkStateChanged(JCheckBoxTree.CheckChangeEvent event) {
+            	table.stopEditing();
+            	DefaultMutableTreeNode  tn = ((DefaultMutableTreeNode ) event.getPath().getLastPathComponent());
+            	String groupName = (String) tn.getUserObject();
+            	if(event.getChecked()) {
+            		table.filterGroupIn(groupName);
+            	}else{
+            		table.filterGroupOut(groupName);
+            	}
+            }           
+        });
+		treeGroups.setModel(treeGroupsModel);
+		treeGroups.expandPath(new TreePath(groupsRoot.getPath()));
+		treeGroups.checkSubTree(new TreePath(groupsRoot.getPath()), true);
+		
+		JCheckBoxTree treeRooms = new JCheckBoxTree();
+		JScrollPane scollPnlRooms = new JScrollPane(treeRooms, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		tabbedPane.addTab("Rooms", null, scollPnlRooms, null);
+		DefaultMutableTreeNode roomsRoot = new DefaultMutableTreeNode("All Rooms");
+		DefaultTreeModel treeRoomsModel = new DefaultTreeModel(roomsRoot);
+		for(String room : rooms)
+			roomsRoot.add(new DefaultMutableTreeNode(room));
+		treeRooms.addCheckChangeEventListener(new JCheckBoxTree.CheckChangeEventListener() {
+            public void checkStateChanged(JCheckBoxTree.CheckChangeEvent event) {
+            	table.stopEditing();
+            	DefaultMutableTreeNode  tn = ((DefaultMutableTreeNode ) event.getPath().getLastPathComponent());
+            	String roomName = (String) tn.getUserObject();
+            	if(event.getChecked()) {
+            		table.filterRoomIn(roomName);
+            	}else{
+            		table.filterRoomOut(roomName);
+            	}   
+            }
+        });
+		treeRooms.setModel(treeRoomsModel);
+		treeRooms.expandPath(new TreePath(roomsRoot.getPath()));
+		treeRooms.checkSubTree(new TreePath(roomsRoot.getPath()), true);
 		
 		btnLoadEnv.addActionListener(new ActionListener() {
 			

@@ -457,6 +457,11 @@ public class CtrlDomain {
 			return infoGroup;
 		};
 		
+		public Set<String> getGroupsNamesFromSuject(String s) {
+			Environment env = Environment.getInstance();
+			return new TreeSet<String>(env.getSubjectGroups(s));
+		}
+		
 		// SUBJECT
 		public Set<String> getSubjectNames() {
 			Environment env = Environment.getInstance();

@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.EventListener;
 import java.util.EventObject;
 import java.util.HashSet;
+import java.util.Set;
+
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -39,20 +41,10 @@ public class ScheduleTable extends JScrollPane{
 	public static final String[] startTimes = {"08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"};
 	private int[] heights = new int[12];
 	private String selectedLectureName;
-	private HashSet<String> rooms_filter = new HashSet<String>();
-	private HashSet<String> groups_filter = new HashSet<String>();
+	private Set<String> groups_filter = new HashSet<String>();
+	private Set<String> rooms_filter = new HashSet<String>();
 	public ScheduleTable(Object[][] data){
 		super();
-		
-		rooms_filter.add("A6002");
-		rooms_filter.add("A5104");
-		rooms_filter.add("A5109");
-		rooms_filter.add("A5S01");
-		rooms_filter.add("A5S104");
-		rooms_filter.add("A5S105");
-		rooms_filter.add("A5S109");
-		rooms_filter.add("C6S306");
-		rooms_filter.add("C6S308");
 		
 		table = new JTable(new ScheduleTableModel(data));
 		JTableHeader header = table.getTableHeader();
@@ -68,6 +60,7 @@ public class ScheduleTable extends JScrollPane{
 		table.setGridColor(Color.decode("#ebedf2"));
 		table.setShowGrid(false);
 		table.getTableHeader().setReorderingAllowed(false);
+		table.getTableHeader().setResizingAllowed(false);
 		
 		CellRenderer renderer = new CellRenderer();
 		table.setDefaultRenderer(Object.class, renderer);
@@ -201,9 +194,9 @@ public class ScheduleTable extends JScrollPane{
 		    if(value == null) {
 		    	l.setListData(new String[][] {});   	
 		    }else {
-				//((ArrayList<String[]>) value).removeIf(x -> groups_whitelist.contains(x[0]) || rooms_whitelist.contains(x[1]));
 		    	ArrayList<String[]> filtered = (ArrayList<String[]>) ((ArrayList<String[]>) value).clone();
 		    	filtered.removeIf(x -> !rooms_filter.contains(x[1]));
+		    	filtered.removeIf(x -> !groups_filter.contains(x[0]));
 				l.setListData(filtered.toArray());
 				
 				int height = Math.max(l.getFixedCellHeight()*filtered.size(), table.getRowHeight(rowIndex));
@@ -297,6 +290,16 @@ public class ScheduleTable extends JScrollPane{
 	
 	public void stopEditing() {
 		table.removeEditor();
+	}
+	
+	public void filterGroupIn(String groupName){
+		groups_filter.add(groupName);
+		((AbstractTableModel) table.getModel()).fireTableDataChanged();
+	}
+	
+	public void filterGroupOut(String groupName){
+		groups_filter.remove(groupName);
+		((AbstractTableModel) table.getModel()).fireTableDataChanged();
 	}
 	
 	public void filterRoomIn(String roomName){
