@@ -3,14 +3,8 @@ package presentation;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
-
 import org.json.simple.parser.ParseException;
-
-import domain.classes.Environment;
 import domain.controllers.CtrlDomain;
 
 public class CtrlPresentation {
@@ -33,6 +27,21 @@ public class CtrlPresentation {
 	
 	public void initialize() {
 		mainView.setVisible(true);
+	}
+	
+	public void switchToSubjectInfoView(String name) {
+		SubjectInfoView subjectInfoView = new SubjectInfoView(null, this, name);
+		subjectInfoView.setVisible(true);
+	}
+	
+	public void switchToGroupInfoView(String name) {
+		GroupInfoView groupInfoView = new GroupInfoView(null, this, name);
+		groupInfoView.setVisible(true);
+	}
+	
+	public void switchToRoomInfoView(String name) {
+		RoomInfoView roomInfoView = new RoomInfoView(null, this, name);
+		roomInfoView.setVisible(true);
 	}
 	
 	public ArrayList<String[]>[][] getScheduleMatrix(){

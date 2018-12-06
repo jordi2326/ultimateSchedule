@@ -34,7 +34,6 @@ public class MoveLectureView {
 		    "Room:", rooms
 		};
 		
-		JOptionPane optionPane = new JOptionPane(message, JOptionPane.YES_NO_CANCEL_OPTION);
-		optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
+		JOptionPane optionPane = new JOptionPane(message);
 	}
 }

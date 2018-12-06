@@ -72,6 +72,8 @@ public class ScheduleTable extends JScrollPane{
 				int r = table.rowAtPoint(e.getPoint());
                 int c = table.columnAtPoint(e.getPoint());
                 if (table.getValueAt(r, c)!=null && !((ArrayList<String>) table.getValueAt(r, c)).isEmpty() && r >= 0 && r < table.getRowCount() && c >= 0 && c < table.getColumnCount()) {
+                	table.setRowSelectionInterval(r,r);
+            		table.setColumnSelectionInterval(c,c);
                 	table.editCellAt(r, c);
                 }
 			}

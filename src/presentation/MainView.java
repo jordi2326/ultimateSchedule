@@ -55,7 +55,7 @@ public class MainView extends JFrame {
 		scheduleLoaded = false;
 
 	    setTitle("Ultimate Schedule");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(1200, 600);
 		setLocationRelativeTo(null);
 		contentPanel = new JPanel();
@@ -166,10 +166,10 @@ public class MainView extends JFrame {
 				if(SwingUtilities.isRightMouseButton(e)) {
 					final JPopupMenu popupMenu = new JPopupMenu();
 			        JMenuItem removeLec = new JMenuItem("Remove Lecture");
-			        
 			        JMenuItem moveLec = new JMenuItem("Move Lecture");
+			        JMenuItem groupInfo = new JMenuItem("Group Info");
+			        JMenuItem roomInfo = new JMenuItem("Room Info");
 			        moveLec.addActionListener(new ActionListener() {
-
 			            @Override
 			            public void actionPerformed(ActionEvent e) {
 			            	MoveLectureView mlView = new MoveLectureView(value[0], duration, col, row, value[1]);
@@ -178,14 +178,30 @@ public class MainView extends JFrame {
 			        });
 			        
 			        removeLec.addActionListener(new ActionListener() {
-
 			            @Override
 			            public void actionPerformed(ActionEvent e) {
 			            }
 			        });
 			        
+			        groupInfo.addActionListener(new ActionListener() {
+			            @Override
+			            public void actionPerformed(ActionEvent e) {
+	   		            	ctrlPresentation.switchToGroupInfoView(value[0]);
+			            }
+			        });
+			        
+			        roomInfo.addActionListener(new ActionListener() {
+			            @Override
+			            public void actionPerformed(ActionEvent e) {
+	   		            	ctrlPresentation.switchToRoomInfoView(value[1]);
+			            }
+			        });
+			        
 			        popupMenu.add(moveLec);
 			        popupMenu.add(removeLec);
+			        popupMenu.addSeparator();
+			        popupMenu.add(groupInfo);
+			        popupMenu.add(roomInfo);
                 	popupMenu.show(e.getComponent(), e.getX(), e.getY());
                 }
 				
@@ -211,6 +227,38 @@ public class MainView extends JFrame {
             }           
         });
 		treeGroups.setModel(new DefaultTreeModel(null));
+		treeGroups.addMouseListener(new MouseAdapter() {
+		     public void mousePressed(MouseEvent e) {
+		    	 if(SwingUtilities.isRightMouseButton(e)) {
+                	int selRow = treeGroups.getRowForLocation(e.getX(), e.getY());
+	   		        TreePath selPath = treeGroups.getPathForLocation(e.getX(), e.getY());
+	   		        treeGroups.clearSelection();
+	   		        treeGroups.setSelectionPath(selPath);
+	   		        if(selRow != -1 && !(((DefaultMutableTreeNode) selPath.getLastPathComponent()).isRoot())) {
+	   		        	final JPopupMenu popupMenu = new JPopupMenu();
+	   		        	JMenuItem info = new JMenuItem("View Info");
+	   		        	if(((DefaultMutableTreeNode) selPath.getLastPathComponent()).isLeaf()){ //is group
+	   		        		info.addActionListener(new ActionListener() {
+			   		            @Override
+			   		            public void actionPerformed(ActionEvent e) {
+			   		            	ctrlPresentation.switchToGroupInfoView((String) ((DefaultMutableTreeNode) selPath.getLastPathComponent()).getUserObject());
+			   		            }
+			   		        });
+	   		        	}else{ //is subject
+	   		        		info.addActionListener(new ActionListener() {
+			   		            @Override
+			   		            public void actionPerformed(ActionEvent e) {
+			   		            	ctrlPresentation.switchToSubjectInfoView((String) ((DefaultMutableTreeNode) selPath.getLastPathComponent()).getUserObject());
+			   		            }
+			   		        });
+	   		        	}
+		   		        popupMenu.add(info);
+	   		        	popupMenu.show(e.getComponent(), e.getX(), e.getY());
+	   		        }
+                }
+		         
+		     }
+		 });
 		
 		JScrollPane scollPnlRooms = new JScrollPane(treeRooms, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		tabbedPane.addTab("Rooms", null, scollPnlRooms, null);
@@ -227,7 +275,6 @@ public class MainView extends JFrame {
             }
         });
 		treeRooms.setModel(new DefaultTreeModel(null));
-		
 		treeRooms.addMouseListener(new MouseAdapter() {
 		     public void mousePressed(MouseEvent e) {
 		    	 if(SwingUtilities.isRightMouseButton(e)) {
@@ -237,25 +284,15 @@ public class MainView extends JFrame {
 	   		        treeRooms.setSelectionPath(selPath);
 	   		        if(selRow != -1 && ((DefaultMutableTreeNode) selPath.getLastPathComponent()).isLeaf()) {
 	   		        	final JPopupMenu popupMenu = new JPopupMenu();
-		   		         JMenuItem editRoom = new JMenuItem("Edit Room");
-		   		         JMenuItem deleteRoom = new JMenuItem("Delete Room");
-		   		         editRoom.addActionListener(new ActionListener() {
+		   		         JMenuItem infoRoom = new JMenuItem("View Info");
+		   		         infoRoom.addActionListener(new ActionListener() {
 		   		             @Override
 		   		             public void actionPerformed(ActionEvent e) {
-		   		                 JOptionPane.showMessageDialog(MainView.this, "Duuuuuuuuude no.." + selPath);
+		   		            	 System.out.println((String) ((DefaultMutableTreeNode) selPath.getLastPathComponent()).getUserObject());
+		   		            	 ctrlPresentation.switchToRoomInfoView((String) ((DefaultMutableTreeNode) selPath.getLastPathComponent()).getUserObject());
 		   		             }
-		   		         });
-		   		         
-		   		         deleteRoom.addActionListener(new ActionListener() {
-	
-		   		             @Override
-		   		             public void actionPerformed(ActionEvent e) {
-		   		                 JOptionPane.showMessageDialog(MainView.this, "Duuuuuuuuude really? " + selPath);
-		   		             }
-		   		         });
-		   		         
-		   		        popupMenu.add(editRoom);
-		   		        popupMenu.add(deleteRoom);
+		   		         });	   		         
+		   		        popupMenu.add(infoRoom);
 	   		        	popupMenu.show(e.getComponent(), e.getX(), e.getY());
 	   		        }
                  }

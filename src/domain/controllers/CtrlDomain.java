@@ -4,38 +4,23 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-
 import org.json.simple.JSONArray; 
 import org.json.simple.JSONObject; 
 import org.json.simple.parser.*;
-
 import domain.classes.Environment;
 import domain.classes.Group;
 import domain.classes.Lecture;
-import domain.classes.PosAssig;
 import domain.classes.Room;
 import domain.classes.Schedule;
 import domain.classes.Subject;
-import domain.classes.Group.DayPeriod;
-import domain.classes.Group.Type;
-import domain.classes.restrictions.CorequisitRestriction;
 import domain.classes.restrictions.DayPeriodRestriction;
-import domain.classes.restrictions.LectureFromSameGroupOverlapRestriction;
-import domain.classes.restrictions.SubjectLevelRestriction;
 import domain.classes.restrictions.NaryRestriction;
-import domain.classes.restrictions.OccupiedRoomRestriction;
-import domain.classes.restrictions.ParentGroupOverlapRestriction;
-import domain.classes.restrictions.SpecificDayOrHourRestriction;
 import domain.classes.restrictions.UnaryRestriction;
 import persistance.CtrlData;
 
@@ -442,11 +427,11 @@ public class CtrlDomain {
 			  * param subject			Assignatura a la que pertany.
 			  * param type				Tipus de grup.
 			  * param dayPeriod			Període del dia.
-			  * param lectures			Conjunt de sessions del grup.
+			  * param needsComputers	True si necessita ordinadors.
 			  * ************************* */
 			Environment env = Environment.getInstance();
 			
-			String[] infoGroup = new String[6];
+			String[] infoGroup = new String[7];
 			infoGroup[0] = env.getGroupCode(group);
 			infoGroup[1] = env.getGroupNumOfPeople(group).toString();
 			infoGroup[2] = env.getGroupParentGroupCode(group);
