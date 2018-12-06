@@ -1,6 +1,7 @@
 package presentation;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -36,6 +37,11 @@ public class CtrlPresentation {
 	
 	public ArrayList<String[]>[][] getScheduleMatrix(){
 		return ctrlDomain.getScheduleMatrix();
+	}
+	
+	public boolean importEnvironment(String filename)
+		throws ParseException, IOException {
+		return ctrlDomain.importEnvironment(filename);
 	}
 	
 	public boolean importSchedule(String filename)
@@ -83,5 +89,9 @@ public class CtrlPresentation {
 	// Com vols que es vegin a la pantalla
 	public Set<String> getRestrictionNamesView() {
 		return ctrlDomain.getRestrictionNamesView();
+	}
+	
+	public boolean generateSchedule() {
+		return ctrlDomain.generateSchedule();
 	}
 }

@@ -292,6 +292,11 @@ public class ScheduleTable extends JScrollPane{
 		table.removeEditor();
 	}
 	
+	public void clearFilterLists(){
+		groups_filter.clear();
+		rooms_filter.clear();
+	}
+	
 	public void filterGroupIn(String groupName){
 		groups_filter.add(groupName);
 		((AbstractTableModel) table.getModel()).fireTableDataChanged();
@@ -352,5 +357,5 @@ public class ScheduleTable extends JScrollPane{
         public boolean getChecked() {
         	return checked;
         }**/
-    }   
+    }
 }

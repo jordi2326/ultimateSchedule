@@ -202,6 +202,7 @@ public class CtrlDomain {
 	public boolean importEnvironment(String filename) throws ParseException, IOException   {
 		
 		 Environment env = Environment.getInstance();
+		 env.erase();
 		 
 		 String jsonData = dataController.readEnvironment(filename);
 		 Object obj = new JSONParser().parse(jsonData);

@@ -1,37 +1,36 @@
 package presentation;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTabbedPane;
-import javax.swing.JTree;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.JScrollPane;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Set;
-
-import domain.controllers.CtrlDomain;
 import presentation.ScheduleTable.LectureClickedEventListener;
 
 public class MainView extends JFrame {
@@ -42,22 +41,19 @@ public class MainView extends JFrame {
 	private ScheduleTable table;
 	
 	final private JFileChooser fc = new JFileChooser();
+	private JCheckBoxTree treeGroups = new JCheckBoxTree();
+	private JCheckBoxTree treeRooms = new JCheckBoxTree();
+	private JButton btnLoadEnvironment, btnLoadSchedule, btnGenSchedule, btnSaveSchedule;
+	private JLabel envText;
 	
-	private boolean environmentLoaded;
+	private boolean environmentLoaded, scheduleLoaded;
 	
 	public MainView(CtrlPresentation ctrlPresentation) {
 		this.ctrlPresentation = ctrlPresentation;
 		
 		environmentLoaded = false;
-		//TODO: Remove
-		CtrlDomain ctrlDomain = CtrlDomain.getInstance();
-		try {
-			ctrlDomain.importEnvironment("Q1+Q2.json");
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		//
-		
+		scheduleLoaded = false;
+
 	    setTitle("Ultimate Schedule");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1200, 600);
@@ -69,27 +65,47 @@ public class MainView extends JFrame {
 		//contentPanel.setBackground(Color.decode("#616161"));
 		setContentPane(contentPanel);
 		
-		JPanel panel = new JPanel();
-		panel.setOpaque(false);
-		contentPanel.add(panel, BorderLayout.NORTH);
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JPanel topPanel = new JPanel();
+		topPanel.setLayout(new BorderLayout(0, 0));
+		topPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
+		topPanel.setOpaque(true);
+		contentPanel.add(topPanel, BorderLayout.NORTH);
 		
-		JButton btnLoadEnv = new JButton("Load Environment");
-		panel.add(btnLoadEnv);
+		JPanel topLeftPanel = new JPanel();
+		topLeftPanel.setLayout(new BoxLayout(topLeftPanel, BoxLayout.X_AXIS));
+		topLeftPanel.setBorder((BorderFactory.createCompoundBorder(new LineBorder(Color.decode("#eeeeee"), 5), new EmptyBorder(5, 10, 5, 5))));
+		topLeftPanel.setPreferredSize(new Dimension(410-5+8, 0));
+		topLeftPanel.setOpaque(true);
+		topLeftPanel.setBackground(Color.decode("#dddddd"));
+		topPanel.add(topLeftPanel, BorderLayout.WEST);
 		
-		JButton btnLoadSchedule = new JButton("Load Schedule");
-		panel.add(btnLoadSchedule);
+		btnLoadEnvironment = new JButton("Load Environment");
+		btnLoadEnvironment.setFocusPainted(false);
+		topLeftPanel.add(btnLoadEnvironment);
 		
-		btnLoadSchedule.addActionListener(new ActionListener() {
-			
+		envText = new JLabel("No Environment Loaded");
+		envText.setFont(envText.getFont().deriveFont(Font.BOLD, 12f));
+		envText.setBorder(new EmptyBorder(0, 10, 0, 0));
+		envText.setBackground(Color.red);
+		envText.setPreferredSize(new Dimension(410-5+8, 0));
+		topLeftPanel.add(envText);
+		
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setBackground(Color.decode("#dddddd"));
+		buttonsPanel.setBorder((BorderFactory.createCompoundBorder(new LineBorder(Color.decode("#eeeeee"), 5), new EmptyBorder(5, 5, 5, 5))));
+		
+		topPanel.add(buttonsPanel, BorderLayout.CENTER);
+		buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		btnLoadEnvironment.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				File path = new File("data/schedules");
+				File path = new File("data/environments");
 				File selected = loadLocalFile(path);
 				if (!selected.equals(path)) {	//user selected a file
 					try {
-						ctrlPresentation.importSchedule(selected.getName());
-						redrawScheduleMatrix();
+						ctrlPresentation.importEnvironment(selected.getName());
+						environmentLoaded(selected.getName());
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
@@ -97,22 +113,52 @@ public class MainView extends JFrame {
 			}
 		});
 		
-		JButton btnGenSchedule = new JButton("Generate Schedule");
-		panel.add(btnGenSchedule);
-		btnGenSchedule.setEnabled(environmentLoaded);
-		
-		btnGenSchedule.addActionListener(new ActionListener() {
-			
-			@Override	
+		btnLoadSchedule = new JButton("Load Schedule");
+		buttonsPanel.add(btnLoadSchedule);
+		btnLoadSchedule.setEnabled(environmentLoaded);
+		btnLoadSchedule.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(MainView.this, "wtf");
+				File path = new File("data/schedules");
+				File selected = loadLocalFile(path);
+				if (!selected.equals(path)) {	//user selected a file
+					try {
+						ctrlPresentation.importSchedule(selected.getName());
+						scheduleLoaded();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
 			}
 		});
 		
-		Set<String> rooms = ctrlPresentation.getRoomNames();
+		btnGenSchedule = new JButton("Generate Schedule");
+		buttonsPanel.add(btnGenSchedule);
+		btnGenSchedule.setEnabled(environmentLoaded);
+		btnGenSchedule.addActionListener(new ActionListener() {
+			@Override	
+			public void actionPerformed(ActionEvent e) {
+				if(ctrlPresentation.generateSchedule()) {
+					scheduleLoaded();
+				}else {
+					JOptionPane.showMessageDialog(MainView.this, "No Valid Schedule Found", null, JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
+		
+		btnSaveSchedule = new JButton("Save Schedule");
+		buttonsPanel.add(btnSaveSchedule);
+		btnSaveSchedule.setEnabled(environmentLoaded);
+		btnSaveSchedule.addActionListener(new ActionListener() {
+			@Override	
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(MainView.this, "Mehhh.. Doesn't work yet", null, JOptionPane.WARNING_MESSAGE);
+			}
+		});
+		
 		table = new ScheduleTable(ctrlPresentation.getScheduleMatrix());
 		contentPanel.add(table, BorderLayout.CENTER);
-		
+		table.setBorder(new EmptyBorder(20, 8, 0, 0));
 		table.addLectureClickedEventListener(new LectureClickedEventListener() {
 			
 			@Override
@@ -150,19 +196,8 @@ public class MainView extends JFrame {
 		contentPanel.add(tabbedPane, BorderLayout.WEST);
 		tabbedPane.setPreferredSize(new Dimension(300, 0));
 		
-		JCheckBoxTree treeGroups = new JCheckBoxTree();
 		JScrollPane scollPnlGroups = new JScrollPane(treeGroups, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		tabbedPane.addTab("Groups", null, scollPnlGroups, null);
-		DefaultMutableTreeNode groupsRoot = new DefaultMutableTreeNode("All Subjects");
-		DefaultTreeModel treeGroupsModel = new DefaultTreeModel(groupsRoot);
-		for(String subject : ctrlPresentation.getSubjectNames()) {
-			DefaultMutableTreeNode s = new DefaultMutableTreeNode(subject);
-			for(String group : ctrlPresentation.getGroupsNamesFromSuject(subject)) {
-				s.add(new DefaultMutableTreeNode(group));
-			}
-			groupsRoot.add(s);
-			
-		}
 		treeGroups.addCheckChangeEventListener(new JCheckBoxTree.CheckChangeEventListener() {
             public void checkStateChanged(JCheckBoxTree.CheckChangeEvent event) {
             	table.stopEditing();
@@ -175,17 +210,10 @@ public class MainView extends JFrame {
             	}
             }           
         });
-		treeGroups.setModel(treeGroupsModel);
-		treeGroups.expandPath(new TreePath(groupsRoot.getPath()));
-		treeGroups.checkSubTree(new TreePath(groupsRoot.getPath()), true);
+		treeGroups.setModel(new DefaultTreeModel(null));
 		
-		JCheckBoxTree treeRooms = new JCheckBoxTree();
 		JScrollPane scollPnlRooms = new JScrollPane(treeRooms, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		tabbedPane.addTab("Rooms", null, scollPnlRooms, null);
-		DefaultMutableTreeNode roomsRoot = new DefaultMutableTreeNode("All Rooms");
-		DefaultTreeModel treeRoomsModel = new DefaultTreeModel(roomsRoot);
-		for(String room : rooms)
-			roomsRoot.add(new DefaultMutableTreeNode(room));
 		treeRooms.addCheckChangeEventListener(new JCheckBoxTree.CheckChangeEventListener() {
             public void checkStateChanged(JCheckBoxTree.CheckChangeEvent event) {
             	table.stopEditing();
@@ -198,18 +226,8 @@ public class MainView extends JFrame {
             	}   
             }
         });
-		treeRooms.setModel(treeRoomsModel);
-		treeRooms.expandPath(new TreePath(roomsRoot.getPath()));
-		treeRooms.checkSubTree(new TreePath(roomsRoot.getPath()), true);
+		treeRooms.setModel(new DefaultTreeModel(null));
 		
-		btnLoadEnv.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(MainView.this, "wtf duuuude", "really?", JOptionPane.WARNING_MESSAGE);
-			}
-		});
-        
 		treeRooms.addMouseListener(new MouseAdapter() {
 		     public void mousePressed(MouseEvent e) {
 		    	 if(SwingUtilities.isRightMouseButton(e)) {
@@ -222,7 +240,6 @@ public class MainView extends JFrame {
 		   		         JMenuItem editRoom = new JMenuItem("Edit Room");
 		   		         JMenuItem deleteRoom = new JMenuItem("Delete Room");
 		   		         editRoom.addActionListener(new ActionListener() {
-	
 		   		             @Override
 		   		             public void actionPerformed(ActionEvent e) {
 		   		                 JOptionPane.showMessageDialog(MainView.this, "Duuuuuuuuude no.." + selPath);
@@ -257,9 +274,44 @@ public class MainView extends JFrame {
 		return file;
 	}
 	
-	private void redrawScheduleMatrix() {
+	private void environmentLoaded(String name) {
+		environmentLoaded = true;
+		scheduleLoaded = false;
+		
+		table.clearFilterLists();
+		DefaultMutableTreeNode groupsRoot = new DefaultMutableTreeNode("All Subjects");
+		DefaultTreeModel treeGroupsModel = new DefaultTreeModel(groupsRoot);
+		for(String subject : ctrlPresentation.getSubjectNames()) {
+			DefaultMutableTreeNode s = new DefaultMutableTreeNode(subject);
+			for(String group : ctrlPresentation.getGroupsNamesFromSuject(subject)) {
+				s.add(new DefaultMutableTreeNode(group));
+			}
+			groupsRoot.add(s);
+		}
+		treeGroups.setModel(treeGroupsModel);
+		treeGroups.expandPath(new TreePath(groupsRoot.getPath()));
+		treeGroups.checkSubTree(new TreePath(groupsRoot.getPath()), true);
+		
+		DefaultMutableTreeNode roomsRoot = new DefaultMutableTreeNode("All Rooms");
+		DefaultTreeModel treeRoomsModel = new DefaultTreeModel(roomsRoot);
+		for(String room : ctrlPresentation.getRoomNames())
+			roomsRoot.add(new DefaultMutableTreeNode(room));
+		treeRooms.setModel(treeRoomsModel);
+		treeRooms.expandPath(new TreePath(roomsRoot.getPath()));
+		treeRooms.checkSubTree(new TreePath(roomsRoot.getPath()), true);
+		
+		envText.setText(name);
+		btnLoadSchedule.setEnabled(environmentLoaded);
+		btnGenSchedule.setEnabled(environmentLoaded);
+		btnSaveSchedule.setEnabled(scheduleLoaded);
+	}
+	
+	private void scheduleLoaded() {
+		scheduleLoaded = true;
 		ArrayList<String[]>[][] data = ctrlPresentation.getScheduleMatrix();
 		table.changeData(data);
+		
+		btnSaveSchedule.setEnabled(scheduleLoaded);
 	}
 
 }
