@@ -1,9 +1,23 @@
 package presentation;
 
+import java.awt.HeadlessException;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
+
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
+
 import org.json.simple.parser.ParseException;
 import domain.controllers.CtrlDomain;
 
@@ -13,10 +27,14 @@ public class CtrlPresentation {
 	
 	private CtrlDomain ctrlDomain;
 	private MainView mainView;
+	ProgressView progressV;
+	private SwingWorker<Boolean, Void> task;
+	Timer tmr;
 	
 	private CtrlPresentation() {
 		ctrlDomain = CtrlDomain.getInstance();
 		mainView = new MainView(this);
+		progressV = new ProgressView(mainView, this);
 	}
 	
 	public static CtrlPresentation getInstance() {
@@ -100,7 +118,44 @@ public class CtrlPresentation {
 		return ctrlDomain.getRestrictionNamesView();
 	}
 	
-	public boolean generateSchedule() {
-		return ctrlDomain.generateSchedule();
+	public void generateSchedule() {
+        task = new SwingWorker<Boolean, Void>(){
+        	@Override
+			protected Boolean doInBackground() throws Exception {
+        		return ctrlDomain.generateSchedule();
+			}
+        	@Override
+            public void done() {
+        		tmr.cancel();
+        		Toolkit.getDefaultToolkit().beep();
+        		progressV.setVisible(false);
+        		//progressV.dispose();
+				try {
+					if(get()) {
+						mainView.scheduleLoaded();
+						//JOptionPane.showMessageDialog(mainView, "Schedule Generated!", null, JOptionPane.PLAIN_MESSAGE);
+					}else {
+						JOptionPane.showMessageDialog(mainView, "No Valid Schedule Found", null, JOptionPane.WARNING_MESSAGE);
+					}
+				} catch (CancellationException | InterruptedException e) { //do nothing
+				} catch (HeadlessException | ExecutionException e) {
+					JOptionPane.showMessageDialog(mainView, "Error when generating Schedule", null, JOptionPane.ERROR_MESSAGE);
+				}
+            }
+        };
+        task.execute();
+        tmr = new Timer();
+        tmr.schedule(new TimerTask() {
+        	@Override
+        	public void run() {
+        		progressV.setVisible(true);
+        		}
+        	},
+        	500
+        );
+	}
+
+	public void stopTask() {
+		task.cancel(true);
 	}
 }

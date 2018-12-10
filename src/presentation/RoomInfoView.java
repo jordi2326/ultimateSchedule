@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -15,8 +14,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class RoomInfoView extends JDialog {
-	
-	private JPanel contentPanel;
 	
 	public RoomInfoView(Frame parent, CtrlPresentation ctrlPresentation, String name) {
 		super(parent, true);
@@ -30,7 +27,7 @@ public class RoomInfoView extends JDialog {
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 	    GridBagLayout layout = new GridBagLayout();
-	    contentPanel = new JPanel();
+	    JPanel contentPanel = new JPanel();
 	    contentPanel.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(5, 5, 5, 5), BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder("Room:"), new EmptyBorder(10, 10, 10, 10))));
 	    contentPanel.setLayout(layout);
 	    setContentPane(contentPanel);

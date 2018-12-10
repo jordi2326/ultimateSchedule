@@ -16,8 +16,6 @@ import javax.swing.border.EmptyBorder;
 
 public class SubjectInfoView extends JDialog {
 	
-	private JPanel contentPanel;
-	
 	public SubjectInfoView(Frame parent, CtrlPresentation ctrlPresentation, String name) {
 		super(parent, true);
 		
@@ -30,7 +28,7 @@ public class SubjectInfoView extends JDialog {
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 	    GridBagLayout layout = new GridBagLayout();
-	    contentPanel = new JPanel();
+	    JPanel contentPanel = new JPanel();
 	    contentPanel.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(5, 5, 5, 5), BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder("Subject:"), new EmptyBorder(10, 10, 10, 10))));
 	    contentPanel.setLayout(layout);
 	    setContentPane(contentPanel);

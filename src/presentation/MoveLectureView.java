@@ -34,6 +34,6 @@ public class MoveLectureView {
 		    "Room:", rooms
 		};
 		
-		JOptionPane optionPane = new JOptionPane(message);
+		//JOptionPane optionPane = new JOptionPane(message);
 	}
 }

@@ -31,24 +31,23 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
+
 import presentation.ScheduleTable.LectureClickedEventListener;
 
-public class MainView extends JFrame {
+public class MainView extends JFrame{
 
 	private CtrlPresentation ctrlPresentation;
 	
 	private JPanel contentPanel;
-	private ScheduleTable table;
-	
 	final private JFileChooser fc = new JFileChooser();
 	private JCheckBoxTree treeGroups = new JCheckBoxTree();
 	private JCheckBoxTree treeRooms = new JCheckBoxTree();
 	private JButton btnLoadEnvironment, btnLoadSchedule, btnGenSchedule, btnSaveSchedule;
 	private JLabel envText;
-	
+	private ScheduleTable table;
 	private boolean environmentLoaded, scheduleLoaded;
 	
-	public MainView(CtrlPresentation ctrlPresentation) {
+	public MainView(CtrlPresentation ctrlPresentation){
 		this.ctrlPresentation = ctrlPresentation;
 		
 		environmentLoaded = false;
@@ -138,11 +137,7 @@ public class MainView extends JFrame {
 		btnGenSchedule.addActionListener(new ActionListener() {
 			@Override	
 			public void actionPerformed(ActionEvent e) {
-				if(ctrlPresentation.generateSchedule()) {
-					scheduleLoaded();
-				}else {
-					JOptionPane.showMessageDialog(MainView.this, "No Valid Schedule Found", null, JOptionPane.WARNING_MESSAGE);
-				}
+				ctrlPresentation.generateSchedule();
 			}
 		});
 		
@@ -343,7 +338,7 @@ public class MainView extends JFrame {
 		btnSaveSchedule.setEnabled(scheduleLoaded);
 	}
 	
-	private void scheduleLoaded() {
+	public void scheduleLoaded() {
 		scheduleLoaded = true;
 		ArrayList<String[]>[][] data = ctrlPresentation.getScheduleMatrix();
 		table.changeData(data);

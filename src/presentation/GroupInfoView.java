@@ -15,8 +15,6 @@ import javax.swing.border.EmptyBorder;
 
 public class GroupInfoView extends JDialog {
 	
-	private JPanel contentPanel;
-	
 	public GroupInfoView(Frame parent, CtrlPresentation ctrlPresentation, String name) {
 		super(parent, true);
 		
@@ -29,7 +27,7 @@ public class GroupInfoView extends JDialog {
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 	    GridBagLayout layout = new GridBagLayout();
-	    contentPanel = new JPanel();
+	    JPanel contentPanel = new JPanel();
 	    contentPanel.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(5, 5, 5, 5), BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder("Group:"), new EmptyBorder(10, 10, 10, 10))));
 	    contentPanel.setLayout(layout);
 	    setContentPane(contentPanel);
