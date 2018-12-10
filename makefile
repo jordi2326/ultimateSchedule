@@ -1,6 +1,6 @@
 JFLAGS = -g
-#JC = javac
-JC = /usr/java/jdk1.8.0_45/bin/javac
+JC = javac
+#JC = /usr/java/jdk1.8.0_45/bin/javac
 JVM= java
 
 BIN = ./exe/
@@ -15,6 +15,7 @@ RCPATHS = $(BIN):$(JARS)
 
 CLASSES = \
 	src/Main.java \
+	src/RealMain.java \
 	src/domain/classes/*.java \
 	src/domain/classes/restrictions/*.java \
 	src/domain/controllers/*.java \
@@ -35,6 +36,9 @@ classes: $(CLASSES:.java=.class)
 
 run: $(BIN)$(MAIN).class
 	$(JVM) -cp $(RCPATHS) $(MAIN)
+
+run2:
+	$(JVM) -cp $(RCPATHS) RealMain
 
 run-driver-subject:
 	$(JVM) -cp $(RCPATHS) domain.drivers.SubjectDriver
