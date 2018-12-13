@@ -158,4 +158,15 @@ public class CtrlPresentation {
 	public void stopTask() {
 		task.cancel(true);
 	}
+	
+	/** Elimina un grup en un dia i aula determinats.
+	*   @param duration Duració del grup.
+	*	@param room		Aula on eliminarem el grup.
+	*	@param day		Dia on eliminarem el grup.
+	*	@param hour		Hora on eliminarem el grup.
+	*	@return Si existeix l'aula, eliminem el grup en qï¿½estiï¿½ i retornem true. Fals en cas contrari.
+	*/
+	public boolean removeLecture(int duration, String room, int day, int hour) {
+		return ctrlDomain.removeLecture(duration, room, day, hour);
+	}
 }

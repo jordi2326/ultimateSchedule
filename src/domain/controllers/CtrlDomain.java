@@ -555,4 +555,89 @@ public class CtrlDomain {
 			String[] error = new String[0];
 			return error;
 		};
+		
+		/** Elimina un grup en un dia i aula determinats.
+		*   @param duration Duració del grup.
+		*	@param room		Aula on eliminarem el grup.
+		*	@param day		Dia on eliminarem el grup.
+		*	@param hour		Hora on eliminarem el grup.
+		*	@return Si existeix l'aula, eliminem el grup en qï¿½estiï¿½ i retornem true. Fals en cas contrari.
+		*/
+		public boolean removeLecture(int duration, String room, int day, int hour) {
+			for (int i = 0; i < duration; i++) {
+				boolean removeOne = schedule.removeLecture(room, day, hour + i);
+				if (!removeOne) return false;
+			}
+			return true;
+		}
+		
+		/** Afageix un grup en un dia i aula determinats.
+		*   @param duration Duració del grup.
+		*	@param room		Aula on eliminarem el grup.
+		*	@param day		Dia on eliminarem el grup.
+		*	@param hour		Hora on eliminarem el grup.
+		*	@return True si s'ha pogut afegir el grup. Fals en cas contrari.
+		*/
+		public boolean putLecture(int duration, String room, int day, int hour) {
+			String lecture = schedule.getSchedule().get(room)[day][hour];
+			for (int i = 0; i < duration; i++) {
+				boolean removeOne = schedule.putLecture(room, day, hour + i, lecture);
+				if (!removeOne) return false;
+			}
+			return true;
+		}
+		
+		public boolean validateAllRestrictions(String lecture, int day, int hour, String room, int duration) {
+			Environment env = Environment.getInstance();
+			
+			Map<String, String[][]> sche = schedule.getSchedule();
+			
+			for (String[][] r : sche.values()) {
+				String group = env.getLectureGroup(lecture);
+				
+				
+				
+				for (String restr : env.getGroupNaryRestrictions(lecture)) {
+					if (!env.validateGroupNaryRestriction(group, restr, room, day, hour, lecture, day, h, r, l)) return false;
+				}
+			}
+			
+			for (String restr : env.getGroupUnaryRestrictions(lecture)) {
+				if (!env.validateGroupUnaryRestriction(lecture, room, day, hour, duration)) return false;
+			}
+			
+			return true;
+		}
+		
+		/** Mou un grup de dia, aula i hora determinats
+		*   @param duration Duració del grup.
+		*	@param iniDay		Dia on està actualment el grup.
+		*	@param fiDay		Dia on anirà el grup si es pot.
+		*	@param iniHour		Hora on està actualment el grup.
+		*	@param fiHour		Hora on anirà el grup si es pot.
+		*	@param iniRoom		Aula on està actualment el grup.
+		*	@param fiRoom		Aula on anirà el grup si es pot.
+		*	@return True si s'ha pogut moure el grup. Fals en cas contrari.
+		*/
+		public boolean moveLecture(int duration, int iniDay, int fiDay, int iniHour, int fiHour, String iniRoom, String fiRoom) {
+			String lecture = schedule.getSchedule().get(fiRoom)[fiDay][fiHour];
+			
+			// Eliminar lecture
+			boolean removed = removeLecture(duration, iniRoom, iniDay, iniHour);
+			
+			if (removed) {
+				// Restriccions
+				boolean restr = validateAllRestrictions(lecture, fiDay, fiHour, fiRoom, duration);
+				
+				if (restr) {
+					// Afegir-lo al lloc nou
+					putLecture(duration, fiRoom, fiDay, fiHour);
+					return true;
+				} else {
+					// Tornar a afegir-lo al lloc inicial
+					putLecture(duration, iniRoom, iniDay, iniHour);
+					return false;
+				}
+			} else return false;
+		}
 }
