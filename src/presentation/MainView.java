@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
@@ -19,6 +20,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -30,6 +32,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import presentation.ScheduleTable.LectureClickedEventListener;
@@ -42,13 +45,16 @@ public class MainView extends JFrame{
 	final private JFileChooser fc = new JFileChooser();
 	private JCheckBoxTree treeGroups = new JCheckBoxTree();
 	private JCheckBoxTree treeRooms = new JCheckBoxTree();
-	private JButton btnLoadEnvironment, btnLoadSchedule, btnGenSchedule, btnSaveSchedule;
+	private JButton btnLoadEnvironment, btnLoadSchedule, btnGenSchedule, btnSaveSchedule, btnConfigRestrictions;
 	private JLabel envText;
 	private ScheduleTable table;
 	private boolean environmentLoaded, scheduleLoaded;
 	
 	public MainView(CtrlPresentation ctrlPresentation){
 		this.ctrlPresentation = ctrlPresentation;
+		
+		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fc.setFileFilter(new FileNameExtensionFilter("JSON Files", "json", "JSON"));
 		
 		environmentLoaded = false;
 		scheduleLoaded = false;
@@ -100,10 +106,11 @@ public class MainView extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				File path = new File("data/environments");
+				fc.setDialogTitle("Load Environment");
 				File selected = loadLocalFile(path);
 				if (!selected.equals(path)) {	//user selected a file
 					try {
-						ctrlPresentation.importEnvironment(selected.getName());
+						ctrlPresentation.importEnvironment(selected.getAbsolutePath());
 						environmentLoaded(selected.getName());
 					} catch (Exception e1) {
 						e1.printStackTrace();
@@ -119,10 +126,11 @@ public class MainView extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				File path = new File("data/schedules");
+				fc.setDialogTitle("Load Schedule");
 				File selected = loadLocalFile(path);
 				if (!selected.equals(path)) {	//user selected a file
 					try {
-						ctrlPresentation.importSchedule(selected.getName());
+						ctrlPresentation.importSchedule(selected.getAbsolutePath());
 						scheduleLoaded();
 					} catch (Exception e1) {
 						e1.printStackTrace();
@@ -147,7 +155,26 @@ public class MainView extends JFrame{
 		btnSaveSchedule.addActionListener(new ActionListener() {
 			@Override	
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(MainView.this, "Mehhh.. Doesn't work yet", null, JOptionPane.WARNING_MESSAGE);
+				//JLabel tfFilename = new JLabel("Filename");
+				//JTextField tfFilename = new JTextField();
+				//JOptionPane.showInputDialog(parentComponent, message, title, messageType)
+				//String m = (String) JOptionPane.showInputDialog(MainView.this, "Enter filename:", "Save Schedule", JOptionPane.PLAIN_MESSAGE, null, null, "schedule.json");
+				//JOptionPane.showMessageDialog(MainView.this, "Mehhh.. Doesn't work yet", null, JOptionPane.WARNING_MESSAGE);
+				try {
+					saveLocalFile();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		btnConfigRestrictions = new JButton("Config. Restrictions");
+		buttonsPanel.add(btnConfigRestrictions);
+		btnConfigRestrictions.addActionListener(new ActionListener() {
+			@Override	
+			public void actionPerformed(ActionEvent e) {
+				//ctrlPresentation.generateSchedule();
 			}
 		});
 		
@@ -298,12 +325,58 @@ public class MainView extends JFrame{
 	
 	private File loadLocalFile(File file) {
 		fc.setCurrentDirectory(file);
+		int returnVal = fc.showOpenDialog(MainView.this);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            return fc.getSelectedFile();
+        }
+		return file;
+	}
+	
+	/**private boolean saveLocalFile() throws IOException {
+		/**fc.setCurrentDirectory(file);
 		int returnVal = fc.showOpenDialog(contentPanel);
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             return fc.getSelectedFile();
         }
 		return file;
+		int returnVal = fc.showSaveDialog(MainView.this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            //This is where a real application would save the file.
+            //log.append("Saving: " + file.getName() + "." + newline);
+            return ctrlPresentation.exportSchedule(file.getAbsolutePath());
+        } else {
+            //log.append("Save command cancelled by user." + newline);
+        }
+        return false;
+        //log.setCaretPosition(log.getDocument().getLength());
+	}
+	 * @throws IOException **/
+
+	public boolean saveLocalFile() throws NullPointerException, IOException {
+	    boolean acceptable = false;
+	    String filepath = "";
+	    do {
+	        File f = new File("data/schedules");
+	        fc.setCurrentDirectory(f);
+	        if (fc.showSaveDialog(MainView.this) == JFileChooser.APPROVE_OPTION) {
+	        	filepath = fc.getSelectedFile().getAbsolutePath();
+	            f = fc.getSelectedFile();
+	            //System.out.println(theFile);
+	            if (f.exists()) {
+	            	JOptionPane.showMessageDialog(MainView.this, "Choose another filename.", "File already exists", JOptionPane.PLAIN_MESSAGE);
+	            } else {
+	                acceptable = true;
+	            }
+	        } else {
+	            acceptable = true;
+	        }
+	    } while (!acceptable);
+
+	    return ctrlPresentation.exportSchedule(filepath);
+
 	}
 	
 	private void environmentLoaded(String name) {

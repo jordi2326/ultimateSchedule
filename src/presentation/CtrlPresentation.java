@@ -48,18 +48,22 @@ public class CtrlPresentation {
 	}
 	
 	public void switchToSubjectInfoView(String name) {
-		SubjectInfoView subjectInfoView = new SubjectInfoView(null, this, name);
-		subjectInfoView.setVisible(true);
+		/**SubjectInfoView subjectInfoView = new SubjectInfoView(mainView, this, name);
+		subjectInfoView.setVisible(true);**/
+		EditSubjectView editSubjectView = new EditSubjectView(mainView, this, name);
+		editSubjectView.setVisible(true);
 	}
 	
 	public void switchToGroupInfoView(String name) {
-		GroupInfoView groupInfoView = new GroupInfoView(null, this, name);
+		GroupInfoView groupInfoView = new GroupInfoView(mainView, this, name);
 		groupInfoView.setVisible(true);
 	}
 	
 	public void switchToRoomInfoView(String name) {
-		RoomInfoView roomInfoView = new RoomInfoView(null, this, name);
-		roomInfoView.setVisible(true);
+		/**RoomInfoView roomInfoView = new RoomInfoView(mainView, this, name);
+		roomInfoView.setVisible(true);**/
+		EditRoomView editRoomView = new EditRoomView(mainView, this, name);
+		editRoomView.setVisible(true);
 	}
 	
 	public ArrayList<String[]>[][] getScheduleMatrix(){
@@ -68,13 +72,17 @@ public class CtrlPresentation {
 	
 	public boolean importEnvironment(String filename)
 		throws ParseException, IOException {
-		return ctrlDomain.importEnvironment(filename);
+		return ctrlDomain.importEnvironment(filename, true);
 	}
 	
 	public boolean importSchedule(String filename)
 		throws FileNotFoundException, ParseException {
-		return ctrlDomain.importSchedule(filename);
+		return ctrlDomain.importSchedule(filename, true);
 	}
+	
+	public boolean exportSchedule(String filename) throws IOException{
+			return ctrlDomain.exportSchedule(filename, true);
+		}
 	
 	// Getters de totes les coses d'environment
 	public Set<String> getRoomNames() {

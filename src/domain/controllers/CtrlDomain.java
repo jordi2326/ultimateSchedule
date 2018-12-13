@@ -184,12 +184,12 @@ public class CtrlDomain {
 	 * @return true si s'ha importat correctament, sino false.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public boolean importEnvironment(String filename) throws ParseException, IOException   {
+	public boolean importEnvironment(String filename, boolean isFullpath) throws ParseException, IOException   {
 		
 		 Environment env = Environment.getInstance();
 		 env.erase();
 		 
-		 String jsonData = dataController.readEnvironment(filename);
+		 String jsonData = dataController.readEnvironment(filename, isFullpath);
 		 Object obj = new JSONParser().parse(jsonData);
 		 
 		// typecasting obj to JSONObject 
@@ -343,8 +343,8 @@ public class CtrlDomain {
 	 * @param filename Nom de l'arxiu d'horari a importar.
 	 * @return true si s'ha importat correctament, sino false
 	 */
-	public boolean importSchedule(String filename) throws ParseException, FileNotFoundException {
-		String jsonData = dataController.readSchedule(filename);
+	public boolean importSchedule(String filename, boolean isFullpath) throws ParseException, FileNotFoundException {
+		String jsonData = dataController.readSchedule(filename, isFullpath);
 		schedule = new Schedule(jsonData);
 	   	return true;
 	}
@@ -354,8 +354,8 @@ public class CtrlDomain {
 	 * @param filename Nom amb el que guardar l'horari.
 	 * @return true si s'ha guardat correctament.
 	 */
-	public boolean exportSchedule(String filename) throws IOException  {
-        return dataController.writeSchedule(filename, schedule.toJsonString());
+	public boolean exportSchedule(String filename, boolean isFullpath) throws IOException  {
+        return dataController.writeSchedule(filename, schedule.toJsonString(), isFullpath);
 	}
 	
 	/**

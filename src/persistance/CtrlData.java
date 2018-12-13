@@ -41,8 +41,9 @@ public class CtrlData {
 	 * @param filename Nom de l'arxiu d'entorn a importar.
 	 * @return Contingut de l'arxiu llegit.
 	 */
-	public String readEnvironment(String filename) throws FileNotFoundException {
-		return readData("environments/"+filename);
+	public String readEnvironment(String filename, boolean isFullpath) throws FileNotFoundException {
+		if(isFullpath) return readData(filename);
+		else return readData("data/environments/"+filename);
 	}
 	
 	/**public boolean writeEnvironment(String filename, String content) throws FileNotFoundException {
@@ -50,12 +51,24 @@ public class CtrlData {
 	}**/
 	
 	/**
+	 * Guarda el contingut donat (que representa un horari) a un arxiu dins la carpeta d'horaris.
+	 * @param filename Nom amb el que guardar l'horari.
+	 * @param content Contingut de l'horari a guardar.
+	 * @return true si s'ha guardat correctament.
+	 */
+	public boolean writeEnvironment(String filename, String content, boolean isFullpath) throws FileNotFoundException {
+		if(isFullpath) return writeData(filename, content);
+		else return writeData("data/environments/"+filename, content);
+	}
+	
+	/**
 	 * Importa un horari desde un arxiu.
 	 * @param filename Nom de l'arxiu d'horari a importar.
 	 * @return Contingut de l'arxiu llegit.
 	 */
-	public String readSchedule(String filename) throws FileNotFoundException {
-		return readData("schedules/"+filename);
+	public String readSchedule(String filename, boolean isFullpath) throws FileNotFoundException {
+		if(isFullpath) return readData(filename);
+		else return readData("data/schedules/"+filename);
 	}
 	
 	/**
@@ -64,8 +77,9 @@ public class CtrlData {
 	 * @param content Contingut de l'horari a guardar.
 	 * @return true si s'ha guardat correctament.
 	 */
-	public boolean writeSchedule(String filename, String content) throws FileNotFoundException {
-		return writeData("schedules/"+filename, content);
+	public boolean writeSchedule(String filename, String content, boolean isFullpath) throws FileNotFoundException {
+		if(isFullpath) return writeData(filename, content);
+		else return writeData("data/schedules/"+filename, content);
 	}
 	
 	/**
@@ -74,12 +88,12 @@ public class CtrlData {
 	 * @return El contingut de l'arxiu.
 	 */
 	private String readData(String filename) throws FileNotFoundException {
-			FileReader fr = new FileReader("data/"+filename);
-			Scanner scan = new Scanner(fr);
-			scan.useDelimiter("\\Z");
-			String out = scan.next();
-			scan.close();
-			return out;
+		FileReader fr = new FileReader(filename);
+		Scanner scan = new Scanner(fr);
+		scan.useDelimiter("\\Z");
+		String out = scan.next();
+		scan.close();
+		return out;
 	}
 	
 	/**
@@ -88,7 +102,7 @@ public class CtrlData {
 	 * @return true si s'ha escrit correctament.
 	 */
 	private boolean writeData(String filename, String content) throws FileNotFoundException {
-		PrintWriter pw = new PrintWriter("data/"+filename); 
+		PrintWriter pw = new PrintWriter(filename); 
         pw.write(content); 
         pw.flush(); 
         pw.close(); 

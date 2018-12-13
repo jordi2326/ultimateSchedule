@@ -130,7 +130,7 @@ public class Main {
 		sc.nextLine();
 	    String s = sc.nextLine();
 	    try {
-			ctDomain.importEnvironment(s);
+			ctDomain.importEnvironment(s, false);
 			/*Set<String> SR = ctDomain.getRestrictionNames();
 			for (String res : SR) {
 				System.out.println(res);
@@ -204,7 +204,7 @@ public class Main {
 		String n = sc.nextLine();
 	    try {
 	    	String filename = n;
-			ctDomain.importSchedule(filename);
+			ctDomain.importSchedule(filename, false);
 			ctDomain.printSchedule();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -246,7 +246,7 @@ public class Main {
 		sc.nextLine(); //clear for next line
 		String filename = sc.nextLine();
 		try {
-			ctDomain.exportSchedule(filename+".json");
+			ctDomain.exportSchedule(filename+".json", false);
 			System.out.println("Saved '"+filename+".json'");
 		} catch (IOException e) {
 			e.printStackTrace();
