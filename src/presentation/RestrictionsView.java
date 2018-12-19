@@ -2,29 +2,25 @@ package presentation;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.ListCellRenderer;
 import javax.swing.ScrollPaneLayout;
-import javax.swing.border.Border;
+import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -45,9 +41,10 @@ public class RestrictionsView extends JDialog {
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		
 		JScrollPane scrollPane = new JScrollPane(contentPanel);
-		scrollPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		scrollPane.setBorder(new EmptyBorder(0, 5, 0, 5));
 		scrollPane.setLayout(new ScrollPaneLayout());
 		scrollPane.setOpaque(true);
+		scrollPane.setBackground(Color.decode("#dddddd"));
 		scrollPane.setMaximumSize(scrollPane.getPreferredSize());
 		setContentPane(scrollPane);
 		
@@ -59,13 +56,19 @@ public class RestrictionsView extends JDialog {
 		list.setCellRenderer(new CellRenderer());
 		
 		list.setListData(testdata);**/
-		String[][] testdata = {{"M1-11-THEORY", "Monday", "10:00"}, {"M1CCCCCC", "Monday", "10:00"}, {"CCCCCC", "Monday", "10:00"}};
-		for(String[] rowData : testdata) {
+		//String[][] testdata = {{"M1-11-THEORY", "Monday", "10:00"}, {"M1CCCCCC", "Monday", "10:00"}, {"CCCCCC", "Monday", "10:00"}};
+		for(String title : ctrlPresentation.getRestrictionNames()) {
+			String[] rData = ctrlPresentation.getRestrictionInfo(title);
 			JPanel row = new JPanel();
+			
+			JPanel content = new JPanel();
+			content.setLayout(new BorderLayout());
+			content.setOpaque(false);
 			row.setOpaque(true);
 			row.setBackground(Color.white);
-			row.setLayout(new BoxLayout(row, BoxLayout.Y_AXIS));
-			row.setBorder(new CompoundBorder(new LineBorder(Color.decode("#eeeeee"), 4), new EmptyBorder(4, 4, 4, 4)));
+			row.setLayout(new BoxLayout(row, BoxLayout.X_AXIS));
+			//row.setBorder(new CompoundBorder(new LineBorder(Color.decode("#dddddd"), 4), new EmptyBorder(4, 4, 4, 4)));
+			row.setBorder(new CompoundBorder(new LineBorder(Color.decode("#dddddd"), 4), new CompoundBorder(new LineBorder(Color.decode("#6382bf"), 1), new EmptyBorder(4, 4, 4, 4))));
 			JPanel topPanel = new JPanel();
 			topPanel.setLayout(new BorderLayout());
 			topPanel.setOpaque(false);
@@ -97,13 +100,27 @@ public class RestrictionsView extends JDialog {
 			label2.setFont(label1.getFont().deriveFont(Font.PLAIN));
 			bottomPanel.add(label2, BorderLayout.CENTER);
 			
-			row.add(topPanel);
-			row.add(new JSeparator());
-			row.add(bottomPanel);
+			content.add(topPanel, BorderLayout.NORTH);
+			content.add(new JSeparator(SwingConstants.HORIZONTAL), BorderLayout.CENTER);
+			content.add(bottomPanel, BorderLayout.SOUTH);
+			JCheckBox checkbox = new JCheckBox("");
+			checkbox.setOpaque(false);
+			checkbox.setBorder(new EmptyBorder(0, 0, 0, 4));
+			checkbox.setSelected(true);
+			checkbox.addItemListener(new ItemListener() {
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+					//if(checkbox.isSelected());
+				}
+			});
 			
-			label1.setText(((String[]) rowData)[0]);
-			label2.setText(((String[]) rowData)[1] + " - " + ((String[]) rowData)[2]);
-			row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 80));
+			row.add(checkbox);
+			row.add(new JSeparator(SwingConstants.VERTICAL), BorderLayout.CENTER);
+			row.add(content);
+			label1.setText(title);
+			label2.setText(((String[]) rData)[0] + " - " + ((String[]) rData)[1]);
+			row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
+			row.setBackground(Color.decode("#fafafa"));
 			contentPanel.add(row);
 		}
 		
@@ -111,12 +128,14 @@ public class RestrictionsView extends JDialog {
 		bottomRow.setLayout(new BorderLayout());
 		bottomRow.setOpaque(true);
 		bottomRow.setBackground(Color.white);
-		bottomRow.setBorder(new CompoundBorder(new LineBorder(Color.decode("#eeeeee"), 4), new EmptyBorder(4, 4, 4, 4)));
+		bottomRow.setBorder(new CompoundBorder(new LineBorder(Color.decode("#dddddd"), 4), new EmptyBorder(4, 4, 4, 4)));
 		bottomRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
 		JButton btnAdd = new JButton("Add");
+		btnAdd.setOpaque(true);
 		btnAdd.setBorderPainted(true);
 		btnAdd.setFocusPainted(false);
-		btnAdd.setContentAreaFilled(false);
+		btnAdd.setContentAreaFilled(true);
+		btnAdd.setBackground(Color.decode("#fafafa"));
 		bottomRow.add(btnAdd, BorderLayout.CENTER);
 		contentPanel.add(bottomRow);
 		
@@ -124,7 +143,7 @@ public class RestrictionsView extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				ctrlPresentation.switchToNewRestrictionsView();
 			}
 		});
 	}

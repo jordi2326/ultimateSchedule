@@ -21,126 +21,244 @@ import javax.swing.SwingWorker;
 import org.json.simple.parser.ParseException;
 import domain.controllers.CtrlDomain;
 
+/**
+ * @author Carlos
+ *
+ */
 public class CtrlPresentation {
 	
+	/**
+	 * 
+	 */
 	private static CtrlPresentation instance;
 	
+	/**
+	 * 
+	 */
 	private CtrlDomain ctrlDomain;
+	/**
+	 * 
+	 */
 	private MainView mainView;
 	
+	/**
+	 * 
+	 */
 	private SwingWorker<Boolean, Void> task;
+	/**
+	 * 
+	 */
+	/**
+	 * 
+	 */
 	Timer tmr1, tmr2;
 	
+	/**
+	 * 
+	 */
 	private CtrlPresentation() {
 		ctrlDomain = CtrlDomain.getInstance();
 	}
 	
+	/**
+	 * @return
+	 */
 	public static CtrlPresentation getInstance() {
 		if (instance == null)
 			instance = new CtrlPresentation();
 		return instance;
 	}
 	
+	/**
+	 * 
+	 */
 	public void initialize() {
 		mainView = new MainView(this);
 		mainView.setVisible(true);
 	}
 	
+	/**
+	 * @param name
+	 */
 	public void switchToSubjectInfoView(String name) {
 		SubjectInfoView subjectInfoView = new SubjectInfoView(mainView, this, name);
 		subjectInfoView.setVisible(true);
 	}
 	
+	/**
+	 * @param name
+	 */
 	public void switchToGroupInfoView(String name) {
 		GroupInfoView groupInfoView = new GroupInfoView(mainView, name);
 		groupInfoView.setVisible(true);
 	}
 	
+	/**
+	 * @param name
+	 */
 	public void switchToRoomInfoView(String name) {
 		RoomInfoView roomInfoView = new RoomInfoView(mainView, this, name);
 		roomInfoView.setVisible(true);
 	}
 	
+	/**
+	 * 
+	 */
 	public void switchToNewSubjectView() {
 		NewSubjectView newSubjectView = new NewSubjectView(mainView);
 		newSubjectView.setVisible(true);
 	}
 	
+	/**
+	 * @param subjectCode
+	 */
 	public void switchToNewGroupView(String subjectCode) {
 		NewGroupView newGroupView = new NewGroupView(mainView, subjectCode);
 		newGroupView.setVisible(true);
 	}
 	
+	/**
+	 * 
+	 */
 	public void switchToNewRoomView() {
 		NewRoomView newRoomView = new NewRoomView(mainView);
 		newRoomView.setVisible(true);
 	}
 	
+	/**
+	 * 
+	 */
 	public void switchToRestrictionsView() {
 		RestrictionsView restrictionsView = new RestrictionsView(mainView);
 		restrictionsView.setVisible(true);
 	}
 	
+	/**
+	 * 
+	 */
+	public void switchToNewRestrictionsView() {
+		NewRestrictionView newRestrictionsView = new NewRestrictionView();
+		newRestrictionsView.makeVisible();
+	}
+	
+	/**
+	 * @return
+	 */
 	public ArrayList<String[]>[][] getScheduleMatrix(){
 		return ctrlDomain.getScheduleMatrix();
 	}
 	
+	/**
+	 * @param filename
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
 	public boolean importEnvironment(String filename)
 		throws ParseException, IOException {
 		return ctrlDomain.importEnvironment(filename, true);
 	}
 	
+	/**
+	 * @param filename
+	 * @return
+	 * @throws FileNotFoundException
+	 * @throws ParseException
+	 */
 	public boolean importSchedule(String filename)
 		throws FileNotFoundException, ParseException {
 		return ctrlDomain.importSchedule(filename, true);
 	}
 	
+	/**
+	 * @param filename
+	 * @return
+	 * @throws IOException
+	 */
 	public boolean exportSchedule(String filename) throws IOException{
 			return ctrlDomain.exportSchedule(filename, true);
 		}
 	
 	// Getters de totes les coses d'environment
+	/**
+	 * @return
+	 */
 	public Set<String> getRoomNames() {
 		return ctrlDomain.getRoomNames();
 	}
 	
+	/**
+	 * @param room
+	 * @return
+	 */
 	public String[] getRoomInfo(String room) {
 		return ctrlDomain.getRoomInfo(room);
 	}
 	
+	/**
+	 * @return
+	 */
 	public Set<String> getGroupNames() {
 		return ctrlDomain.getGroupNames();
 	}
 	
+	/**
+	 * @param s
+	 * @return
+	 */
 	public Set<String> getGroupsNamesFromSuject(String s) {
 		return ctrlDomain.getGroupsNamesFromSuject(s);
 	}
 	
+	/**
+	 * @param group
+	 * @return
+	 */
 	public String[] getGroupInfo(String group) {
 		return ctrlDomain.getGroupInfo(group);
 	}
 	
+	/**
+	 * @return
+	 */
 	public Set<String> getSubjectNames() {
 		return ctrlDomain.getSubjectNames();
 	}
 	
+	/**
+	 * @param sub
+	 * @return
+	 */
 	public Object[] getSubjectInfo(String sub) {
 		return ctrlDomain.getSubjectInfo(sub);
 	}
 	
+	/**
+	 * @return
+	 */
 	public Set<String> getRestrictionNames() {
 		return ctrlDomain.getRestrictionNames();
 	}
 	
+	/**
+	 * @param res
+	 * @return
+	 */
 	public String[] getRestrictionInfo(String res) {
 		return ctrlDomain.getRestrictionInfo(res);
 	}
 	
 	// Com vols que es vegin a la pantalla
+	/**
+	 * @return
+	 */
 	public Set<String> getRestrictionNamesView() {
 		return ctrlDomain.getRestrictionNamesView();
 	}
 	
+	/**
+	 * 
+	 */
 	public void generateSchedule() {
 		ProgressView progressV  = new ProgressView(mainView);
         task = new SwingWorker<Boolean, Void>(){
@@ -190,6 +308,9 @@ public class CtrlPresentation {
         );
 	}
 
+	/**
+	 * 
+	 */
 	public void stopTask() {
 		task.cancel(true);
 	}
@@ -219,18 +340,46 @@ public class CtrlPresentation {
 		return ctrlDomain.moveLecture(duration, iniDay, fiDay, iniHour, fiHour, iniRoom, fiRoom);
 	}
 
+	/**
+	 * @param inCode
+	 * @param inCapacity
+	 * @param inHasComputers
+	 * @return
+	 */
 	public boolean addRoom(String inCode, Integer inCapacity, Boolean inHasComputers) {
 		return false;
 	}
 
+	/**
+	 * @param code
+	 */
 	public void removeRoom(String code) {
 		
 	}
 
+	/**
+	 * @param inCode
+	 * @param inName
+	 * @param inLevel
+	 * @param arrayList
+	 * @param inCoreqs
+	 * @return
+	 */
 	public boolean addSubject(String inCode, String inName, String inLevel, ArrayList<String> arrayList, ArrayList<String> inCoreqs) {
 		return false;
 	}
 
+	/**
+	 * @param inCode
+	 * @param inNPeople
+	 * @param inParentGroupCode
+	 * @param subjectCode
+	 * @param inNeedsComputers
+	 * @param inType
+	 * @param inDayPeriod
+	 * @param arrayList
+	 * @return
+	 */
 	public boolean addGroup(String inCode, Integer inNPeople, String inParentGroupCode, String subjectCode,
 			Boolean inNeedsComputers, String inType, String inDayPeriod, ArrayList<String> arrayList) {
 		return false;

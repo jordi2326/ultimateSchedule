@@ -171,6 +171,7 @@ public class MainView extends JFrame{
 		
 		btnConfigRestrictions = new JButton("Config. Restrictions");
 		buttonsPanel.add(btnConfigRestrictions);
+		btnConfigRestrictions.setEnabled(environmentLoaded);
 		btnConfigRestrictions.addActionListener(new ActionListener() {
 			@Override	
 			public void actionPerformed(ActionEvent e) {
@@ -426,6 +427,9 @@ public class MainView extends JFrame{
 
 	}
 	
+	/**
+	 * @param name
+	 */
 	private void environmentLoaded(String name) {
 		environmentLoaded = true;
 		scheduleLoaded = false;
@@ -456,8 +460,12 @@ public class MainView extends JFrame{
 		btnLoadSchedule.setEnabled(environmentLoaded);
 		btnGenSchedule.setEnabled(environmentLoaded);
 		btnSaveSchedule.setEnabled(scheduleLoaded);
+		btnConfigRestrictions.setEnabled(environmentLoaded);
 	}
 	
+	/**
+	 * 
+	 */
 	public void reloadSchedule() {
 		scheduleLoaded = true;
 		ArrayList<String[]>[][] data = ctrlPresentation.getScheduleMatrix();
