@@ -15,8 +15,10 @@ import javax.swing.border.EmptyBorder;
 
 public class GroupInfoView extends JDialog {
 	
-	public GroupInfoView(Frame parent, CtrlPresentation ctrlPresentation, String name) {
+	public GroupInfoView(Frame parent, String name) {
 		super(parent, true);
+		
+		CtrlPresentation ctrlPresentation = CtrlPresentation.getInstance();
 		
 		setTitle("Information");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

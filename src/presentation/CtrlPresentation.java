@@ -27,14 +27,12 @@ public class CtrlPresentation {
 	
 	private CtrlDomain ctrlDomain;
 	private MainView mainView;
-	ProgressView progressV;
+	
 	private SwingWorker<Boolean, Void> task;
-	Timer tmr;
+	Timer tmr1, tmr2;
 	
 	private CtrlPresentation() {
 		ctrlDomain = CtrlDomain.getInstance();
-		mainView = new MainView(this);
-		progressV = new ProgressView(mainView, this);
 	}
 	
 	public static CtrlPresentation getInstance() {
@@ -44,26 +42,43 @@ public class CtrlPresentation {
 	}
 	
 	public void initialize() {
+		mainView = new MainView(this);
 		mainView.setVisible(true);
 	}
 	
 	public void switchToSubjectInfoView(String name) {
-		/**SubjectInfoView subjectInfoView = new SubjectInfoView(mainView, this, name);
-		subjectInfoView.setVisible(true);**/
-		EditSubjectView editSubjectView = new EditSubjectView(mainView, this, name);
-		editSubjectView.setVisible(true);
+		SubjectInfoView subjectInfoView = new SubjectInfoView(mainView, this, name);
+		subjectInfoView.setVisible(true);
 	}
 	
 	public void switchToGroupInfoView(String name) {
-		GroupInfoView groupInfoView = new GroupInfoView(mainView, this, name);
+		GroupInfoView groupInfoView = new GroupInfoView(mainView, name);
 		groupInfoView.setVisible(true);
 	}
 	
 	public void switchToRoomInfoView(String name) {
-		/**RoomInfoView roomInfoView = new RoomInfoView(mainView, this, name);
-		roomInfoView.setVisible(true);**/
-		EditRoomView editRoomView = new EditRoomView(mainView, this, name);
-		editRoomView.setVisible(true);
+		RoomInfoView roomInfoView = new RoomInfoView(mainView, this, name);
+		roomInfoView.setVisible(true);
+	}
+	
+	public void switchToNewSubjectView() {
+		NewSubjectView newSubjectView = new NewSubjectView(mainView);
+		newSubjectView.setVisible(true);
+	}
+	
+	public void switchToNewGroupView(String subjectCode) {
+		NewGroupView newGroupView = new NewGroupView(mainView, subjectCode);
+		newGroupView.setVisible(true);
+	}
+	
+	public void switchToNewRoomView() {
+		NewRoomView newRoomView = new NewRoomView(mainView);
+		newRoomView.setVisible(true);
+	}
+	
+	public void switchToRestrictionsView() {
+		RestrictionsView restrictionsView = new RestrictionsView(mainView);
+		restrictionsView.setVisible(true);
 	}
 	
 	public ArrayList<String[]>[][] getScheduleMatrix(){
@@ -127,6 +142,7 @@ public class CtrlPresentation {
 	}
 	
 	public void generateSchedule() {
+		ProgressView progressV  = new ProgressView(mainView);
         task = new SwingWorker<Boolean, Void>(){
         	@Override
 			protected Boolean doInBackground() throws Exception {
@@ -134,13 +150,14 @@ public class CtrlPresentation {
 			}
         	@Override
             public void done() {
-        		tmr.cancel();
+        		tmr1.cancel();
+        		tmr2.cancel();
         		Toolkit.getDefaultToolkit().beep();
         		progressV.setVisible(false);
         		//progressV.dispose();
 				try {
 					if(get()) {
-						mainView.scheduleLoaded();
+						mainView.reloadSchedule();
 						//JOptionPane.showMessageDialog(mainView, "Schedule Generated!", null, JOptionPane.PLAIN_MESSAGE);
 					}else {
 						JOptionPane.showMessageDialog(mainView, "No Valid Schedule Found", null, JOptionPane.WARNING_MESSAGE);
@@ -152,14 +169,24 @@ public class CtrlPresentation {
             }
         };
         task.execute();
-        tmr = new Timer();
-        tmr.schedule(new TimerTask() {
+        tmr1 = new Timer();
+        tmr1.schedule(new TimerTask() {
         	@Override
         	public void run() {
         		progressV.setVisible(true);
         		}
         	},
         	500
+        );
+        tmr2 = new Timer();
+        tmr2.schedule(new TimerTask() {
+        	@Override
+        	public void run() {
+        		stopTask();
+        		JOptionPane.showMessageDialog(mainView, "No Valid Schedule Found", null, JOptionPane.WARNING_MESSAGE);
+        		}
+        	},
+        	30000 //30 seconds
         );
 	}
 
@@ -176,5 +203,36 @@ public class CtrlPresentation {
 	*/
 	public boolean removeLecture(int duration, String room, int day, int hour) {
 		return ctrlDomain.removeLecture(duration, room, day, hour);
+	}
+	
+	/** Mou un grup de dia, aula i hora determinats
+	*   @param duration Duració del grup.
+	*	@param iniDay		Dia on està actualment el grup.
+	*	@param fiDay		Dia on anirà el grup si es pot.
+	*	@param iniHour		Hora on està actualment el grup.
+	*	@param fiHour		Hora on anirà el grup si es pot.
+	*	@param iniRoom		Aula on està actualment el grup.
+	*	@param fiRoom		Aula on anirà el grup si es pot.
+	*	@return True si s'ha pogut moure el grup. Fals en cas contrari.
+	*/
+	public boolean moveLecture(int duration, int iniDay, int fiDay, int iniHour, int fiHour, String iniRoom, String fiRoom) {
+		return ctrlDomain.moveLecture(duration, iniDay, fiDay, iniHour, fiHour, iniRoom, fiRoom);
+	}
+
+	public boolean addRoom(String inCode, Integer inCapacity, Boolean inHasComputers) {
+		return false;
+	}
+
+	public void removeRoom(String code) {
+		
+	}
+
+	public boolean addSubject(String inCode, String inName, String inLevel, ArrayList<String> arrayList, ArrayList<String> inCoreqs) {
+		return false;
+	}
+
+	public boolean addGroup(String inCode, Integer inNPeople, String inParentGroupCode, String subjectCode,
+			Boolean inNeedsComputers, String inType, String inDayPeriod, ArrayList<String> arrayList) {
+		return false;
 	}
 }

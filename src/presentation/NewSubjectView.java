@@ -1,37 +1,43 @@
 package presentation;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 
 public class NewSubjectView extends JDialog {
 	
-	public NewSubjectView(Frame parent, CtrlPresentation ctrlPresentation, String name) {
+	public NewSubjectView(Frame parent) {
 		super(parent, true);
 		
-		setTitle("Information");
+		CtrlPresentation ctrlPresentation = CtrlPresentation.getInstance();
+		
+		setTitle("New Subject");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(400, 200);
 		setMinimumSize(new Dimension(400, 200));
-		setMaximumSize(new Dimension(800, 400));
-		Object[] data = ctrlPresentation.getSubjectInfo(name);
-		
 		
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -45,67 +51,102 @@ public class NewSubjectView extends JDialog {
 	    contentPanel.add(gridPanel, BorderLayout.CENTER);
 	    constraints.anchor = GridBagConstraints.PAGE_START;
 	    constraints.ipady = 5;
-  
+		    
 	    constraints.gridy = 0;
-	    gridPanel.add(new JLabel("Code:  ", SwingConstants.RIGHT), constraints);
-	    JTextField txtfield = new JTextField();
-	    txtfield.setFont(txtfield.getFont().deriveFont(Font.PLAIN));
-	    gridPanel.add(txtfield, constraints);
+	    gridPanel.add(new JLabel("Name:  ", SwingConstants.RIGHT), constraints);
+	    JTextField tfName = new JTextField();
+	    gridPanel.add(tfName, constraints);
 	    
 	    constraints.gridy = 1;
-	    gridPanel.add(new JLabel("Name:  ", SwingConstants.RIGHT), constraints);
-	    txtfield = new JTextField();
-	    txtfield.setFont(txtfield.getFont().deriveFont(Font.PLAIN));
-	    gridPanel.add(txtfield, constraints);
+	    gridPanel.add(new JLabel("Code:  ", SwingConstants.RIGHT), constraints);
+	    JTextField tfCode = new JTextField(6);
+	    tfCode.setBorder(BorderFactory.createCompoundBorder(new MatteBorder(0, 0, 0, 100, getParent().getBackground()), tfCode.getBorder()));
+	    gridPanel.add(tfCode, constraints);
 
 	    constraints.gridy = 2;
 	    gridPanel.add(new JLabel("Level:  ", SwingConstants.RIGHT), constraints);
-	    txtfield = new JTextField((String) data[2]);
-	    txtfield.setFont(txtfield.getFont().deriveFont(Font.PLAIN));
-	    gridPanel.add(txtfield, constraints);
+	    JTextField tfLevel = new JTextField();
+	    tfLevel.setBorder(BorderFactory.createCompoundBorder(new MatteBorder(0, 0, 0, 100, getParent().getBackground()), tfLevel.getBorder()));
+	    gridPanel.add(tfLevel, constraints);
 	    
-	    /**constraints.gridy = 3;
+	    constraints.gridy = 3;
 	    gridPanel.add(new JLabel("Corequisits:  ", SwingConstants.RIGHT), constraints);
-	    ArrayList<String> coreqs = (ArrayList<String>) data[4];
-	    String tmp = "-";
-	    if(!coreqs.isEmpty()) {
-	    	tmp = "<html>";
-		    for(String s : coreqs)
-		    	tmp += s + "<br>"; 
-		    tmp += "</html>";
-	    }
-	    txtfield = new JTextField(tmp);
-	    txtfield.setFont(txtfield.getFont().deriveFont(Font.PLAIN));
-	    gridPanel.add(txtfield, constraints);**/
+	    JButton addCoreq = new JButton(" + ");
+	    JButton rmvCoreq = new JButton(" - ");
+	    rmvCoreq.setVisible(false);
+	    JPanel panelCoreqs = new JPanel();
+	    ArrayList<String> inCoreqs = new ArrayList<String>();
+	    panelCoreqs.setLayout(new BoxLayout(panelCoreqs, BoxLayout.Y_AXIS));
+	    panelCoreqs.setBorder(new EmptyBorder(2, 0, 0, 0));
+	    //addCoreq.setBorder(BorderFactory.createCompoundBorder(new MatteBorder(0, 0, 0, 100, getParent().getBackground()), tfCode.getBorder()));
+	    addCoreq.setMargin(new Insets(0, 0, 0, 0));
+	    addCoreq.setBorderPainted(true);
+	    addCoreq.setFocusPainted(false);
+	    addCoreq.setContentAreaFilled(false);
+	    addCoreq.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<String> subjectsToSelect = new ArrayList<>(ctrlPresentation.getSubjectNames());
+				subjectsToSelect.removeAll(inCoreqs);
+				String selected = (String) JOptionPane.showInputDialog(NewSubjectView.this, 
+						"",
+						"Add Corequisit",
+				        JOptionPane.QUESTION_MESSAGE, 
+				        null, 
+				        subjectsToSelect.toArray(), 
+						null);
+				if(selected != null && !selected.isEmpty() && !inCoreqs.contains(selected)) {
+					inCoreqs.add(selected);
+					panelCoreqs.add(new JLabel(selected), panelCoreqs.getComponentCount()-1);
+					panelCoreqs.revalidate();
+					panelCoreqs.repaint();
+					rmvCoreq.setVisible(true);
+					pack();
+				}
+				
+			}
+		});
+	    rmvCoreq.setMargin(new Insets(0, 0, 0, 0));
+	    rmvCoreq.setBorderPainted(true);
+	    rmvCoreq.setFocusPainted(false);
+	    rmvCoreq.setContentAreaFilled(false);
+	    rmvCoreq.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				inCoreqs.remove(inCoreqs.size()-1);
+				panelCoreqs.remove(panelCoreqs.getComponentCount()-2);
+				panelCoreqs.revalidate();
+				panelCoreqs.repaint();
+				if(inCoreqs.isEmpty()) rmvCoreq.setVisible(false);
+				pack();
+				
+			}
+		});
+	    JPanel btnsCoreq = new JPanel();
+	    btnsCoreq.setLayout(new BoxLayout(btnsCoreq, BoxLayout.X_AXIS));
+	    btnsCoreq.setAlignmentX(JScrollPane.LEFT_ALIGNMENT);
+	    btnsCoreq.add(addCoreq);
+	    btnsCoreq.add(rmvCoreq);
+	    panelCoreqs.add(btnsCoreq);
+	    gridPanel.add(panelCoreqs, constraints);
 	    
-	    /**constraints.gridy = 4;
-	    gridPanel.add(new JLabel("Groups:  ", SwingConstants.RIGHT), constraints);
-	    ArrayList<String> groups = (ArrayList<String>) data[3];
-	    tmp = "-";
-	    if(!groups.isEmpty()) {
-	    	tmp = "<html>";
-		    for(String s : groups)
-		    	tmp += s + "<br>"; 
-		    tmp += "</html>";
-	    }
-	    JLabel iLabel = new JLabel(tmp);
-	    iLabel.setFont(iLabel.getFont().deriveFont(Font.PLAIN));
-	    gridPanel.add(iLabel, constraints);**/
-	    
-	    
-	    JButton btnOk = new JButton("Ok");
+	    JButton btnAdd = new JButton("Add");
 	    JButton btnCancel = new JButton("Cancel");
 	    
 	    JPanel bottomPanel = new JPanel();
 	    bottomPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 	    bottomPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-	    bottomPanel.add(btnOk);
+	    bottomPanel.add(btnAdd);
 	    bottomPanel.add(btnCancel);
 	    
-	    btnOk.addActionListener(new ActionListener() {
+	    btnAdd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				String inCode = tfCode.getText();
+				String inName = tfName.getText();
+				String inLevel = tfLevel.getText();
+				if(!ctrlPresentation.addSubject(inCode, inName, inLevel, new ArrayList<>(), inCoreqs)) 
+					JOptionPane.showMessageDialog(NewSubjectView.this, "Subject data is not valid", "", JOptionPane.WARNING_MESSAGE);
 			}
 		});
 
@@ -113,11 +154,11 @@ public class NewSubjectView extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
+				dispose();
 			}
 		});
 	    
-	    contentPanel.add(bottomPanel, BorderLayout.SOUTH);
-	    
+	    contentPanel.add(bottomPanel, BorderLayout.SOUTH); 
 	    
 	    pack();
 	    setLocationRelativeTo(null);

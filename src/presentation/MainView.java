@@ -131,7 +131,7 @@ public class MainView extends JFrame{
 				if (!selected.equals(path)) {	//user selected a file
 					try {
 						ctrlPresentation.importSchedule(selected.getAbsolutePath());
-						scheduleLoaded();
+						reloadSchedule();
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
@@ -174,7 +174,9 @@ public class MainView extends JFrame{
 		btnConfigRestrictions.addActionListener(new ActionListener() {
 			@Override	
 			public void actionPerformed(ActionEvent e) {
-				//ctrlPresentation.generateSchedule();
+				ctrlPresentation.switchToRestrictionsView();
+				/**SDHRestrictionView rView = new SDHRestrictionView("", 0, 0);
+				rView.makeVisible();**/
 			}
 		});
 		
@@ -202,6 +204,8 @@ public class MainView extends JFrame{
 			        removeLec.addActionListener(new ActionListener() {
 			            @Override
 			            public void actionPerformed(ActionEvent e) {
+			            	ctrlPresentation.removeLecture(duration, value[1], col, row);
+			            	reloadSchedule();
 			            }
 			        });
 			        
@@ -256,25 +260,50 @@ public class MainView extends JFrame{
 	   		        TreePath selPath = treeGroups.getPathForLocation(e.getX(), e.getY());
 	   		        treeGroups.clearSelection();
 	   		        treeGroups.setSelectionPath(selPath);
-	   		        if(selRow != -1 && !(((DefaultMutableTreeNode) selPath.getLastPathComponent()).isRoot())) {
+	   		        if(selRow != -1)  {
 	   		        	final JPopupMenu popupMenu = new JPopupMenu();
-	   		        	JMenuItem info = new JMenuItem("View Info");
-	   		        	if(((DefaultMutableTreeNode) selPath.getLastPathComponent()).isLeaf()){ //is group
-	   		        		info.addActionListener(new ActionListener() {
+	   		        	if(((DefaultMutableTreeNode) selPath.getLastPathComponent()).isRoot()){
+	   		        		popupMenu.add("Add New Subject").addActionListener(new ActionListener() {
 			   		            @Override
 			   		            public void actionPerformed(ActionEvent e) {
-			   		            	ctrlPresentation.switchToGroupInfoView((String) ((DefaultMutableTreeNode) selPath.getLastPathComponent()).getUserObject());
+			   		            	ctrlPresentation.switchToNewSubjectView();
 			   		            }
 			   		        });
-	   		        	}else{ //is subject
-	   		        		info.addActionListener(new ActionListener() {
-			   		            @Override
-			   		            public void actionPerformed(ActionEvent e) {
-			   		            	ctrlPresentation.switchToSubjectInfoView((String) ((DefaultMutableTreeNode) selPath.getLastPathComponent()).getUserObject());
-			   		            }
-			   		        });
-	   		        	}
-		   		        popupMenu.add(info);
+						}else {
+		   		        	String code = (String) ((DefaultMutableTreeNode) selPath.getLastPathComponent()).getUserObject();
+		   		        	JMenuItem info = new JMenuItem("View More Info");
+		   		        	popupMenu.add(info);
+		   		        	popupMenu.addSeparator();
+		   		        	if(((DefaultMutableTreeNode) selPath.getLastPathComponent()).isLeaf()){ //is group
+		   		        		info.addActionListener(new ActionListener() {
+				   		            @Override
+				   		            public void actionPerformed(ActionEvent e) {
+				   		            	ctrlPresentation.switchToGroupInfoView(code);
+				   		            }
+				   		        });
+		   		        		JMenuItem removeGroup = new JMenuItem("Remove Group");
+		   		        		popupMenu.add(removeGroup);
+		   		        	}else{ //is subject
+		   		        		info.addActionListener(new ActionListener() {
+				   		            @Override
+				   		            public void actionPerformed(ActionEvent e) {
+				   		            	ctrlPresentation.switchToSubjectInfoView(code);
+				   		            }
+				   		        });
+		   		        		popupMenu.add("Add New Group").addActionListener(new ActionListener() {
+				   		            @Override
+				   		            public void actionPerformed(ActionEvent e) {
+				   		            	ctrlPresentation.switchToNewGroupView(code);
+				   		            }
+				   		        });
+		   		        		popupMenu.add("Remove Subject").addActionListener(new ActionListener() {
+				   		            @Override
+				   		            public void actionPerformed(ActionEvent e) {
+				   		            	//ctrlPresentation.switchToRoomInfoView((String) ((DefaultMutableTreeNode) selPath.getLastPathComponent()).getUserObject());
+				   		            }
+				   		        });
+		   		        	}
+						}
 	   		        	popupMenu.show(e.getComponent(), e.getX(), e.getY());
 	   		        }
                 }
@@ -304,17 +333,35 @@ public class MainView extends JFrame{
 	   		        TreePath selPath = treeRooms.getPathForLocation(e.getX(), e.getY());
 	   		        treeRooms.clearSelection();
 	   		        treeRooms.setSelectionPath(selPath);
-	   		        if(selRow != -1 && ((DefaultMutableTreeNode) selPath.getLastPathComponent()).isLeaf()) {
+	   		        if(selRow != -1) {
 	   		        	final JPopupMenu popupMenu = new JPopupMenu();
-		   		         JMenuItem infoRoom = new JMenuItem("View Info");
-		   		         infoRoom.addActionListener(new ActionListener() {
-		   		             @Override
-		   		             public void actionPerformed(ActionEvent e) {
-		   		            	 System.out.println((String) ((DefaultMutableTreeNode) selPath.getLastPathComponent()).getUserObject());
-		   		            	 ctrlPresentation.switchToRoomInfoView((String) ((DefaultMutableTreeNode) selPath.getLastPathComponent()).getUserObject());
-		   		             }
-		   		         });	   		         
-		   		        popupMenu.add(infoRoom);
+	   		        	if(((DefaultMutableTreeNode) selPath.getLastPathComponent()).isRoot()){
+		   		        	popupMenu.add("Add New Room").addActionListener(new ActionListener() {
+			   		            @Override
+			   		            public void actionPerformed(ActionEvent e) {
+			   		            	ctrlPresentation.switchToNewRoomView();
+			   		            }
+			   		        });
+						}else {
+							String code = (String) ((DefaultMutableTreeNode) selPath.getLastPathComponent()).getUserObject();
+			   		        popupMenu.add("View More Info").addActionListener(new ActionListener() {
+			   		            @Override
+			   		            public void actionPerformed(ActionEvent e) {
+			   		            	ctrlPresentation.switchToRoomInfoView(code);
+			   		            }
+			   		        });
+			   		        popupMenu.addSeparator();
+			   		        popupMenu.add("Delete Room").addActionListener(new ActionListener() {
+			   		            @Override
+			   		            public void actionPerformed(ActionEvent e) {
+			   		            	int result = JOptionPane.showConfirmDialog(MainView.this, "Are you sure you want to delete '" + code + "'?\nThis action cannot be undone.", "Delete Room", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+			   		            	if(result==JOptionPane.OK_OPTION) {
+			   		            		ctrlPresentation.removeRoom(code);
+			   		            	}
+			   		            	
+			   		            }
+			   		        });
+						}
 	   		        	popupMenu.show(e.getComponent(), e.getX(), e.getY());
 	   		        }
                  }
@@ -411,7 +458,7 @@ public class MainView extends JFrame{
 		btnSaveSchedule.setEnabled(scheduleLoaded);
 	}
 	
-	public void scheduleLoaded() {
+	public void reloadSchedule() {
 		scheduleLoaded = true;
 		ArrayList<String[]>[][] data = ctrlPresentation.getScheduleMatrix();
 		table.changeData(data);

@@ -18,8 +18,11 @@ public class ProgressView extends JDialog {
   private JProgressBar progressBar;
   private JButton startButton;
 
-  public ProgressView(Frame parent, CtrlPresentation ctrlPresentation) {
+  public ProgressView(Frame parent) {
 	super(parent, true);
+	
+	CtrlPresentation ctrlPresentation = CtrlPresentation.getInstance();
+	
     setTitle("Working...");
     setMinimumSize(new Dimension(300, 100));
     BorderLayout layout = new BorderLayout();
