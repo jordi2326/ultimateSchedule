@@ -40,7 +40,7 @@ public class MoveLectureView {
 	         System.out.println("x value: " + ((JComboBox<String>) message[4]).getSelectedItem());
 	         System.out.println("y value: " + ((JComboBox<String>) message[6]).getSelectedItem());
 	         System.out.println("z value: " + ((JComboBox<String>) message[8]).getSelectedItem());
-	         ctrlPresentation.moveLecture(duration, iniDay, ((JComboBox<String>) message[4]).getSelectedIndex(), iniHour, ((JComboBox<String>) message[6]).getSelectedIndex(), iniRoom, (String) ((JComboBox<String>) message[4]).getSelectedItem());
+	         ctrlPresentation.moveLecture(duration, iniDay, ((JComboBox<String>) message[4]).getSelectedIndex(), iniHour, ((JComboBox<String>) message[6]).getSelectedIndex(), iniRoom, (String) ((JComboBox<String>) message[8]).getSelectedItem());
 	    }
 	}
 	

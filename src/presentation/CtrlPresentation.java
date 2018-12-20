@@ -347,7 +347,7 @@ public class CtrlPresentation {
 	 * @return
 	 */
 	public boolean addRoom(String inCode, Integer inCapacity, Boolean inHasComputers) {
-		return false;
+		return ctrlDomain.addRoom(inCode, inCapacity, inHasComputers);
 	}
 
 	/**
@@ -365,9 +365,18 @@ public class CtrlPresentation {
 	 * @param inCoreqs
 	 * @return
 	 */
-	public boolean addSubject(String inCode, String inName, String inLevel, ArrayList<String> arrayList, ArrayList<String> inCoreqs) {
-		return false;
+	public boolean addSubject(String inCode, String inName, String inLevel,  ArrayList<String> inCoreqs) {
+		return ctrlDomain.addSubject(inCode, inName, inLevel, inCoreqs);
 	}
+	
+	/**
+	 * @param name
+	 * @return
+	 */
+	public boolean removeSubject(String name) {
+		return ctrlDomain.removeSubject(name);
+	}
+	
 
 	/**
 	 * @param inCode

@@ -43,6 +43,11 @@ public class CtrlDomain {
 	*/
 	private Schedule schedule;
 	
+	/** Escenari
+	 * 
+	 */
+	private Environment environment;
+	
 	/*
 	public static void main(String[] args) throws Throwable, IOException {
 		CtrlDomain cd = CtrlDomain.getInstance();
@@ -239,14 +244,7 @@ public class CtrlDomain {
 			env.addUnaryRestriction(g.toString(), dpr);
   
         	}
-        	Subject s = new Subject(
-				scode,
-				(String) subject.get("name"),
-				(String) subject.get("level"),
-				groupsToString,
-				(ArrayList<String>) subject.get("coreqs")
-    			);
-        	env.addSubject(s);
+        	env.addSubject(scode, (String) subject.get("name"), (String) subject.get("level"), groupsToString, (ArrayList<String>) subject.get("coreqs"));
         }
         // getting rooms 
         JSONArray jsonRooms = (JSONArray) jo.get("rooms");
@@ -254,13 +252,8 @@ public class CtrlDomain {
         Iterator itr3 = jsonRooms.iterator(); 
         while (itr3.hasNext()) {
         	JSONObject room = (JSONObject) itr3.next();
-        	Room r = new Room(
-        			(String) room.get("code"),
-        			((Long) room.get("capacity")).intValue(),
-        			(Boolean) room.get("hasComputers")
-        			);
         	//rooms.put(r.toString(), r);
-        	env.addRoom(r);
+        	env.addRoom((String) room.get("code"), ((Long) room.get("capacity")).intValue(), (Boolean) room.get("hasComputers"));
         }
         
         // getting subjects 
@@ -391,6 +384,7 @@ public class CtrlDomain {
 	public ArrayList<String[]>[][] getScheduleMatrix() {
 		ArrayList<String[]>[][] data = new ArrayList[12][5];
 		for(Entry<String, String[][]> d : schedule.getSchedule().entrySet()) {
+			System.out.println(d.getKey()+" "+d.getValue()[0][0]+" "+d.getValue()[0][1]);
 			String[][] matrix = d.getValue();
 			for (int i = 0; i < matrix[0].length; i++) {
                 for (int j = 0; j < matrix.length; j++) {
@@ -601,22 +595,32 @@ public class CtrlDomain {
 			return true;
 		}
 		
-		public boolean validateAllRestrictions(String lecture, int day, int hour, String room, int duration) {
+		public boolean validateAllRestrictions(String lecture, int day, int hour, String room, int duration) { // On ha d'anar
 			Environment env = Environment.getInstance();
-			
+			System.out.println(lecture);
+			String g = env.getLectureGroup(lecture);
 			Map<String, String[][]> sche = schedule.getSchedule();
 			
-			for (String[][] r : sche.values()) {
-				String group = env.getLectureGroup(lecture);
+			//String g, String restr, String room, int day, int hour, String lecture, Integer d, Integer h, String r, String l
+			
+			for (String r : sche.keySet()) { // Restriccions nàries
+				// Per cada room
+				String[][] rm = sche.get(r);
+						//env.getLectureGroup(lecture);
 				
-				
-				
-				for (String restr : env.getGroupNaryRestrictions(lecture)) {
-					if (!env.validateGroupNaryRestriction(group, restr, room, day, hour, lecture, day, h, r, l)) return false;
+				for (int i = 0; i < 12; i++) {
+					String groupCompare = rm[i][day];
+					// Per cada hora
+					if (groupCompare != null) {
+						for (String restr : env.getGroupNaryRestrictions(lecture)) {
+							// Coses que estàz intentant inserir     |      Coses amb qui ho compares
+							if (!env.validateGroupNaryRestriction(g, restr, room, day, hour, lecture, day, i, r, groupCompare)) return false;
+						}
+					}
 				}
 			}
 			
-			for (String restr : env.getGroupUnaryRestrictions(lecture)) {
+			for (String restr : env.getGroupUnaryRestrictions(lecture)) { // Restriccions unàries
 				if (!env.validateGroupUnaryRestriction(lecture, room, day, hour, duration)) return false;
 			}
 			
@@ -634,7 +638,7 @@ public class CtrlDomain {
 		*	@return True si s'ha pogut moure el grup. Fals en cas contrari.
 		*/
 		public boolean moveLecture(int duration, int iniDay, int fiDay, int iniHour, int fiHour, String iniRoom, String fiRoom) {
-			String lecture = schedule.getSchedule().get(fiRoom)[fiDay][fiHour];
+			String lecture = schedule.getSchedule().get(fiRoom)[iniDay][iniHour];
 			
 			// Eliminar lecture
 			boolean removed = removeLecture(duration, iniRoom, iniDay, iniHour);
@@ -653,5 +657,37 @@ public class CtrlDomain {
 					return false;
 				}
 			} else return false;
+		}
+		
+		/**
+		 * @param inCode
+		 * @param inName
+		 * @param inLevel
+		 * @param arrayList
+		 * @param inCoreqs
+		 * @return
+		 */
+		public boolean addSubject(String inCode, String inName, String inLevel, ArrayList<String> inCoreqs) {
+			if (inCode == null || inCode.isEmpty() || inName == null || inName.isEmpty() || inLevel == null || inLevel.isEmpty()) return false;
+			return environment.getInstance().addSubject(inCode, inName, inLevel, new ArrayList(), inCoreqs);
+		}
+		
+		/**
+		 * @param name
+		 * @return
+		 */
+		public boolean removeSubject(String name) {
+			return environment.removeSubject(name);
+		}
+		
+		/**
+		 * @param inCode
+		 * @param inCapacity
+		 * @param inHasComputers
+		 * @return
+		 */
+		public boolean addRoom(String inCode, Integer inCapacity, Boolean inHasComputers) {
+			if (inCode == null || inCode.isEmpty()) return false;
+			return environment.getInstance().addRoom(inCode, inCapacity, inHasComputers);
 		}
 }

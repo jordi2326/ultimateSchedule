@@ -207,8 +207,32 @@ public class Environment {
 	
 	/////////////// SUBJECTS //////////////////////////////
 	
-	public void addSubject(Subject s) {
-		subjects.put(s.toString(), s);
+	public boolean addSubject(String inCode, String inName, String inLevel, ArrayList<String> groups, ArrayList<String> inCoreqs) {
+		if (!subjects.containsKey(inCode)) {
+			Subject newSub = new Subject(inCode, inName, inLevel, groups, inCoreqs);
+			
+			subjects.put(inCode, newSub);
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * @param name
+	 * @return
+	 */
+	public boolean removeSubject(String name) {
+		// Pre: el Subject amb nom "name" existeix
+		Subject sub = subjects.get(name);
+		
+		for (String group : sub.getGroups()) {
+			for (String lecture : groups.get(group).getLectures()) {
+				lectures.remove(lecture);
+			}
+			groups.remove(group);
+		}
+		subjects.remove(name);
+		return true;
 	}
 	
 	public String getSubjectCode(String s) {
@@ -255,8 +279,15 @@ public class Environment {
 	
 	/////////////// ROOM //////////////////////////////
 	
-	public void addRoom(Room r) {
-		rooms.put(r.toString(), r);
+	public boolean addRoom(String inCode, Integer inCapacity, Boolean inHasComputers) {
+		if (!rooms.containsKey(inCode)) {
+			Room r = new Room(inCode, inCapacity, inHasComputers);
+			rooms.put(inCode, r);
+			
+			return true;
+		}
+
+		return false;
 	}
 	
 	public String getRoomCode(String r) {
