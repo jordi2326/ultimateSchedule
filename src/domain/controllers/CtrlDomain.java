@@ -658,12 +658,12 @@ public class CtrlDomain {
 		 * @param inCoreqs
 		 * @return
 		 */
-		public boolean addSubject(String inCode, String inName, String inLevel,  ArrayList<String> inCoreqs) {
+		public boolean addSubject(String inCode, String inName, String inLevel, ArrayList<String> inCoreqs) {
 			if (inCode == null || inCode.isEmpty() || inName == null || inName.isEmpty() || inLevel == null || inLevel.isEmpty()) return false;
 			return environment.getInstance().addSubject(inCode, inName, inLevel, new ArrayList(), inCoreqs);
 		}
 		
 		public boolean removeSubject(String name) {
-			return true;
+			return environment.removeSubject(name);
 		}
 }

@@ -217,6 +217,20 @@ public class Environment {
 		return false;
 	}
 	
+	public boolean removeSubject(String name) {
+		// Pre: el Subject amb nom "name" existeix
+		Subject sub = subjects.get(name);
+		
+		for (String group : sub.getGroups()) {
+			for (String lecture : groups.get(group).getLectures()) {
+				lectures.remove(lecture);
+			}
+			groups.remove(group);
+		}
+		subjects.remove(name);
+		return true;
+	}
+	
 	public String getSubjectCode(String s) {
 		return subjects.get(s).getCode();
 	}
