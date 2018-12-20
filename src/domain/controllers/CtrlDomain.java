@@ -659,7 +659,6 @@ public class CtrlDomain {
 		 * @return
 		 */
 		public boolean addSubject(String inCode, String inName, String inLevel,  ArrayList<String> inCoreqs) {
-			System.out.println(inCode);
 			if (inCode == null || inCode.isEmpty() || inName == null || inName.isEmpty() || inLevel == null || inLevel.isEmpty()) return false;
 			return environment.getInstance().addSubject(inCode, inName, inLevel, new ArrayList(), inCoreqs);
 		}
