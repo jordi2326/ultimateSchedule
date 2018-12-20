@@ -369,6 +369,10 @@ public class CtrlPresentation {
 		return ctrlDomain.addSubject(inCode, inName, inLevel, inCoreqs);
 	}
 	
+	/**
+	 * @param name
+	 * @return
+	 */
 	public boolean removeSubject(String name) {
 		return ctrlDomain.removeSubject(name);
 	}

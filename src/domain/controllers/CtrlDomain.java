@@ -663,6 +663,10 @@ public class CtrlDomain {
 			return environment.getInstance().addSubject(inCode, inName, inLevel, new ArrayList(), inCoreqs);
 		}
 		
+		/**
+		 * @param name
+		 * @return
+		 */
 		public boolean removeSubject(String name) {
 			return environment.removeSubject(name);
 		}

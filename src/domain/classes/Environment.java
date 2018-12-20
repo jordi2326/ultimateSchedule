@@ -217,6 +217,10 @@ public class Environment {
 		return false;
 	}
 	
+	/**
+	 * @param name
+	 * @return
+	 */
 	public boolean removeSubject(String name) {
 		// Pre: el Subject amb nom "name" existeix
 		Subject sub = subjects.get(name);
