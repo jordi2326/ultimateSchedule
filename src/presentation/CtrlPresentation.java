@@ -365,8 +365,8 @@ public class CtrlPresentation {
 	 * @param inCoreqs
 	 * @return
 	 */
-	public boolean addSubject(String inCode, String inName, String inLevel, ArrayList<String> arrayList, ArrayList<String> inCoreqs) {
-		return false;
+	public boolean addSubject(String inCode, String inName, String inLevel,  ArrayList<String> inCoreqs) {
+		return ctrlDomain.addSubject(inCode, inName, inLevel, inCoreqs);
 	}
 
 	/**

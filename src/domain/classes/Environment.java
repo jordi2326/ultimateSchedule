@@ -207,8 +207,12 @@ public class Environment {
 	
 	/////////////// SUBJECTS //////////////////////////////
 	
-	public void addSubject(Subject s) {
-		subjects.put(s.toString(), s);
+	public boolean addSubject(Subject s) {
+		if (!subjects.containsKey(s.toString())) {
+			subjects.put(s.toString(), s);
+			return true;
+		}
+		return false;
 	}
 	
 	public String getSubjectCode(String s) {

@@ -42,6 +42,11 @@ public class CtrlDomain {
 	*/
 	private Schedule schedule;
 	
+	/** Escenari
+	 * 
+	 */
+	private Environment environment;
+	
 	/*
 	public static void main(String[] args) throws Throwable, IOException {
 		CtrlDomain cd = CtrlDomain.getInstance();
@@ -650,5 +655,21 @@ public class CtrlDomain {
 					return false;
 				}
 			} else return false;
+		}
+		
+		/**
+		 * @param inCode
+		 * @param inName
+		 * @param inLevel
+		 * @param arrayList
+		 * @param inCoreqs
+		 * @return
+		 */
+		public boolean addSubject(String inCode, String inName, String inLevel,  ArrayList<String> inCoreqs) {
+			ArrayList<String> groups = new ArrayList<String>();
+			
+			Subject newSub = new Subject(inCode, inName, inLevel, groups, inCoreqs);
+			
+			return environment.getInstance().addSubject(newSub);
 		}
 }
