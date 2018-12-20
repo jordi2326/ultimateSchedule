@@ -676,4 +676,12 @@ public class CtrlDomain {
 			if (inCode == null || inCode.isEmpty()) return false;
 			return environment.getInstance().addRoom(inCode, inCapacity, inHasComputers);
 		}
+		
+		/**
+		 * @param code
+		 * @return
+		 */
+		public boolean removeRoom(String code) {
+			return environment.getInstance().removeRoom(code);
+		}
 }

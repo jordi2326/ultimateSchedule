@@ -353,8 +353,8 @@ public class CtrlPresentation {
 	/**
 	 * @param code
 	 */
-	public void removeRoom(String code) {
-		
+	public boolean removeRoom(String code) {
+		return ctrlDomain.removeRoom(code);
 	}
 
 	/**

@@ -290,6 +290,15 @@ public class Environment {
 		return false;
 	}
 	
+	/**
+	 * @param code
+	 * @return
+	 */
+	public boolean removeRoom(String code) {
+		rooms.remove(code);
+		return true;
+	}
+	
 	public String getRoomCode(String r) {
 		return rooms.get(r).getCode();
 	}
