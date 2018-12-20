@@ -147,6 +147,11 @@ public class NewSubjectView extends JDialog {
 				String inLevel = tfLevel.getText();
 				if(!ctrlPresentation.addSubject(inCode, inName, inLevel, inCoreqs)) 
 					JOptionPane.showMessageDialog(NewSubjectView.this, "Subject data is not valid", "", JOptionPane.WARNING_MESSAGE);
+				else{
+					ctrlPresentation.subjectAdded(inName);
+					setVisible(false);
+					dispose();
+				}
 			}
 		});
 

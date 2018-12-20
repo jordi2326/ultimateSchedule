@@ -403,17 +403,19 @@ public class CtrlDomain {
 	public ArrayList<String[]>[][] getScheduleMatrix() {
 		ArrayList<String[]>[][] data = new ArrayList[12][5];
 		for(Entry<String, String[][]> d : schedule.getSchedule().entrySet()) {
-			System.out.println(d.getKey()+" "+d.getValue()[0][0]+" "+d.getValue()[0][1]);
 			String[][] matrix = d.getValue();
 			for (int i = 0; i < matrix[0].length; i++) {
                 for (int j = 0; j < matrix.length; j++) {
                 	if(data[i][j]==null) data[i][j] = new ArrayList<String[]>();
-                	if(matrix[j][i]!=null && !matrix[j][i].isEmpty()) data[i][j].add(new String[]{matrix[j][i], d.getKey()});
+                	if(matrix[j][i]!=null && !matrix[j][i].isEmpty()) data[i][j].add(new String[]{getLectureGroup(matrix[j][i]), d.getKey(), matrix[j][i]});
                 }
             }
-		}
-		
+		}		
 		return data;
+	}
+	
+	public String getLectureGroup(String lecture){
+		return environment.getInstance().getLectureGroup(lecture);
 	}
 	
 	// Funcions per comunicar-se amb la capa de presentaci�

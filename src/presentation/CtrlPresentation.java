@@ -402,4 +402,8 @@ public class CtrlPresentation {
 	public boolean removeGroup(String name) {
 		return ctrlDomain.removeGroup(name);
 	}
+	
+	public void subjectAdded(String name) {
+		mainView.subjectAdded(name);
+	}
 }

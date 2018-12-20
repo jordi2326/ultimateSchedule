@@ -15,6 +15,7 @@ import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.event.EventListenerList;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
@@ -91,6 +92,11 @@ public class JCheckBoxTree extends JTree {
         super.setModel(newModel);
         resetCheckingState();
     }
+    
+    public void setModelUpdated(DefaultTreeModel newModel, DefaultMutableTreeNode node) {
+    	super.setModel(newModel);
+		addSubtreeToCheckingStateTracking(node);
+	}
 
     // New method that returns only the checked paths (totally ignores original "selection" mechanism)
     public TreePath[] getCheckedPaths() {
