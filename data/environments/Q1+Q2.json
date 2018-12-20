@@ -1561,5 +1561,17 @@
               }
           ] 
       }
-    ]
+    ], 
+    "restrictions": 
+      [
+        {
+          "name": "SpecificDayOrHourRestriction",
+          "info":
+          {
+            "group": "PRO2-10-THEORY",
+            "day": 1,
+            "hour": 0
+          }
+        }
+      ]
 }

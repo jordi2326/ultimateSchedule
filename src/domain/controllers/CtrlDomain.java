@@ -21,10 +21,11 @@ import domain.classes.Schedule;
 import domain.classes.Subject;
 import domain.classes.restrictions.DayPeriodRestriction;
 import domain.classes.restrictions.NaryRestriction;
+import domain.classes.restrictions.SpecificDayOrHourRestriction;
 import domain.classes.restrictions.UnaryRestriction;
 import persistance.CtrlData;
 
-/** Controlador principal de domini de l'aplicació.
+/** Controlador principal de domini de l'aplicaciï¿½.
  * @author Carlos Bergillos Varela
 */
 
@@ -237,13 +238,6 @@ public class CtrlDomain {
 			DayPeriodRestriction dpr = new DayPeriodRestriction(6, g.getDayPeriod());
 			env.addUnaryRestriction(g.toString(), dpr);
   
-			/*
-    			if (g.toString().equals("FM-10-THEORY")) {
-    				SpecificDayOrHourRestriction sdohr = new SpecificDayOrHourRestriction(2, 2);
-    				restrictions.put(sdohr.toString(), sdohr);
-    			}
-			*/
-        		
         	}
         	Subject s = new Subject(
 				scode,
@@ -268,7 +262,27 @@ public class CtrlDomain {
         	//rooms.put(r.toString(), r);
         	env.addRoom(r);
         }
-       
+        
+        // getting subjects 
+        JSONArray jsonRestrictions = (JSONArray) jo.get("restrictions");
+        
+        
+        Iterator itr4 = jsonRestrictions.iterator(); 
+        
+        while (itr4.hasNext()) {
+        	JSONObject restriction = (JSONObject) itr4.next();
+        	String restrName = (String) restriction.get("name");
+        	// if (restrName.equals(SpecificDayOrHourRestriction.class.getSimpleName())) {
+        	if (true) {
+        		JSONObject info = (JSONObject) restriction.get("info");
+            	String restrGroup = (String) info.get("group");
+            	Integer day = ((Long) info.get("day")).intValue();
+            	Integer hour = ((Long) info.get("hour")).intValue();
+            	SpecificDayOrHourRestriction r = new SpecificDayOrHourRestriction(day, hour);
+            	env.addUnaryRestriction(restrGroup, r);
+        	}
+        }
+       	
 		return true;
 	}
 	
@@ -389,7 +403,7 @@ public class CtrlDomain {
 		return data;
 	}
 	
-	// Funcions per comunicar-se amb la capa de presentació
+	// Funcions per comunicar-se amb la capa de presentaciï¿½
 	
 		// ROOM
 		public Set<String> getRoomNames() {
@@ -401,7 +415,7 @@ public class CtrlDomain {
 			 /* ********* ORDRE *********
 			  * param code			Codi de l'aula.
 			  * param capacity 		Capacitat de l'aula.
-			  * param hasComputers 	Indica si l'aula té ordinadors o no.
+			  * param hasComputers 	Indica si l'aula tï¿½ ordinadors o no.
 			  * ************************* */
 			Environment env = Environment.getInstance();
 			
@@ -422,11 +436,11 @@ public class CtrlDomain {
 		public String[] getGroupInfo(String group) {
 			 /* ********* ORDRE *********
 			  * param code				Codi del grup.
-			  * param numPeople			Núm. persones en el grup.
+			  * param numPeople			Nï¿½m. persones en el grup.
 			  * param parentGroupCode	Codi del grup pare.
 			  * param subject			Assignatura a la que pertany.
 			  * param type				Tipus de grup.
-			  * param dayPeriod			Període del dia.
+			  * param dayPeriod			Perï¿½ode del dia.
 			  * param needsComputers	True si necessita ordinadors.
 			  * ************************* */
 			Environment env = Environment.getInstance();
@@ -557,7 +571,7 @@ public class CtrlDomain {
 		};
 		
 		/** Elimina un grup en un dia i aula determinats.
-		*   @param duration Duració del grup.
+		*   @param duration Duraciï¿½ del grup.
 		*	@param room		Aula on eliminarem el grup.
 		*	@param day		Dia on eliminarem el grup.
 		*	@param hour		Hora on eliminarem el grup.
@@ -572,7 +586,7 @@ public class CtrlDomain {
 		}
 		
 		/** Afageix un grup en un dia i aula determinats.
-		*   @param duration Duració del grup.
+		*   @param duration Duraciï¿½ del grup.
 		*	@param room		Aula on eliminarem el grup.
 		*	@param day		Dia on eliminarem el grup.
 		*	@param hour		Hora on eliminarem el grup.
@@ -610,13 +624,13 @@ public class CtrlDomain {
 		}
 		
 		/** Mou un grup de dia, aula i hora determinats
-		*   @param duration Duració del grup.
-		*	@param iniDay		Dia on està actualment el grup.
-		*	@param fiDay		Dia on anirà el grup si es pot.
-		*	@param iniHour		Hora on està actualment el grup.
-		*	@param fiHour		Hora on anirà el grup si es pot.
-		*	@param iniRoom		Aula on està actualment el grup.
-		*	@param fiRoom		Aula on anirà el grup si es pot.
+		*   @param duration Duraciï¿½ del grup.
+		*	@param iniDay		Dia on estï¿½ actualment el grup.
+		*	@param fiDay		Dia on anirï¿½ el grup si es pot.
+		*	@param iniHour		Hora on estï¿½ actualment el grup.
+		*	@param fiHour		Hora on anirï¿½ el grup si es pot.
+		*	@param iniRoom		Aula on estï¿½ actualment el grup.
+		*	@param fiRoom		Aula on anirï¿½ el grup si es pot.
 		*	@return True si s'ha pogut moure el grup. Fals en cas contrari.
 		*/
 		public boolean moveLecture(int duration, int iniDay, int fiDay, int iniHour, int fiHour, String iniRoom, String fiRoom) {

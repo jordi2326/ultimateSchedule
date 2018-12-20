@@ -343,7 +343,7 @@ public class CtrlSchedule {
 					//All lectures from here on have been inserted recursively
 					Integer h = 0;
 					while (h < env.getLectureDuration(lecture)) {
-						schedule.putLecture(room, day, hour+h, env.getLectureGroup(lecture));
+						schedule.putLecture(room, day, hour+h, lecture);
 						++h;
 					}
 					return true;
