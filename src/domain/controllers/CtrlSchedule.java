@@ -320,15 +320,7 @@ public class CtrlSchedule {
 			Integer day = getDayFromKey(key);
 			Integer hour = getHourFromKey(key);
 			
-			//Cas base Aixo hauria de ser molt més bonic
-			if (assignations.size() == 1) {
-				Integer h = 0;
-				while (h < env.getLectureDuration(lecture)) {
-					schedule.putLecture(room, day, hour+h, env.getLectureGroup(lecture));
-					++h;
-				}
-				return true;
-			}
+			
 			//Try forwardChecking and generating schedule before the insertion so that if it fails we don't have to delete lecture from schedule	
 			Map<String, PosAssig> assigChanges = new HashMap<String, PosAssig>();
 			Map<String, Integer> numPossibleAllocChanges = new HashMap<String, Integer>();
@@ -343,7 +335,7 @@ public class CtrlSchedule {
 					//All lectures from here on have been inserted recursively
 					Integer h = 0;
 					while (h < env.getLectureDuration(lecture)) {
-						schedule.putLecture(room, day, hour+h, env.getLectureGroup(lecture));
+						schedule.putLecture(room, day, hour+h, lecture);
 						++h;
 					}
 					return true;

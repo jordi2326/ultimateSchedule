@@ -377,6 +377,7 @@ public class CtrlDomain {
 	public ArrayList<String[]>[][] getScheduleMatrix() {
 		ArrayList<String[]>[][] data = new ArrayList[12][5];
 		for(Entry<String, String[][]> d : schedule.getSchedule().entrySet()) {
+			System.out.println(d.getKey()+" "+d.getValue()[0][0]+" "+d.getValue()[0][1]);
 			String[][] matrix = d.getValue();
 			for (int i = 0; i < matrix[0].length; i++) {
                 for (int j = 0; j < matrix.length; j++) {
@@ -587,22 +588,32 @@ public class CtrlDomain {
 			return true;
 		}
 		
-		public boolean validateAllRestrictions(String lecture, int day, int hour, String room, int duration) {
+		public boolean validateAllRestrictions(String lecture, int day, int hour, String room, int duration) { // On ha d'anar
 			Environment env = Environment.getInstance();
-			
+			System.out.println(lecture);
+			String g = env.getLectureGroup(lecture);
 			Map<String, String[][]> sche = schedule.getSchedule();
 			
-			for (String[][] r : sche.values()) {
-				String group = env.getLectureGroup(lecture);
+			//String g, String restr, String room, int day, int hour, String lecture, Integer d, Integer h, String r, String l
+			
+			for (String r : sche.keySet()) { // Restriccions nàries
+				// Per cada room
+				String[][] rm = sche.get(r);
+						//env.getLectureGroup(lecture);
 				
-				
-				
-				for (String restr : env.getGroupNaryRestrictions(lecture)) {
-					if (!env.validateGroupNaryRestriction(group, restr, room, day, hour, lecture, day, h, r, l)) return false;
+				for (int i = 0; i < 12; i++) {
+					String groupCompare = rm[i][day];
+					// Per cada hora
+					if (groupCompare != null) {
+						for (String restr : env.getGroupNaryRestrictions(lecture)) {
+							// Coses que estàz intentant inserir     |      Coses amb qui ho compares
+							if (!env.validateGroupNaryRestriction(g, restr, room, day, hour, lecture, day, i, r, groupCompare)) return false;
+						}
+					}
 				}
 			}
 			
-			for (String restr : env.getGroupUnaryRestrictions(lecture)) {
+			for (String restr : env.getGroupUnaryRestrictions(lecture)) { // Restriccions unàries
 				if (!env.validateGroupUnaryRestriction(lecture, room, day, hour, duration)) return false;
 			}
 			
@@ -620,7 +631,7 @@ public class CtrlDomain {
 		*	@return True si s'ha pogut moure el grup. Fals en cas contrari.
 		*/
 		public boolean moveLecture(int duration, int iniDay, int fiDay, int iniHour, int fiHour, String iniRoom, String fiRoom) {
-			String lecture = schedule.getSchedule().get(fiRoom)[fiDay][fiHour];
+			String lecture = schedule.getSchedule().get(fiRoom)[iniDay][iniHour];
 			
 			// Eliminar lecture
 			boolean removed = removeLecture(duration, iniRoom, iniDay, iniHour);
