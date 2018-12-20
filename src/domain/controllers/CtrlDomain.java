@@ -258,13 +258,8 @@ public class CtrlDomain {
         Iterator itr3 = jsonRooms.iterator(); 
         while (itr3.hasNext()) {
         	JSONObject room = (JSONObject) itr3.next();
-        	Room r = new Room(
-        			(String) room.get("code"),
-        			((Long) room.get("capacity")).intValue(),
-        			(Boolean) room.get("hasComputers")
-        			);
         	//rooms.put(r.toString(), r);
-        	env.addRoom(r);
+        	env.addRoom((String) room.get("code"), ((Long) room.get("capacity")).intValue(), (Boolean) room.get("hasComputers"));
         }
        
 		return true;
@@ -669,5 +664,16 @@ public class CtrlDomain {
 		 */
 		public boolean removeSubject(String name) {
 			return environment.removeSubject(name);
+		}
+		
+		/**
+		 * @param inCode
+		 * @param inCapacity
+		 * @param inHasComputers
+		 * @return
+		 */
+		public boolean addRoom(String inCode, Integer inCapacity, Boolean inHasComputers) {
+			if (inCode == null || inCode.isEmpty()) return false;
+			return environment.getInstance().addRoom(inCode, inCapacity, inHasComputers);
 		}
 }

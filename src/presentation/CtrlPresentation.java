@@ -347,7 +347,7 @@ public class CtrlPresentation {
 	 * @return
 	 */
 	public boolean addRoom(String inCode, Integer inCapacity, Boolean inHasComputers) {
-		return false;
+		return ctrlDomain.addRoom(inCode, inCapacity, inHasComputers);
 	}
 
 	/**
@@ -376,9 +376,6 @@ public class CtrlPresentation {
 	public boolean removeSubject(String name) {
 		return ctrlDomain.removeSubject(name);
 	}
-	
-	
-	
 	
 
 	/**

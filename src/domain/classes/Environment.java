@@ -279,8 +279,15 @@ public class Environment {
 	
 	/////////////// ROOM //////////////////////////////
 	
-	public void addRoom(Room r) {
-		rooms.put(r.toString(), r);
+	public boolean addRoom(String inCode, Integer inCapacity, Boolean inHasComputers) {
+		if (!rooms.containsKey(inCode)) {
+			Room r = new Room(inCode, inCapacity, inHasComputers);
+			rooms.put(inCode, r);
+			
+			return true;
+		}
+
+		return false;
 	}
 	
 	public String getRoomCode(String r) {
