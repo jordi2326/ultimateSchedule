@@ -207,9 +207,11 @@ public class Environment {
 	
 	/////////////// SUBJECTS //////////////////////////////
 	
-	public boolean addSubject(Subject s) {
-		if (!subjects.containsKey(s.toString())) {
-			subjects.put(s.toString(), s);
+	public boolean addSubject(String inCode, String inName, String inLevel, ArrayList<String> groups, ArrayList<String> inCoreqs) {
+		if (!subjects.containsKey(inCode)) {
+			Subject newSub = new Subject(inCode, inName, inLevel, groups, inCoreqs);
+			
+			subjects.put(inCode, newSub);
 			return true;
 		}
 		return false;

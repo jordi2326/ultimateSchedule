@@ -250,14 +250,7 @@ public class CtrlDomain {
 			*/
         		
         	}
-        	Subject s = new Subject(
-				scode,
-				(String) subject.get("name"),
-				(String) subject.get("level"),
-				groupsToString,
-				(ArrayList<String>) subject.get("coreqs")
-    			);
-        	env.addSubject(s);
+        	env.addSubject(scode, (String) subject.get("name"), (String) subject.get("level"), groupsToString, (ArrayList<String>) subject.get("coreqs"));
         }
         // getting rooms 
         JSONArray jsonRooms = (JSONArray) jo.get("rooms");
@@ -666,10 +659,12 @@ public class CtrlDomain {
 		 * @return
 		 */
 		public boolean addSubject(String inCode, String inName, String inLevel,  ArrayList<String> inCoreqs) {
-			ArrayList<String> groups = new ArrayList<String>();
-			
-			Subject newSub = new Subject(inCode, inName, inLevel, groups, inCoreqs);
-			
-			return environment.getInstance().addSubject(newSub);
+			System.out.println(inCode);
+			if (inCode == null || inCode.isEmpty() || inName == null || inName.isEmpty() || inLevel == null || inLevel.isEmpty()) return false;
+			return environment.getInstance().addSubject(inCode, inName, inLevel, new ArrayList(), inCoreqs);
+		}
+		
+		public boolean removeSubject(String name) {
+			return true;
 		}
 }

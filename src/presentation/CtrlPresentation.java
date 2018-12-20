@@ -368,6 +368,14 @@ public class CtrlPresentation {
 	public boolean addSubject(String inCode, String inName, String inLevel,  ArrayList<String> inCoreqs) {
 		return ctrlDomain.addSubject(inCode, inName, inLevel, inCoreqs);
 	}
+	
+	public boolean removeSubject(String name) {
+		return ctrlDomain.removeSubject(name);
+	}
+	
+	
+	
+	
 
 	/**
 	 * @param inCode
