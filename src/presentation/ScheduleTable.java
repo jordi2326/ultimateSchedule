@@ -32,6 +32,9 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.tree.TreePath;
 
+/**
+ * @author Carlos Bergillos Varela
+*/
 public class ScheduleTable extends JScrollPane{
 	
 	private JTable table;

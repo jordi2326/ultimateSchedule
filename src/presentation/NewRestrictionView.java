@@ -7,6 +7,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
+/**
+ * @author Xavier Martín Ballesteros
+*/
 public class NewRestrictionView {
 	
 	Object[] message;

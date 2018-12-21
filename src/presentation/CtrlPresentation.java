@@ -24,9 +24,8 @@ import domain.classes.Environment;
 import domain.controllers.CtrlDomain;
 
 /**
- * @author Carlos
- *
- */
+ * @author Carlos Bergillos Varela
+*/
 public class CtrlPresentation {
 	
 	/**
@@ -474,5 +473,9 @@ public class CtrlPresentation {
 	
 	public String getEnvironmentName(){
 		return ctrlDomain.getEnvironmentName();
+	}
+	
+	public ArrayList<Integer> getGroupsDuration(String name) {
+		return ctrlDomain.getGroupDurations(name);
 	}
 }

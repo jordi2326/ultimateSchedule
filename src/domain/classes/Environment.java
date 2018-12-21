@@ -19,7 +19,7 @@ import domain.classes.restrictions.SubjectLevelRestriction;
 import domain.classes.restrictions.UnaryRestriction;
 
 /** Representa un escenari.
- * @author 
+ * @author Xavier Lacasa Curto
 */
 
 public class Environment {
@@ -460,6 +460,22 @@ public class Environment {
 	 */
 	public Set<String> getAllGroups() {
 		return groups.keySet();
+	}
+	
+	/**
+	 * Duracions d'un grup.
+	 * @param name	Nom del grup.
+	 * @return Les duracions de les lectures d'un grup.
+	 */
+	public ArrayList<Integer> getGroupDurations(String name) {
+		Group g = groups.get(name);
+		ArrayList<Integer> dur = new ArrayList<Integer>();
+		ArrayList<String> lecture = g.getLectures();
+		for (String l : lecture) {
+			dur.add(lectures.get(l).getDuration());
+		}
+		
+		return dur;
 	}
 	
 	/////////////// SUBJECTS //////////////////////////////

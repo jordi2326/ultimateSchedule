@@ -15,6 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * @author Xavier Lacasa Curto
+*/
 public class GroupInfoView extends JDialog {
 	
 	public GroupInfoView(Frame parent, String name) {
@@ -74,18 +77,19 @@ public class GroupInfoView extends JDialog {
 	    iLabel.setFont(iLabel.getFont().deriveFont(Font.PLAIN));
 	    add(iLabel, constraints);
 	    
-	    /**add(new JLabel("Weekly Lectures:  ", SwingConstants.RIGHT), constraints);
-	    ArrayList<String> coreqs = ctrlPresentation.g;
+	    constraints.gridy = 6;
+	    add(new JLabel("Weekly Lectures:  ", SwingConstants.RIGHT), constraints);
+	    ArrayList<Integer> ls = ctrlPresentation.getGroupsDuration(name);
 	    String tmp = "-";
-	    if(!coreqs.isEmpty()) {
+	    if(!ls.isEmpty()) {
 	    	tmp = "<html>";
-		    for(String s : coreqs)
-		    	tmp += s + "<br>"; 
+		    for(Integer s : ls)
+		    	tmp += s.toString()+" hour(s)<br>";
 		    tmp += "</html>";
 	    }
 	    iLabel = new JLabel(tmp);
 	    iLabel.setFont(iLabel.getFont().deriveFont(Font.PLAIN));
-	    add(iLabel, constraints);**/
+	    add(iLabel, constraints);
 	    
 	    pack();
 	    setLocationRelativeTo(null);

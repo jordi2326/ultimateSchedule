@@ -911,4 +911,13 @@ public class CtrlDomain {
 		public boolean removeRestriction(String group, String name) {
 			return environment.removeRestriction(group, name);
 		}
+		
+		/**
+		 * Duracions d'un grup.
+		 * @param name	Nom del grup.
+		 * @return	Les duracions de les lectures d'un grup.
+		 */
+		public ArrayList<Integer> getGroupDurations(String name) {
+			return environment.getGroupDurations(name);
+		}
 }

@@ -1,5 +1,6 @@
 package presentation;
 
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -13,6 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * @author Carlos Bergillos Varela
+*/
 public class ProgressView extends JDialog {
 
   private JProgressBar progressBar;
