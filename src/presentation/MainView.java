@@ -55,7 +55,6 @@ public class MainView extends JFrame{
 	private JLabel envText;
 	private ScheduleTable table;
 	private boolean environmentLoaded, scheduleLoaded;
-	private String environmentName;
 	
 	public MainView(CtrlPresentation ctrlPresentation){
 		this.ctrlPresentation = ctrlPresentation;
@@ -118,8 +117,7 @@ public class MainView extends JFrame{
 				if (!selected.equals(path)) {	//user selected a file
 					try {
 						ctrlPresentation.importEnvironment(selected.getAbsolutePath());
-						environmentName = selected.getName();
-						environmentLoaded();
+						reloadEnvironment();
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
@@ -137,9 +135,10 @@ public class MainView extends JFrame{
 				fc.setDialogTitle("Load Schedule");
 				File selected = loadLocalFile(path);
 				if (!selected.equals(path)) {	//user selected a file
-					if(ctrlPresentation.importSchedule(selected.getAbsolutePath()))
+					if(ctrlPresentation.importSchedule(selected.getAbsolutePath())) {
 						reloadSchedule();
-					else
+						reloadEnvironment();
+					}else
 						JOptionPane.showMessageDialog(MainView.this, "Schedule's environment not found.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -491,7 +490,7 @@ public class MainView extends JFrame{
 	/**
 	 * @param name
 	 */
-	private void environmentLoaded() {
+	private void reloadEnvironment() {
 		environmentLoaded = true;
 		//scheduleLoaded = false;
 		
@@ -517,7 +516,7 @@ public class MainView extends JFrame{
 		treeRooms.expandPath(new TreePath(roomsRoot.getPath()));
 		treeRooms.checkSubTree(new TreePath(roomsRoot.getPath()), true);
 		
-		envText.setText(environmentName);
+		envText.setText(ctrlPresentation.getEnvironmentName());
 		btnLoadSchedule.setEnabled(environmentLoaded);
 		btnGenSchedule.setEnabled(environmentLoaded);
 		btnSaveSchedule.setEnabled(scheduleLoaded);

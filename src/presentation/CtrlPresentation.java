@@ -283,17 +283,19 @@ public class CtrlPresentation {
         		Toolkit.getDefaultToolkit().beep();
         		progressV.setVisible(false);
         		//progressV.dispose();
-				try {
-					if(get()) {
-						mainView.reloadSchedule();
-						//JOptionPane.showMessageDialog(mainView, "Schedule Generated!", null, JOptionPane.PLAIN_MESSAGE);
-					}else {
-						JOptionPane.showMessageDialog(mainView, "No Valid Schedule Found", null, JOptionPane.WARNING_MESSAGE);
-					}
-				} catch (CancellationException | InterruptedException e) { //do nothing
-				} catch (HeadlessException | ExecutionException e) {
-					JOptionPane.showMessageDialog(mainView, "Error when generating Schedule", null, JOptionPane.ERROR_MESSAGE);
-				}
+        		if(isCancelled()) {
+        			try {
+    					if(get()) {
+    						mainView.reloadSchedule();
+    						//JOptionPane.showMessageDialog(mainView, "Schedule Generated!", null, JOptionPane.PLAIN_MESSAGE);
+    					}else {
+    						JOptionPane.showMessageDialog(mainView, "No Valid Schedule Found", null, JOptionPane.WARNING_MESSAGE);
+    					}
+    				} catch (CancellationException | InterruptedException e) { //do nothing
+    				} catch (HeadlessException | ExecutionException e) {
+    					JOptionPane.showMessageDialog(mainView, "Error when generating Schedule", null, JOptionPane.ERROR_MESSAGE);
+    				}
+        		}
             }
         };
         task.execute();
@@ -468,5 +470,9 @@ public class CtrlPresentation {
 	
 	public Boolean setRestrictionEnabled(String g, String r, Boolean state) {
 		return ctrlDomain.setRestrictionEnabled(g, r, state);
+	}
+	
+	public String getEnvironmentName(){
+		return ctrlDomain.getEnvironmentName();
 	}
 }

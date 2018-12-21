@@ -243,7 +243,7 @@ public class CtrlDomain {
         		ArrayList<Long> durations = (ArrayList<Long>) group.get("lecturesDuration");
 
         		String gcode = (String) group.get("code");
-        		env.addGroup(gcode, (Integer)((Long) group.get("numPeople")).intValue(), (String) group.get("parentGroupCode"), scode, Boolean.valueOf((String)group.get("needsComputers")), (String)group.get("type"), (String)group.get("dayPeriod"), ls);
+        		env.addGroup(gcode, (Integer)((Long) group.get("numPeople")).intValue(), (String) group.get("parentGroupCode"), scode, (Boolean) group.get("needsComputers"), (String)group.get("type"), (String)group.get("dayPeriod"), ls);
         		
         		for(int i = 0; i < durations.size(); i++){
         			//Lecture l = new Lecture(i, scode +"-"+ gcode +"-"+ group.get("type"), durations.get(i).intValue());
@@ -625,6 +625,10 @@ public class CtrlDomain {
 			String[] error = new String[0];
 			return error;
 		};*/
+		
+		public String getEnvironmentName(){
+			return environment.getInstance().getPath();
+		}
 		
 		/** Elimina un grup en un dia i aula determinats.
 		*   @param duration Duraci� del grup.
