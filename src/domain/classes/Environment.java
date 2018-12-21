@@ -203,7 +203,8 @@ public class Environment {
 		if (!groups.containsKey(inCode)) {
 			Group g = new Group(inCode, inNPeople, inParentGroupCode, subjectCode, inNeedsComputers, Group.Type.valueOf((String) inType), Group.DayPeriod.valueOf((String) inDayPeriod), arrayList);
 			
-			groups.put(inCode, g);
+			groups.put(g.toString(), g);
+			//System.out.println(g.toString());
 			naryRestrictions.put(g.toString(), groupRestr);
 			return true;
 		}

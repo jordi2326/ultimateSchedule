@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 import org.json.simple.JSONArray; 
 import org.json.simple.JSONObject; 
 import org.json.simple.parser.*;
+
 import domain.classes.Environment;
 import domain.classes.Group;
 import domain.classes.Lecture;
@@ -196,8 +198,13 @@ public class CtrlDomain {
 		 Environment env = Environment.getInstance();
 		 
 		 env.erase();
+		 String path = filename;
+		 if (isFullpath) {
+			 File f = new File(filename);
+			 path = f.getName();
+		 }
 		 
-		 env.setPath(filename);
+		 env.setPath(path);
 		 
 		 String jsonData = dataController.readEnvironment(filename, isFullpath);
 		 Object obj = new JSONParser().parse(jsonData);
@@ -233,13 +240,15 @@ public class CtrlDomain {
     			//Group g = new Group(
     			//		gcode, ((Long) group.get("numPeople")).intValue(), (String) group.get("parentGroupCode"), scode, (Boolean) group.get("needsComputers"), Group.Type.valueOf((String) group.get("type")), Group.DayPeriod.valueOf((String) group.get("dayPeriod")), ls);
     			//groups.put(g.toString(), g);
+        		System.out.println();
     			env.addGroup(gcode, (Integer)((Long) group.get("numPeople")).intValue(), (String) group.get("parentGroupCode"), scode, (Boolean) group.get("needsComputers"), (String)group.get("type"), (String)group.get("dayPeriod"), ls);    			
     			groupsToString.add(scode + "-" + gcode + "-" + Group.Type.valueOf((String) group.get("type")));
     			// subject + "-" + code + "-" + type
     			//Afegim la restriccio d'aquest grup de mati o tarda o indiferent
     						
-			DayPeriodRestriction dpr = new DayPeriodRestriction(6, Group.DayPeriod.valueOf((String) group.get("dayPeriod")));
-			env.addUnaryRestriction(scode + "-" + gcode + "-" + Group.Type.valueOf((String) group.get("type")), dpr);
+				DayPeriodRestriction dpr = new DayPeriodRestriction(6, Group.DayPeriod.valueOf((String) group.get("dayPeriod")));
+				env.addUnaryRestriction(scode + "-" + gcode + "-" + Group.Type.valueOf((String) group.get("type")), dpr);
+				System.out.println(scode);
   
         	}
         	env.addSubject(scode, (String) subject.get("name"), (String) subject.get("level"), groupsToString, (ArrayList<String>) subject.get("coreqs"));
@@ -356,14 +365,26 @@ public class CtrlDomain {
 	}
 
 
-	/**
+	/**jsonData
 	 * Importa un horari desde un arxiu.
 	 * @param filename Nom de l'arxiu d'horari a importar.
 	 * @return true si s'ha importat correctament, sino false
+	 * @throws IOException 
 	 */
-	public boolean importSchedule(String filename, boolean isFullpath) throws ParseException, FileNotFoundException {
+	public boolean importSchedule(String filename, boolean isFullpath) throws ParseException, IOException {
+		Environment environment = Environment.getInstance();
 		String jsonData = dataController.readSchedule(filename, isFullpath);
-		schedule = new Schedule(jsonData);
+
+		Object obj = new JSONParser().parse(jsonData);
+		
+		JSONObject jo = new JSONObject();
+		jo = (JSONObject) obj;
+		String scheduleData = ((JSONObject) jo.get("schedule")).toJSONString(0);
+		schedule = new Schedule(scheduleData);
+		
+		String envPath = (String) jo.get("path");
+		importEnvironment(envPath, false);
+		
 	   	return true;
 	}
 	
@@ -371,9 +392,24 @@ public class CtrlDomain {
 	 * Guarda l'horari de l'entorn a un arxiu.
 	 * @param filename Nom amb el que guardar l'horari.
 	 * @return true si s'ha guardat correctament.
+	 * @throws ParseException 
 	 */
-	public boolean exportSchedule(String filename, boolean isFullpath) throws IOException  {
-        return dataController.writeSchedule(filename, schedule.toJsonString(), isFullpath);
+	@SuppressWarnings("unchecked")
+	public boolean exportSchedule(String filename, boolean isFullpath) throws IOException, ParseException  {
+		Environment environment = Environment.getInstance();
+
+		Object obj = new JSONParser().parse(schedule.toJsonString());
+
+		// typecasting obj to JSONObject 
+        JSONObject scheduleJSON = (JSONObject) obj; 
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("schedule", scheduleJSON);
+
+        jo.put("path", environment.getPath());
+
+        return dataController.writeSchedule(filename, jo.toJSONString(0), isFullpath);
 	}
 	
 	/**
