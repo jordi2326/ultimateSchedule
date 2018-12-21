@@ -25,6 +25,7 @@
                 "code": "10",
                 "numPeople": 60,
                 "parentGroupCode": "10",
+                "needsComputers": false,
                 "type": "THEORY",
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [1]
@@ -42,6 +43,7 @@
                 "code": "10",
                 "numPeople": 60,
                 "parentGroupCode": "10",
+                "needsComputers": false,
                 "type": "THEORY",
                 "dayPeriod": "MORNING",
                 "lecturesDuration": [1]

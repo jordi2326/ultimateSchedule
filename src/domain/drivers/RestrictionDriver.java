@@ -2,9 +2,14 @@ package domain.drivers;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import org.json.simple.parser.ParseException;
+
+import com.sun.xml.internal.ws.util.xml.CDATA;
 
 import domain.classes.Group;
 import domain.classes.Lecture;
@@ -142,8 +147,9 @@ public class RestrictionDriver {
 	        else return;
 	    }
 	}
+
 	
-	public static void testValidate(Scanner sc) {
+	public static void testValidate(Scanner sc) throws ParseException, IOException {
 		if (r instanceof UnaryRestriction) {
 			if (!silent) System.out.println("Introduzca dia y/o hora en este orden.\n");
         	Integer day, hour;
@@ -156,9 +162,20 @@ public class RestrictionDriver {
 			else System.out.println("Tu combinacion de dia-hora-clase NO es valida segun la ultima restriccion creada");
 		}
 		else {
-			System.out.println("Debido a que la restriccion que quieres validar es N-aria y necesita\n"
-					+ "tener un escenario cargado, esta restriccion se comprueba en el driver de Ctrl Schedule,\n"
-					+ "que usa las restricciones para generar horarios.\n");
+			CtrlDomain cdo = CtrlDomain.getInstance();
+			String filename = sc.next();
+			cdo.importEnvironment(filename, false);
+			String room = sc.next();
+			Integer day = sc.nextInt();
+			Integer hour = sc.nextInt();
+			String lecture = sc.next();
+			String ro = sc.next();
+			Integer d = sc.nextInt();
+			Integer h = sc.nextInt();
+			String l = sc.next();
+			
+			boolean x = ((NaryRestriction) r).validate(room, day, hour, lecture, d, h, ro, l);
+			if (x) System.out.println("La combinacion es valida segun la restriccion " + r.getClass().getSimpleName());
 		}
 	}
 	
