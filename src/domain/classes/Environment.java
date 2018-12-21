@@ -9,6 +9,7 @@ import java.util.Set;
 
 import domain.classes.Group.DayPeriod;
 import domain.classes.restrictions.CorequisitRestriction;
+import domain.classes.restrictions.DayPeriodRestriction;
 import domain.classes.restrictions.LectureFromSameGroupOverlapRestriction;
 import domain.classes.restrictions.NaryRestriction;
 import domain.classes.restrictions.OccupiedRoomRestriction;
@@ -130,6 +131,21 @@ public class Environment {
 		return naryRestrictions;
 	}
 	
+	public ArrayList<Object[]> getNegotiableRestrictions() {
+		ArrayList<Object[]> restr = new ArrayList<Object[]>();
+		for (String group : groups.keySet()) {
+			Map<String, UnaryRestriction> map = unaryRestrictions.get(group);
+			for (String rest : map.keySet()) {
+				if (map.get(rest).getClass().getSimpleName().equals(SpecificDayOrHourRestriction.class.getSimpleName())) {
+					Object[] str = new Object[] {map.get(rest).toString(), group, ((SpecificDayOrHourRestriction) map.get(rest)).getDay(), ((SpecificDayOrHourRestriction) map.get(rest)).getHour()};
+					restr.add(str);
+				}
+			}
+		}
+		
+		return restr;
+	}
+	
 	public Boolean groupHasUnaryRestrictions(String g) {
 		return unaryRestrictions.containsKey(g);
 	}
@@ -149,6 +165,14 @@ public class Environment {
 			}
 		}
 		return info;
+	}
+	
+	public boolean removeRestriction(String group, String name) {
+		if (unaryRestrictions.get(group).containsKey(name)) {
+			unaryRestrictions.get(group).remove(name);
+			return true;
+		}
+		return false;
 	}
 	
 	public Set<String> getGroupUnaryRestrictions(String g) {

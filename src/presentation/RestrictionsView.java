@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -57,8 +59,8 @@ public class RestrictionsView extends JDialog {
 		
 		list.setListData(testdata);**/
 		//String[][] testdata = {{"M1-11-THEORY", "Monday", "10:00"}, {"M1CCCCCC", "Monday", "10:00"}, {"CCCCCC", "Monday", "10:00"}};
-		for(String title : ctrlPresentation.getRestrictionNames()) {
-			String[] rData = ctrlPresentation.getRestrictionInfo(title);
+		for(Object[] data : ctrlPresentation.getNegotiableRestrictions()) {
+			//ArrayList<Object[]> rData = ctrlPresentation.getRestrictionInfo(title);
 			JPanel row = new JPanel();
 			
 			JPanel content = new JPanel();
@@ -117,8 +119,8 @@ public class RestrictionsView extends JDialog {
 			row.add(checkbox);
 			row.add(new JSeparator(SwingConstants.VERTICAL), BorderLayout.CENTER);
 			row.add(content);
-			label1.setText(title);
-			label2.setText(((String[]) rData)[0] + " - " + ((String[]) rData)[1]);
+			label1.setText(data[1].toString());
+			label2.setText(ScheduleTable.colNames[(int) data[2]].toString() + " - " + ScheduleTable.startTimes[(int) data[3]].toString());
 			row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
 			row.setBackground(Color.decode("#fafafa"));
 			contentPanel.add(row);

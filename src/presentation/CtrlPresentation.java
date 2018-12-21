@@ -248,8 +248,8 @@ public class CtrlPresentation {
 	 * @param res
 	 * @return
 	 */
-	public String[] getRestrictionInfo(String res) {
-		return ctrlDomain.getRestrictionInfo(res);
+	public ArrayList<Object[]> getNegotiableRestrictions() {
+		return ctrlDomain.getNegotiableRestrictions();
 	}
 	
 	// Com vols que es vegin a la pantalla
@@ -423,6 +423,10 @@ public class CtrlPresentation {
 	 */
 	public boolean removeGroup(String name) {
 		return ctrlDomain.removeGroup(name);
+	}
+	
+	public boolean addRestriction(String group, Integer day, Integer hour) {
+		return ctrlDomain.addRestriction(group, day, hour);
 	}
 	
 	/**
