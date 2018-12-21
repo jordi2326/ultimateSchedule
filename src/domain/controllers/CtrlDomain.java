@@ -225,10 +225,10 @@ public class CtrlDomain {
         		
         		String gcode = (String) group.get("code");
         		for(int i = 0; i < durations.size(); i++){
-        			Lecture l = new Lecture(i, scode +"-"+ gcode +"-"+ group.get("type"), durations.get(i).intValue());
+        			//Lecture l = new Lecture(i, scode +"-"+ gcode +"-"+ group.get("type"), durations.get(i).intValue());
         			//lectures.put(l.toString(), l);
-        			env.addLecture(l);
-        			ls.add(l.toString());
+        			env.addLecture(i, scode +"-"+ gcode +"-"+ group.get("type"), durations.get(i).intValue());
+        			ls.add(scode +"-"+ gcode +"-"+ group.get("type") + "-" + i);
         		}
     			//Group g = new Group(
     			//		gcode, ((Long) group.get("numPeople")).intValue(), (String) group.get("parentGroupCode"), scode, (Boolean) group.get("needsComputers"), Group.Type.valueOf((String) group.get("type")), Group.DayPeriod.valueOf((String) group.get("dayPeriod")), ls);
@@ -690,7 +690,25 @@ public class CtrlDomain {
 		 * @return
 		 */
 		public boolean removeSubject(String name) {
-			return environment.removeSubject(name);
+			ArrayList<String> groups = environment.getInstance().getSubjectGroups(name);
+			Map<String, ArrayList<String>> lectures = new HashMap<String, ArrayList<String>>();
+			for (String group : groups) {
+				lectures.put(group, environment.getInstance().getGroupLectures(group));
+			}
+			
+			boolean erase = environment.getInstance().removeSubject(name);
+			
+			if (erase) {
+				for (String lecture : lectures.keySet()) {
+					for (String l : lectures.get(lecture)) {
+						eraseLecture(l);
+					}
+				}
+				
+				return true;
+			}
+			
+			return false;
 		}
 		
 		/**
@@ -709,7 +727,15 @@ public class CtrlDomain {
 		 * @return
 		 */
 		public boolean removeRoom(String code) {
-			return environment.getInstance().removeRoom(code);
+			boolean erase = environment.getInstance().removeRoom(code);
+			
+			if (erase) {
+				schedule.getSchedule().remove(code);
+				
+				return true;
+			}
+			
+			return false;
 		}
 		
 		/**
@@ -736,6 +762,54 @@ public class CtrlDomain {
 		 * @return
 		 */
 		public boolean removeGroup(String name) {
-			return environment.getInstance().removeGroup(name);
+			ArrayList<String> lectures = environment.getInstance().getGroupLectures(name);
+			boolean erase = environment.getInstance().removeGroup(name);
+			if (erase) {
+				for (String lecture : lectures) {
+					eraseLecture(lecture);
+				}
+
+				return true;
+			}
+			
+			return false;
+		}
+		
+		/**
+		 * @param codi
+		 * @param group
+		 * @param duration
+		 * @return
+		 */
+		public boolean addLecture(Integer codi, String group, Integer duration) {
+			 return environment.getInstance().addLecture(codi, group, duration);
+		 }
+		
+		/**
+		 * @param name
+		 * @return
+		 */
+		public boolean removeLecture(String name) {
+			boolean erase = environment.getInstance().removeLecture(name);
+			if (erase) {
+				eraseLecture(name);
+				return true;
+			}
+			
+			return false;
+		}
+		
+		public void eraseLecture(String name) {
+			for (String room : schedule.getSchedule().keySet()) {
+				for (int i = 0; i < 11; i++) {
+					for (int j = 0; j < 5; ++j) {
+						if (schedule.getSchedule().get(room)[j][i] != null) {
+							if (schedule.getSchedule().get(room)[j][i].equals(name)) {
+								schedule.getSchedule().get(room)[j][i] = null;
+							}
+						}
+					}
+				}
+			}
 		}
 }

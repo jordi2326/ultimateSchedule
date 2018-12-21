@@ -199,11 +199,12 @@ public class Environment {
 	 */
 	public boolean addGroup(String inCode, Integer inNPeople, String inParentGroupCode, String subjectCode,
 			Boolean inNeedsComputers, String inType, String inDayPeriod, ArrayList<String> arrayList) {
-		if (!groups.containsKey(inCode)) {
+		if (!groups.containsKey(subjectCode + "-" + inCode + "-" + inType)) {
 			Group g = new Group(inCode, inNPeople, inParentGroupCode, subjectCode, inNeedsComputers, Group.Type.valueOf((String) inType), Group.DayPeriod.valueOf((String) inDayPeriod), arrayList);
 			
 			groups.put(g.toString(), g);
 			naryRestrictions.put(g.toString(), groupRestr);
+			System.out.println(inCode);
 			return true;
 		}
 		
@@ -215,6 +216,9 @@ public class Environment {
 	 * @return
 	 */
 	public boolean removeGroup(String name) {
+		for(String lecture : groups.get(name).getLectures()) {
+			removeLecture(lecture);
+		}
 		groups.remove(name);
 		return true;
 	}
@@ -273,13 +277,8 @@ public class Environment {
 	 */
 	public boolean removeSubject(String name) {
 		// Pre: el Subject amb nom "name" existeix
-		Subject sub = subjects.get(name);
-		
-		for (String group : sub.getGroups()) {
-			for (String lecture : groups.get(group).getLectures()) {
-				lectures.remove(lecture);
-			}
-			groups.remove(group);
+		for (String group : subjects.get(name).getGroups()) {
+			removeGroup(group);
 		}
 		subjects.remove(name);
 		return true;
@@ -311,8 +310,31 @@ public class Environment {
 	
 	/////////////// LECTURE //////////////////////////////
 	
-	public void addLecture(Lecture l) {
-		lectures.put(l.toString(), l);
+	/**
+	 * @param codi
+	 * @param group
+	 * @param duration
+	 * @return
+	 */
+	public boolean addLecture(Integer codi, String group, Integer duration) {
+		if (!lectures.containsKey(group + "-" + codi)) {
+			Lecture L = new Lecture(codi, group, duration);
+			
+			lectures.put(group + "-" + codi, L);
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * @param name
+	 * @return
+	 */
+	public boolean removeLecture(String name) {
+		lectures.remove(name);
+
+		return true;
 	}
 	
 	public Integer getLectureDuration(String l) {
