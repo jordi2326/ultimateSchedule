@@ -8,11 +8,11 @@ import java.util.ArrayList;
 
 public class Subject {
 	
-	/** Codi identificador únic. Ex: "PROP", "M2"
+	/** Codi identificador unic. Ex: "PROP", "M2"
 	*/
 	private String code;
 	
-	/** Nom complet. Ex: "Projectes de Programació", "Matemàtiques 2"
+	/** Nom complet. Ex: "Projectes de Programacio", "Matematiques 2"
 	*/
 	private String name;
 	
@@ -28,7 +28,7 @@ public class Subject {
 	*/
 	private ArrayList<String> coreqs;
 
-	/** Constructora estàndard.
+	/** Constructora estandard.
 	 * @param code		Codi de l'assignatura.
 	 * @param name		Nom complet de l'assignatura.
 	 * @param level		Nivell de l'assignatura.
@@ -45,7 +45,7 @@ public class Subject {
 	
 	/**
 	 * Retorna el codi de l'assignatura.
-	 * @return {@link Subject#code}
+	 * @return {@link Subject#code}.
 	 */
 	public String getCode() {
 		return code;
@@ -53,7 +53,7 @@ public class Subject {
 
 	/**
 	 * Retorna el nom de l'assignatura.
-	 * @return {@link Subject#name}
+	 * @return {@link Subject#name}.
 	 */
 	public String getName() {
 		return name;
@@ -61,7 +61,7 @@ public class Subject {
 	
 	/**
 	 * Retorna el nivell de l'assignatura.
-	 * @return {@link Subject#level}
+	 * @return {@link Subject#level}.
 	 */
 	public String getLevel() {
 		return level;
@@ -69,7 +69,7 @@ public class Subject {
 	
 	/**
 	 * Retorna la llista de corequisits de l'assignatura.
-	 * @return {@link Subject#coreqs}
+	 * @return {@link Subject#coreqs}.
 	 */
 	public ArrayList<String> getCoreqs() {
 		return coreqs;
@@ -77,14 +77,16 @@ public class Subject {
 	
 	/**
 	 * Retorna la llista de grups de l'assignatura.
-	 * @return {@link Subject#groups}
+	 * @return {@link Subject#groups}.
 	 */
 	public ArrayList<String> getGroups() {
 		return groups;
 	}
 	
 	/**
-	 *
+	 * Afageix un grup.
+	 * @param group	Nom del grup a afegir.
+	 * @return True si s'ha pogut afegir el grup {@link Subbject#group}.
 	 */
 	public boolean addGroup(String group) {
 		if(groups.contains(group)) return false;
@@ -93,7 +95,9 @@ public class Subject {
 	}
 	
 	/**
-	 *
+	 * Elimina un grup.
+	 * @param group	Grup a eliminar.
+	 * @return True si s'ha pogut eliminar el grup {@link Subject#group}. False en cas contrari.
 	 */
 	public boolean removeGroup(String group) {
 		if(!groups.contains(group)) return false;
