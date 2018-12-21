@@ -25,8 +25,6 @@ CLASSES = \
 
 JARS = ./externalClasses/json-simple-1.1c.jar:./externalClasses/junit-4.12.jar:./externalClasses/hamcrest-core-1.3.jar
 
-MAIN = Main
-
 default: bin classes
 
 bin:
@@ -34,11 +32,11 @@ bin:
 
 classes: $(CLASSES:.java=.class)
 
-run: $(BIN)$(MAIN).class
-	$(JVM) -cp $(RCPATHS) $(MAIN)
-
-run2:
+run:
 	$(JVM) -cp $(RCPATHS) RealMain
+	
+run-old: $(BIN)$(MAIN).class
+	$(JVM) -cp $(RCPATHS) Main
 
 run-driver-subject:
 	$(JVM) -cp $(RCPATHS) domain.drivers.SubjectDriver

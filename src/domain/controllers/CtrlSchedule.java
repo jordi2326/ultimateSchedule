@@ -23,7 +23,7 @@ import java.util.Iterator;
 
 
 /** Controlador de Schedule.
- * @author Xavier Mart�n Ballesteros i Xavier Lacasa Curto
+ * @author Xavier Martin Ballesteros i Xavier Lacasa Curto
 */
 
 class groupHeuristicComparator implements Comparator<Map.Entry<Integer, String>>{ 
@@ -55,33 +55,55 @@ public class CtrlSchedule {
 		return instance;
 	}
 	
-	/** Constructora est�ndard.
+	/** Constructora estandard.
 	*/
 	private CtrlSchedule() {
 	}
 	
+	/**
+	 * Crea la clau.
+	 * @param room	Aula.
+	 * @param day	Dia.
+	 * @param hour	Hour.
+	 * @return La clau creada.
+	 */
 	private static String createKey(String room, Integer day, Integer hour) {
 		String key = room+"-"+day+"-"+hour;
 		return key;
 	}
 	
+	/**
+	 * Obte l'aula a partir d'una clau.
+	 * @param key	Clau.
+	 * @return El nom de l'aula la qual li pertany la clau {@link CtrlSchedule#key}.
+	 */
 	private static String getRoomFromKey(String key) {
 		return key.split("-")[0]; 
 	}
 	
+	/**
+	 * Obté l'hora a partir d'una clau.
+	 * @param key	Clau.
+	 * @return L'hora la qual li pertany {@link CtrlSchedule#key}.
+	 */
 	private static Integer getHourFromKey(String key) {
 		Integer hour =  Integer.valueOf(key.split("-")[2]); 
 		return hour;
 		
 	}
 	
+	/**
+	 * Obté el dia a partir d'una clau.
+	 * @param key	Clau.
+	 * @return El dia el qual li pertany {@link CtrlSchedule#key}.
+	 */
 	private static Integer getDayFromKey(String key) {
 		return Integer.valueOf(key.split("-")[1]); 
 	}
 
 	/**
-	 * Funci� principal que genera un horari amb les dades donades.
-	 * @param schedule Objecte de la classe Schedule que contindr� l'horari generat al finalitzar l'algoritme.
+	 * Funcio principal que genera un horari amb les dades donades.
+	 * @param schedule Objecte de la classe Schedule que contindra l'horari generat al finalitzar l'algoritme.
 	 * @return  true si s'ha trobat un horari valid, sino false.
 	 */
 	public boolean generateSchedule(Schedule schedule) {
@@ -160,12 +182,18 @@ public class CtrlSchedule {
 	}
 	
 	/**
-	 * Funci� de Forward Checking que comprova la validesa de l'�ltima assignaci� i reduiex les possibles assignacions si es possible.
-	 * @param lecture �ltima 'lecture' que s'ha assignat a l'horari, i es vol comprovar la seva validesa.
-	 * @param room Aula en la qual s'ha assignat la 'lecture'.
-	 * @param day Dia en el que s'ha assignat la 'lecture'.
-	 * @param hour Hora en la que s'ha assignat la 'lecture'.
-	 * @return True si l'assigaci� a comprovar es valida, sino false.
+	 * Funcio de Forward Checking que comprova la validesa de l'ultima assignacio i reduiex les possibles assignacions si es possible.
+	 * @param lecture 					Ultima 'lecture' que s'ha assignat a l'horari, i es vol comprovar la seva validesa.
+	 * @param room 						Aula en la qual s'ha assignat la 'lecture'.
+	 * @param day 						Dia en el que s'ha assignat la 'lecture'.
+	 * @param hour 						Hora en la que s'ha assignat la 'lecture'.
+	 * @param numPossibleAlloc 			Numero de possibles assignacions per cada sessio.
+	 * @param assignations				Assignacions.
+	 * @param referencedRooms			Aules referenciades.
+	 * @param numPossibleAllocChanges	Numero possible de canvis d'assignacio.
+	 * @param assigChanges				Canvis d'assignacio.
+	 * @param referencedRoomsChanges	Numero de canvis d'aula referenciats.
+	 * @return True si l'assigacio a comprovar es valida, sino false.
 	 */
 	private static boolean forwardCheck(String lecture, String room, Integer day, Integer hour, 
 			Map<String, Integer> numPossibleAlloc, Map<String, PosAssig> assignations, Map<String, Integer> referencedRooms,
@@ -282,8 +310,12 @@ public class CtrlSchedule {
 	}
 
 	/**
-	 * Funci� que fa Backjumping, utilitzat en l'algoritme que genera un horari.
-	 * @param schedule Objecte de la classe Schedule que contindr� l'horari generat al finalitzar l'algoritme.
+	 * Algorisme de backjumping.
+	 * @param schedule			Objecte de la classe Schedule que contindra l'horari generat al finalitzar l'algoritme.
+	 * @param numPossibleAlloc	Numero de possibles assignacions.
+	 * @param assignations		Assignacions.
+	 * @param referencedRooms	Aules referenciades.
+	 * @return True si s'ha pogut generar un horari. False en cas contrari.
 	 */
 	private static boolean backjumping(Schedule schedule, Map<String, Integer> numPossibleAlloc, Map<String, PosAssig> assignations, Map<String, Integer> referencedRooms) {	
 		Environment env = Environment.getInstance();

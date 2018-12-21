@@ -10,22 +10,22 @@ import domain.classes.Lecture;
 import domain.classes.PosAssig;
 import domain.classes.Subject;
 
-/** Restricci� sobre els correquisits de les assignatures.
+/** Restriccio sobre els correquisits de les assignatures.
  *  Dos grups amb el mateix parentCode de dues assignatures correquisites entre elles no poden anar a un mateix dia i hora.
- *  	Ex: PROP 10 T no pot anar al mateix dia i hora que TC 15 P, per� s� pot anar amb F 11 L i FM 10 T.
+ *  	Ex: PROP 10 T no pot anar al mateix dia i hora que TC 15 P, pero si pot anar amb F 11 L i FM 10 T.
  * @author Xavier Lacasa Curto
 */
 
 public class CorequisitRestriction extends NaryRestriction{
 	
-	/** Constructora est�ndard.
+	/** Constructora estandard.
 	 */
 	public CorequisitRestriction() {
 		super(false); //negotiable
 	}
 	
 	/**
-	 * @return El String que identifica la restricci�.
+	 * @return El String que identifica la restriccio.
 	 */
 	public String toString() {
 		return CorequisitRestriction.class.getSimpleName();
@@ -38,13 +38,13 @@ public class CorequisitRestriction extends NaryRestriction{
 		return "Corequisit Restriction";
 	}
 	
-	/** Validaci� de la restricci�.
-	 * @param lecture	Sessi� que hem afegit a l'horari.
-	 * @param room		Aula on hem afegit la sessi�.
-	 * @param day		Dia en el que hem afegit la sessi�.
-	 * @param hour		Hora en la que hem afegit la sessi�.
-	 * @return True si, un cop eliminat les aules en les que cada sessi� no podia anar, totes les sessions restant poden anar com a m�nim a una aula. False en cas contrari.
-	 * Les aules que s'eliminen per cada sessi� restant s�n aquelles que farien anar dos grups (un de cada assignatura correquisites entre elles), amb mateix parentCode, en un dia i hora concrets.
+	/** Validacio de la restriccio.
+	 * @param lecture	Sessio que hem afegit a l'horari.
+	 * @param room		Aula on hem afegit la sessio.
+	 * @param day		Dia en el que hem afegit la sessio.
+	 * @param hour		Hora en la que hem afegit la sessio.
+	 * @return True si, un cop eliminat les aules en les que cada sessio no podia anar, totes les sessions restant poden anar com a minim a una aula. False en cas contrari.
+	 * Les aules que s'eliminen per cada sessio restant son aquelles que farien anar dos grups (un de cada assignatura correquisites entre elles), amb mateix parentCode, en un dia i hora concrets.
 	*/
 	//Si la assignatura A �s correq de B, llavors hi ha d'haver alguna combinaci� en que algun grup de A i un grup que pot ser diferent de B no es solapen
 	public boolean validate(String room, Integer day, Integer hour, String lecture, Integer d, Integer h, String r, String l) {

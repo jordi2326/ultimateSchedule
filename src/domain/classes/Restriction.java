@@ -1,29 +1,29 @@
 package domain.classes;
 
-/** Representa una restricci� que es pot aplicar a l'hora de generar un horari.
+/** Representa una restriccio que es pot aplicar a l'hora de generar un horari.
  * @author Xavier Lacasa Curto
 */
 
 public abstract class Restriction {
 	
-	/** Indica si la restricci� �s negociable.
+	/** Indica si la restriccio es negociable.
 	*/
 	private boolean negotiable;
 	
-	/** Indica si la restricci� est� activada.
+	/** Indica si la restriccio esta activada.
 	*/
 	private boolean enabled = true;
 	
 	
-	/** Constructora est�ndard.
-	 * @param negotiable Indica si �s o no negociable.
+	/** Constructora estandard.
+	 * @param negotiable Indica si es o no negociable.
 	*/
 	public Restriction(boolean negotiable) {
 		this.negotiable = negotiable;
 	}
 	
 	/**
-	 * Retorna si la restricci� �s negociable.
+	 * Retorna si la restriccio es negociable.
 	 * @return {@link Restriction#negotiable}
 	 */
 	public boolean isNegotiable() {
@@ -31,7 +31,7 @@ public abstract class Restriction {
 	}
 	
 	/**
-	 * Retorna si la restricci� est� activada.
+	 * Retorna si la restriccio esta activada.
 	 * @return {@link Restriction#enabled}
 	 */
 	public boolean isEnabled() {
@@ -39,8 +39,8 @@ public abstract class Restriction {
 	}
 	
 	/**
-	 * Activa la restricci�.
-	 * @return True si la restricci� �s negociable. False en cas contrari.
+	 * Activa la restriccio.
+	 * @return True si la restriccio es negociable. False en cas contrari.
 	 */
 	public boolean enable() {
 		if (negotiable) {
@@ -51,8 +51,8 @@ public abstract class Restriction {
 	}
 	
 	/**
-	 * Desactiva la restricci�.
-	 * @return True si la restricci� �s negociable. False en cas contrari.
+	 * Desactiva la restriccio.
+	 * @return True si la restriccio es negociable. False en cas contrari.
 	 */
 	public boolean disable() {
 		if (negotiable) {
@@ -63,7 +63,7 @@ public abstract class Restriction {
 	}
 	
 	/**
-	 * @return El String que identifica la restricci�.
+	 * @return El String que identifica la restriccio.
 	 */
 	public abstract String toString();
 	
