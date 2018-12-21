@@ -34,7 +34,7 @@ classes: $(CLASSES:.java=.class)
 run:
 	$(JVM) -cp $(RCPATHS) RealMain
 
-run-old: $(BIN)$(MAIN).class
+run-old:
 	$(JVM) -cp $(RCPATHS) Main
 
 clean:
