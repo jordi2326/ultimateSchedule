@@ -174,10 +174,10 @@ public class NewGroupView extends JDialog {
 				} catch (ParseException e1) {}
 				Integer inNPeople = (Integer) spNPeople.getValue();
 				
-				String inParentGroupCode = tfParentGroupCode.getSelectedText(); 
+				String inParentGroupCode = tfParentGroupCode.getText(); 
 				Boolean inNeedsComputers = cbNeedsComputers.isSelected();
 				String inType = cbbType.getSelectedItem().toString();
-				String inDayPeriod  = cbbType.getSelectedItem().toString();
+				String inDayPeriod  = cbbDayPeriod.getSelectedItem().toString();
 				
 				//ArrayList<String> lectures;
 				

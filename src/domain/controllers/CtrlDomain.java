@@ -226,22 +226,16 @@ public class CtrlDomain {
         			env.addLecture(l);
         			ls.add(l.toString());
         		}
-    			Group g = new Group(
-    					gcode,
-    					((Long) group.get("numPeople")).intValue(),
-    					(String) group.get("parentGroupCode"),
-    					scode,
-    					(Boolean) group.get("needsComputers"), //hopefully aixi ja funcionara
-    					Group.Type.valueOf((String) group.get("type")),
-    					Group.DayPeriod.valueOf((String) group.get("dayPeriod")),
-    					ls);
+    			//Group g = new Group(
+    			//		gcode, ((Long) group.get("numPeople")).intValue(), (String) group.get("parentGroupCode"), scode, (Boolean) group.get("needsComputers"), Group.Type.valueOf((String) group.get("type")), Group.DayPeriod.valueOf((String) group.get("dayPeriod")), ls);
     			//groups.put(g.toString(), g);
-    			env.addGroup(g);    			
-    			groupsToString.add(g.toString());
+    			env.addGroup(gcode, (Integer)((Long) group.get("numPeople")).intValue(), (String) group.get("parentGroupCode"), scode, (Boolean) group.get("needsComputers"), (String)group.get("type"), (String)group.get("dayPeriod"), ls);    			
+    			groupsToString.add(scode + "-" + gcode + "-" + Group.Type.valueOf((String) group.get("type")));
+    			// subject + "-" + code + "-" + type
     			//Afegim la restriccio d'aquest grup de mati o tarda o indiferent
     						
-			DayPeriodRestriction dpr = new DayPeriodRestriction(6, g.getDayPeriod());
-			env.addUnaryRestriction(g.toString(), dpr);
+			DayPeriodRestriction dpr = new DayPeriodRestriction(6, Group.DayPeriod.valueOf((String) group.get("dayPeriod")));
+			env.addUnaryRestriction(scode + "-" + gcode + "-" + Group.Type.valueOf((String) group.get("type")), dpr);
   
         	}
         	env.addSubject(scode, (String) subject.get("name"), (String) subject.get("level"), groupsToString, (ArrayList<String>) subject.get("coreqs"));
@@ -697,5 +691,14 @@ public class CtrlDomain {
 		 */
 		public boolean removeRoom(String code) {
 			return environment.getInstance().removeRoom(code);
+		}
+		
+		public boolean addGroup(String inCode, Integer inNPeople, String inParentGroupCode, String subjectCode,
+				Boolean inNeedsComputers, String inType, String inDayPeriod, ArrayList<String> arrayList) {
+			System.out.println(inCode + " " + inParentGroupCode);
+			if (inCode == null || inCode.isEmpty() || inParentGroupCode == null || inParentGroupCode.isEmpty()) return false;
+			
+			return environment.getInstance().addGroup(inCode, inNPeople, inParentGroupCode, subjectCode,
+					inNeedsComputers, inType, inDayPeriod, arrayList);
 		}
 }
