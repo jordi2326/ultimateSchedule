@@ -86,6 +86,7 @@ public class CtrlDomain {
 	public boolean generateSchedule() {
 		CtrlSchedule ctS = CtrlSchedule.getInstance();
 		//Filtrem restriccions unaries
+		schedule = new Schedule();
 		boolean a = ctS.generateSchedule(schedule);
 		return a;
 	}
