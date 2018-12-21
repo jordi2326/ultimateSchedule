@@ -186,6 +186,11 @@ public class CtrlDomain {
 
 		System.out.println("|---------------------------------------------------------------------------------------------------------------|");
 	}
+	
+	String getEnvirnonmentPath() {
+		Environment env = Environment.getInstance();
+		return env.getPath();
+	}
 
 	/**
 	 * Importa un entorn (aules, assignatures, aules) desde un arxiu.
