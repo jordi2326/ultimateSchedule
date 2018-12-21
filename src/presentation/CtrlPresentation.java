@@ -165,10 +165,12 @@ public class CtrlPresentation {
 	 * @throws ParseException
 	 * @throws IOException 
 	 */
-	public boolean importSchedule(String filename)
-		throws ParseException, IOException {
-		
-		return ctrlDomain.importSchedule(filename, true);
+	public boolean importSchedule(String filename) {
+		try {
+			return ctrlDomain.importSchedule(filename, true);
+		} catch (ParseException | IOException e) {
+			return false;
+		}
 	}
 	
 	/**
