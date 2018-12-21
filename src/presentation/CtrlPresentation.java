@@ -283,7 +283,7 @@ public class CtrlPresentation {
         		Toolkit.getDefaultToolkit().beep();
         		progressV.setVisible(false);
         		//progressV.dispose();
-        		if(isCancelled()) {
+        		if(!isCancelled()) {
         			try {
     					if(get()) {
     						mainView.reloadSchedule();

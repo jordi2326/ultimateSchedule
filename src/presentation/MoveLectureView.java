@@ -36,17 +36,8 @@ public class MoveLectureView {
 	
 	public void makeVisible() {
 		int result = JOptionPane.showOptionDialog(null, message, "Move Lecture", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
-		if (result == JOptionPane.OK_OPTION) {
-	         System.out.println("x value: " + ((JComboBox<String>) message[4]).getSelectedItem());
-	         System.out.println("y value: " + ((JComboBox<String>) message[6]).getSelectedItem());
-	         System.out.println("z value: " + ((JComboBox<String>) message[8]).getSelectedItem());
-	         ctrlPresentation.moveLecture(duration, iniDay, ((JComboBox<String>) message[4]).getSelectedIndex(), iniHour, ((JComboBox<String>) message[6]).getSelectedIndex(), iniRoom, (String) ((JComboBox<String>) message[8]).getSelectedItem());
-	    }
-	}
-	
-	private void initializeComponents(String group, int duration, int day, int hour, String room) {
-		
-		
-		//JOptionPane optionPane = new JOptionPane(message);
+		if (result == JOptionPane.OK_OPTION)
+	         if(!ctrlPresentation.moveLecture(duration, iniDay, ((JComboBox<String>) message[4]).getSelectedIndex(), iniHour, ((JComboBox<String>) message[6]).getSelectedIndex(), iniRoom, (String) ((JComboBox<String>) message[8]).getSelectedItem()))
+	        	 JOptionPane.showMessageDialog(null, "Movement not valid. Try something else", "Error", JOptionPane.ERROR_MESSAGE);
 	}
 }

@@ -223,6 +223,7 @@ public class MainView extends JFrame{
 			            public void actionPerformed(ActionEvent e) {
 			            	MoveLectureView mlView = new MoveLectureView(value[0], duration, col, row, value[1]);
 			            	mlView.makeVisible();
+			            	reloadSchedule();
 			            }
 			        });
 			        

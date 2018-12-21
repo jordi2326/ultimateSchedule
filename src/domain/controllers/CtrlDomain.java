@@ -638,22 +638,6 @@ public class CtrlDomain {
 			return true;
 		}
 
-		/** Afageix un grup en un dia i aula determinats.
-		*   @param duration Duraci� del grup.
-		*	@param room		Aula on eliminarem el grup.
-		*	@param day		Dia on eliminarem el grup.
-		*	@param hour		Hora on eliminarem el grup.
-		*	@return True si s'ha pogut afegir el grup. Fals en cas contrari.
-		*/
-		public boolean putLecture(int duration, String room, int day, int hour) {
-			String lecture = schedule.getSchedule().get(room)[day][hour];
-			for (int i = 0; i < duration; i++) {
-				boolean removeOne = schedule.putLecture(room, day, hour + i, lecture);
-				if (!removeOne) return false;
-			}
-			return true;
-		}
-
 		private boolean validateAllRestrictions(String lecture, int day, int hour, String room, int duration) { 
 			Environment env = Environment.getInstance();
 			String group = env.getLectureGroup(lecture);
@@ -704,7 +688,7 @@ public class CtrlDomain {
 		*	@return True si s'ha pogut moure el grup. Fals en cas contrari.
 		*/
 		public boolean moveLecture(int duration, int iniDay, int fiDay, int iniHour, int fiHour, String iniRoom, String fiRoom) {
-			String lecture = schedule.getSchedule().get(fiRoom)[iniDay][iniHour];
+			String lecture = schedule.getSchedule().get(iniRoom)[iniDay][iniHour];
 			System.out.println(lecture);
 			// Eliminar lecture
 			boolean removed = removeLecture(duration, iniRoom, iniDay, iniHour);
@@ -716,12 +700,16 @@ public class CtrlDomain {
 				if (restr) {
 					// Afegir-lo al lloc nou
 					System.out.println("VALID");
-					putLecture(duration, fiRoom, fiDay, fiHour);
+					while(--duration >= 0) {
+						schedule.putLecture(fiRoom, fiDay, fiHour + duration, lecture);
+					}
 					return true;
 				} else {
 					System.out.println("INVALID");
 					// Tornar a afegir-lo al lloc inicial
-					putLecture(duration, iniRoom, iniDay, iniHour);
+					while(--duration >= 0) {
+						schedule.putLecture(iniRoom, iniDay, iniHour + duration, lecture);
+					}
 					return false;
 				}
 			} else return false;
