@@ -61,7 +61,9 @@ public class CtrlSchedule {
 	}
 	
 	private static String createKey(String room, Integer day, Integer hour) {
-		return room+"-"+hour+"-"+day;
+		String key = room+"-"+day+"-"+hour;
+		//System.out.println(key);
+		return key;
 	}
 	
 	private static String getRoomFromKey(String key) {
@@ -69,11 +71,13 @@ public class CtrlSchedule {
 	}
 	
 	private static Integer getHourFromKey(String key) {
-		return Integer.valueOf(key.split("-")[1]); 
+		Integer hour =  Integer.valueOf(key.split("-")[2]); 
+		return hour;
+		
 	}
 	
 	private static Integer getDayFromKey(String key) {
-		return Integer.valueOf(key.split("-")[2]); 
+		return Integer.valueOf(key.split("-")[1]); 
 	}
 
 	/**
@@ -95,6 +99,7 @@ public class CtrlSchedule {
 			Set<String> roomSet = new HashSet<String>();
 			// get possible rooms for group g				
 			for (String r : env.getAllRooms()) {
+				System.out.println(r);
 				if (env.getGroupNumOfPeople(g) <= env.getRoomCapacity(r)) {
 					//Group fits in room
 					if ((env.getGroupType(g).equals(Group.Type.LABORATORY) && env.roomHasComputers(r))
@@ -105,7 +110,7 @@ public class CtrlSchedule {
 				}
 			}
 			//now roomSet contains possible rooms for group
-			for (String l : env.getAllLectures()) {
+			for (String l : env.getGroupLectures(g)) {
 				//Initialize number of possible allocations to zero
 				numPossibleAlloc.put(l, 0);
 				int lecDuration = env.getLectureDuration(l);
@@ -121,6 +126,7 @@ public class CtrlSchedule {
 							}
 						}
 						if (valid) {
+							//System.out.println(l + " - " + day + " :: " + hour);
 							//Add all rooms from that day and hour to total allocations of lecture l
 							numPossibleAlloc.put(l, numPossibleAlloc.get(l) + totalGroupRooms);
 							if (!assignations.containsKey(l)) {
@@ -143,7 +149,9 @@ public class CtrlSchedule {
 				if (numPossibleAlloc.get(l).equals(0)) {
 					return false;
 				}
-				if (assignations.get(l).isEmpty()) return false;
+				if (assignations.get(l).isEmpty()) {
+					return false;
+				}
 			}
 			//COMPROVAR AL FINAL QUE HI HA IGUAL O MENYS LECTURES QUE REFERENCED ROOMS
 			if (referencedRooms.size() < assignations.size()) {
@@ -174,7 +182,7 @@ public class CtrlSchedule {
 					referencedRooms.put(key, referencedRooms.get(key)-1);
 					//Guardar canvis
 					if (!referencedRoomsChanges.containsKey(key)) {
-						referencedRoomsChanges.put(key, 1);
+						referencedRoomsChanges.put(key, 0);
 					}
 					referencedRoomsChanges.put(key, referencedRoomsChanges.get(key)+1);
 					//If that room+hour+day isn't referenced by any lecture, delete it
@@ -191,6 +199,9 @@ public class CtrlSchedule {
 		//MIRAR SI FUNCIONA PER LODE SHALLOW COPY
 		numPossibleAlloc.remove(lecture);
 		assignations.remove(lecture);
+		
+		if (assignations.size() == 0) return true;
+		
 		for (String l : assignations.keySet()) {
 			String g = env.getLectureGroup(l);
 			String overlapRestr = LectureFromSameGroupOverlapRestriction.class.getSimpleName();
@@ -225,7 +236,7 @@ public class CtrlSchedule {
 								String key = createKey(r, day, h);
 								//Guardar canvis
 								if (!referencedRoomsChanges.containsKey(key)) {
-									referencedRoomsChanges.put(key, 1);
+									referencedRoomsChanges.put(key, 0);
 								}
 								referencedRoomsChanges.put(key, referencedRoomsChanges.get(key)+1);
 								//Treure ref
@@ -237,7 +248,7 @@ public class CtrlSchedule {
 								}
 								referencedRoomsChanges.put(key, referencedRoomsChanges.get(key)+1);
 								if (!numPossibleAllocChanges.containsKey(l)) {
-									numPossibleAllocChanges.put(l, 1);
+									numPossibleAllocChanges.put(l, 0);
 								}
 								numPossibleAllocChanges.put(l, numPossibleAllocChanges.get(l)+1);
 								//Substract numPossibleAlloc
@@ -245,6 +256,7 @@ public class CtrlSchedule {
 								if (numPossibleAlloc.get(l).equals(0)) {
 									//If the lecture can't be allocated anymore, return fals
 									//numPossibleAlloc.remove(l);
+									System.out.println("HA FALLAT AQUI 1");
 									return false;
 								}
 								
@@ -262,10 +274,14 @@ public class CtrlSchedule {
 					++h;
 				}
 			}
-			if (assignations.get(l).isEmpty()) return false;
+			if (assignations.get(l).isEmpty()) {
+				System.out.println("HA FALLAT AQUI 2");
+				return false;
+			}
 		}
 		//COMPROVAR AL FINAL QUE HI HA IGUAL O MENYS LECTURES QUE REFERENCED ROOMS
 		if (referencedRooms.size() < assignations.size()) {
+			System.out.println("HA FALLAT AQUI 3");
 			return false;
 		}
 		return true;
@@ -281,6 +297,7 @@ public class CtrlSchedule {
 		if (assignations.isEmpty()) {
 			return true;
 		}	
+		
 		//Get lecture with the least amount of possibilities to insert it first
 		Integer minLecture = Integer.MAX_VALUE;
 		String lecture = null; //lo de null es per evitar que eclipse dongui errors
@@ -290,6 +307,7 @@ public class CtrlSchedule {
 				lecture = entry.getKey();
 			}
 		}
+		System.out.println("LECTURE SELECTED: " + lecture);
 		//Order room+hour+day from the lecture with less possibilities, in ascending number of references from other lectures
 		//Because the room with the least amount of references is most likely not gonna be used by any other lecture
 		PriorityQueue<Map.Entry<Integer, String>> pq = new PriorityQueue<Map.Entry<Integer, String>>(new groupHeuristicComparator()); // PriorityQueue<Pair<Int, room.toString()>>
@@ -321,6 +339,16 @@ public class CtrlSchedule {
 			Integer hour = getHourFromKey(key);
 			
 			
+			if (assignations.size() ==1) {
+				System.out.println("HEM FICAT UNA!");
+				Integer h = 0;
+				while (h < env.getLectureDuration(lecture)) {
+					schedule.putLecture(room, day, hour+h, lecture);
+					++h;
+				}
+				return true;
+			}
+			
 			//Try forwardChecking and generating schedule before the insertion so that if it fails we don't have to delete lecture from schedule	
 			Map<String, PosAssig> assigChanges = new HashMap<String, PosAssig>();
 			Map<String, Integer> numPossibleAllocChanges = new HashMap<String, Integer>();
@@ -334,8 +362,10 @@ public class CtrlSchedule {
 					//If backjumping returned true, the schedule is possible, so insert the lecture
 					//All lectures from here on have been inserted recursively
 					Integer h = 0;
+					System.out.println("HEM FICAT UNA!");
 					while (h < env.getLectureDuration(lecture)) {
-						schedule.putLecture(room, day, hour+h, lecture);
+						Integer auxHour = new Integer(hour+h);
+						schedule.putLecture(room, day, auxHour, lecture);
 						++h;
 					}
 					return true;

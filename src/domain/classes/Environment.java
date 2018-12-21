@@ -224,18 +224,20 @@ public class Environment {
 	public boolean addGroup(String inCode, Integer inNPeople, String inParentGroupCode, String subjectCode,
 			Boolean inNeedsComputers, String inType, String inDayPeriod, ArrayList<String> lectures) {
 		if (!groups.containsKey(subjectCode + "-" + inCode + "-" + inType)) {
-			Group g = new Group(inCode, inNPeople, inParentGroupCode, subjectCode, inNeedsComputers, Group.Type.valueOf((String) inType), Group.DayPeriod.valueOf((String) inDayPeriod), lectures);
-			
-			groups.put(g.toString(), g);
-			naryRestrictions.put(g.toString(), groupRestr);
-			
-			subjects.get(subjectCode).addGroup(g.toString());
-			
-			//Afegim la restriccio d'aquest grup de mati o tarda o indiferent
 
-			DayPeriodRestriction dpr = new DayPeriodRestriction(6, Group.DayPeriod.valueOf(inDayPeriod));
-			addUnaryRestriction(subjectCode + "-" + inCode + "-" + Group.Type.valueOf(inType), dpr);
-			System.out.println(dpr.toString());
+			Group g = new Group(inCode, inNPeople, inParentGroupCode, subjectCode, inNeedsComputers, 
+					Group.Type.valueOf(inType), Group.DayPeriod.valueOf(inDayPeriod), lectures);	
+
+			
+
+			groups.put(g.toString(), g);
+			DayPeriodRestriction dpr = new DayPeriodRestriction(6, g.getDayPeriod());
+			if (!unaryRestrictions.containsKey(g.toString())) {
+				unaryRestrictions.put(g.toString(), new HashMap<String, UnaryRestriction>());
+			}
+			unaryRestrictions.get(g.toString()).put(dpr.toString(), dpr);
+			naryRestrictions.put(g.toString(), groupRestr);
+			subjects.get(subjectCode).addGroup(g.toString());
 			return true;
 		}
 		

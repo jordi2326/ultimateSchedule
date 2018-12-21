@@ -24,9 +24,10 @@
 	          {
 	            "code": "10",
 	            "numPeople": 90,
-	            "parentGroupCode": "10",
+              "parentGroupCode": "10",
+              "needsComputers": false,
 	            "type": "THEORY",
-	            "dayPeriod": "MORNING",
+	            "dayPeriod": "AFTERNOON",
 	            "lecturesDuration": [1]
 	          }
 	      ] 
@@ -42,6 +43,7 @@
               "code": "10",
               "numPeople": 10,
               "parentGroupCode": "10",
+              "needsComputers": false,
               "type": "THEORY",
               "dayPeriod": "MORNING",
               "lecturesDuration": [1]
@@ -51,22 +53,13 @@
     ], 
     "restrictions": 
       [
-       {
+        {
           "name": "SpecificDayOrHourRestriction",
           "info":
           {
             "group": "M2-10-THEORY",
-            "day": 0,
+            "day": 1,
             "hour": 0
-          }
-        },
-         {
-          "name": "SpecificDayOrHourRestriction",
-          "info":
-          {
-            "group": "M2-10-THEORY",
-            "day": 0,
-            "hour": 1
           }
         }
       ]

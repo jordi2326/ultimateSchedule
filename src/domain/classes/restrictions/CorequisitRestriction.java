@@ -52,18 +52,20 @@ public class CorequisitRestriction extends NaryRestriction{
 		//Get inserted lecture info
 		Integer duration = env.getLectureDuration(lecture);
 		String group = env.getLectureGroup(lecture);
+		String groupCode = env.getLectureGroup(lecture);
 		String subject = env.getGroupSubject(group);
 		String groupParentCode = env.getGroupParentGroupCode(group);
 		ArrayList<String> coreqs = env.getSubjectCoreqs(subject);
 		//get checking lecture (l) info
 		Integer dur = env.getLectureDuration(l);
 		String g = env.getLectureGroup(l);
+		String gcode = env.getLectureGroup(l);
 		String s = env.getGroupSubject(g);
 		String gpcode = env.getGroupParentGroupCode(g);
 		ArrayList<String> cqs = env.getSubjectCoreqs(s);
 		//Nomes importa si son coreqs si tenen el mateix parent group
 		Boolean sonCoreqs = false;
-		if (gpcode.equals(groupParentCode)) {
+		if (groupCode.equals(gpcode) || groupCode.equals(gcode) || gcode.equals(groupParentCode)) {
 			for (String c : cqs) {
 				if (c.equals(subject)) {
 					sonCoreqs = true;
