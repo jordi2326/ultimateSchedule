@@ -21,7 +21,7 @@ public class CorequisitRestriction extends NaryRestriction{
 	/** Constructora est�ndard.
 	 */
 	public CorequisitRestriction() {
-		super(true); //negotiable
+		super(false); //negotiable
 	}
 	
 	/**

@@ -43,6 +43,14 @@ public class SpecificDayOrHourRestriction extends UnaryRestriction{
 		return res;
 	}
 	
+	public Integer getDay() {
+		return day;
+	}
+	
+	public Integer getHour() {
+		return hour;
+	}
+	
 	/**
 	 * Validaci� de la restricci�.
 	 * @param day		Dia en que, combinat amb l'hora, no pot anar el grup.

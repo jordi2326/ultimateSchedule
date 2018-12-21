@@ -13,6 +13,7 @@ import domain.classes.restrictions.LectureFromSameGroupOverlapRestriction;
 import domain.classes.restrictions.NaryRestriction;
 import domain.classes.restrictions.OccupiedRoomRestriction;
 import domain.classes.restrictions.ParentGroupOverlapRestriction;
+import domain.classes.restrictions.SpecificDayOrHourRestriction;
 import domain.classes.restrictions.SubjectLevelRestriction;
 import domain.classes.restrictions.UnaryRestriction;
 
@@ -127,6 +128,19 @@ public class Environment {
 	
 	public Boolean groupHasNaryRestrictions(String g) {
 		return naryRestrictions.containsKey(g);
+	}
+	
+	public  Set<ArrayList<Integer>> getSpecificDayHourInfo(String g) {
+		Set<ArrayList<Integer>> info = new HashSet<ArrayList<Integer>>();
+		for (UnaryRestriction r : unaryRestrictions.get(g).values()) {
+			if (r.isNegotiable()) {
+				ArrayList<Integer> dayAndHours = new ArrayList<>();
+				dayAndHours.add( ((SpecificDayOrHourRestriction) r).getDay() );
+				dayAndHours.add( ((SpecificDayOrHourRestriction) r).getHour() );
+				info.add(dayAndHours);
+			}
+		}
+		return info;
 	}
 	
 	public Set<String> getGroupUnaryRestrictions(String g) {

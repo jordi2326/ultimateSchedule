@@ -19,7 +19,7 @@ public class SubjectLevelRestriction extends NaryRestriction {
 	/** Constructora est�ndard.
 	 */
 	public SubjectLevelRestriction() {
-		super(true); //negotiable
+		super(false); //negotiable
 	}
 	
 	/**

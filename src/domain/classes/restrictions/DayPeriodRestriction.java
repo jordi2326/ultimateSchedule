@@ -25,7 +25,7 @@ public class DayPeriodRestriction extends UnaryRestriction{
 	 * @param dayPeriod	Per�ode del dia en el que ha d'anar el grup.
 	 */
 	public DayPeriodRestriction(Integer midDay, Group.DayPeriod dayPeriod) {
-		super(true); //negotiable
+		super(false); //negotiable
 		this.midDay = midDay;
 		this.dayPeriod = dayPeriod;
 	}
