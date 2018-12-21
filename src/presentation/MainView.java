@@ -18,6 +18,8 @@ import javax.swing.tree.TreePath;
 
 import org.json.simple.parser.ParseException;
 
+import domain.controllers.CtrlDomain;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -49,7 +51,7 @@ public class MainView extends JFrame{
 	final private JFileChooser fc = new JFileChooser();
 	private JCheckBoxTree treeGroups = new JCheckBoxTree();
 	private JCheckBoxTree treeRooms = new JCheckBoxTree();
-	private JButton btnLoadEnvironment, btnLoadSchedule, btnGenSchedule, btnSaveSchedule, btnConfigRestrictions;
+	private JButton btnLoadEnvironment, btnLoadSchedule, btnGenSchedule, btnSaveSchedule, btnConfigRestrictions, btnSaveEnvironment;
 	private JLabel envText;
 	private ScheduleTable table;
 	private boolean environmentLoaded, scheduleLoaded;
@@ -165,7 +167,7 @@ public class MainView extends JFrame{
 				//String m = (String) JOptionPane.showInputDialog(MainView.this, "Enter filename:", "Save Schedule", JOptionPane.PLAIN_MESSAGE, null, null, "schedule.json");
 				//JOptionPane.showMessageDialog(MainView.this, "Mehhh.. Doesn't work yet", null, JOptionPane.WARNING_MESSAGE);
 				try {
-					saveLocalFile();
+					exportSchedule();
 				} catch (IOException | NullPointerException | ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -182,6 +184,25 @@ public class MainView extends JFrame{
 				ctrlPresentation.switchToRestrictionsView();
 				/**SDHRestrictionView rView = new SDHRestrictionView("", 0, 0);
 				rView.makeVisible();**/
+			}
+		});
+		
+		btnSaveEnvironment = new JButton("Save Environment");
+		buttonsPanel.add(btnSaveEnvironment);
+		btnSaveEnvironment.addActionListener(new ActionListener() {
+			@Override	
+			public void actionPerformed(ActionEvent e) {
+				//JLabel tfFilename = new JLabel("Filename");
+				//JTextField tfFilename = new JTextField();
+				//JOptionPane.showInputDialog(parentComponent, message, title, messageType)
+				//String m = (String) JOptionPane.showInputDialog(MainView.this, "Enter filename:", "Save Schedule", JOptionPane.PLAIN_MESSAGE, null, null, "schedule.json");
+				//JOptionPane.showMessageDialog(MainView.this, "Mehhh.. Doesn't work yet", null, JOptionPane.WARNING_MESSAGE);
+				try {
+					exportEnvironment();
+				} catch (IOException | NullPointerException | ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		
@@ -419,7 +440,7 @@ public class MainView extends JFrame{
 	 * @throws IOException 
 	 * @throws ParseException **/
 
-	public boolean saveLocalFile() throws NullPointerException, IOException, ParseException {
+	public boolean exportSchedule() throws NullPointerException, IOException, ParseException {
 	    boolean acceptable = false;
 	    String filepath = "";
 	    do {
@@ -440,6 +461,30 @@ public class MainView extends JFrame{
 	    } while (!acceptable);
 
 	    return ctrlPresentation.exportSchedule(filepath);
+
+	}
+	
+	public boolean exportEnvironment() throws NullPointerException, IOException, ParseException {
+	    boolean acceptable = false;
+	    String filepath = "";
+	    do {
+	        File f = new File("data/environment");
+	        fc.setCurrentDirectory(f);
+	        if (fc.showSaveDialog(MainView.this) == JFileChooser.APPROVE_OPTION) {
+	        	filepath = fc.getSelectedFile().getAbsolutePath();
+	            f = fc.getSelectedFile();
+	            //System.out.println(theFile);
+	            if (f.exists()) {
+	            	JOptionPane.showMessageDialog(MainView.this, "Choose another filename.", "File already exists", JOptionPane.PLAIN_MESSAGE);
+	            } else {
+	                acceptable = true;
+	            }
+	        } else {
+	            acceptable = true;
+	        }
+	    } while (!acceptable);
+
+	    return ctrlPresentation.exportEnvironment(filepath);
 
 	}
 	
@@ -498,11 +543,45 @@ public class MainView extends JFrame{
 	        DefaultMutableTreeNode node = e.nextElement();
 	        if (node.toString().equals(name)) {
 	        	root.remove(node);
-	        	treeRooms.setModelRemoved(model, new TreePath(node.getPath()));
+	        	treeGroups.setModelRemoved(model, new TreePath(node.getPath()));
 	            break;
 	        }
 	    }
-	    ((DefaultTreeModel) treeRooms.getModel()).reload();
+	    ((DefaultTreeModel) treeGroups.getModel()).reload();
+	}
+	
+	public void groupAdded(String subjectName, String name) {
+		for(String s: ctrlPresentation.getGroupsNamesFromSuject(subjectName))
+			System.out.println("> "+s);
+		
+		DefaultTreeModel model = (DefaultTreeModel) treeGroups.getModel();
+		DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
+		//DefaultMutableTreeNode child = new DefaultMutableTreeNode(name);
+		Enumeration<DefaultMutableTreeNode> s = root.children();
+		while (s.hasMoreElements()) {
+	        DefaultMutableTreeNode subjectNode = s.nextElement();
+	        if (subjectNode.toString().equals(subjectName)) {
+		        /**Enumeration<DefaultMutableTreeNode> g = subjectNode.children();
+	        	while (g.hasMoreElements()) {
+		        	DefaultMutableTreeNode groupNode = g.nextElement();
+		        	subjectNode.remove(groupNode);
+		        	treeGroups.setModelRemoved(model, new TreePath(groupNode.getPath()));
+		        }
+	        	for(String groupS : ctrlPresentation.getGroupsNamesFromSuject(subjectName)) {
+	        		DefaultMutableTreeNode group = new DefaultMutableTreeNode(groupS);
+	        		subjectNode.add(group);
+	        		treeGroups.setModelAdded(model, group);
+				}**/
+	        	DefaultMutableTreeNode child = new DefaultMutableTreeNode(name);
+	        	subjectNode.add(child);
+	        	treeGroups.setModelAdded(model, child);
+	        	((DefaultTreeModel) treeGroups.getModel()).reload();
+	        	treeGroups.expandPath(new TreePath(subjectNode.getPath()));
+        		treeGroups.checkSubTree(new TreePath(child.getPath()), true);
+	        	break;
+	        }
+	    }
+
 	}
 	
 	public void groupRemoved(String name) {
@@ -516,13 +595,13 @@ public class MainView extends JFrame{
 	        	DefaultMutableTreeNode groupNode = g.nextElement();
 	        	if (groupNode.toString().equals(name)) {
 	        		subjectNode.remove(groupNode);
-	        		treeRooms.setModelRemoved(model, new TreePath(groupNode.getPath()));
+	        		treeGroups.setModelRemoved(model, new TreePath(groupNode.getPath()));
+	        		((DefaultTreeModel) treeGroups.getModel()).reload();
+	        	    treeGroups.expandPath(new TreePath(subjectNode.getPath()));
 	        		break;
 	        	}
-	        	break;
 	        }
 	    }
-	    ((DefaultTreeModel) treeRooms.getModel()).reload();
 	}
 	
 	public void roomAdded(String name) {
@@ -544,7 +623,7 @@ public class MainView extends JFrame{
 	        DefaultMutableTreeNode node = e.nextElement();
 	        if (node.toString().equals(name)) {
 	        	root.remove(node);
-	        	//treeRooms.setModelRemoved(model, (TreePath) node.getPath()[node.getLevel()]);
+	        	treeRooms.setModelRemoved(model, new TreePath(node.getPath()));
 	            break;
 	        }
 	    }

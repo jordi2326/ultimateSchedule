@@ -137,7 +137,7 @@ public class Environment {
 			Map<String, UnaryRestriction> map = unaryRestrictions.get(group);
 			for (String rest : map.keySet()) {
 				if (map.get(rest).getClass().getSimpleName().equals(SpecificDayOrHourRestriction.class.getSimpleName())) {
-					Object[] str = new Object[] {map.get(rest).toString(), group, ((SpecificDayOrHourRestriction) map.get(rest)).getDay(), ((SpecificDayOrHourRestriction) map.get(rest)).getHour()};
+					Object[] str = new Object[] {map.get(rest).toString(), group, ((SpecificDayOrHourRestriction) map.get(rest)).getDay(), ((SpecificDayOrHourRestriction) map.get(rest)).getHour(), map.get(rest).isEnabled()};
 					restr.add(str);
 				}
 			}
@@ -222,13 +222,20 @@ public class Environment {
 	 * @return
 	 */
 	public boolean addGroup(String inCode, Integer inNPeople, String inParentGroupCode, String subjectCode,
-			Boolean inNeedsComputers, String inType, String inDayPeriod, ArrayList<String> arrayList) {
+			Boolean inNeedsComputers, String inType, String inDayPeriod, ArrayList<String> lectures) {
 		if (!groups.containsKey(subjectCode + "-" + inCode + "-" + inType)) {
-			Group g = new Group(subjectCode + "-" + inCode + "-" + inType, inNPeople, inParentGroupCode, subjectCode, inNeedsComputers, Group.Type.valueOf((String) inType), Group.DayPeriod.valueOf((String) inDayPeriod), arrayList);
+			Group g = new Group(inCode, inNPeople, inParentGroupCode, subjectCode, inNeedsComputers, Group.Type.valueOf((String) inType), Group.DayPeriod.valueOf((String) inDayPeriod), lectures);
 			
 			groups.put(g.toString(), g);
 			naryRestrictions.put(g.toString(), groupRestr);
-			System.out.println(inCode);
+			
+			subjects.get(subjectCode).addGroup(g.toString());
+			
+			//Afegim la restriccio d'aquest grup de mati o tarda o indiferent
+
+			DayPeriodRestriction dpr = new DayPeriodRestriction(6, Group.DayPeriod.valueOf(inDayPeriod));
+			addUnaryRestriction(subjectCode + "-" + inCode + "-" + Group.Type.valueOf(inType), dpr);
+			System.out.println(dpr.toString());
 			return true;
 		}
 		
@@ -254,6 +261,7 @@ public class Environment {
 	 * @return
 	 */
 	public boolean removeGroup(String name) {
+		subjects.get(groups.get(name).getSubject()).removeGroup(name);
 		for(String lecture : groups.get(name).getLectures()) {
 			removeLecture(lecture);
 		}
@@ -315,7 +323,7 @@ public class Environment {
 	 */
 	public boolean removeSubject(String name) {
 		// Pre: el Subject amb nom "name" existeix
-		for (String group : subjects.get(name).getGroups()) {
+		for (String group : (ArrayList<String>) subjects.get(name).getGroups().clone()) {
 			removeGroup(group);
 		}
 		subjects.remove(name);
@@ -359,6 +367,7 @@ public class Environment {
 			Lecture L = new Lecture(codi, group, duration);
 			
 			lectures.put(group + "-" + codi, L);
+			groups.get(group).addLectures(codi, duration);
 			return true;
 		}
 		

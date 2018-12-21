@@ -19,6 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 import org.json.simple.parser.ParseException;
+
+import domain.classes.Environment;
 import domain.controllers.CtrlDomain;
 
 /**
@@ -182,6 +184,10 @@ public class CtrlPresentation {
 	public boolean exportSchedule(String filename) throws IOException, ParseException{
 			return ctrlDomain.exportSchedule(filename, true);
 		}
+	
+	public boolean exportEnvironment(String filename) throws IOException, ParseException{
+		return ctrlDomain.exportEnvironment(filename, true);
+	}
 	
 	// Getters de totes les coses d'environment
 	/**
@@ -440,15 +446,27 @@ public class CtrlPresentation {
 		mainView.subjectAdded(name);
 	}
 	
-	public void subjectRemoved(String name) {
+	/**public void subjectRemoved(String name) {
 		mainView.subjectRemoved(name);
+	}**/
+	
+	public void groupAdded(String subjectCode, String name) {
+		mainView.groupAdded(subjectCode, name);
 	}
+	
+	/**public void groupRemoved(String name) {
+		mainView.groupRemoved(name);
+	}**/
 	
 	public void roomAdded(String name) {
 		mainView.roomAdded(name);
 	}
 	
-	public void roomRemoved(String name) {
+	/**public void roomRemoved(String name) {
 		mainView.roomRemoved(name);
+	}**/
+	
+	public Boolean setRestrictionEnabled(String g, String r, Boolean state) {
+		return ctrlDomain.setRestrictionEnabled(g, r, state);
 	}
 }

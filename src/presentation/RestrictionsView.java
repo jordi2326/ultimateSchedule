@@ -131,11 +131,11 @@ public class RestrictionsView extends JDialog {
 			JCheckBox checkbox = new JCheckBox("");
 			checkbox.setOpaque(false);
 			checkbox.setBorder(new EmptyBorder(0, 0, 0, 4));
-			checkbox.setSelected(true);
+			checkbox.setSelected((Boolean) data[4]);
 			checkbox.addItemListener(new ItemListener() {
 				@Override
 				public void itemStateChanged(ItemEvent e) {
-					//if(checkbox.isSelected());
+					ctrlPresentation.setRestrictionEnabled(data[1].toString(), data[0].toString(), checkbox.isSelected());
 				}
 			});
 			

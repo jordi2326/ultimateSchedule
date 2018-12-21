@@ -235,6 +235,7 @@ public class CtrlDomain {
         	ArrayList<String> groupsToString = new ArrayList<String>();
         	String scode = (String) subject.get("code");
         	//getting groups
+        	env.addSubject(scode, (String) subject.get("name"), (String) subject.get("level"), new ArrayList<String>(), (ArrayList<String>) subject.get("coreqs"));
         	Iterator itr2 = jsonGroups.iterator();
         	while (itr2.hasNext()) {
         		JSONObject group = (JSONObject) itr2.next();
@@ -242,27 +243,21 @@ public class CtrlDomain {
         		ArrayList<Long> durations = (ArrayList<Long>) group.get("lecturesDuration");
 
         		String gcode = (String) group.get("code");
+        		env.addGroup(gcode, (Integer)((Long) group.get("numPeople")).intValue(), (String) group.get("parentGroupCode"), scode, Boolean.valueOf((String)group.get("needsComputers")), (String)group.get("type"), (String)group.get("dayPeriod"), ls);
+        		
         		for(int i = 0; i < durations.size(); i++){
         			//Lecture l = new Lecture(i, scode +"-"+ gcode +"-"+ group.get("type"), durations.get(i).intValue());
         			//lectures.put(l.toString(), l);
         			env.addLecture(i, scode +"-"+ gcode +"-"+ group.get("type"), durations.get(i).intValue());
-        			ls.add(scode +"-"+ gcode +"-"+ group.get("type") + "-" + i);
+        			//ls.add(scode +"-"+ gcode +"-"+ group.get("type") + "-" + i);
         		}
     			//Group g = new Group(
     			//		gcode, ((Long) group.get("numPeople")).intValue(), (String) group.get("parentGroupCode"), scode, (Boolean) group.get("needsComputers"), Group.Type.valueOf((String) group.get("type")), Group.DayPeriod.valueOf((String) group.get("dayPeriod")), ls);
     			//groups.put(g.toString(), g);
-        		System.out.println();
-    			env.addGroup(gcode, (Integer)((Long) group.get("numPeople")).intValue(), (String) group.get("parentGroupCode"), scode, (Boolean) group.get("needsComputers"), (String)group.get("type"), (String)group.get("dayPeriod"), ls);
-    			groupsToString.add(scode + "-" + gcode + "-" + Group.Type.valueOf((String) group.get("type")));
+    			
+    			////groupsToString.add(scode + "-" + gcode + "-" + Group.Type.valueOf((String) group.get("type")));
     			// subject + "-" + code + "-" + type
-    			//Afegim la restriccio d'aquest grup de mati o tarda o indiferent
-
-				DayPeriodRestriction dpr = new DayPeriodRestriction(6, Group.DayPeriod.valueOf((String) group.get("dayPeriod")));
-				env.addUnaryRestriction(scode + "-" + gcode + "-" + Group.Type.valueOf((String) group.get("type")), dpr);
-				System.out.println(scode);
-
         	}
-        	env.addSubject(scode, (String) subject.get("name"), (String) subject.get("level"), groupsToString, (ArrayList<String>) subject.get("coreqs"));
         }
         // getting rooms
         JSONArray jsonRooms = (JSONArray) jo.get("rooms");
@@ -326,6 +321,7 @@ public class CtrlDomain {
         		jsonGroup.put("subject", environment.getGroupSubject(g));
         		jsonGroup.put("type", environment.getGroupType(g).toString());
         		jsonGroup.put("dayPeriod", environment.getGroupDayPeriod(g).toString());
+        		jsonGroup.put("needsComputers", environment.groupNeedsComputers(g).toString());
         		JSONArray jsonLectures = new JSONArray();
         		for (String l : environment.getGroupLectures(g)) {
         			jsonLectures.add(environment.getLectureDuration(l));

@@ -84,6 +84,24 @@ public class Subject {
 	}
 	
 	/**
+	 *
+	 */
+	public boolean addGroup(String group) {
+		if(groups.contains(group)) return false;
+		groups.add(group);
+		return true;
+	}
+	
+	/**
+	 *
+	 */
+	public boolean removeGroup(String group) {
+		if(!groups.contains(group)) return false;
+		groups.remove(group);
+		return true;
+	}
+	
+	/**
 	 * @return El String que identifica l'assignatura.
 	 */
 	@Override

@@ -62,7 +62,7 @@ public class NewGroupView extends JDialog {
 	    constraints.ipadx = 15;
   
 	    constraints.gridy = 0;
-	    gridPanel.add(new JLabel("Code:", SwingConstants.RIGHT), constraints);
+	    gridPanel.add(new JLabel("Code:  ", SwingConstants.RIGHT), constraints);
 	    JTextField tfCode = new JTextField();
 	    gridPanel.add(tfCode, constraints);
 	    
@@ -179,14 +179,17 @@ public class NewGroupView extends JDialog {
 				String inType = cbbType.getSelectedItem().toString();
 				String inDayPeriod  = cbbDayPeriod.getSelectedItem().toString();
 				
-				//ArrayList<String> lectures;
-				
 				if(ctrlPresentation.addGroup(inCode, inNPeople, inParentGroupCode, subjectCode, inNeedsComputers, inType, inDayPeriod, new ArrayList<String>())) {
-					for(Integer d : inLecs) {
-						//ctrlPresentation.addLecture(group idd != codee, d);
+					ctrlPresentation.groupAdded(subjectCode, subjectCode + "-" + inCode + "-" + inType);
+					for(int i = 0; i<inLecs.size(); i++) {
+						ctrlPresentation.addLecture(i, subjectCode + "-" + inCode + "-" + inType, inLecs.get(i));
 					}
-				}else
+					setVisible(false);
+					dispose();
+				}else{
 					JOptionPane.showMessageDialog(NewGroupView.this, "Group data is not valid", "", JOptionPane.WARNING_MESSAGE);
+				}
+					
 			}
 		});
 
