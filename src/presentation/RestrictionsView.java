@@ -50,26 +50,14 @@ public class RestrictionsView extends JDialog {
 		scrollPane.setMaximumSize(scrollPane.getPreferredSize());
 		setContentPane(scrollPane);
 		
-		
-		/**JList<String[]> list = new JList<String[]>();
-		//list.setBackground(bg);
-		//list.setOpaque(false);
-		contentPanel.add(new JScrollPane(list), BorderLayout.CENTER);
-		list.setCellRenderer(new CellRenderer());
-		
-		list.setListData(testdata);**/
-		//String[][] testdata = {{"M1-11-THEORY", "Monday", "10:00"}, {"M1CCCCCC", "Monday", "10:00"}, {"CCCCCC", "Monday", "10:00"}};
 		for(Object[] data : ctrlPresentation.getNegotiableRestrictions()) {
-			//ArrayList<Object[]> rData = ctrlPresentation.getRestrictionInfo(title);
 			JPanel row = new JPanel();
-			
 			JPanel content = new JPanel();
 			content.setLayout(new BorderLayout());
 			content.setOpaque(false);
 			row.setOpaque(true);
 			row.setBackground(Color.white);
 			row.setLayout(new BoxLayout(row, BoxLayout.X_AXIS));
-			//row.setBorder(new CompoundBorder(new LineBorder(Color.decode("#dddddd"), 4), new EmptyBorder(4, 4, 4, 4)));
 			row.setBorder(new CompoundBorder(new LineBorder(Color.decode("#dddddd"), 4), new CompoundBorder(new LineBorder(Color.decode("#6382bf"), 1), new EmptyBorder(4, 4, 4, 4))));
 			JPanel topPanel = new JPanel();
 			topPanel.setLayout(new BorderLayout());
@@ -92,8 +80,8 @@ public class RestrictionsView extends JDialog {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					System.out.println("clicked");
-					
+					ctrlPresentation.removeRestriction(data[1].toString(), data[0].toString());
+					row.setVisible(false);
 				}
 			});
 			
@@ -148,5 +136,9 @@ public class RestrictionsView extends JDialog {
 				ctrlPresentation.switchToNewRestrictionsView();
 			}
 		});
+	}
+	
+	private void loadData() {
+		/
 	}
 }

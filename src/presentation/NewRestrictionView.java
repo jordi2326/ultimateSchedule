@@ -45,16 +45,7 @@ public class NewRestrictionView {
 	public void makeVisible() {
 		int result = JOptionPane.showOptionDialog(null, message, "New Restriction", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 		if (result == JOptionPane.OK_OPTION) {
-	         /**System.out.println("x value: " + ((JComboBox<String>) message[4]).getSelectedItem());
-	         System.out.println("y value: " + ((JComboBox<String>) message[6]).getSelectedItem());
-	         System.out.println("z value: " + ((JComboBox<String>) message[8]).getSelectedItem());
-	         ctrlPresentation.moveLecture(duration, iniDay, ((JComboBox<String>) message[4]).getSelectedIndex(), iniHour, ((JComboBox<String>) message[6]).getSelectedIndex(), iniRoom, (String) ((JComboBox<String>) message[4]).getSelectedItem());**/
+			ctrlPresentation.addRestriction((String) ((JComboBox<String>) message[3]).getSelectedItem(), ((JComboBox<String>) message[5]).getSelectedIndex(), ((JComboBox<String>) message[7]).getSelectedIndex());
 	    }
-	}
-	
-	private void initializeComponents(String group, int duration, int day, int hour, String room) {
-		
-		
-		//JOptionPane optionPane = new JOptionPane(message);
 	}
 }
