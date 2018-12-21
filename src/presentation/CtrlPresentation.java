@@ -406,4 +406,16 @@ public class CtrlPresentation {
 	public void subjectAdded(String name) {
 		mainView.subjectAdded(name);
 	}
+	
+	public void subjectRemoved(String name) {
+		mainView.subjectRemoved(name);
+	}
+	
+	public void roomAdded(String name) {
+		mainView.roomAdded(name);
+	}
+	
+	public void roomRemoved(String name) {
+		mainView.roomRemoved(name);
+	}
 }

@@ -690,7 +690,7 @@ public class CtrlDomain {
 		 * @return
 		 */
 		public boolean removeSubject(String name) {
-			return environment.removeSubject(name);
+			return environment.getInstance().removeSubject(name);
 		}
 		
 		/**

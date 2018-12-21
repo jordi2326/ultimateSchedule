@@ -34,6 +34,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 import presentation.ScheduleTable.LectureClickedEventListener;
 
@@ -277,7 +278,7 @@ public class MainView extends JFrame{
 		   		        	JMenuItem info = new JMenuItem("View More Info");
 		   		        	popupMenu.add(info);
 		   		        	popupMenu.addSeparator();
-		   		        	if(((DefaultMutableTreeNode) selPath.getLastPathComponent()).isLeaf()){ //is group
+		   		        	if(!((DefaultMutableTreeNode) selPath.getParentPath().getLastPathComponent()).isRoot()){ //is group
 		   		        		info.addActionListener(new ActionListener() {
 				   		            @Override
 				   		            public void actionPerformed(ActionEvent e) {
@@ -285,6 +286,15 @@ public class MainView extends JFrame{
 				   		            }
 				   		        });
 		   		        		JMenuItem removeGroup = new JMenuItem("Remove Group");
+		   		        		removeGroup.addActionListener(new ActionListener() {
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										int result = JOptionPane.showConfirmDialog(MainView.this, "Are you sure you want to delete '" + code + "'?\nThis action cannot be undone.", "Delete Room", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+				   		            	if(result==JOptionPane.OK_OPTION) {
+				   		            		if(ctrlPresentation.removeGroup(code)) groupRemoved(code);
+				   		            	}
+									}
+								});
 		   		        		popupMenu.add(removeGroup);
 		   		        	}else{ //is subject
 		   		        		info.addActionListener(new ActionListener() {
@@ -302,7 +312,10 @@ public class MainView extends JFrame{
 		   		        		popupMenu.add("Remove Subject").addActionListener(new ActionListener() {
 				   		            @Override
 				   		            public void actionPerformed(ActionEvent e) {
-				   		            	//ctrlPresentation.switchToRoomInfoView((String) ((DefaultMutableTreeNode) selPath.getLastPathComponent()).getUserObject());
+				   		            	int result = JOptionPane.showConfirmDialog(MainView.this, "Are you sure you want to delete '" + code + "'?\nThis action cannot be undone.", "Delete Room", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+				   		            	if(result==JOptionPane.OK_OPTION) {
+				   		            		if(ctrlPresentation.removeSubject(code)) subjectRemoved(code);
+				   		            	}
 				   		            }
 				   		        });
 		   		        	}
@@ -354,14 +367,13 @@ public class MainView extends JFrame{
 			   		            }
 			   		        });
 			   		        popupMenu.addSeparator();
-			   		        popupMenu.add("Delete Room").addActionListener(new ActionListener() {
+			   		        popupMenu.add("Remove Room").addActionListener(new ActionListener() {
 			   		            @Override
 			   		            public void actionPerformed(ActionEvent e) {
 			   		            	int result = JOptionPane.showConfirmDialog(MainView.this, "Are you sure you want to delete '" + code + "'?\nThis action cannot be undone.", "Delete Room", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 			   		            	if(result==JOptionPane.OK_OPTION) {
-			   		            		ctrlPresentation.removeRoom(code);
+			   		            		if(ctrlPresentation.removeRoom(code)) roomRemoved(code);
 			   		            	}
-			   		            	
 			   		            }
 			   		        });
 						}
@@ -471,9 +483,68 @@ public class MainView extends JFrame{
 		
 		DefaultMutableTreeNode child = new DefaultMutableTreeNode(name);
 	    root.add(child);
-	    treeGroups.setModelUpdated(model, child);
+	    treeGroups.setModelAdded(model, child);
 	    ((DefaultTreeModel) treeGroups.getModel()).reload();
 	    treeGroups.checkSubTree(new TreePath(child.getPath()), true);
+	}
+	
+	public void subjectRemoved(String name) {
+		DefaultTreeModel model = (DefaultTreeModel) treeGroups.getModel();
+		DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
+		Enumeration<DefaultMutableTreeNode> e = root.children();
+	    while (e.hasMoreElements()) {
+	        DefaultMutableTreeNode node = e.nextElement();
+	        if (node.toString().equals(name)) {
+	        	root.remove(node);
+	            break;
+	        }
+	    }
+	    ((DefaultTreeModel) treeRooms.getModel()).reload();
+	}
+	
+	public void groupRemoved(String name) {
+		DefaultTreeModel model = (DefaultTreeModel) treeGroups.getModel();
+		DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
+		Enumeration<DefaultMutableTreeNode> s = root.children();
+	    while (s.hasMoreElements()) {
+	        DefaultMutableTreeNode subjectNode = s.nextElement();
+	        Enumeration<DefaultMutableTreeNode> g = subjectNode.children();
+	        while (g.hasMoreElements()) {
+	        	DefaultMutableTreeNode groupNode = g.nextElement();
+	        	if (groupNode.toString().equals(name)) {
+	        		subjectNode.remove(groupNode);
+	        		break;
+	        	}
+	        	break;
+	        }
+	    }
+	    ((DefaultTreeModel) treeRooms.getModel()).reload();
+	}
+	
+	public void roomAdded(String name) {
+		DefaultTreeModel model = (DefaultTreeModel) treeRooms.getModel();
+		DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
+		
+		DefaultMutableTreeNode child = new DefaultMutableTreeNode(name);
+	    root.add(child);
+	    treeRooms.setModelAdded(model, child);
+	    ((DefaultTreeModel) treeRooms.getModel()).reload();
+	    treeRooms.checkSubTree(new TreePath(child.getPath()), true);
+	}
+	
+	public void roomRemoved(String name) {
+		DefaultTreeModel model = (DefaultTreeModel) treeRooms.getModel();
+		DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
+		Enumeration<DefaultMutableTreeNode> e = root.children();
+	    while (e.hasMoreElements()) {
+	        DefaultMutableTreeNode node = e.nextElement();
+	        if (node.toString().equals(name)) {
+	        	root.remove(node);
+	        	//treeRooms.setModelRemoved(model, (TreePath) node.getPath()[node.getLevel()]);
+	            break;
+	        }
+	    }
+	    ((DefaultTreeModel) treeRooms.getModel()).reload();
 	}
 	
 	/**
