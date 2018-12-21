@@ -1,0 +1,10 @@
+{
+"schedule":{
+	"MONDAY":{
+		"8":{
+			"A6002":"M2-10-THEORY-0"
+			}
+		}
+	},
+"path":"provaCorequisit.json"
+}

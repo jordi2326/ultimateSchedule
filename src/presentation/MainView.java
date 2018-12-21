@@ -449,7 +449,6 @@ public class MainView extends JFrame{
 	        if (fc.showSaveDialog(MainView.this) == JFileChooser.APPROVE_OPTION) {
 	        	filepath = fc.getSelectedFile().getAbsolutePath();
 	            f = fc.getSelectedFile();
-	            //System.out.println(theFile);
 	            if (f.exists()) {
 	            	JOptionPane.showMessageDialog(MainView.this, "Choose another filename.", "File already exists", JOptionPane.PLAIN_MESSAGE);
 	            } else {
@@ -473,7 +472,6 @@ public class MainView extends JFrame{
 	        if (fc.showSaveDialog(MainView.this) == JFileChooser.APPROVE_OPTION) {
 	        	filepath = fc.getSelectedFile().getAbsolutePath();
 	            f = fc.getSelectedFile();
-	            //System.out.println(theFile);
 	            if (f.exists()) {
 	            	JOptionPane.showMessageDialog(MainView.this, "Choose another filename.", "File already exists", JOptionPane.PLAIN_MESSAGE);
 	            } else {
@@ -550,10 +548,7 @@ public class MainView extends JFrame{
 	    ((DefaultTreeModel) treeGroups.getModel()).reload();
 	}
 	
-	public void groupAdded(String subjectName, String name) {
-		for(String s: ctrlPresentation.getGroupsNamesFromSuject(subjectName))
-			System.out.println("> "+s);
-		
+	public void groupAdded(String subjectName, String name) {		
 		DefaultTreeModel model = (DefaultTreeModel) treeGroups.getModel();
 		DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
 		//DefaultMutableTreeNode child = new DefaultMutableTreeNode(name);
@@ -561,17 +556,6 @@ public class MainView extends JFrame{
 		while (s.hasMoreElements()) {
 	        DefaultMutableTreeNode subjectNode = s.nextElement();
 	        if (subjectNode.toString().equals(subjectName)) {
-		        /**Enumeration<DefaultMutableTreeNode> g = subjectNode.children();
-	        	while (g.hasMoreElements()) {
-		        	DefaultMutableTreeNode groupNode = g.nextElement();
-		        	subjectNode.remove(groupNode);
-		        	treeGroups.setModelRemoved(model, new TreePath(groupNode.getPath()));
-		        }
-	        	for(String groupS : ctrlPresentation.getGroupsNamesFromSuject(subjectName)) {
-	        		DefaultMutableTreeNode group = new DefaultMutableTreeNode(groupS);
-	        		subjectNode.add(group);
-	        		treeGroups.setModelAdded(model, group);
-				}**/
 	        	DefaultMutableTreeNode child = new DefaultMutableTreeNode(name);
 	        	subjectNode.add(child);
 	        	treeGroups.setModelAdded(model, child);

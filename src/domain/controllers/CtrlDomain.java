@@ -103,91 +103,6 @@ public class CtrlDomain {
 	public void erase() {
 		schedule = new Schedule();
 	}
-
-	/**
-	 * Imprimeix l'horari en una taula.
-	 */
-	public void printSchedule() {
-		Schedule copy = new Schedule(schedule.toJsonString());
-
-		Map<String, String[][]> SCH = new HashMap<String, String[][]>(copy.getSchedule());
-		System.out.println("|---------------------------------------------------------------------------------------------------------------|");
-		System.out.println("|      |      MONDAY        |      TUESDAY       |     WEDNESDAY      |      THURSDAY      |       FRIDAY       |");
-		System.out.println("|------+--------------------+--------------------+--------------------+--------------------+--------------------|");
-		boolean after = false;
-		ArrayList<Integer> posL = new ArrayList<Integer>();
-		posL.add(20);
-		for (int i = 0; i < 12; i++) {
-			if (after) {
-				i--;
-				System.out.print("|      |");
-			} else {
-				if (i + 8 < 10) System.out.print("|0" + (i + 8) + ":00 |");
-				else System.out.print("|" + (i + 8) + ":00 |");
-			}
-			after = false;
-			for (int j = 0; j < 5; j++) {
-				boolean found = false;
-				for (Map.Entry<String, String[][]> entry : SCH.entrySet()) {
-					if (!found) {
-						String text = entry.getValue()[j][i];
-						if (text!=null && !text.isEmpty()) {
-							found = true;
-							String[] split = text.split("-");
-							String ntext = split[0]+" "+split[1]+split[2].substring(0, 1);
-							System.out.print("  " + entry.getKey()+ ": " + ntext);
-							for (int k = (2 + entry.getKey().length() + 2 + ntext.length()); k < 20; ++k) System.out.print(" ");
-							System.out.print("|");
-							entry.getValue()[j][i] = null;
-						}
-					} else if (!after) {
-						// String room = entry.getKey();
-						String lecture = entry.getValue()[j][i];
-						if (lecture != null) {
-							after = true;
-						}
-					}
-				}
-				if (!found) System.out.print("                    |");
-			}
-			System.out.println("");
-			if (!after && i != 11) System.out.println("|------+--------------------+--------------------+--------------------+--------------------+--------------------|");
-		}
-
-		// Imprimir l'11
-		after = true;
-		while (after) {
-			System.out.print("|      |");
-			after = false;
-			for (int j = 0; j < 5; j++) {
-				boolean found = false;
-				for (Map.Entry<String, String[][]> entry : SCH.entrySet()) {
-					if (!found) {
-						String text = entry.getValue()[j][11];
-						if (text!=null && !text.isEmpty()) {
-							found = true;
-								String[] split = text.split("-");
-								String ntext = split[0]+" "+split[1]+split[2].substring(0, 1);
-								System.out.print("  " + entry.getKey()+ ": " + ntext);
-								for (int k = (2 + entry.getKey().length() + 2 + ntext.length()); k < 20; ++k) System.out.print(" ");
-								System.out.print("|");
-							entry.getValue()[j][11] = null;
-						}
-					} else if (!after) {
-						// String room = entry.getKey();
-						String lecture = entry.getValue()[j][11];
-						if (lecture != null) {
-							after = true;
-						}
-					}
-				}
-				if (!found) System.out.print("                    |");
-			}
-			System.out.println("");
-		}
-
-		System.out.println("|---------------------------------------------------------------------------------------------------------------|");
-	}
 	
 	public String getEnvirnonmentPath() {
 		Environment env = Environment.getInstance();
@@ -572,52 +487,6 @@ public class CtrlDomain {
 		public ArrayList<Object[]> getNegotiableRestrictions() {
 			return environment.getInstance().getNegotiableRestrictions();
 		}
-
-		//public String[] getRestrictionInfo(String res) {
-
-			 /* ********* ORDRE *********
-			  * param negotiable	Indica si la restricci� �s negociable.
-			  * param enabled		Indica si la restricci� est� activada.
-			  * ************************* */
-
-			/*Environment env = Environment.getInstance();
-
-			String[] infoRes = new String[2];
-
-			for (Map<String, UnaryRestriction> groupRes : env.getUnaryRestrictions().values()) {
-				for (String rest : groupRes.keySet()) {
-					if (rest == res) {
-						Boolean nego = groupRes.get(rest).isNegotiable();
-						infoRes[0] = nego.toString();
-
-						Boolean ena = groupRes.get(rest).isEnabled();
-						infoRes[1] = ena.toString();
-
-						return infoRes;
-					}
-				}
-			}
-
-			for (Map<String, NaryRestriction> groupRes : env.getNaryRestrictions().values()) {
-				for (String rest : groupRes.keySet()) {
-					if (rest == res) {
-						Boolean nego = groupRes.get(rest).isNegotiable();
-						infoRes[0] = nego.toString();
-
-						Boolean ena = groupRes.get(rest).isEnabled();
-						infoRes[1] = ena.toString();
-
-						return infoRes;
-					}
-				}
-			}
-
-			// No existeix (error)
-			//System.out.println("error");
-
-			String[] error = new String[0];
-			return error;
-		};*/
 		
 		public String getEnvironmentName(){
 			return environment.getInstance().getPath();
@@ -689,7 +558,6 @@ public class CtrlDomain {
 		*/
 		public boolean moveLecture(int duration, int iniDay, int fiDay, int iniHour, int fiHour, String iniRoom, String fiRoom) {
 			String lecture = schedule.getSchedule().get(iniRoom)[iniDay][iniHour];
-			System.out.println(lecture);
 			// Eliminar lecture
 			boolean removed = removeLecture(duration, iniRoom, iniDay, iniHour);
 
@@ -699,13 +567,11 @@ public class CtrlDomain {
 
 				if (restr) {
 					// Afegir-lo al lloc nou
-					System.out.println("VALID");
 					while(--duration >= 0) {
 						schedule.putLecture(fiRoom, fiDay, fiHour + duration, lecture);
 					}
 					return true;
 				} else {
-					System.out.println("INVALID");
 					// Tornar a afegir-lo al lloc inicial
 					while(--duration >= 0) {
 						schedule.putLecture(iniRoom, iniDay, iniHour + duration, lecture);
