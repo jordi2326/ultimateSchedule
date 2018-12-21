@@ -2,6 +2,7 @@ package presentation;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,6 +22,7 @@ import org.json.simple.parser.ParseException;
 import domain.controllers.CtrlDomain;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -80,6 +82,7 @@ public class MainView extends JFrame{
 		topPanel.setLayout(new BorderLayout(0, 0));
 		topPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		topPanel.setOpaque(true);
+		topPanel.setPreferredSize(new Dimension(0, 80));
 		contentPanel.add(topPanel, BorderLayout.NORTH);
 		
 		JPanel topLeftPanel = new JPanel();
@@ -92,7 +95,15 @@ public class MainView extends JFrame{
 		
 		btnLoadEnvironment = new JButton("Load Environment");
 		btnLoadEnvironment.setFocusPainted(false);
-		topLeftPanel.add(btnLoadEnvironment);
+		JPanel topLeftLeftPanel = new JPanel();
+		topLeftLeftPanel.setLayout(new BoxLayout(topLeftLeftPanel, BoxLayout.Y_AXIS));
+		topLeftLeftPanel.setBackground(Color.decode("#dddddd"));
+		topLeftLeftPanel.add(btnLoadEnvironment);
+		btnSaveEnvironment = new JButton("Save Environment");
+		btnSaveEnvironment.setEnabled(environmentLoaded);
+		topLeftLeftPanel.add(Box.createRigidArea(new Dimension(0, 6)));
+		topLeftLeftPanel.add(btnSaveEnvironment);
+		topLeftPanel.add(topLeftLeftPanel);
 		
 		envText = new JLabel("No Environment Loaded");
 		envText.setFont(envText.getFont().deriveFont(Font.BOLD, 12f));
@@ -121,6 +132,23 @@ public class MainView extends JFrame{
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
+				}
+			}
+		});
+		
+		btnSaveEnvironment.addActionListener(new ActionListener() {
+			@Override	
+			public void actionPerformed(ActionEvent e) {
+				//JLabel tfFilename = new JLabel("Filename");
+				//JTextField tfFilename = new JTextField();
+				//JOptionPane.showInputDialog(parentComponent, message, title, messageType)
+				//String m = (String) JOptionPane.showInputDialog(MainView.this, "Enter filename:", "Save Schedule", JOptionPane.PLAIN_MESSAGE, null, null, "schedule.json");
+				//JOptionPane.showMessageDialog(MainView.this, "Mehhh.. Doesn't work yet", null, JOptionPane.WARNING_MESSAGE);
+				try {
+					exportEnvironment();
+				} catch (IOException | NullPointerException | ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -183,25 +211,6 @@ public class MainView extends JFrame{
 				ctrlPresentation.switchToRestrictionsView();
 				/**SDHRestrictionView rView = new SDHRestrictionView("", 0, 0);
 				rView.makeVisible();**/
-			}
-		});
-		
-		btnSaveEnvironment = new JButton("Save Environment");
-		buttonsPanel.add(btnSaveEnvironment);
-		btnSaveEnvironment.addActionListener(new ActionListener() {
-			@Override	
-			public void actionPerformed(ActionEvent e) {
-				//JLabel tfFilename = new JLabel("Filename");
-				//JTextField tfFilename = new JTextField();
-				//JOptionPane.showInputDialog(parentComponent, message, title, messageType)
-				//String m = (String) JOptionPane.showInputDialog(MainView.this, "Enter filename:", "Save Schedule", JOptionPane.PLAIN_MESSAGE, null, null, "schedule.json");
-				//JOptionPane.showMessageDialog(MainView.this, "Mehhh.. Doesn't work yet", null, JOptionPane.WARNING_MESSAGE);
-				try {
-					exportEnvironment();
-				} catch (IOException | NullPointerException | ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 			}
 		});
 		
@@ -416,29 +425,6 @@ public class MainView extends JFrame{
         }
 		return file;
 	}
-	
-	/**private boolean saveLocalFile() throws IOException {
-		/**fc.setCurrentDirectory(file);
-		int returnVal = fc.showOpenDialog(contentPanel);
-
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            return fc.getSelectedFile();
-        }
-		return file;
-		int returnVal = fc.showSaveDialog(MainView.this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
-            //This is where a real application would save the file.
-            //log.append("Saving: " + file.getName() + "." + newline);
-            return ctrlPresentation.exportSchedule(file.getAbsolutePath());
-        } else {
-            //log.append("Save command cancelled by user." + newline);
-        }
-        return false;
-        //log.setCaretPosition(log.getDocument().getLength());
-	}
-	 * @throws IOException 
-	 * @throws ParseException **/
 
 	public boolean exportSchedule() throws NullPointerException, IOException, ParseException {
 	    boolean acceptable = false;
@@ -519,6 +505,7 @@ public class MainView extends JFrame{
 		btnLoadSchedule.setEnabled(environmentLoaded);
 		btnGenSchedule.setEnabled(environmentLoaded);
 		btnSaveSchedule.setEnabled(scheduleLoaded);
+		btnSaveEnvironment.setEnabled(environmentLoaded);
 		btnConfigRestrictions.setEnabled(environmentLoaded);
 	}
 	
