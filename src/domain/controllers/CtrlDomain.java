@@ -23,6 +23,7 @@ import domain.classes.Room;
 import domain.classes.Schedule;
 import domain.classes.Subject;
 import domain.classes.restrictions.DayPeriodRestriction;
+import domain.classes.restrictions.LectureFromSameGroupOverlapRestriction;
 import domain.classes.restrictions.NaryRestriction;
 import domain.classes.restrictions.SpecificDayOrHourRestriction;
 import domain.classes.restrictions.UnaryRestriction;
@@ -257,8 +258,6 @@ public class CtrlDomain {
     			// subject + "-" + code + "-" + type
     			//Afegim la restriccio d'aquest grup de mati o tarda o indiferent
 
-				DayPeriodRestriction dpr = new DayPeriodRestriction(6, Group.DayPeriod.valueOf((String) group.get("dayPeriod")));
-				env.addUnaryRestriction(scode + "-" + gcode + "-" + Group.Type.valueOf((String) group.get("type")), dpr);
 				System.out.println(scode);
 
         	}
@@ -446,7 +445,8 @@ public class CtrlDomain {
 			for (int i = 0; i < matrix[0].length; i++) {
                 for (int j = 0; j < matrix.length; j++) {
                 	if(data[i][j]==null) data[i][j] = new ArrayList<String[]>();
-                	if(matrix[j][i]!=null && !matrix[j][i].isEmpty()) data[i][j].add(new String[]{getLectureGroup(matrix[j][i]), d.getKey(), matrix[j][i]});
+                	if(matrix[j][i]!=null && !matrix[j][i].isEmpty()) 
+                		data[i][j].add(new String[]{getLectureGroup(matrix[j][i]), d.getKey(), matrix[j][i]});
                 }
             }
 		}
@@ -661,35 +661,42 @@ public class CtrlDomain {
 			return true;
 		}
 
-		public boolean validateAllRestrictions(String lecture, int day, int hour, String room, int duration) { // On ha d'anar
+		private boolean validateAllRestrictions(String lecture, int day, int hour, String room, int duration) { 
 			Environment env = Environment.getInstance();
-			System.out.println(lecture);
-			String g = env.getLectureGroup(lecture);
-			Map<String, String[][]> sche = schedule.getSchedule();
-
-			//String g, String restr, String room, int day, int hour, String lecture, Integer d, Integer h, String r, String l
-
-			for (String r : sche.keySet()) { // Restriccions n�ries
-				// Per cada room
-				String[][] rm = sche.get(r);
-						//env.getLectureGroup(lecture);
-
-				for (int i = 0; i < 12; i++) {
-					String groupCompare = rm[i][day];
-					// Per cada hora
-					if (groupCompare != null) {
-						for (String restr : env.getGroupNaryRestrictions(lecture)) {
-							// Coses que est�z intentant inserir     |      Coses amb qui ho compares
-							if (!env.validateGroupNaryRestriction(g, restr, room, day, hour, lecture, day, i, r, groupCompare)) return false;
+			String group = env.getLectureGroup(lecture);
+			if (env.getGroupNumOfPeople(group) <= env.getRoomCapacity(room)) {
+				//Group fits in room
+				if ((env.getGroupType(group).equals(Group.Type.LABORATORY) && env.roomHasComputers(room))
+					|| !env.getGroupType(group).equals(Group.Type.LABORATORY)) {
+					if (env.groupHasUnaryRestrictions(group)) {
+						for (String restr : env.getGroupUnaryRestrictions(group)) {
+							if (env.restrictionIsEnabled(group, restr) && !env.validateGroupUnaryRestriction(group, restr, day, hour, duration)) {
+								return false;
+							}
 						}
+						// All unary restrictions checked and passed
+						for (String r : schedule.getSchedule().keySet()) {
+							for (int h = 0; h < 12; ++h) {
+								String l = schedule.getSchedule().get(r)[day][h];
+								if (l != null) {
+									String g = env.getLectureGroup(l);
+									String overlapRestr = LectureFromSameGroupOverlapRestriction.class.getSimpleName();
+									if (env.getGroupNaryRestrictions(g).contains(overlapRestr)
+											&& !env.validateGroupNaryRestriction(g, overlapRestr, room, day, hour, lecture, day, hour, room, l)) {
+										return false;
+									}
+									for (String restr : env.getGroupNaryRestrictions(g)) {
+										if (!env.validateGroupNaryRestriction(g, restr, room, day, hour, lecture, day, h, r, l)) {
+											return false;
+										}
+									}
+								}
+							}
+						}
+							
 					}
 				}
 			}
-
-			for (String restr : env.getGroupUnaryRestrictions(lecture)) { // Restriccions un�ries
-				if (!env.validateGroupUnaryRestriction(lecture, room, day, hour, duration)) return false;
-			}
-
 			return true;
 		}
 
@@ -705,7 +712,7 @@ public class CtrlDomain {
 		*/
 		public boolean moveLecture(int duration, int iniDay, int fiDay, int iniHour, int fiHour, String iniRoom, String fiRoom) {
 			String lecture = schedule.getSchedule().get(fiRoom)[iniDay][iniHour];
-
+			System.out.println(lecture);
 			// Eliminar lecture
 			boolean removed = removeLecture(duration, iniRoom, iniDay, iniHour);
 
@@ -715,9 +722,11 @@ public class CtrlDomain {
 
 				if (restr) {
 					// Afegir-lo al lloc nou
+					System.out.println("VALID");
 					putLecture(duration, fiRoom, fiDay, fiHour);
 					return true;
 				} else {
+					System.out.println("INVALID");
 					// Tornar a afegir-lo al lloc inicial
 					putLecture(duration, iniRoom, iniDay, iniHour);
 					return false;

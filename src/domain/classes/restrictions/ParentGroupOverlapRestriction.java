@@ -64,7 +64,7 @@ public class ParentGroupOverlapRestriction extends NaryRestriction {
 		//Si son grups pares de la mateixa assignatura (M2 10 i M2 30 no s'han de solapar)
 		if (s.equals(subject)) {
 			if (groupCode.equals(parentGroupCode)) {
-				return !(day.equals(d) && hour < h+dur && h < hour+duration && (gcode.equals(parentgcode) || parentgcode.equals(groupCode)));
+				return !(day.equals(d) && hour < h+dur && h < hour+duration && parentgcode.equals(groupCode));
 			}
 			else {
 				//check that l is not the parent group of lecture inserted

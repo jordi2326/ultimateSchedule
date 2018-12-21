@@ -50,16 +50,19 @@ public class SubjectLevelRestriction extends NaryRestriction {
 		//Info from lecture inserted
 		Integer duration = env.getLectureDuration(lecture);
 		String group = env.getLectureGroup(lecture);
+		String groupCode = env.getGroupCode(group);
 		String parentGroupCode = env.getGroupParentGroupCode(group);
 		String subject = env.getGroupSubject(group);
 		String subjectLevel = env.getSubjectLevel(subject);
 		//Info from checked lecture (l)
 		Integer dur = env.getLectureDuration(l);
 		String g = env.getLectureGroup(l);
+		String gcode = env.getGroupCode(g);
 		String parentgcode = env.getGroupParentGroupCode(g);
 		String s = env.getGroupSubject(g);
 		String slevel = env.getSubjectLevel(s);
 		//If groups have same parent (even though they are different subjects) and same subject level, they can't go together
-		return !(day.equals(d) && hour < h+dur && h < hour+duration	&& parentgcode.equals(parentGroupCode) && subjectLevel.equals(slevel));
+		return !(day.equals(d) && hour < h+dur && h < hour+duration	&& subjectLevel.equals(slevel) && 
+				(gcode.equals(groupCode) || gcode.equals(parentGroupCode) || groupCode.equals(parentgcode)));
 	}
 }
