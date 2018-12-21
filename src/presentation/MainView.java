@@ -127,7 +127,7 @@ public class MainView extends JFrame{
 		
 		btnLoadSchedule = new JButton("Load Schedule");
 		buttonsPanel.add(btnLoadSchedule);
-		btnLoadSchedule.setEnabled(environmentLoaded);
+		//btnLoadSchedule.setEnabled(environmentLoaded);
 		btnLoadSchedule.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -135,12 +135,10 @@ public class MainView extends JFrame{
 				fc.setDialogTitle("Load Schedule");
 				File selected = loadLocalFile(path);
 				if (!selected.equals(path)) {	//user selected a file
-					try {
-						ctrlPresentation.importSchedule(selected.getAbsolutePath());
+					if(ctrlPresentation.importSchedule(selected.getAbsolutePath()))
 						reloadSchedule();
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
+					else
+						JOptionPane.showMessageDialog(MainView.this, "Schedule's environment not found.", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -500,6 +498,7 @@ public class MainView extends JFrame{
 	        DefaultMutableTreeNode node = e.nextElement();
 	        if (node.toString().equals(name)) {
 	        	root.remove(node);
+	        	treeRooms.setModelRemoved(model, new TreePath(node.getPath()));
 	            break;
 	        }
 	    }
@@ -517,6 +516,7 @@ public class MainView extends JFrame{
 	        	DefaultMutableTreeNode groupNode = g.nextElement();
 	        	if (groupNode.toString().equals(name)) {
 	        		subjectNode.remove(groupNode);
+	        		treeRooms.setModelRemoved(model, new TreePath(groupNode.getPath()));
 	        		break;
 	        	}
 	        	break;
