@@ -134,6 +134,12 @@ public class Group {
 		return lectures;
 	}
 	
+	public boolean addLectures(int i, int duration) {
+		if(lectures.contains(this.toString()+"-"+i)) return false;
+		lectures.add(this.toString()+"-"+i);
+		return true;
+	}
+	
 	/**
 	 * @return El String que identifica el grup.
 	 */

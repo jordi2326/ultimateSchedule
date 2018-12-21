@@ -2,6 +2,7 @@ package presentation;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
@@ -10,8 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -28,18 +27,21 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 public class RestrictionsView extends JDialog {
+	JPanel contentPanel;
+	CtrlPresentation ctrlPresentation;
 	
 	public RestrictionsView(Frame parent) {
 		super(parent, true);
 		
-		CtrlPresentation ctrlPresentation = CtrlPresentation.getInstance();
+		ctrlPresentation = CtrlPresentation.getInstance();
 		
 		setTitle("Restrictions");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(400, 600);
+		setMinimumSize(new Dimension(400, 600));
 		setLocationRelativeTo(null);
 		
-		JPanel contentPanel = new JPanel();
+		contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		
 		JScrollPane scrollPane = new JScrollPane(contentPanel);
@@ -50,26 +52,46 @@ public class RestrictionsView extends JDialog {
 		scrollPane.setMaximumSize(scrollPane.getPreferredSize());
 		setContentPane(scrollPane);
 		
+		JPanel bottomRow = new JPanel();
+		bottomRow.setLayout(new BorderLayout());
+		bottomRow.setOpaque(true);
+		bottomRow.setBackground(Color.white);
+		bottomRow.setBorder(new CompoundBorder(new LineBorder(Color.decode("#dddddd"), 4), new EmptyBorder(4, 4, 4, 4)));
+		bottomRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+		JButton btnAdd = new JButton("Add");
+		btnAdd.setOpaque(true);
+		btnAdd.setBorderPainted(true);
+		btnAdd.setFocusPainted(false);
+		btnAdd.setContentAreaFilled(true);
+		btnAdd.setBackground(Color.decode("#fafafa"));
+		bottomRow.add(btnAdd, BorderLayout.CENTER);
+		contentPanel.add(bottomRow);
 		
-		/**JList<String[]> list = new JList<String[]>();
-		//list.setBackground(bg);
-		//list.setOpaque(false);
-		contentPanel.add(new JScrollPane(list), BorderLayout.CENTER);
-		list.setCellRenderer(new CellRenderer());
-		
-		list.setListData(testdata);**/
-		//String[][] testdata = {{"M1-11-THEORY", "Monday", "10:00"}, {"M1CCCCCC", "Monday", "10:00"}, {"CCCCCC", "Monday", "10:00"}};
-		for(Object[] data : ctrlPresentation.getNegotiableRestrictions()) {
-			//ArrayList<Object[]> rData = ctrlPresentation.getRestrictionInfo(title);
-			JPanel row = new JPanel();
+		btnAdd.addActionListener(new ActionListener() {
 			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ctrlPresentation.switchToNewRestrictionsView();
+				loadData();
+			}
+		});
+		
+		loadData();
+	}
+	
+	private void loadData() {
+		while(contentPanel.getComponentCount()>1) {
+			contentPanel.remove(0);
+		}
+		
+		for(Object[] data : ctrlPresentation.getNegotiableRestrictions()) {
+			JPanel row = new JPanel();
 			JPanel content = new JPanel();
 			content.setLayout(new BorderLayout());
 			content.setOpaque(false);
 			row.setOpaque(true);
 			row.setBackground(Color.white);
 			row.setLayout(new BoxLayout(row, BoxLayout.X_AXIS));
-			//row.setBorder(new CompoundBorder(new LineBorder(Color.decode("#dddddd"), 4), new EmptyBorder(4, 4, 4, 4)));
 			row.setBorder(new CompoundBorder(new LineBorder(Color.decode("#dddddd"), 4), new CompoundBorder(new LineBorder(Color.decode("#6382bf"), 1), new EmptyBorder(4, 4, 4, 4))));
 			JPanel topPanel = new JPanel();
 			topPanel.setLayout(new BorderLayout());
@@ -92,8 +114,9 @@ public class RestrictionsView extends JDialog {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					System.out.println("clicked");
-					
+					ctrlPresentation.removeRestriction(data[1].toString(), data[0].toString());
+					//row.setVisible(false);
+					loadData();
 				}
 			});
 			
@@ -108,11 +131,11 @@ public class RestrictionsView extends JDialog {
 			JCheckBox checkbox = new JCheckBox("");
 			checkbox.setOpaque(false);
 			checkbox.setBorder(new EmptyBorder(0, 0, 0, 4));
-			checkbox.setSelected(true);
+			checkbox.setSelected((Boolean) data[4]);
 			checkbox.addItemListener(new ItemListener() {
 				@Override
 				public void itemStateChanged(ItemEvent e) {
-					//if(checkbox.isSelected());
+					ctrlPresentation.setRestrictionEnabled(data[1].toString(), data[0].toString(), checkbox.isSelected());
 				}
 			});
 			
@@ -123,30 +146,9 @@ public class RestrictionsView extends JDialog {
 			label2.setText(ScheduleTable.colNames[(int) data[2]].toString() + " - " + ScheduleTable.startTimes[(int) data[3]].toString());
 			row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
 			row.setBackground(Color.decode("#fafafa"));
-			contentPanel.add(row);
+			contentPanel.add(row, contentPanel.getComponentCount()-1);
 		}
-		
-		JPanel bottomRow = new JPanel();
-		bottomRow.setLayout(new BorderLayout());
-		bottomRow.setOpaque(true);
-		bottomRow.setBackground(Color.white);
-		bottomRow.setBorder(new CompoundBorder(new LineBorder(Color.decode("#dddddd"), 4), new EmptyBorder(4, 4, 4, 4)));
-		bottomRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
-		JButton btnAdd = new JButton("Add");
-		btnAdd.setOpaque(true);
-		btnAdd.setBorderPainted(true);
-		btnAdd.setFocusPainted(false);
-		btnAdd.setContentAreaFilled(true);
-		btnAdd.setBackground(Color.decode("#fafafa"));
-		bottomRow.add(btnAdd, BorderLayout.CENTER);
-		contentPanel.add(bottomRow);
-		
-		btnAdd.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ctrlPresentation.switchToNewRestrictionsView();
-			}
-		});
+		contentPanel.repaint();
+		pack();
 	}
 }
