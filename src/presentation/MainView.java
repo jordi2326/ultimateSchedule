@@ -2,7 +2,6 @@ package presentation;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,18 +15,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
-
 import org.json.simple.parser.ParseException;
-
-import domain.controllers.CtrlDomain;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -45,6 +39,9 @@ import java.util.Enumeration;
 
 import presentation.ScheduleTable.LectureClickedEventListener;
 
+/**
+ * @author Carlos Bergillos Varela
+*/
 public class MainView extends JFrame{
 
 	private CtrlPresentation ctrlPresentation;
