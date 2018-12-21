@@ -847,6 +847,9 @@ public class CtrlDomain {
 			return false;
 		}
 
+		/**
+		 * @param name
+		 */
 		public void eraseLecture(String name) {
 			for (String room : schedule.getSchedule().keySet()) {
 				for (int i = 0; i < 11; i++) {
@@ -859,5 +862,31 @@ public class CtrlDomain {
 					}
 				}
 			}
+		}
+		
+		/**
+		 * @param group
+		 * @param day
+		 * @param hour
+		 * @return
+		 */
+		public boolean addRestriction(String group, Integer day, Integer hour) {
+			SpecificDayOrHourRestriction rest = new SpecificDayOrHourRestriction(day, hour);
+			
+			if (!environment.getInstance().getGroupUnaryRestrictions(group).contains(rest.toString())) {
+				environment.getInstance().addUnaryRestriction(group, rest);
+				return true;
+			}
+			
+			return false;
+		}
+		
+		/**
+		 * @param group
+		 * @param name
+		 * @return
+		 */
+		public boolean removeRestriction(String group, String name) {
+			return environment.getInstance().removeRestriction(group, name);
 		}
 }

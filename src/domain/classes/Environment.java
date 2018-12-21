@@ -167,6 +167,14 @@ public class Environment {
 		return info;
 	}
 	
+	public boolean removeRestriction(String group, String name) {
+		if (unaryRestrictions.get(group).containsKey(name)) {
+			unaryRestrictions.get(group).remove(name);
+			return true;
+		}
+		return false;
+	}
+	
 	public Set<String> getGroupUnaryRestrictions(String g) {
 		return unaryRestrictions.get(g).keySet();
 	}
