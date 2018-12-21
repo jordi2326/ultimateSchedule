@@ -93,9 +93,15 @@ public class JCheckBoxTree extends JTree {
         resetCheckingState();
     }
     
-    public void setModelUpdated(DefaultTreeModel newModel, DefaultMutableTreeNode node) {
+    public void setModelAdded(DefaultTreeModel newModel, DefaultMutableTreeNode node) {
     	super.setModel(newModel);
 		addSubtreeToCheckingStateTracking(node);
+	}
+    
+    public void setModelRemoved(DefaultTreeModel newModel, TreePath path) {
+    	super.setModel(newModel);
+		checkedPaths.remove(path);
+		nodesCheckingState.remove(path);
 	}
 
     // New method that returns only the checked paths (totally ignores original "selection" mechanism)

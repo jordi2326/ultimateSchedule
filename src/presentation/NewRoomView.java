@@ -100,8 +100,13 @@ public class NewRoomView extends JDialog {
 				
 				Boolean inHasComputers = cbHasComputers.isSelected();
 
-				if(!ctrlPresentation.addRoom(inCode, inCapacity, inHasComputers)) 
+				if(ctrlPresentation.addRoom(inCode, inCapacity, inHasComputers)) {
+					ctrlPresentation.roomAdded(inCode);
+					setVisible(false);
+					dispose();
+				}else{
 					JOptionPane.showMessageDialog(NewRoomView.this, "Room data is not valid", "", JOptionPane.WARNING_MESSAGE);
+				}
 			}
 		});
 

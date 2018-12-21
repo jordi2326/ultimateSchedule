@@ -360,6 +360,24 @@ public class CtrlPresentation {
 	public boolean removeRoom(String code) {
 		return ctrlDomain.removeRoom(code);
 	}
+	
+	/**
+	 * @param codi
+	 * @param group
+	 * @param duration
+	 * @return
+	 */
+	public boolean addLecture(Integer codi, String group, Integer duration) {
+		return ctrlDomain.addLecture(codi, group, duration);
+	}
+	
+	/**
+	 * @param name
+	 * @return
+	 */
+	public boolean removeLecture(String name) {
+		return ctrlDomain.removeLecture(name);
+	}
 
 	/**
 	 * @param inCode
@@ -407,7 +425,22 @@ public class CtrlPresentation {
 		return ctrlDomain.removeGroup(name);
 	}
 	
+	/**
+	 * @param name
+	 */
 	public void subjectAdded(String name) {
 		mainView.subjectAdded(name);
+	}
+	
+	public void subjectRemoved(String name) {
+		mainView.subjectRemoved(name);
+	}
+	
+	public void roomAdded(String name) {
+		mainView.roomAdded(name);
+	}
+	
+	public void roomRemoved(String name) {
+		mainView.roomRemoved(name);
 	}
 }

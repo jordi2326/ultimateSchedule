@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import org.json.simple.JSONArray; 
-import org.json.simple.JSONObject; 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
 import domain.classes.Environment;
@@ -33,41 +33,41 @@ import persistance.CtrlData;
 */
 
 public class CtrlDomain {
-	
+
 	/** Instancia d'aquesta classe.
 	*/
 	private static CtrlDomain instance;
-	
+
 	/** Controlador de dades.
 	*/
 	private CtrlData dataController;
-	
-	/** Horari 
+
+	/** Horari
 	*/
 	private Schedule schedule;
-	
+
 	/** Escenari
-	 * 
+	 *
 	 */
 	private Environment environment;
-	
+
 	/*
 	public static void main(String[] args) throws Throwable, IOException {
 		CtrlDomain cd = CtrlDomain.getInstance();
 		cd.importEnvironment("Q1+Q2.json");
 		Environment env = Environment.getInstance();
-		
+
 		int i = 0;
-		
+
 	}*/
-	
+
 	/** Constructora estandard.
 	*/
 	private CtrlDomain() {
-		dataController = CtrlData.getInstance();	
+		dataController = CtrlData.getInstance();
 		schedule = new Schedule();
 	}
-	
+
 	/**
 	 * Retorna la instancia d'aquesta classe.
 	 * @return {@link CtrlDomain#instance}
@@ -77,8 +77,8 @@ public class CtrlDomain {
 			instance = new CtrlDomain();
 		return instance;
 	}
-	
-	
+
+
 	/**
 	 * Genera un horari amb les condicions de l'entorn.
 	 * @return true si s'ha trobat un horari valid, sino false.
@@ -89,7 +89,7 @@ public class CtrlDomain {
 		boolean a = ctS.generateSchedule(schedule);
 		return a;
 	}
-	
+
 	/**
 	 * Retorna l'horari del domini converit en Json.
 	 * @return L'horari del domini converit en String Json.
@@ -97,17 +97,17 @@ public class CtrlDomain {
 	public String scheduleToJsonString() {
 		return schedule.toJsonString();
 	}
-	
+
 	public void erase() {
 		schedule = new Schedule();
 	}
-	
+
 	/**
 	 * Imprimeix l'horari en una taula.
 	 */
 	public void printSchedule() {
 		Schedule copy = new Schedule(schedule.toJsonString());
-		
+
 		Map<String, String[][]> SCH = new HashMap<String, String[][]>(copy.getSchedule());
 		System.out.println("|---------------------------------------------------------------------------------------------------------------|");
 		System.out.println("|      |      MONDAY        |      TUESDAY       |     WEDNESDAY      |      THURSDAY      |       FRIDAY       |");
@@ -151,7 +151,7 @@ public class CtrlDomain {
 			System.out.println("");
 			if (!after && i != 11) System.out.println("|------+--------------------+--------------------+--------------------+--------------------+--------------------|");
 		}
-		
+
 		// Imprimir l'11
 		after = true;
 		while (after) {
@@ -183,7 +183,7 @@ public class CtrlDomain {
 			}
 			System.out.println("");
 		}
-		
+
 		System.out.println("|---------------------------------------------------------------------------------------------------------------|");
 	}
 
@@ -194,81 +194,81 @@ public class CtrlDomain {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public boolean importEnvironment(String filename, boolean isFullpath) throws ParseException, IOException   {
-		
+
 		 Environment env = Environment.getInstance();
-		 
+
 		 env.erase();
 		 String path = filename;
 		 if (isFullpath) {
 			 File f = new File(filename);
 			 path = f.getName();
 		 }
-		 
+
 		 env.setPath(path);
-		 
+
 		 String jsonData = dataController.readEnvironment(filename, isFullpath);
 		 Object obj = new JSONParser().parse(jsonData);
-		 
-		// typecasting obj to JSONObject 
-        JSONObject jo = (JSONObject) obj; 
-        
-        // getting subjects 
+
+		// typecasting obj to JSONObject
+        JSONObject jo = (JSONObject) obj;
+
+        // getting subjects
         JSONArray jsonSubjects = (JSONArray) jo.get("subjects");
-        
-        
-        Iterator itr1 = jsonSubjects.iterator(); 
+
+
+        Iterator itr1 = jsonSubjects.iterator();
 
         while (itr1.hasNext()) {
         	JSONObject subject = (JSONObject) itr1.next();
-        	JSONArray jsonGroups = (JSONArray) subject.get("groups"); 
+        	JSONArray jsonGroups = (JSONArray) subject.get("groups");
         	ArrayList<String> groupsToString = new ArrayList<String>();
         	String scode = (String) subject.get("code");
         	//getting groups
-        	Iterator itr2 = jsonGroups.iterator(); 
+        	Iterator itr2 = jsonGroups.iterator();
         	while (itr2.hasNext()) {
         		JSONObject group = (JSONObject) itr2.next();
         		ArrayList<String> ls = new ArrayList<String>();
         		ArrayList<Long> durations = (ArrayList<Long>) group.get("lecturesDuration");
-        		
+
         		String gcode = (String) group.get("code");
         		for(int i = 0; i < durations.size(); i++){
-        			Lecture l = new Lecture(i, scode +"-"+ gcode +"-"+ group.get("type"), durations.get(i).intValue());
+        			//Lecture l = new Lecture(i, scode +"-"+ gcode +"-"+ group.get("type"), durations.get(i).intValue());
         			//lectures.put(l.toString(), l);
-        			env.addLecture(l);
-        			ls.add(l.toString());
+        			env.addLecture(i, scode +"-"+ gcode +"-"+ group.get("type"), durations.get(i).intValue());
+        			ls.add(scode +"-"+ gcode +"-"+ group.get("type") + "-" + i);
         		}
     			//Group g = new Group(
     			//		gcode, ((Long) group.get("numPeople")).intValue(), (String) group.get("parentGroupCode"), scode, (Boolean) group.get("needsComputers"), Group.Type.valueOf((String) group.get("type")), Group.DayPeriod.valueOf((String) group.get("dayPeriod")), ls);
     			//groups.put(g.toString(), g);
         		System.out.println();
-    			env.addGroup(gcode, (Integer)((Long) group.get("numPeople")).intValue(), (String) group.get("parentGroupCode"), scode, (Boolean) group.get("needsComputers"), (String)group.get("type"), (String)group.get("dayPeriod"), ls);    			
+    			env.addGroup(gcode, (Integer)((Long) group.get("numPeople")).intValue(), (String) group.get("parentGroupCode"), scode, (Boolean) group.get("needsComputers"), (String)group.get("type"), (String)group.get("dayPeriod"), ls);
     			groupsToString.add(scode + "-" + gcode + "-" + Group.Type.valueOf((String) group.get("type")));
     			// subject + "-" + code + "-" + type
     			//Afegim la restriccio d'aquest grup de mati o tarda o indiferent
-    						
+
 				DayPeriodRestriction dpr = new DayPeriodRestriction(6, Group.DayPeriod.valueOf((String) group.get("dayPeriod")));
 				env.addUnaryRestriction(scode + "-" + gcode + "-" + Group.Type.valueOf((String) group.get("type")), dpr);
 				System.out.println(scode);
-  
+
         	}
         	env.addSubject(scode, (String) subject.get("name"), (String) subject.get("level"), groupsToString, (ArrayList<String>) subject.get("coreqs"));
         }
-        // getting rooms 
+        // getting rooms
         JSONArray jsonRooms = (JSONArray) jo.get("rooms");
         Map<String, Room> rooms = new HashMap<String, Room>();
-        Iterator itr3 = jsonRooms.iterator(); 
+        Iterator itr3 = jsonRooms.iterator();
         while (itr3.hasNext()) {
         	JSONObject room = (JSONObject) itr3.next();
         	//rooms.put(r.toString(), r);
         	env.addRoom((String) room.get("code"), ((Long) room.get("capacity")).intValue(), (Boolean) room.get("hasComputers"));
         }
-        
-        // getting subjects 
+
+        // getting subjects
         JSONArray jsonRestrictions = (JSONArray) jo.get("restrictions");
-        
-        
-        Iterator itr4 = jsonRestrictions.iterator(); 
-        
+
+
+        Iterator itr4 = jsonRestrictions.iterator();
+
         while (itr4.hasNext()) {
         	JSONObject restriction = (JSONObject) itr4.next();
         	String restrName = (String) restriction.get("name");
@@ -282,31 +282,31 @@ public class CtrlDomain {
             	env.addUnaryRestriction(restrGroup, r);
         	}
         }
-        
-       	
+
+
 		return true;
 	}
-	
-	
+
+
 	@SuppressWarnings("unchecked")
 	public boolean exportEnvironment(String filename, Boolean absolutePath) throws IOException {
 		Environment environment = Environment.getInstance();
-		// creating JSONObject 
+		// creating JSONObject
         JSONObject jo = new JSONObject();
         // creating subjects JSONArray
         JSONArray jsonSubjects = new JSONArray();
         // creating rooms JSONArray
         JSONArray jsonRestrictions = new JSONArray();
-        
+
         for (String s : environment.getAllSubjects()) {
         	JSONObject subject = new JSONObject();
         	subject.put("code", environment.getSubjectCode(s));
         	subject.put("name", environment.getSubjectName(s));
         	subject.put("level", environment.getSubjectLevel(s));
         	subject.put("coreqs", environment.getSubjectCoreqs(s));
-        	
+
         	JSONArray jsonGroups = new JSONArray();
-        	
+
         	for (String g : environment.getSubjectGroups(s)) {
         		JSONObject jsonGroup = new JSONObject();
         		jsonGroup.put("code", environment.getGroupCode(g));
@@ -319,9 +319,9 @@ public class CtrlDomain {
         		for (String l : environment.getGroupLectures(g)) {
         			jsonLectures.add(environment.getLectureDuration(l));
         		}
-        		jsonGroup.put("lecturesDuration", jsonLectures); 
+        		jsonGroup.put("lecturesDuration", jsonLectures);
         		jsonGroups.add(jsonGroup);
-        		
+
         		// restrictions
         		Set<ArrayList<Integer>> infoRestr = new HashSet<ArrayList<Integer>>();
         		infoRestr = environment.getSpecificDayHourInfo(g);
@@ -338,15 +338,15 @@ public class CtrlDomain {
         			jsonRestrictions.add(restrJson);
         		}
         	}
-        	
-        	subject.put("groups", jsonGroups);	
-        	
+
+        	subject.put("groups", jsonGroups);
+
         	jsonSubjects.add(subject);
         }
-        
+
         // creating rooms JSONArray
         JSONArray jsonRooms = new JSONArray();
-        
+
         for  (String r : environment.getAllRooms()) {
         	JSONObject room = new JSONObject();
         	room.put("code", environment.getRoomCode(r));
@@ -354,14 +354,14 @@ public class CtrlDomain {
         	room.put("hasComputers", environment.roomHasComputers(r));
         	jsonRooms.add(room);
         }
-        
+
         //Add Subjects and Rooms to final object
         jo.put("rooms", jsonRooms);
         jo.put("subjects", jsonSubjects);
         jo.put("restrictions", jsonRestrictions);
-    	
+
         //Send to data controller to write
-        return dataController.writeEnvironment(filename, jo.toJSONString(0), absolutePath);        
+        return dataController.writeEnvironment(filename, jo.toJSONString(0), absolutePath);
 	}
 
 
@@ -369,30 +369,30 @@ public class CtrlDomain {
 	 * Importa un horari desde un arxiu.
 	 * @param filename Nom de l'arxiu d'horari a importar.
 	 * @return true si s'ha importat correctament, sino false
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public boolean importSchedule(String filename, boolean isFullpath) throws ParseException, IOException {
 		Environment environment = Environment.getInstance();
 		String jsonData = dataController.readSchedule(filename, isFullpath);
 
 		Object obj = new JSONParser().parse(jsonData);
-		
+
 		JSONObject jo = new JSONObject();
 		jo = (JSONObject) obj;
 		String scheduleData = ((JSONObject) jo.get("schedule")).toJSONString(0);
 		schedule = new Schedule(scheduleData);
-		
+
 		String envPath = (String) jo.get("path");
 		importEnvironment(envPath, false);
-		
+
 	   	return true;
 	}
-	
+
 	/**
 	 * Guarda l'horari de l'entorn a un arxiu.
 	 * @param filename Nom amb el que guardar l'horari.
 	 * @return true si s'ha guardat correctament.
-	 * @throws ParseException 
+	 * @throws ParseException
 	 */
 	@SuppressWarnings("unchecked")
 	public boolean exportSchedule(String filename, boolean isFullpath) throws IOException, ParseException  {
@@ -400,8 +400,8 @@ public class CtrlDomain {
 
 		Object obj = new JSONParser().parse(schedule.toJsonString());
 
-		// typecasting obj to JSONObject 
-        JSONObject scheduleJSON = (JSONObject) obj; 
+		// typecasting obj to JSONObject
+        JSONObject scheduleJSON = (JSONObject) obj;
 
         JSONObject jo = new JSONObject();
 
@@ -411,7 +411,7 @@ public class CtrlDomain {
 
         return dataController.writeSchedule(filename, jo.toJSONString(0), isFullpath);
 	}
-	
+
 	/**
 	 * Retorna una llista de noms d'arxius d'entorn disponibles.
 	 * @return Una llista de noms d'arxius d'entorn disponibles.
@@ -419,7 +419,7 @@ public class CtrlDomain {
 	public List<String> getEnvironmentFilesList() {
 		return dataController.getEnvironmentFilesList();
 	}
-	
+
 	/**
 	 * Retorna una llista de noms d'arxius d'horari disponibles.
 	 * @return Una llista de noms d'arxius d'horari disponibles.
@@ -427,7 +427,7 @@ public class CtrlDomain {
 	public List<String> getScheduleFilesList() {
 		return dataController.getScheduleFilesList();
 	}
-	
+
 	public ArrayList<String[]>[][] getScheduleMatrix() {
 		ArrayList<String[]>[][] data = new ArrayList[12][5];
 		for(Entry<String, String[][]> d : schedule.getSchedule().entrySet()) {
@@ -438,22 +438,22 @@ public class CtrlDomain {
                 	if(matrix[j][i]!=null && !matrix[j][i].isEmpty()) data[i][j].add(new String[]{getLectureGroup(matrix[j][i]), d.getKey(), matrix[j][i]});
                 }
             }
-		}		
+		}
 		return data;
 	}
-	
+
 	public String getLectureGroup(String lecture){
 		return environment.getInstance().getLectureGroup(lecture);
 	}
-	
+
 	// Funcions per comunicar-se amb la capa de presentaci�
-	
+
 		// ROOM
 		public Set<String> getRoomNames() {
 			Environment env = Environment.getInstance();
 			return new TreeSet<String>(env.getAllRooms());
 		}
-		
+
 		public String[] getRoomInfo(String room) {
 			 /* ********* ORDRE *********
 			  * param code			Codi de l'aula.
@@ -461,21 +461,21 @@ public class CtrlDomain {
 			  * param hasComputers 	Indica si l'aula t� ordinadors o no.
 			  * ************************* */
 			Environment env = Environment.getInstance();
-			
+
 			String[] infoRoom = new String[3];
 			infoRoom[0] = env.getRoomCode(room);
 			infoRoom[1] = env.getRoomCapacity(room).toString();
 			infoRoom[2] = env.roomHasComputers(room).toString();
-			
+
 			return infoRoom;
 		};
-		
+
 		// GROUP
 		public Set<String> getGroupNames() {
 			Environment env = Environment.getInstance();
 			return new TreeSet<String>(env.getAllGroups());
 		}
-		
+
 		public String[] getGroupInfo(String group) {
 			 /* ********* ORDRE *********
 			  * param code				Codi del grup.
@@ -487,7 +487,7 @@ public class CtrlDomain {
 			  * param needsComputers	True si necessita ordinadors.
 			  * ************************* */
 			Environment env = Environment.getInstance();
-			
+
 			String[] infoGroup = new String[7];
 			infoGroup[0] = env.getGroupCode(group);
 			infoGroup[1] = env.getGroupNumOfPeople(group).toString();
@@ -496,21 +496,21 @@ public class CtrlDomain {
 			infoGroup[4] = env.getGroupType(group).toString();
 			infoGroup[5] = env.getGroupDayPeriod(group).toString();
 			infoGroup[6] = env.groupNeedsComputers(group).toString();
-			
+
 			return infoGroup;
 		};
-		
+
 		public Set<String> getGroupsNamesFromSuject(String s) {
 			Environment env = Environment.getInstance();
 			return new TreeSet<String>(env.getSubjectGroups(s));
 		}
-		
+
 		// SUBJECT
 		public Set<String> getSubjectNames() {
 			Environment env = Environment.getInstance();
 			return new TreeSet<String>(env.getAllSubjects());
 		}
-		
+
 		public Object[] getSubjectInfo(String sub) {
 			 /* ********* ORDRE *********
 			  * param code		Codi de l'assignatura.
@@ -520,7 +520,7 @@ public class CtrlDomain {
 			  * param coreqs	Assignatues corequisites de l'assignatura que estem creant.
 			  * ************************* */
 			Environment env = Environment.getInstance();
-			
+
 			Object[] infoSub = new Object[] {
 				env.getSubjectCode(sub),
 				env.getSubjectName(sub),
@@ -528,29 +528,29 @@ public class CtrlDomain {
 				env.getSubjectGroups(sub),
 				env.getSubjectCoreqs(sub)
 			};
-			
+
 			return infoSub;
 		};
-		
+
 		// RESTRICTION
 		public Set<String> getRestrictionNames() {
 			Environment env = Environment.getInstance();
-			
+
 			TreeSet<String> R = new TreeSet<String>();
-			
+
 			for (String group : env.getAllGroups()) {
 				if (env.groupHasUnaryRestrictions(group)) R.addAll(env.getGroupUnaryRestrictions(group));
 				if (env.groupHasNaryRestrictions(group)) R.addAll(env.getGroupNaryRestrictions(group));
 			}
-			
+
 			return R;
 		}
-		
+
 		public Set<String> getRestrictionNamesView() {
 			Environment env = Environment.getInstance();
-			
+
 			TreeSet<String> R = new TreeSet<String>();
-			
+
 			for (String group : env.getAllGroups()) {
 				if (env.groupHasUnaryRestrictions(group)) {
 					Map<String, Map<String, UnaryRestriction>> allUnary = env.getUnaryRestrictions();
@@ -565,54 +565,54 @@ public class CtrlDomain {
 					}
 				}
 			}
-			
+
 			return R;
 		}
-		
+
 		public String[] getRestrictionInfo(String res) {
 			 /* ********* ORDRE *********
 			  * param negotiable	Indica si la restricci� �s negociable.
 			  * param enabled		Indica si la restricci� est� activada.
 			  * ************************* */
 			Environment env = Environment.getInstance();
-			
+
 			String[] infoRes = new String[2];
-			
+
 			for (Map<String, UnaryRestriction> groupRes : env.getUnaryRestrictions().values()) {
 				for (String rest : groupRes.keySet()) {
 					if (rest == res) {
 						Boolean nego = groupRes.get(rest).isNegotiable();
 						infoRes[0] = nego.toString();
-						
+
 						Boolean ena = groupRes.get(rest).isEnabled();
 						infoRes[1] = ena.toString();
-						
+
 						return infoRes;
 					}
 				}
 			}
-			
+
 			for (Map<String, NaryRestriction> groupRes : env.getNaryRestrictions().values()) {
 				for (String rest : groupRes.keySet()) {
 					if (rest == res) {
 						Boolean nego = groupRes.get(rest).isNegotiable();
 						infoRes[0] = nego.toString();
-						
+
 						Boolean ena = groupRes.get(rest).isEnabled();
 						infoRes[1] = ena.toString();
-						
+
 						return infoRes;
 					}
 				}
 			}
-			
+
 			// No existeix (error)
 			//System.out.println("error");
-			
+
 			String[] error = new String[0];
 			return error;
 		};
-		
+
 		/** Elimina un grup en un dia i aula determinats.
 		*   @param duration Duraci� del grup.
 		*	@param room		Aula on eliminarem el grup.
@@ -627,7 +627,7 @@ public class CtrlDomain {
 			}
 			return true;
 		}
-		
+
 		/** Afageix un grup en un dia i aula determinats.
 		*   @param duration Duraci� del grup.
 		*	@param room		Aula on eliminarem el grup.
@@ -643,20 +643,20 @@ public class CtrlDomain {
 			}
 			return true;
 		}
-		
+
 		public boolean validateAllRestrictions(String lecture, int day, int hour, String room, int duration) { // On ha d'anar
 			Environment env = Environment.getInstance();
 			System.out.println(lecture);
 			String g = env.getLectureGroup(lecture);
 			Map<String, String[][]> sche = schedule.getSchedule();
-			
+
 			//String g, String restr, String room, int day, int hour, String lecture, Integer d, Integer h, String r, String l
-			
+
 			for (String r : sche.keySet()) { // Restriccions n�ries
 				// Per cada room
 				String[][] rm = sche.get(r);
 						//env.getLectureGroup(lecture);
-				
+
 				for (int i = 0; i < 12; i++) {
 					String groupCompare = rm[i][day];
 					// Per cada hora
@@ -668,14 +668,14 @@ public class CtrlDomain {
 					}
 				}
 			}
-			
+
 			for (String restr : env.getGroupUnaryRestrictions(lecture)) { // Restriccions un�ries
 				if (!env.validateGroupUnaryRestriction(lecture, room, day, hour, duration)) return false;
 			}
-			
+
 			return true;
 		}
-		
+
 		/** Mou un grup de dia, aula i hora determinats
 		*   @param duration Duraci� del grup.
 		*	@param iniDay		Dia on est� actualment el grup.
@@ -688,14 +688,14 @@ public class CtrlDomain {
 		*/
 		public boolean moveLecture(int duration, int iniDay, int fiDay, int iniHour, int fiHour, String iniRoom, String fiRoom) {
 			String lecture = schedule.getSchedule().get(fiRoom)[iniDay][iniHour];
-			
+
 			// Eliminar lecture
 			boolean removed = removeLecture(duration, iniRoom, iniDay, iniHour);
-			
+
 			if (removed) {
 				// Restriccions
 				boolean restr = validateAllRestrictions(lecture, fiDay, fiHour, fiRoom, duration);
-				
+
 				if (restr) {
 					// Afegir-lo al lloc nou
 					putLecture(duration, fiRoom, fiDay, fiHour);
@@ -707,7 +707,7 @@ public class CtrlDomain {
 				}
 			} else return false;
 		}
-		
+
 		/**
 		 * @param inCode
 		 * @param inName
@@ -720,15 +720,33 @@ public class CtrlDomain {
 			if (inCode == null || inCode.isEmpty() || inName == null || inName.isEmpty() || inLevel == null || inLevel.isEmpty()) return false;
 			return environment.getInstance().addSubject(inCode, inName, inLevel, new ArrayList(), inCoreqs);
 		}
-		
+
 		/**
 		 * @param name
 		 * @return
 		 */
 		public boolean removeSubject(String name) {
-			return environment.removeSubject(name);
+			ArrayList<String> groups = environment.getInstance().getSubjectGroups(name);
+			Map<String, ArrayList<String>> lectures = new HashMap<String, ArrayList<String>>();
+			for (String group : groups) {
+				lectures.put(group, environment.getInstance().getGroupLectures(group));
+			}
+
+			boolean erase = environment.getInstance().removeSubject(name);
+
+			if (erase) {
+				for (String lecture : lectures.keySet()) {
+					for (String l : lectures.get(lecture)) {
+						eraseLecture(l);
+					}
+				}
+
+				return true;
+			}
+
+			return false;
 		}
-		
+
 		/**
 		 * @param inCode
 		 * @param inCapacity
@@ -739,15 +757,23 @@ public class CtrlDomain {
 			if (inCode == null || inCode.isEmpty()) return false;
 			return environment.getInstance().addRoom(inCode, inCapacity, inHasComputers);
 		}
-		
+
 		/**
 		 * @param code
 		 * @return
 		 */
 		public boolean removeRoom(String code) {
-			return environment.getInstance().removeRoom(code);
+			boolean erase = environment.getInstance().removeRoom(code);
+
+			if (erase) {
+				schedule.getSchedule().remove(code);
+
+				return true;
+			}
+
+			return false;
 		}
-		
+
 		/**
 		 * @param inCode
 		 * @param inNPeople
@@ -762,16 +788,64 @@ public class CtrlDomain {
 		public boolean addGroup(String inCode, Integer inNPeople, String inParentGroupCode, String subjectCode,
 				Boolean inNeedsComputers, String inType, String inDayPeriod, ArrayList<String> arrayList) {
 			if (inCode == null || inCode.isEmpty() || inParentGroupCode == null || inParentGroupCode.isEmpty()) return false;
-			
+
 			return environment.getInstance().addGroup(inCode, inNPeople, inParentGroupCode, subjectCode,
 					inNeedsComputers, inType, inDayPeriod, arrayList);
 		}
-		
+
 		/**
 		 * @param name
 		 * @return
 		 */
 		public boolean removeGroup(String name) {
-			return environment.getInstance().removeGroup(name);
+			ArrayList<String> lectures = environment.getInstance().getGroupLectures(name);
+			boolean erase = environment.getInstance().removeGroup(name);
+			if (erase) {
+				for (String lecture : lectures) {
+					eraseLecture(lecture);
+				}
+
+				return true;
+			}
+
+			return false;
+		}
+
+		/**
+		 * @param codi
+		 * @param group
+		 * @param duration
+		 * @return
+		 */
+		public boolean addLecture(Integer codi, String group, Integer duration) {
+			 return environment.getInstance().addLecture(codi, group, duration);
+		 }
+
+		/**
+		 * @param name
+		 * @return
+		 */
+		public boolean removeLecture(String name) {
+			boolean erase = environment.getInstance().removeLecture(name);
+			if (erase) {
+				eraseLecture(name);
+				return true;
+			}
+
+			return false;
+		}
+
+		public void eraseLecture(String name) {
+			for (String room : schedule.getSchedule().keySet()) {
+				for (int i = 0; i < 11; i++) {
+					for (int j = 0; j < 5; ++j) {
+						if (schedule.getSchedule().get(room)[j][i] != null) {
+							if (schedule.getSchedule().get(room)[j][i].equals(name)) {
+								schedule.getSchedule().get(room)[j][i] = null;
+							}
+						}
+					}
+				}
+			}
 		}
 }
