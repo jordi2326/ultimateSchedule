@@ -8,22 +8,22 @@ import domain.classes.Lecture;
 import domain.classes.PosAssig;
 import domain.classes.Subject;
 
-/** Restricci� sobre el nivell de les assignatures.
- *  Dos grups d'assignatures del mateix nivell no poden anar al mateix dia i hora si tenen el mateix codi i s�n del mateix tipus.
- *  	Ex: FM 10 T no pot anar al mateix dia i hora que PRO1 10 T, per� s� pot anar amb PRO1 11 L i PRO1 20 T.
+/** Restriccio sobre el nivell de les assignatures.
+ *  Dos grups d'assignatures del mateix nivell no poden anar al mateix dia i hora si tenen el mateix codi i son del mateix tipus.
+ *  	Ex: FM 10 T no pot anar al mateix dia i hora que PRO1 10 T, pero si pot anar amb PRO1 11 L i PRO1 20 T.
  * @author Xavier Lacasa Curto
 */
 
 public class SubjectLevelRestriction extends NaryRestriction {
 	
-	/** Constructora est�ndard.
+	/** Constructora estandard.
 	 */
 	public SubjectLevelRestriction() {
 		super(false); //negotiable
 	}
 	
 	/**
-	 * @return El String que identifica la restricci�.
+	 * @return El String que identifica la restriccio.
 	 */
 	public String toString() {
 		return SubjectLevelRestriction.class.getSimpleName();
@@ -36,13 +36,13 @@ public class SubjectLevelRestriction extends NaryRestriction {
 		return "Subject Level Restriction";
 	}
 	
-	/** Validaci� de la restricci�.
-	 * @param lecture	Sessi� que hem afegit a l'horari.
-	 * @param room		Aula on hem afegit la sessi�.
-	 * @param day		Dia en el que hem afegit la sessi�.
-	 * @param hour		Hora en la que hem afegit la sessi�.
-	 * @return True si, un cop eliminat les aules en les que cada sessi� no podia anar, totes les sessions restant poden anar com a m�nim a una aula. False en cas contrari.
-	 * Les aules que s'eliminen per cada sessi� restant s�n aquelles que farien anar dos grups, amb mateix codi i tipus, d'assignatures del mateix nivell al mateix dia i hora.
+	/** Validacio de la restriccio.
+	 * @param lecture	Sessio que hem afegit a l'horari.
+	 * @param room		Aula on hem afegit la sessio.
+	 * @param day		Dia en el que hem afegit la sessio.
+	 * @param hour		Hora en la que hem afegit la sessio.
+	 * @return True si, un cop eliminat les aules en les que cada sessio no podia anar, totes les sessions restant poden anar com a minim a una aula. False en cas contrari.
+	 * Les aules que s'eliminen per cada sessio restant son aquelles que farien anar dos grups, amb mateix codi i tipus, d'assignatures del mateix nivell al mateix dia i hora.
 	*/
 	@Override
 	public boolean validate(String room, Integer day, Integer hour, String lecture, Integer d, Integer h, String r, String l) {

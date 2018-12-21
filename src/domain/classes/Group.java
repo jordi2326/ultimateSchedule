@@ -16,7 +16,7 @@ public class Group {
 		MORNING, AFTERNOON, INDIFERENT
 	}
 	
-	/** Codi identificador únic. Ex: 10, 20
+	/** Codi identificador unic. Ex: 10, 20
 	*/
 	private String code; //nomes numero
 	
@@ -25,8 +25,8 @@ public class Group {
 	private Integer numPeople;
 	
 	/** Codi del grup pare al qual pertany.
-	 * Ex: Si {@link Group#code} és 10, aleshores {@link Group#parentGroupCode} és 10
-	 * Ex: Si {@link Group#code} és 12, aleshores {@link Group#parentGroupCode} és 10
+	 * Ex: Si {@link Group#code} es 10, aleshores {@link Group#parentGroupCode} es 10
+	 * Ex: Si {@link Group#code} es 12, aleshores {@link Group#parentGroupCode} es 10
 	*/
 	private String parentGroupCode;
 	
@@ -42,7 +42,7 @@ public class Group {
 	*/
 	private Type type;
 	
-	/** Període del dia en que ha d'anar el grup. Ex: "MORNING"
+	/** Periode del dia en que ha d'anar el grup. Ex: "MORNING"
 	*/
 	private DayPeriod dayPeriod;
 	
@@ -50,13 +50,13 @@ public class Group {
 	*/
 	private ArrayList<String> lectures;
 	
-	/** Constructora estàndard.
+	/** Constructora estandard.
 	 * @param code				Codi del grup.
-	 * @param numPeople			Núm. persones en el grup.
+	 * @param numPeople			Num. persones en el grup.
 	 * @param parentGroupCode	Codi del grup pare.
 	 * @param subject			Assignatura a la que pertany.
 	 * @param type				Tipus de grup.
-	 * @param dayPeriod			Període del dia.
+	 * @param dayPeriod			Periode del dia.
 	 * @param lectures			Conjunt de sessions del grup.
 	*/
 	public Group(String code, Integer numPeople, String parentGroupCode, String subject, Boolean needsComputers, Type type, DayPeriod dayPeriod, ArrayList<String> lectures) {
@@ -79,7 +79,7 @@ public class Group {
 	}
 
 	/**
-	 * Retorna el núm. de persones del grup.
+	 * Retorna el num. de persones del grup.
 	 * @return {@link Group#numPeople}
 	 */
 	public Integer getNumOfPeople() {
@@ -111,7 +111,7 @@ public class Group {
 	}
 	
 	/**
-	 * Retorna el període del dia en que aquest grup pot fer classe.
+	 * Retorna el periode del dia en que aquest grup pot fer classe.
 	 * @return {@link Group#dayPeriod}
 	 */
 	public DayPeriod getDayPeriod() {
@@ -134,6 +134,12 @@ public class Group {
 		return lectures;
 	}
 	
+	/**
+	 * Afageix una sessio nova al grup.
+	 * @param i			Codi de la sessio.
+	 * @param duration	Duracio de la sessio.
+	 * @return True si s'ha pogut afegir la nova sessio. False en cas contrari.
+	 */
 	public boolean addLectures(int i, int duration) {
 		if(lectures.contains(this.toString()+"-"+i)) return false;
 		lectures.add(this.toString()+"-"+i);

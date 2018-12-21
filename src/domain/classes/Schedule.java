@@ -18,11 +18,11 @@ import org.json.simple.parser.ParseException;
 */
 
 public class Schedule {
-	/** Horari
+	/** Horari.
 	*/
 	Map<String, String[][]> schedule;
 	
-	/** Constructora est�ndard.
+	/** Constructora estandard.
 	*/
 	public Schedule() {
 		schedule = new HashMap<String, String[][]>(); //String es codi del grup 
@@ -30,7 +30,7 @@ public class Schedule {
 
 	/**
 	 * Retorna l'horari.
-	 * @return {@link Schedule#schedule}
+	 * @return {@link Schedule#schedule}.
 	 */
 	public Map<String, String[][]> getSchedule() {
 		return schedule;
@@ -78,7 +78,7 @@ public class Schedule {
 	*	@param room		Aula on eliminarem el grup.
 	*	@param day		Dia on eliminarem el grup.
 	*	@param hour		Hora on eliminarem el grup.
-	*	@return Si existeix l'aula, eliminem el grup en q�esti� i retornem true. Fals en cas contrari.
+	*	@return Si existeix l'aula, eliminem el grup en que esta i retornem true. Fals en cas contrari.
 	*/
 	public boolean removeLecture(String room, int day, int hour) {
 		if(schedule.containsKey(room)){
@@ -115,9 +115,9 @@ public class Schedule {
         return jo.toJSONString(0);        
 	}
 	
-	/** Compara dos schedules
-	*	@param sc Paràmetre a comparar.
-	*	@return True si sc és igual que this. False en cas contrari.
+	/** Compara dos schedules.
+	*	@param sc Parametre a comparar.
+	*	@return True si sc es igual que this. False en cas contrari.
 	*/
 	public boolean equals(Schedule sc) {
 		for (String room : this.getSchedule().keySet()) {

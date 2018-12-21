@@ -6,11 +6,11 @@ package domain.classes;
 
 public class Room {
 	
-	/** Codi identificador únic.
+	/** Codi identificador unic.
 	*/
 	private String code;
 	
-	/** Núm. màxim d’estudiants que hi caben.
+	/** Num. maxim d’estudiants que hi caben.
 	*/
 	private Integer capacity;
 	
@@ -18,10 +18,10 @@ public class Room {
 	*/
 	private Boolean hasComputers;
 	
-	/** Constructora estàndard.
+	/** Constructora estandard.
 	 * @param code			Codi de l'aula.
 	 * @param capacity 		Capacitat de l'aula.
-	 * @param hasComputers 	Indica si l'aula té ordinadors o no.
+	 * @param hasComputers 	Indica si l'aula te ordinadors o no.
 	*/
 	public Room(String code, Integer capacity, Boolean hasComputers) {
 		this.code = code;
@@ -38,7 +38,7 @@ public class Room {
 	}
 
 	/**
-	 * Retorna el núm. màxim d’estudiants que hi caben.
+	 * Retorna el num. maxim d’estudiants que hi caben.
 	 * @return {@link Room#capacity}
 	 */
 	public Integer getCapacity() {

@@ -11,19 +11,19 @@ import java.util.stream.Collectors;
 */
 
 public class PosAssig {
-	/** Mapa de les possibles assignacions d'una sessi� d'un grup en concret.
-	 *  El mapa t� de key els dies i, per cada dia, t� un mapa amb les hores com a clau i les aules que poden anar-hi com a valor.
+	/** Mapa de les possibles assignacions d'una sessio d'un grup en concret.
+	 *  El mapa te de key els dies i, per cada dia, te un mapa amb les hores com a clau i les aules que poden anar-hi com a valor.
 	*/
 	Map<Integer, Map< Integer, Set<String>>> assigMap;
 	//   Dia		    Hora		Aula
 	
-	/** Constructora est�ndard.
+	/** Constructora estandard.
 	*/
 	public PosAssig() {
 		assigMap = new HashMap<Integer, Map< Integer, Set<String>>>();
 	}
 	
-	/** Constructora est�ndard.
+	/** Constructora estandard.
 	 * @param assigMap Conjunt de possibles assignacions.
 	*/
 	public PosAssig(Map<Integer,Map <Integer, Set<String>>> map) {
@@ -42,14 +42,29 @@ public class PosAssig {
 		//assigMap = map;
 	}
 	
+	/**
+	 * Conjunt de dies en els que hi ha una possible assignacio.
+	 * @return El Set amb els dies en els que hi ha una possible assignacio.
+	 */
 	public Set<Integer> getAllDays() {
 		return assigMap.keySet();
 	}
 	
+	/**
+	 * Conjunt de hores en les que hi ha una possible assignacio donat un dia concret.
+	 * @param day Dia a mirar.
+	 * @return El Set amb el conjunt d'hores en les que hi ha una possible assignacio donat el dia {@link PosAssig#day}.
+	 */
 	public Set<Integer> getAllHoursFromDay(Integer day) {
 		return assigMap.get(day).keySet();
 	}
 	
+	/**
+	 * Conjunt d'aules en les que hi ha una possible assignacio donat un dia i hora concrets.
+	 * @param day	Dia a mirar.
+	 * @param hour	Hora a mirar.
+	 * @return El Set amb el conjunt d'aules en les que hi ha una possible assignacio donat un dia {@link PosAssig#day} i un hour {@link PosAssig#hour}.
+	 */
 	public Set<String> getAllRoomsFromHourAndDay(Integer day, Integer hour) {
 		return assigMap.get(day).get(hour);
 	}
@@ -63,20 +78,20 @@ public class PosAssig {
 	}
 	
 	/**
-	 * Indica si un dia concret est� a {@link PosAssig#assigMap} o no.
+	 * Indica si un dia concret esta a {@link PosAssig#assigMap} o no.
 	 * @param day Dia a mirar.
-	 * @return Retorna true si hi ha una possible assignaci� en un dia concret. Fals en cas contrari.
+	 * @return Retorna true si hi ha una possible assignacio en un dia concret. Fals en cas contrari.
 	 */
 	public boolean hasDay(Integer day) {
 		return assigMap.containsKey(day);
 	}
 	
 	/**
-	 * Indica si hour est� a {@link PosAssig#assigMap} en un dia concret o no.
-	 * Pre: day s� que est� dins {@link PosAssig#assigMap}.
+	 * Indica si hour esta a {@link PosAssig#assigMap} en un dia concret o no.
+	 * Pre: day se que esta dins {@link PosAssig#assigMap}.
 	 * @param day  Dia a mirar.
 	 * @param hour Hora a mirar.
-	 * @return Retorna true si hi ha una possible assignaci� en un dia i hora concrets. Fals en cas contrari.
+	 * @return Retorna true si hi ha una possible assignacio en un dia i hora concrets. Fals en cas contrari.
 	 */
 	public boolean hasHourFromDay(Integer day, Integer hour) {
 		return (assigMap.containsKey(day) && assigMap.get(day).containsKey(hour));
@@ -137,7 +152,7 @@ public class PosAssig {
 	 * @param day	Dia on eliminar l'aula.
 	 * @param hour	Hora on eliminar l'aula.
 	 * @param room	Aula que volem eliminar.
-	 * @return {@link PosAssig#assigMap} amb la room eliminada a day i hour. Si un cop eliminada la room a day i hour no queden possibles assignacions, tamb� eliminarem hour.
+	 * @return {@link PosAssig#assigMap} amb la room eliminada a day i hour. Si un cop eliminada la room a day i hour no queden possibles assignacions, tambe eliminarem hour.
 	 */
 	public void removeRoomFromHourAndDay(Integer day, Integer hour, String room) {
 		assigMap.get(day).get(hour).remove(room);
@@ -149,6 +164,12 @@ public class PosAssig {
 		}
 	}
 	
+	/**
+	 * Afageix {@link PosAssig#room} a {@link PosAssig#day} i {@link PosAssig#hour} seleccionats. Si no existeixen els crea.
+	 * @param day	Dia seleccionat.
+	 * @param hour	Hora seleccionada.
+	 * @param room	Aula a afegir.
+	 */
 	//Posa room a day i hour seleccionats. Si no existeixen els crea.
 	public void putRoomInDayAndHour(Integer day, Integer hour, String room) {
 		//Si no te day l'afegim
