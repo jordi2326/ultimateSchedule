@@ -425,6 +425,10 @@ public class CtrlPresentation {
 		return ctrlDomain.removeGroup(name);
 	}
 	
+	public boolean addRestriction(String group, Integer day, Integer hour) {
+		return ctrlDomain.addRestriction(group, day, hour);
+	}
+	
 	/**
 	 * @param name
 	 */
