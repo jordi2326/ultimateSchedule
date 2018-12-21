@@ -39,7 +39,7 @@ public class RestrictionDriver {
 	
 	private static void menu() {
 		System.out.print(
-	            "Room Driver\n"
+	            "Restriction Driver\n"
 	            + "---------------------\n"
 	            + "Opciones\n"
 	            + " 1| new Restriction\n"
@@ -148,6 +148,11 @@ public class RestrictionDriver {
 	    }
 	}
 
+	/*
+	provaCorequisit.json
+	A6001 0 0 M2-10-THEORY-0
+	A6001 0 0 PRO1-10-THEORY-0
+	*/
 	
 	public static void testValidate(Scanner sc) throws ParseException, IOException {
 		if (r instanceof UnaryRestriction) {

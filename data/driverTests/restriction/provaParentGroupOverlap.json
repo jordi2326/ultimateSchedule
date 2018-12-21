@@ -10,13 +10,18 @@
         "code": "C6201",
         "capacity": 90,
         "hasComputers": true
+      },
+      {
+        "code": "C6202",
+        "capacity": 90,
+        "hasComputers": true
       }
     ],
     "subjects": 
     [
       {
         "code": "M2",
-        "name": "Matem��tiques 2",
+        "name": "Matemàtiques 2",
         "level": "2",
         "coreqs": ["PRO1"],
         "groups": 
@@ -28,7 +33,16 @@
               "needsComputers": true,
               "type": "THEORY",
               "dayPeriod": "MORNING",
-              "lecturesDuration": [1,1]
+              "lecturesDuration": [1]
+            },
+            {
+              "code": "33",
+              "numPeople": 10,
+              "parentGroupCode": "30",
+              "needsComputers": true,
+              "type": "LABORATORY",
+              "dayPeriod": "MORNING",
+              "lecturesDuration": [1]
             }
         ] 
     }
