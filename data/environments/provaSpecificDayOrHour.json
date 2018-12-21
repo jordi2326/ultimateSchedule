@@ -1,0 +1,39 @@
+{
+    "rooms":
+    [
+      {
+        "code": "A6001",
+        "capacity": 900,
+        "hasComputers": false
+      }
+    ],
+    "subjects": 
+    [
+      {
+	      "code": "PRO1",
+	      "name": "Programació 1",
+	      "level": "Q1",
+	      "coreqs": [""],
+	      "groups": 
+	      [
+	          {
+	            "code": "10",
+	            "numPeople": 90,
+              "parentGroupCode": "10",
+              "needsComputers": false,
+	            "type": "THEORY",
+	            "dayPeriod": "MORNING",
+	            "lecturesDuration": [1]
+	          }
+	      ] 
+      }
+    ], 
+    "restrictions":[{
+      "name":"SpecificDayOrHourRestriction",
+      "info":{
+        "hour":0,
+        "day":0,
+        "group":"PRO1-10-THEORY"
+        }
+      }]
+}

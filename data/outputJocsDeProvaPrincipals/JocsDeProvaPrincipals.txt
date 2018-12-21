@@ -21,6 +21,7 @@ On dos grups amb el mateix parentCode de dues assignatures correquisites entre e
 Carregarem l'arxiu 'provaCorequisit.json'
 En aquet entorn, tenim un grup 10 de M2, i un grup 10 de PRO1, on PRO1 es corequisit de M2, i per tant, no es podran solapar, tot hi haver-hi dos aules.
 
+Sortida esperada: mateix horari que arxiu provaCorequisit_SCHEDULE.json
 
 
 ##Prova 3##
@@ -30,6 +31,7 @@ On dos grups d'assignatures del mateix nivell no poden anar al mateix dia i hora
 Carregarem l'arxiu 'provaSubjectLevel.json'
 En aquet entorn els dos grups son grups de teoria 10 i del mateix nivell i per tant, no es podran solapar, tot hi haver-hi dos aules.
 
+Sortida esperada: mateix horari que arxiu provaSubjectLevel_SCHEDULE.json
 
 ##Prova 4##
 Objectius: Provar la restricció de ParentGroupOverlap.
@@ -37,6 +39,8 @@ On un subgrup (31, 45...) no pot anar al mateix dia i hora que el seu grup pare 
 
 Carregarem l'arxiu 'provaParentGroupOverlap.json'
 En aquet entorn un grup es M2 30, i l'altre M2 33, per tant no es poden solapar.
+
+Sortida esperada: mateix horari que arxiu provaParentGroupOverlap_SCHEDULE.json
 
 
 ##Prova 5##
@@ -46,6 +50,7 @@ Un grup
 Carregarem l'arxiu 'provaLectureFromSameGroupOverlap.json'
 En aquet entorn un grup es M2 30 i no pot anar a dues aules diferents en un mateix dia i hora.
 
+Sortida esperada: mateix horari que arxiu provaLectureFromSameGroupOverlap_SCHEDULE.json
 
 ##Prova 6##
 Objectius: Provar si es genera o no un horari en condicions que no s'hauria de generar.
@@ -72,89 +77,16 @@ Carregarem l'arxiu 'provaEmpty.json'
 L'horari generat està buit.
 
 ##Prova 9##
-Objectius: Mirar que el llistat de restriccions d'un entorn sigui el correcte.
-
-Carregarem l'arxiu 'provaNoTime2.json'
-Hi ha un sol grup que pot anar nom�s de matins. Aquesta ser� l'�nica restricci� un�ria.
-De restricci� n-�ries tindrem les que ho comproven tot:
-  � ParentGroupOverlapRestriction
-  � LectureFromSameGroupOverlapRestriction
-  � OccupiedRoomRestriction
-  � CorrequisitRestriction
-  � SubjectLevelRestriction
-
-Sortida esperada:
-Un-ary restrictions
---------------------------
-  | PRO1-10-THEORY: DayPeriodRestriction-6-MORNING
-
-N-ary restrictions
---------------------------
-  | ParentGroupOverlapRestriction
-  | LectureFromSameGroupOverlapRestriction
-  | OccupiedRoomRestriction
-  | CorrequisitRestriction
-  | SubjectLevelRestriction
---------------------------
- 0| Back
---------------------------
+Carregarem l'arxiu provaSpecificDayOrHour.json
+Veurem que importa una restricció negociable de l'environment que fa que la lecture 
+no pugui anar al dilluns a les 8:00h. No obstant, si desactivem (relaxem) la restricció
+veiem que sí pot anar al Dilluns a les 8:00h. Podem anar activar i desactivant la restricció
+o podem eliminar-ne o afegir-ne de noves. Finalment, podem guardar l'environment amb les restriccions
+modificades i també l'horari.
 
 ##Prova 10##
-Objectius: Mirar que el llistat de grups d'un entorn sigui el correcte.
+Objectius: Provar el timeout als 30 segons quan un horari és molt difícil de generar i pot trigar massa.
 
-Carregarem l'arxiu 'provaSubjectLevel.json'
-En aquest entorn nom�s hi ha 2 grups.
-
-Sortida esperada:
-Groups
---------------------------
-  | FM-10-THEORY
-  | PRO1-10-THEORY
---------------------------
- 0| Back
---------------------------
-
-##Prova 11##
-Objectius: Mirar que el llistat d'assignatures d'un entorn sigui el correcte.
-
-Carregarem l'arxiu 'provaSubjectLevel.json'
-En aquest entorn nom�s hi ha 2 assignatures.
-
-Sortida esperada:
-Subjects
---------------------------
-  | PRO1
-  | FM
---------------------------
- 0| Back
---------------------------
-
-##Prova 12##
-Objectius: Mirar que el llistat d'aules d'un entorn sigui el correcte.
-
-Carregarem l'arxiu 'provaSubjectLevel.json'
-En aquest entorn nom�s hi ha 2 aules.
-
-Sortida esperada:
-Rooms
---------------------------
-  | A6002
-  | A6001
---------------------------
- 0| Back
---------------------------
-
-##Prova 13##
-Objectius: Mirar que funcioni correctament el carregar horari existent.
-
-Carreguem l'entorn 'provaCorequisit.json'
-Carregarem l'arxiu 'sparseSchedule.json'
-
-
-##Prova 14##
-Objectius: Mirar que el funcioni correctament el guardat d'horaris generats.
-
-Carregarem l'arxiu 'provaSubjectLevel.json'
-Generem un horari
-Guardarem l'horari amb el nom 'Prova 14'
-Ara el carregarem
+Carregarem l'arxiu "Q1234.json"
+Al generar l'horari, intentarà trobar uan solució durant 30 segons, però al final
+pararà el procés al cap de 30 segons en vista que potser triga massa.

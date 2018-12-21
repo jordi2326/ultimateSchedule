@@ -1,0 +1,13 @@
+{
+"schedule":{
+	"MONDAY":{
+		"8":{
+			"C6202":"M2-33-LABORATORY-0"
+			},
+		"9":{
+			"A6001":"M2-30-THEORY-0"
+			}
+		}
+	},
+"path":"provaParentGroupOverlap.json"
+}

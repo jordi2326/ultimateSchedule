@@ -1,0 +1,15 @@
+{
+"schedule":{
+	"MONDAY":{
+		"8":{
+			"A6001":"M2-30-THEORY-0"
+			}
+		},
+	"TUESDAY":{
+		"8":{
+			"A6001":"M2-30-THEORY-1"
+			}
+		}
+	},
+"path":"provaLectureFromSameGroupOverlap.json"
+}
