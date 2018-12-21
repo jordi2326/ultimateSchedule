@@ -27,16 +27,6 @@
         "hasComputers": false
       },
       {
-        "code": "A6102",
-        "capacity": 90,
-        "hasComputers": false
-      },
-      {
-        "code": "A4202",
-        "capacity": 90,
-        "hasComputers": false
-      },
-      {
         "code": "A6001",
         "capacity": 90,
         "hasComputers": false
@@ -82,27 +72,7 @@
         "hasComputers": true
       },
       {
-        "code": "B5S102",
-        "capacity": 90,
-        "hasComputers": true
-      },
-      {
         "code": "C6S302",
-        "capacity": 90,
-        "hasComputers": true
-      },
-      {
-        "code": "A4001",
-        "capacity": 90,
-        "hasComputers": true
-      },
-      {
-        "code": "C5S302",
-        "capacity": 90,
-        "hasComputers": true
-      },
-      {
-        "code": "C5S301",
         "capacity": 90,
         "hasComputers": true
       },
@@ -2094,7 +2064,7 @@
                       "code": "IES",
                       "name": "La millor assignatura :)",
                       "level": "3",
-                      "coreqs": [""],
+                      "coreqs": ["EDA"],
                       "groups": 
                       [
                           {
@@ -2103,7 +2073,7 @@
                             "parentGroupCode": "10",
                             "type": "THEORY",
 								"needsComputers": false,
-                            "dayPeriod": "INDIFERENT",
+                            "dayPeriod": "MORNING",
                             "lecturesDuration": [2]
                           },
                           {
@@ -2111,8 +2081,8 @@
                             "numPeople": 20,
                             "parentGroupCode": "10",
                             "type": "LABORATORY",
-								"needsComputers": false,
-                            "dayPeriod": "INDIFERENT",
+								"needsComputers": true,
+                            "dayPeriod": "MORNING",
                             "lecturesDuration": [2]
                           },
                           {
@@ -2120,8 +2090,8 @@
                             "numPeople": 20,
                             "parentGroupCode": "10",
                             "type": "LABORATORY",
-								"needsComputers": false,
-                            "dayPeriod": "INDIFERENT",
+								"needsComputers": true,
+                            "dayPeriod": "MORNING",
                             "lecturesDuration": [2]
                           },
                           {
@@ -2129,8 +2099,8 @@
                             "numPeople": 20,
                             "parentGroupCode": "10",
                             "type": "LABORATORY",
-								"needsComputers": false,
-                            "dayPeriod": "INDIFERENT",
+								"needsComputers": true,
+                            "dayPeriod": "MORNING",
                             "lecturesDuration": [2]
                           },
                           {
@@ -2138,8 +2108,8 @@
                             "numPeople": 20,
                             "parentGroupCode": "10",
                             "type": "LABORATORY",
-								"needsComputers": false,
-                            "dayPeriod": "INDIFERENT",
+								"needsComputers": true,
+                            "dayPeriod": "MORNING",
                             "lecturesDuration": [2]
                           },
                           {
@@ -2148,7 +2118,7 @@
                             "parentGroupCode": "40",
                             "type": "THEORY",
 								"needsComputers": false,
-                            "dayPeriod": "INDIFERENT",
+                            "dayPeriod": "AFTERNOON",
                             "lecturesDuration": [2]
                           },
                           {
@@ -2156,8 +2126,8 @@
                             "numPeople": 20,
                             "parentGroupCode": "40",
                             "type": "LABORATORY",
-								"needsComputers": false,
-                            "dayPeriod": "INDIFERENT",
+								"needsComputers": true,
+                            "dayPeriod": "AFTERNOON",
                             "lecturesDuration": [2]
                           },
                           {
@@ -2165,12 +2135,93 @@
                             "numPeople": 20,
                             "parentGroupCode": "40",
                             "type": "LABORATORY",
-								"needsComputers": false,
-                            "dayPeriod": "INDIFERENT",
+								"needsComputers": true,
+                            "dayPeriod": "AFTERNOON",
                             "lecturesDuration": [2]
                           }
                       ] 
                       },
+                      {
+                        "code": "XC",
+                        "name": "xarxes computadors",
+                        "level": "3",
+                        "coreqs": ["SO"],
+                        "groups": 
+                        [
+                            {
+                              "code": "10",
+                              "numPeople": 20,
+                              "parentGroupCode": "10",
+                              "type": "THEORY",
+								"needsComputers": false,
+                              "dayPeriod": "MORNING",
+                              "lecturesDuration": [2]
+                            },
+                            {
+                              "code": "11",
+                              "numPeople": 20,
+                              "parentGroupCode": "10",
+                              "type": "LABORATORY",
+								"needsComputers": true,
+                              "dayPeriod": "MORNING",
+                              "lecturesDuration": [2]
+                            },
+                            {
+                              "code": "12",
+                              "numPeople": 20,
+                              "parentGroupCode": "10",
+                              "type": "LABORATORY",
+								"needsComputers": true,
+                              "dayPeriod": "MORNING",
+                              "lecturesDuration": [2]
+                            },
+                            {
+                              "code": "13",
+                              "numPeople": 20,
+                              "parentGroupCode": "10",
+                              "type": "LABORATORY",
+								"needsComputers": true,
+                              "dayPeriod": "MORNING",
+                              "lecturesDuration": [2]
+                            },
+                            {
+                              "code": "14",
+                              "numPeople": 20,
+                              "parentGroupCode": "10",
+                              "type": "LABORATORY",
+								"needsComputers": true,
+                              "dayPeriod": "MORNING",
+                              "lecturesDuration": [2]
+                            },
+                            {
+                              "code": "40",
+                              "numPeople": 20,
+                              "parentGroupCode": "40",
+                              "type": "THEORY",
+								"needsComputers": false,
+                              "dayPeriod": "AFTERNOON",
+                              "lecturesDuration": [2]
+                            },
+                            {
+                              "code": "41",
+                              "numPeople": 20,
+                              "parentGroupCode": "40",
+                              "type": "LABORATORY",
+								"needsComputers": true,
+                              "dayPeriod": "AFTERNOON",
+                              "lecturesDuration": [2]
+                            },
+                            {
+                              "code": "42",
+                              "numPeople": 20,
+                              "parentGroupCode": "40",
+                              "type": "LABORATORY",
+								"needsComputers": true,
+                              "dayPeriod": "AFTERNOON",
+                              "lecturesDuration": [2]
+                            }
+                        ] 
+                        },
                         {
                           "code": "EEE",
                           "name": "empresa",
@@ -2215,6 +2266,171 @@
                                 "lecturesDuration": [2,2]
                               }
                           ] 
-                          }
-    ]
+                          },
+                          {
+                            "code": "IDI",
+                            "name": "xarxes computadors",
+                            "level": "3",
+                            "coreqs": ["M1", "EDA"],
+                            "groups": 
+                            [
+                                {
+                                  "code": "10",
+                                  "numPeople": 20,
+                                  "parentGroupCode": "10",
+                                  "type": "THEORY",
+								"needsComputers": false,
+                                  "dayPeriod": "MORNING",
+                                  "lecturesDuration": [2]
+                                },
+                                {
+                                  "code": "11",
+                                  "numPeople": 20,
+                                  "parentGroupCode": "10",
+                                  "type": "LABORATORY",
+								"needsComputers": true,
+                                  "dayPeriod": "MORNING",
+                                  "lecturesDuration": [2]
+                                },
+                                {
+                                  "code": "12",
+                                  "numPeople": 20,
+                                  "parentGroupCode": "10",
+                                  "type": "LABORATORY",
+								"needsComputers": true,
+                                  "dayPeriod": "MORNING",
+                                  "lecturesDuration": [2]
+                                },
+                                {
+                                  "code": "13",
+                                  "numPeople": 20,
+                                  "parentGroupCode": "10",
+                                  "type": "LABORATORY",
+								"needsComputers": true,
+                                  "dayPeriod": "MORNING",
+                                  "lecturesDuration": [2]
+                                },
+                                {
+                                  "code": "14",
+                                  "numPeople": 20,
+                                  "parentGroupCode": "10",
+                                  "type": "LABORATORY",
+								"needsComputers": true,
+                                  "dayPeriod": "MORNING",
+                                  "lecturesDuration": [2]
+                                },
+                                {
+                                  "code": "40",
+                                  "numPeople": 20,
+                                  "parentGroupCode": "40",
+                                  "type": "THEORY",
+								"needsComputers": false,
+                                  "dayPeriod": "AFTERNOON",
+                                  "lecturesDuration": [2]
+                                },
+                                {
+                                  "code": "41",
+                                  "numPeople": 20,
+                                  "parentGroupCode": "40",
+                                  "type": "LABORATORY",
+								"needsComputers": true,
+                                  "dayPeriod": "AFTERNOON",
+                                  "lecturesDuration": [2]
+                                },
+                                {
+                                  "code": "42",
+                                  "numPeople": 20,
+                                  "parentGroupCode": "40",
+                                  "type": "LABORATORY",
+								"needsComputers": true,
+                                  "dayPeriod": "AFTERNOON",
+                                  "lecturesDuration": [2]
+                                }
+                            ] 
+                            },
+                            {
+                              "code": "AC",
+                              "name": "Arquitectura computadors",
+                              "level": "3",
+                              "coreqs": ["SO"],
+                              "groups": 
+                              [
+                                  {
+                                    "code": "10",
+                                    "numPeople": 20,
+                                    "parentGroupCode": "10",
+                                    "type": "THEORY",
+								"needsComputers": false,
+                                    "dayPeriod": "MORNING",
+                                    "lecturesDuration": [2]
+                                  },
+                                  {
+                                    "code": "11",
+                                    "numPeople": 20,
+                                    "parentGroupCode": "10",
+                                    "type": "LABORATORY",
+								"needsComputers": true,
+                                    "dayPeriod": "MORNING",
+                                    "lecturesDuration": [2]
+                                  },
+                                  {
+                                    "code": "12",
+                                    "numPeople": 20,
+                                    "parentGroupCode": "10",
+                                    "type": "LABORATORY",
+								"needsComputers": true,
+                                    "dayPeriod": "MORNING",
+                                    "lecturesDuration": [2]
+                                  },
+                                  {
+                                    "code": "13",
+                                    "numPeople": 20,
+                                    "parentGroupCode": "10",
+                                    "type": "LABORATORY",
+								"needsComputers": true,
+                                    "dayPeriod": "MORNING",
+                                    "lecturesDuration": [2]
+                                  },
+                                  {
+                                    "code": "14",
+                                    "numPeople": 20,
+                                    "parentGroupCode": "10",
+                                    "type": "LABORATORY",
+								"needsComputers": true,
+                                    "dayPeriod": "MORNING",
+                                    "lecturesDuration": [2]
+                                  },
+                                  {
+                                    "code": "40",
+                                    "numPeople": 20,
+                                    "parentGroupCode": "40",
+                                    "type": "THEORY",
+								"needsComputers": false,
+                                    "dayPeriod": "AFTERNOON",
+                                    "lecturesDuration": [2]
+                                  },
+                                  {
+                                    "code": "41",
+                                    "numPeople": 20,
+                                    "parentGroupCode": "40",
+                                    "type": "LABORATORY",
+								"needsComputers": true,
+                                    "dayPeriod": "AFTERNOON",
+                                    "lecturesDuration": [2]
+                                  },
+                                  {
+                                    "code": "42",
+                                    "numPeople": 20,
+                                    "parentGroupCode": "40",
+                                    "type": "LABORATORY",
+								"needsComputers": true,
+                                    "dayPeriod": "AFTERNOON",
+                                    "lecturesDuration": [2]
+                                  }
+                              ] 
+                              }
+    ],
+    "restrictions": 
+      [
+      ]
 }

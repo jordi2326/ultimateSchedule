@@ -16,7 +16,7 @@
     [
       {
         "code": "M2",
-        "name": "Matem¨¤tiques 2",
+        "name": "Matemï¿½ï¿½tiques 2",
         "level": "2",
         "coreqs": ["PRO1"]
         "groups": 
@@ -31,5 +31,8 @@
             },
         ] 
     }
-    ]
+    ],
+    "restrictions": 
+      [
+      ]
 }

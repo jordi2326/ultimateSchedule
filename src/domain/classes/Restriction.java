@@ -39,8 +39,8 @@ public abstract class Restriction {
 	}
 	
 	/**
-	 * Activa la restricció.
-	 * @return True si la restricció és negociable. False en cas contrari.
+	 * Activa la restricciï¿½.
+	 * @return True si la restricciï¿½ ï¿½s negociable. False en cas contrari.
 	 */
 	public boolean enable() {
 		if (negotiable) {
@@ -51,8 +51,8 @@ public abstract class Restriction {
 	}
 	
 	/**
-	 * Desactiva la restricció.
-	 * @return True si la restricció és negociable. False en cas contrari.
+	 * Desactiva la restricciï¿½.
+	 * @return True si la restricciï¿½ ï¿½s negociable. False en cas contrari.
 	 */
 	public boolean disable() {
 		if (negotiable) {
@@ -63,7 +63,7 @@ public abstract class Restriction {
 	}
 	
 	/**
-	 * @return El String que identifica la restricció.
+	 * @return El String que identifica la restricciï¿½.
 	 */
 	public abstract String toString();
 	
