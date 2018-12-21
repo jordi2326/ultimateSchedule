@@ -104,6 +104,91 @@ public class CtrlDomain {
 		schedule = new Schedule();
 	}
 	
+	/**
+	 * Imprimeix l'horari en una taula.
+	 */
+	public void printSchedule() {
+		Schedule copy = new Schedule(schedule.toJsonString());
+
+		Map<String, String[][]> SCH = new HashMap<String, String[][]>(copy.getSchedule());
+		System.out.println("|---------------------------------------------------------------------------------------------------------------|");
+		System.out.println("|      |      MONDAY        |      TUESDAY       |     WEDNESDAY      |      THURSDAY      |       FRIDAY       |");
+		System.out.println("|------+--------------------+--------------------+--------------------+--------------------+--------------------|");
+		boolean after = false;
+		ArrayList<Integer> posL = new ArrayList<Integer>();
+		posL.add(20);
+		for (int i = 0; i < 12; i++) {
+			if (after) {
+				i--;
+				System.out.print("|      |");
+			} else {
+				if (i + 8 < 10) System.out.print("|0" + (i + 8) + ":00 |");
+				else System.out.print("|" + (i + 8) + ":00 |");
+			}
+			after = false;
+			for (int j = 0; j < 5; j++) {
+				boolean found = false;
+				for (Map.Entry<String, String[][]> entry : SCH.entrySet()) {
+					if (!found) {
+						String text = entry.getValue()[j][i];
+						if (text!=null && !text.isEmpty()) {
+							found = true;
+							String[] split = text.split("-");
+							String ntext = split[0]+" "+split[1]+split[2].substring(0, 1);
+							System.out.print("  " + entry.getKey()+ ": " + ntext);
+							for (int k = (2 + entry.getKey().length() + 2 + ntext.length()); k < 20; ++k) System.out.print(" ");
+							System.out.print("|");
+							entry.getValue()[j][i] = null;
+						}
+					} else if (!after) {
+						// String room = entry.getKey();
+						String lecture = entry.getValue()[j][i];
+						if (lecture != null) {
+							after = true;
+						}
+					}
+				}
+				if (!found) System.out.print("                    |");
+			}
+			System.out.println("");
+			if (!after && i != 11) System.out.println("|------+--------------------+--------------------+--------------------+--------------------+--------------------|");
+		}
+
+		// Imprimir l'11
+		after = true;
+		while (after) {
+			System.out.print("|      |");
+			after = false;
+			for (int j = 0; j < 5; j++) {
+				boolean found = false;
+				for (Map.Entry<String, String[][]> entry : SCH.entrySet()) {
+					if (!found) {
+						String text = entry.getValue()[j][11];
+						if (text!=null && !text.isEmpty()) {
+							found = true;
+								String[] split = text.split("-");
+								String ntext = split[0]+" "+split[1]+split[2].substring(0, 1);
+								System.out.print("  " + entry.getKey()+ ": " + ntext);
+								for (int k = (2 + entry.getKey().length() + 2 + ntext.length()); k < 20; ++k) System.out.print(" ");
+								System.out.print("|");
+							entry.getValue()[j][11] = null;
+						}
+					} else if (!after) {
+						// String room = entry.getKey();
+						String lecture = entry.getValue()[j][11];
+						if (lecture != null) {
+							after = true;
+						}
+					}
+				}
+				if (!found) System.out.print("                    |");
+			}
+			System.out.println("");
+		}
+
+		System.out.println("|---------------------------------------------------------------------------------------------------------------|");
+	}
+	
 	public String getEnvirnonmentPath() {
 		Environment env = Environment.getInstance();
 		return env.getPath();		
