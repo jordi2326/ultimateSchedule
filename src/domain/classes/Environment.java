@@ -106,7 +106,6 @@ public class Environment {
 			iter.remove();
 		}
 		path = null;
-		System.out.println("cleared!");
 	}
 	
 	public Boolean setPath(String path) {
