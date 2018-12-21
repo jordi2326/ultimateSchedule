@@ -15,6 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * @author Xavier Lacasa Curto
+*/
 public class GroupInfoView extends JDialog {
 	
 	public GroupInfoView(Frame parent, String name) {

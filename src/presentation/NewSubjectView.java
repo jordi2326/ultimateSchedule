@@ -27,6 +27,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
+/**
+ * @author Carlos Bergillos Varela
+*/
 public class NewSubjectView extends JDialog {
 	
 	public NewSubjectView(Frame parent) {

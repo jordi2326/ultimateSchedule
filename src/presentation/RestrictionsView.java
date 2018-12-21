@@ -26,6 +26,9 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+/**
+ * @author Carlos Bergillos Varela
+*/
 public class RestrictionsView extends JDialog {
 	JPanel contentPanel;
 	CtrlPresentation ctrlPresentation;

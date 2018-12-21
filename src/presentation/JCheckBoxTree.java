@@ -21,6 +21,9 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
+/**
+ * @author Carlos Bergillos Varela & https://stackoverflow.com/questions/21847411/java-swing-need-a-good-quality-developed-jtree-with-checkboxes
+*/
 public class JCheckBoxTree extends JTree {
 
     private static final long serialVersionUID = -4194122328392241790L;
@@ -28,7 +31,6 @@ public class JCheckBoxTree extends JTree {
     JCheckBoxTree selfPointer = this;
 
 
-    //https://stackoverflow.com/questions/21847411/java-swing-need-a-good-quality-developed-jtree-with-checkboxes
     // Defining data structure that will enable to fast check-indicate the state of each node
     // It totally replaces the "selection" mechanism of the JTree
     private class CheckedNode {

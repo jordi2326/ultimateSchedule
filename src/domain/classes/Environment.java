@@ -19,7 +19,7 @@ import domain.classes.restrictions.SubjectLevelRestriction;
 import domain.classes.restrictions.UnaryRestriction;
 
 /** Representa un escenari.
- * @author 
+ * @author Xavier Lacasa Curto
 */
 
 public class Environment {

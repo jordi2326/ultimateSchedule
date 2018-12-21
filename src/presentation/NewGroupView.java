@@ -35,6 +35,9 @@ import domain.classes.Group;
 import domain.classes.Group.DayPeriod;
 import domain.classes.Group.Type;
 
+/**
+ * @author Xavier Martín Ballesteros
+*/
 public class NewGroupView extends JDialog {
 	
 	public NewGroupView(Frame parent, String subjectCode) {
