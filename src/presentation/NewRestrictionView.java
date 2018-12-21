@@ -37,6 +37,7 @@ public class NewRestrictionView {
 		message = new Object[]{
 			"Subject:", subjects,
 			"Group:", groups,
+			"NOT allowed on:",
 		    "Day:", days,
 		    "Time:", hours
 		};
@@ -45,7 +46,7 @@ public class NewRestrictionView {
 	public void makeVisible() {
 		int result = JOptionPane.showOptionDialog(null, message, "New Restriction", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 		if (result == JOptionPane.OK_OPTION) {
-			if(!ctrlPresentation.addRestriction((String) ((JComboBox<String>) message[3]).getSelectedItem(), ((JComboBox<String>) message[5]).getSelectedIndex(), ((JComboBox<String>) message[7]).getSelectedIndex()))
+			if(!ctrlPresentation.addRestriction((String) ((JComboBox<String>) message[3]).getSelectedItem(), ((JComboBox<String>) message[6]).getSelectedIndex(), ((JComboBox<String>) message[8]).getSelectedIndex()))
 				JOptionPane.showMessageDialog(null, "Error creating restriction", "The data is invalid.", JOptionPane.PLAIN_MESSAGE);
 	    }
 	}
