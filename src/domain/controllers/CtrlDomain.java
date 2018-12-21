@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import org.json.simple.JSONArray; 
@@ -269,40 +270,61 @@ public class CtrlDomain {
             	env.addUnaryRestriction(restrGroup, r);
         	}
         }
+        
        	
 		return true;
 	}
 	
 	
-	/**Not used anywhere
-	 * 
 	@SuppressWarnings("unchecked")
-	public boolean exportEnvironment(String filename) throws IOException {
+	public boolean exportEnvironment(String filename, Boolean absolutePath) throws IOException {
+		Environment environment = Environment.getInstance();
 		// creating JSONObject 
         JSONObject jo = new JSONObject();
         // creating subjects JSONArray
         JSONArray jsonSubjects = new JSONArray();
+        // creating rooms JSONArray
+        JSONArray jsonRestrictions = new JSONArray();
         
-        for (Subject value : subjects.values()) {
+        for (String s : environment.getAllSubjects()) {
         	JSONObject subject = new JSONObject();
-        	subject.put("code", value.getCode());
-        	subject.put("name", value.getName());
-        	subject.put("level", value.getLevel());
-        	subject.put("coreqs", value.getCoreqs());
+        	subject.put("code", environment.getSubjectCode(s));
+        	subject.put("name", environment.getSubjectName(s));
+        	subject.put("level", environment.getSubjectLevel(s));
+        	subject.put("coreqs", environment.getSubjectCoreqs(s));
         	
         	JSONArray jsonGroups = new JSONArray();
         	
-        	ArrayList<Group> groupsFromSubject = this.getGroupsFromSubject(value.toString());
-        	for (Group group : groupsFromSubject) {
+        	for (String g : environment.getSubjectGroups(s)) {
         		JSONObject jsonGroup = new JSONObject();
-        		jsonGroup.put("code", group.getCode());
-        		jsonGroup.put("numPeople", group.getNumOfPeople());
-        		jsonGroup.put("parentGroupCode", group.getParentGroupCode());
-        		jsonGroup.put("subject", group.getSubject());
-        		jsonGroup.put("type", group.getType().toString());
-        		jsonGroup.put("dayPeriod", group.getDayPeriod().toString());
-        		//jsonGroup.put("lecturesDuration", ); 
+        		jsonGroup.put("code", environment.getGroupCode(g));
+        		jsonGroup.put("numPeople", environment.getGroupNumOfPeople(g));
+        		jsonGroup.put("parentGroupCode", environment.getGroupParentGroupCode(g));
+        		jsonGroup.put("subject", environment.getGroupSubject(g));
+        		jsonGroup.put("type", environment.getGroupType(g).toString());
+        		jsonGroup.put("dayPeriod", environment.getGroupDayPeriod(g).toString());
+        		JSONArray jsonLectures = new JSONArray();
+        		for (String l : environment.getGroupLectures(g)) {
+        			jsonLectures.add(environment.getLectureDuration(l));
+        		}
+        		jsonGroup.put("lecturesDuration", jsonLectures); 
         		jsonGroups.add(jsonGroup);
+        		
+        		// restrictions
+        		Set<ArrayList<Integer>> infoRestr = new HashSet<ArrayList<Integer>>();
+        		infoRestr = environment.getSpecificDayHourInfo(g);
+        		for (ArrayList<Integer> dayAndHour : infoRestr) {
+        			Integer day = dayAndHour.get(0);
+        			Integer hour = dayAndHour.get(1);
+        			JSONObject restrJson = new JSONObject();
+        			restrJson.put("name", SpecificDayOrHourRestriction.class.getSimpleName());
+        			JSONObject infoJson = new JSONObject();
+        			infoJson.put("group", g);
+        			infoJson.put("day", day);
+        			infoJson.put("hour", hour);
+        			restrJson.put("info",  infoJson);
+        			jsonRestrictions.add(restrJson);
+        		}
         	}
         	
         	subject.put("groups", jsonGroups);	
@@ -312,22 +334,25 @@ public class CtrlDomain {
         
         // creating rooms JSONArray
         JSONArray jsonRooms = new JSONArray();
-        for (Room value : rooms.values()) {
+        
+        for  (String r : environment.getAllRooms()) {
         	JSONObject room = new JSONObject();
-        	room.put("code", value.getCode());
-        	room.put("capacity", value.getCapacity());
-        	room.put("hasComputers", value.hasComputers());
-        	
+        	room.put("code", environment.getRoomCode(r));
+        	room.put("capacity",  environment.getRoomCapacity(r));
+        	room.put("hasComputers", environment.roomHasComputers(r));
         	jsonRooms.add(room);
         }
         
         //Add Subjects and Rooms to final object
         jo.put("rooms", jsonRooms);
         jo.put("subjects", jsonSubjects);
+        jo.put("restrictions", jsonRestrictions);
     	
         //Send to data controller to write
-        return dataController.writeEnvironment(filename, jo.toJSONString(0));        
+        return dataController.writeEnvironment(filename, jo.toJSONString(0), absolutePath);        
 	}
+	
+	
 	private ArrayList<Group> getGroupsFromSubject(String subject) {
 		Subject auxSubject = subjects.get(subject);
 		ArrayList<String> subjectGroupsToString = auxSubject.getGroups();
@@ -337,7 +362,7 @@ public class CtrlDomain {
 		}
 		return groupsFromSubject;
 	}
-	**/
+
 	
 	/**
 	 * Importa un horari desde un arxiu.
@@ -597,7 +622,7 @@ public class CtrlDomain {
 			
 			//String g, String restr, String room, int day, int hour, String lecture, Integer d, Integer h, String r, String l
 			
-			for (String r : sche.keySet()) { // Restriccions nàries
+			for (String r : sche.keySet()) { // Restriccions nï¿½ries
 				// Per cada room
 				String[][] rm = sche.get(r);
 						//env.getLectureGroup(lecture);
@@ -607,14 +632,14 @@ public class CtrlDomain {
 					// Per cada hora
 					if (groupCompare != null) {
 						for (String restr : env.getGroupNaryRestrictions(lecture)) {
-							// Coses que estàz intentant inserir     |      Coses amb qui ho compares
+							// Coses que estï¿½z intentant inserir     |      Coses amb qui ho compares
 							if (!env.validateGroupNaryRestriction(g, restr, room, day, hour, lecture, day, i, r, groupCompare)) return false;
 						}
 					}
 				}
 			}
 			
-			for (String restr : env.getGroupUnaryRestrictions(lecture)) { // Restriccions unàries
+			for (String restr : env.getGroupUnaryRestrictions(lecture)) { // Restriccions unï¿½ries
 				if (!env.validateGroupUnaryRestriction(lecture, room, day, hour, duration)) return false;
 			}
 			

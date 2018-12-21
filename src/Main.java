@@ -155,12 +155,13 @@ public class Main {
 	          	+ " 4| View Rooms\n"
 	          	+ " 5| View Restrictions\n"
 	          	+ " 6| View Groups\n"
+	          	+ " 7| Save the Environment\n"
 	          	+ " 0| Back\n"
 	            + "--------------------------\n"
 	            );         
     }
 	
-	public static void environmentMenu(String envName){
+	public static void environmentMenu(String envName) throws IOException{
 		printEnvironmentMenu(envName);
 	    int n = sc.nextInt();
 	    while (n != 0) {
@@ -173,6 +174,8 @@ public class Main {
 	            		System.out.println("Error. No Valid Schedule Found");
 	            	}
 	                break;
+	            case 7:
+	            	ctDomain.exportEnvironment("test.json", false);
 	                /*
 	            case 2:
 	            	loadSchedulesMenu();
