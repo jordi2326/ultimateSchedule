@@ -22,6 +22,10 @@ public class Environment {
 	*/
 	private static Environment instance;
 	
+	/** Relative path (filename of environment)
+	*/
+	private String path;
+	
 	/** Conjunt d'assignatures de l'entorn.
 	*/
 	private Map<String, Subject> subjects;
@@ -101,15 +105,20 @@ public class Environment {
 			iter.next();
 			iter.remove();
 		}
-		/*
-		subjects.clear();
-		rooms.clear();
-		groups.clear();
-		lectures.clear();
-		unaryRestrictions.clear();
-		naryRestrictions.clear();	
-		*/
+		path = null;
 		System.out.println("cleared!");
+	}
+	
+	public Boolean setPath(String path) {
+		if (this.path == null) {
+			this.path = path;
+			return true;
+		}
+		return false;
+	}
+	
+	public String getPath() {
+		return path;
 	}
 	
 	/////////////// RESTRICTIONS //////////////////////////////

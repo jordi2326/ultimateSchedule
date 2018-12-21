@@ -194,7 +194,10 @@ public class CtrlDomain {
 	public boolean importEnvironment(String filename, boolean isFullpath) throws ParseException, IOException   {
 		
 		 Environment env = Environment.getInstance();
+		 
 		 env.erase();
+		 
+		 env.setPath(filename);
 		 
 		 String jsonData = dataController.readEnvironment(filename, isFullpath);
 		 Object obj = new JSONParser().parse(jsonData);
@@ -357,18 +360,6 @@ public class CtrlDomain {
         //Send to data controller to write
         return dataController.writeEnvironment(filename, jo.toJSONString(0), absolutePath);        
 	}
-	
-	
-	private ArrayList<Group> getGroupsFromSubject(String subject) {
-		Subject auxSubject = subjects.get(subject);
-		ArrayList<String> subjectGroupsToString = auxSubject.getGroups();
-		ArrayList<Group> groupsFromSubject = new ArrayList<Group>();
-		for (String groupToString : subjectGroupsToString) {
-			groupsFromSubject.add(groups.get(groupToString));
-		}
-		return groupsFromSubject;
-	}
-
 	
 	/**
 	 * Importa un horari desde un arxiu.
