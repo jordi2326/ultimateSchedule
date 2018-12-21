@@ -162,11 +162,12 @@ public class CtrlPresentation {
 	/**
 	 * @param filename
 	 * @return
-	 * @throws FileNotFoundException
 	 * @throws ParseException
+	 * @throws IOException 
 	 */
 	public boolean importSchedule(String filename)
-		throws FileNotFoundException, ParseException {
+		throws ParseException, IOException {
+		
 		return ctrlDomain.importSchedule(filename, true);
 	}
 	
@@ -174,8 +175,9 @@ public class CtrlPresentation {
 	 * @param filename
 	 * @return
 	 * @throws IOException
+	 * @throws ParseException 
 	 */
-	public boolean exportSchedule(String filename) throws IOException{
+	public boolean exportSchedule(String filename) throws IOException, ParseException{
 			return ctrlDomain.exportSchedule(filename, true);
 		}
 	
@@ -316,7 +318,7 @@ public class CtrlPresentation {
 	}
 	
 	/** Elimina un grup en un dia i aula determinats.
-	*   @param duration Duració del grup.
+	*   @param duration Duraciï¿½ del grup.
 	*	@param room		Aula on eliminarem el grup.
 	*	@param day		Dia on eliminarem el grup.
 	*	@param hour		Hora on eliminarem el grup.
@@ -327,13 +329,13 @@ public class CtrlPresentation {
 	}
 	
 	/** Mou un grup de dia, aula i hora determinats
-	*   @param duration Duració del grup.
-	*	@param iniDay		Dia on està actualment el grup.
-	*	@param fiDay		Dia on anirà el grup si es pot.
-	*	@param iniHour		Hora on està actualment el grup.
-	*	@param fiHour		Hora on anirà el grup si es pot.
-	*	@param iniRoom		Aula on està actualment el grup.
-	*	@param fiRoom		Aula on anirà el grup si es pot.
+	*   @param duration Duraciï¿½ del grup.
+	*	@param iniDay		Dia on estï¿½ actualment el grup.
+	*	@param fiDay		Dia on anirï¿½ el grup si es pot.
+	*	@param iniHour		Hora on estï¿½ actualment el grup.
+	*	@param fiHour		Hora on anirï¿½ el grup si es pot.
+	*	@param iniRoom		Aula on estï¿½ actualment el grup.
+	*	@param fiRoom		Aula on anirï¿½ el grup si es pot.
 	*	@return True si s'ha pogut moure el grup. Fals en cas contrari.
 	*/
 	public boolean moveLecture(int duration, int iniDay, int fiDay, int iniHour, int fiHour, String iniRoom, String fiRoom) {

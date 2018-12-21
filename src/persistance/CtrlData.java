@@ -10,8 +10,8 @@ import java.util.Scanner;
 
 import domain.controllers.CtrlDomain;
 
-/** Controlador principal de dades de l'aplicació.
- * @author Xavier Martín Ballesteros
+/** Controlador principal de dades de l'aplicaciï¿½.
+ * @author Xavier Martï¿½n Ballesteros
 */
 
 public class CtrlData {
@@ -31,7 +31,7 @@ public class CtrlData {
 		return instance;
 	}
 	
-	/** Constructora estàndard.
+	/** Constructora estï¿½ndard.
 	*/
 	private CtrlData() {
 	}
@@ -84,7 +84,7 @@ public class CtrlData {
 	
 	/**
 	 * Llegeix els continguts d'un arxiu.
-	 * @param filename Adreça de l'arxiu a llegir.
+	 * @param filename Adreï¿½a de l'arxiu a llegir.
 	 * @return El contingut de l'arxiu.
 	 */
 	private String readData(String filename) throws FileNotFoundException {
@@ -98,7 +98,7 @@ public class CtrlData {
 	
 	/**
 	 * Escriu un String a un arxiu local.
-	 * @param filename Adreça de l'arxiu a on escriure (si no existeix es crearà).
+	 * @param filename Adreï¿½a de l'arxiu a on escriure (si no existeix es crearï¿½).
 	 * @return true si s'ha escrit correctament.
 	 */
 	private boolean writeData(String filename, String content) throws FileNotFoundException {
@@ -127,7 +127,7 @@ public class CtrlData {
 	
 	/**
 	 * Retorna una llista de noms d'arxius que es troben dins d'una carpeta.
-	 * @param path Adreça de la carpeta.
+	 * @param path Adreï¿½a de la carpeta.
 	 * @return Una llista de noms d'arxius que es troben dins de la carpeta donada.
 	 */
 	private List<String> getFilesList(String path) {
