@@ -248,8 +248,8 @@ public class CtrlPresentation {
 	 * @param res
 	 * @return
 	 */
-	public ArrayList<Object[]> getRestrictionInfo() {
-		return ctrlDomain.getRestrictionInfo();
+	public ArrayList<Object[]> getNegotiableRestrictions() {
+		return ctrlDomain.getNegotiableRestrictions();
 	}
 	
 	// Com vols que es vegin a la pantalla

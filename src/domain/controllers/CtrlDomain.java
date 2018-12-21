@@ -575,8 +575,8 @@ public class CtrlDomain {
 			return R;
 		}
 
-		public ArrayList<Object[]> getRestrictionInfo() {
-			return getRestrictionInfo();
+		public ArrayList<Object[]> getNegotiableRestrictions() {
+			return environment.getInstance().getNegotiableRestrictions();
 		}
 
 		//public String[] getRestrictionInfo(String res) {

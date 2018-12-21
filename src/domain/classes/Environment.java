@@ -131,7 +131,7 @@ public class Environment {
 		return naryRestrictions;
 	}
 	
-	public ArrayList<Object[]> getRestrictionInfo() {
+	public ArrayList<Object[]> getNegotiableRestrictions() {
 		ArrayList<Object[]> restr = new ArrayList<Object[]>();
 		for (String group : groups.keySet()) {
 			Map<String, UnaryRestriction> map = unaryRestrictions.get(group);
