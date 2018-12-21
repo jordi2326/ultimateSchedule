@@ -100,7 +100,7 @@ public class RestrictionsView extends JDialog {
 			bottomPanel.setLayout(new BorderLayout());
 			bottomPanel.setOpaque(false);
 			JLabel label1 = new JLabel();
-			
+			label1.setFont(label1.getFont().deriveFont(Font.BOLD, 14f));
 			label1.setBorder(new EmptyBorder(4, 4, 4, 4));
 			topPanel.add(label1, BorderLayout.CENTER);
 			JButton btnRemove = new JButton("x");
@@ -122,7 +122,8 @@ public class RestrictionsView extends JDialog {
 			
 			JLabel label2 = new JLabel();
 			label2.setBorder(new EmptyBorder(4, 4, 4, 4));
-			label2.setFont(label1.getFont().deriveFont(Font.PLAIN));
+			label2.setFont(label2.getFont().deriveFont(Font.PLAIN));
+			//label2.setFont(label1.getFont().deriveFont(Font.PLAIN));
 			bottomPanel.add(label2, BorderLayout.CENTER);
 			
 			content.add(topPanel, BorderLayout.NORTH);
@@ -143,7 +144,7 @@ public class RestrictionsView extends JDialog {
 			row.add(new JSeparator(SwingConstants.VERTICAL), BorderLayout.CENTER);
 			row.add(content);
 			label1.setText(data[1].toString());
-			label2.setText(ScheduleTable.colNames[(int) data[2]].toString() + " - " + ScheduleTable.startTimes[(int) data[3]].toString());
+			label2.setText("<html><b>NOT</b> allowed on <b>" + ScheduleTable.colNames[(int) data[2]].toString() + "</b> at <b>" + ScheduleTable.startTimes[(int) data[3]].toString() + "</b></html>");
 			row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
 			row.setBackground(Color.decode("#fafafa"));
 			contentPanel.add(row, contentPanel.getComponentCount()-1);

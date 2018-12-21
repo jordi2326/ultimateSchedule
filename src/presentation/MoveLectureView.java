@@ -38,6 +38,6 @@ public class MoveLectureView {
 		int result = JOptionPane.showOptionDialog(null, message, "Move Lecture", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 		if (result == JOptionPane.OK_OPTION)
 	         if(!ctrlPresentation.moveLecture(duration, iniDay, ((JComboBox<String>) message[4]).getSelectedIndex(), iniHour, ((JComboBox<String>) message[6]).getSelectedIndex(), iniRoom, (String) ((JComboBox<String>) message[8]).getSelectedItem()))
-	        	 JOptionPane.showMessageDialog(null, "Movement not valid. Try something else", "Error", JOptionPane.ERROR_MESSAGE);
+	        	 JOptionPane.showMessageDialog(null, "Movement not valid. Try something else.", "Error", JOptionPane.ERROR_MESSAGE);
 	}
 }
