@@ -230,22 +230,16 @@ public class CtrlDomain {
         			env.addLecture(l);
         			ls.add(l.toString());
         		}
-    			Group g = new Group(
-    					gcode,
-    					((Long) group.get("numPeople")).intValue(),
-    					(String) group.get("parentGroupCode"),
-    					scode,
-    					(Boolean) group.get("needsComputers"), //hopefully aixi ja funcionara
-    					Group.Type.valueOf((String) group.get("type")),
-    					Group.DayPeriod.valueOf((String) group.get("dayPeriod")),
-    					ls);
+    			//Group g = new Group(
+    			//		gcode, ((Long) group.get("numPeople")).intValue(), (String) group.get("parentGroupCode"), scode, (Boolean) group.get("needsComputers"), Group.Type.valueOf((String) group.get("type")), Group.DayPeriod.valueOf((String) group.get("dayPeriod")), ls);
     			//groups.put(g.toString(), g);
-    			env.addGroup(g);    			
-    			groupsToString.add(g.toString());
+    			env.addGroup(gcode, (Integer)((Long) group.get("numPeople")).intValue(), (String) group.get("parentGroupCode"), scode, (Boolean) group.get("needsComputers"), (String)group.get("type"), (String)group.get("dayPeriod"), ls);    			
+    			groupsToString.add(scode + "-" + gcode + "-" + Group.Type.valueOf((String) group.get("type")));
+    			// subject + "-" + code + "-" + type
     			//Afegim la restriccio d'aquest grup de mati o tarda o indiferent
     						
-			DayPeriodRestriction dpr = new DayPeriodRestriction(6, g.getDayPeriod());
-			env.addUnaryRestriction(g.toString(), dpr);
+			DayPeriodRestriction dpr = new DayPeriodRestriction(6, Group.DayPeriod.valueOf((String) group.get("dayPeriod")));
+			env.addUnaryRestriction(scode + "-" + gcode + "-" + Group.Type.valueOf((String) group.get("type")), dpr);
   
         	}
         	env.addSubject(scode, (String) subject.get("name"), (String) subject.get("level"), groupsToString, (ArrayList<String>) subject.get("coreqs"));
@@ -360,7 +354,8 @@ public class CtrlDomain {
         //Send to data controller to write
         return dataController.writeEnvironment(filename, jo.toJSONString(0), absolutePath);        
 	}
-	
+
+
 	/**
 	 * Importa un horari desde un arxiu.
 	 * @param filename Nom de l'arxiu d'horari a importar.
@@ -400,17 +395,19 @@ public class CtrlDomain {
 	public ArrayList<String[]>[][] getScheduleMatrix() {
 		ArrayList<String[]>[][] data = new ArrayList[12][5];
 		for(Entry<String, String[][]> d : schedule.getSchedule().entrySet()) {
-			System.out.println(d.getKey()+" "+d.getValue()[0][0]+" "+d.getValue()[0][1]);
 			String[][] matrix = d.getValue();
 			for (int i = 0; i < matrix[0].length; i++) {
                 for (int j = 0; j < matrix.length; j++) {
                 	if(data[i][j]==null) data[i][j] = new ArrayList<String[]>();
-                	if(matrix[j][i]!=null && !matrix[j][i].isEmpty()) data[i][j].add(new String[]{matrix[j][i], d.getKey()});
+                	if(matrix[j][i]!=null && !matrix[j][i].isEmpty()) data[i][j].add(new String[]{getLectureGroup(matrix[j][i]), d.getKey(), matrix[j][i]});
                 }
             }
-		}
-		
+		}		
 		return data;
+	}
+	
+	public String getLectureGroup(String lecture){
+		return environment.getInstance().getLectureGroup(lecture);
 	}
 	
 	// Funcions per comunicar-se amb la capa de presentaci�
@@ -713,5 +710,32 @@ public class CtrlDomain {
 		 */
 		public boolean removeRoom(String code) {
 			return environment.getInstance().removeRoom(code);
+		}
+		
+		/**
+		 * @param inCode
+		 * @param inNPeople
+		 * @param inParentGroupCode
+		 * @param subjectCode
+		 * @param inNeedsComputers
+		 * @param inType
+		 * @param inDayPeriod
+		 * @param arrayList
+		 * @return
+		 */
+		public boolean addGroup(String inCode, Integer inNPeople, String inParentGroupCode, String subjectCode,
+				Boolean inNeedsComputers, String inType, String inDayPeriod, ArrayList<String> arrayList) {
+			if (inCode == null || inCode.isEmpty() || inParentGroupCode == null || inParentGroupCode.isEmpty()) return false;
+			
+			return environment.getInstance().addGroup(inCode, inNPeople, inParentGroupCode, subjectCode,
+					inNeedsComputers, inType, inDayPeriod, arrayList);
+		}
+		
+		/**
+		 * @param name
+		 * @return
+		 */
+		public boolean removeGroup(String name) {
+			return environment.getInstance().removeGroup(name);
 		}
 }

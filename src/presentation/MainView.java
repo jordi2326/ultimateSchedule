@@ -49,6 +49,7 @@ public class MainView extends JFrame{
 	private JLabel envText;
 	private ScheduleTable table;
 	private boolean environmentLoaded, scheduleLoaded;
+	private String environmentName;
 	
 	public MainView(CtrlPresentation ctrlPresentation){
 		this.ctrlPresentation = ctrlPresentation;
@@ -111,7 +112,8 @@ public class MainView extends JFrame{
 				if (!selected.equals(path)) {	//user selected a file
 					try {
 						ctrlPresentation.importEnvironment(selected.getAbsolutePath());
-						environmentLoaded(selected.getName());
+						environmentName = selected.getName();
+						environmentLoaded();
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
@@ -430,9 +432,9 @@ public class MainView extends JFrame{
 	/**
 	 * @param name
 	 */
-	private void environmentLoaded(String name) {
+	private void environmentLoaded() {
 		environmentLoaded = true;
-		scheduleLoaded = false;
+		//scheduleLoaded = false;
 		
 		table.clearFilterLists();
 		DefaultMutableTreeNode groupsRoot = new DefaultMutableTreeNode("All Subjects");
@@ -456,11 +458,22 @@ public class MainView extends JFrame{
 		treeRooms.expandPath(new TreePath(roomsRoot.getPath()));
 		treeRooms.checkSubTree(new TreePath(roomsRoot.getPath()), true);
 		
-		envText.setText(name);
+		envText.setText(environmentName);
 		btnLoadSchedule.setEnabled(environmentLoaded);
 		btnGenSchedule.setEnabled(environmentLoaded);
 		btnSaveSchedule.setEnabled(scheduleLoaded);
 		btnConfigRestrictions.setEnabled(environmentLoaded);
+	}
+	
+	public void subjectAdded(String name) {
+		DefaultTreeModel model = (DefaultTreeModel) treeGroups.getModel();
+		DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
+		
+		DefaultMutableTreeNode child = new DefaultMutableTreeNode(name);
+	    root.add(child);
+	    treeGroups.setModelUpdated(model, child);
+	    ((DefaultTreeModel) treeGroups.getModel()).reload();
+	    treeGroups.checkSubTree(new TreePath(child.getPath()), true);
 	}
 	
 	/**

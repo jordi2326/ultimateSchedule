@@ -187,9 +187,37 @@ public class Environment {
 	
 	/////////////// GROUPS //////////////////////////////
 	
-	public void addGroup(Group g) {
-		groups.put(g.toString(), g);
-		naryRestrictions.put(g.toString(), groupRestr);
+	/**
+	 * @param inCode
+	 * @param inNPeople
+	 * @param inParentGroupCode
+	 * @param subjectCode
+	 * @param inNeedsComputers
+	 * @param inType
+	 * @param inDayPeriod
+	 * @param arrayList
+	 * @return
+	 */
+	public boolean addGroup(String inCode, Integer inNPeople, String inParentGroupCode, String subjectCode,
+			Boolean inNeedsComputers, String inType, String inDayPeriod, ArrayList<String> arrayList) {
+		if (!groups.containsKey(inCode)) {
+			Group g = new Group(inCode, inNPeople, inParentGroupCode, subjectCode, inNeedsComputers, Group.Type.valueOf((String) inType), Group.DayPeriod.valueOf((String) inDayPeriod), arrayList);
+			
+			groups.put(inCode, g);
+			naryRestrictions.put(g.toString(), groupRestr);
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * @param name
+	 * @return
+	 */
+	public boolean removeGroup(String name) {
+		groups.remove(name);
+		return true;
 	}
 	
 	public String getGroupSubject(String g) {

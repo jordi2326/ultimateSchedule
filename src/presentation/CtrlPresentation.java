@@ -391,6 +391,19 @@ public class CtrlPresentation {
 	 */
 	public boolean addGroup(String inCode, Integer inNPeople, String inParentGroupCode, String subjectCode,
 			Boolean inNeedsComputers, String inType, String inDayPeriod, ArrayList<String> arrayList) {
-		return false;
+		return ctrlDomain.addGroup(inCode, inNPeople, inParentGroupCode, subjectCode,
+				inNeedsComputers, inType, inDayPeriod, arrayList);
+	}
+	
+	/**
+	 * @param name
+	 * @return
+	 */
+	public boolean removeGroup(String name) {
+		return ctrlDomain.removeGroup(name);
+	}
+	
+	public void subjectAdded(String name) {
+		mainView.subjectAdded(name);
 	}
 }
