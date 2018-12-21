@@ -8,22 +8,22 @@ import domain.classes.Lecture;
 import domain.classes.PosAssig;
 import domain.classes.Subject;
 
-/** Restricci� sobre els grups.
+/** Restriccio sobre els grups.
  *  Un subgrup (31, 45...) no pot anar al mateix dia i hora que el seu grup pare (30, 40...).
- *  	Ex: FM 11 L no pot anar al mateix dia i hora que FM 10 T, per� s� pot anar amb FM 12 L.
+ *  	Ex: FM 11 L no pot anar al mateix dia i hora que FM 10 T, pero si pot anar amb FM 12 L.
  * @author Xavier Lacasa Curto
 */
 
 public class ParentGroupOverlapRestriction extends NaryRestriction {
 	
-	/** Constructora est�ndard.
+	/** Constructora estandard.
 	 */
 	public ParentGroupOverlapRestriction() {
 		super(false); //negotiable
 	}
 	
 	/**
-	 * @return El String que identifica la restricci�.
+	 * @return El String que identifica la restriccio.
 	 */
 	public String toString() {
 		return ParentGroupOverlapRestriction.class.getSimpleName();
@@ -36,13 +36,13 @@ public class ParentGroupOverlapRestriction extends NaryRestriction {
 		return "Parent Group Overlap Restriction";
 	}
 	
-	/** Validaci� de la restricci�.
-	 * @param lecture	Sessi� que hem afegit a l'horari.
-	 * @param room		Aula on hem afegit la sessi�.
-	 * @param day		Dia en el que hem afegit la sessi�.
-	 * @param hour		Hora en la que hem afegit la sessi�.
-	 * @return True si, un cop eliminat les aules en les que cada sessi� no podia anar, totes les sessions restant poden anar com a m�nim a una aula. False en cas contrari.
-	 * Les aules que s'eliminen per cada sessi� restant s�n aquelles que farien que un grup pare i un subgrup anessin al mateix dia i hora.
+	/** Validacio de la restriccio.
+	 * @param lecture	Sessio que hem afegit a l'horari.
+	 * @param room		Aula on hem afegit la sessio.
+	 * @param day		Dia en el que hem afegit la sessio.
+	 * @param hour		Hora en la que hem afegit la sessio.
+	 * @return True si, un cop eliminat les aules en les que cada sessio no podia anar, totes les sessions restant poden anar com a minim a una aula. False en cas contrari.
+	 * Les aules que s'eliminen per cada sessio restant son aquelles que farien que un grup pare i un subgrup anessin al mateix dia i hora.
 	*/
 	//Per cada lecture mirem totes les aules de totes les hores de tots els dies i les borrem si estaran ocupades per la lecture inserida
 	public boolean validate(String room, Integer day, Integer hour, String lecture, Integer d, Integer h, String r, String l) {
