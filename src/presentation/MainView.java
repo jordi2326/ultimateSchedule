@@ -15,6 +15,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
+
+import org.json.simple.parser.ParseException;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -165,7 +168,7 @@ public class MainView extends JFrame{
 				//JOptionPane.showMessageDialog(MainView.this, "Mehhh.. Doesn't work yet", null, JOptionPane.WARNING_MESSAGE);
 				try {
 					saveLocalFile();
-				} catch (IOException e1) {
+				} catch (IOException | NullPointerException | ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -415,9 +418,10 @@ public class MainView extends JFrame{
         return false;
         //log.setCaretPosition(log.getDocument().getLength());
 	}
-	 * @throws IOException **/
+	 * @throws IOException 
+	 * @throws ParseException **/
 
-	public boolean saveLocalFile() throws NullPointerException, IOException {
+	public boolean saveLocalFile() throws NullPointerException, IOException, ParseException {
 	    boolean acceptable = false;
 	    String filepath = "";
 	    do {
