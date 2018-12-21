@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.ArrayList;
+
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -71,6 +73,19 @@ public class GroupInfoView extends JDialog {
 	    iLabel = new JLabel((String) data[5]);
 	    iLabel.setFont(iLabel.getFont().deriveFont(Font.PLAIN));
 	    add(iLabel, constraints);
+	    
+	    /**add(new JLabel("Weekly Lectures:  ", SwingConstants.RIGHT), constraints);
+	    ArrayList<String> coreqs = ctrlPresentation.g;
+	    String tmp = "-";
+	    if(!coreqs.isEmpty()) {
+	    	tmp = "<html>";
+		    for(String s : coreqs)
+		    	tmp += s + "<br>"; 
+		    tmp += "</html>";
+	    }
+	    iLabel = new JLabel(tmp);
+	    iLabel.setFont(iLabel.getFont().deriveFont(Font.PLAIN));
+	    add(iLabel, constraints);**/
 	    
 	    pack();
 	    setLocationRelativeTo(null);
