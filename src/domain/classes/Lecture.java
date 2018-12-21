@@ -6,22 +6,22 @@ package domain.classes;
 
 public class Lecture {
 	
-	/** Codi identificador de la sessi√≥ dins del grup en el que est√†.
+	/** Codi identificador de la sessio dins del grup en el que esta.
 	*/
 	private Integer id;
 	
-	/** Grup al qual pertany la sessi√≥.
+	/** Grup al qual pertany la sessio.
 	*/
 	private String group;
 	
-	/** Duraci√≥ de la sessi√≥.
+	/** Duracio de la sessio.
 	*/
 	private Integer duration;
 	
-	/** Constructora est√†ndard.
-	 * @param id		IdentificaciÛ de la sessiÛ.
+	/** Constructora estandard.
+	 * @param id		IdentificaciÛ de la sessio.
 	 * @param group		Grup al qual pertany.
-	 * @param duration	DuraciÛ de la sessiÛ.
+	 * @param duration	DuraciÛ de la sessio.
 	*/
 	public Lecture(Integer id, String group, Integer duration) {
 		this.id = id;
@@ -30,7 +30,7 @@ public class Lecture {
 	}
 	
 	/**
-	 * Retorna el grup al qual pertany la sessi√≥.
+	 * Retorna el grup al qual pertany la sessio.
 	 * @return {@link Lecture#group}
 	 */
 	public String getGroup() {
@@ -38,7 +38,7 @@ public class Lecture {
 	}
 	
 	/**
-	 * Retorna la duraci√≥ de la sessi√≥.
+	 * Retorna la duracio de la sessio.
 	 * @return {@link Lecture#duration}
 	 */
 	public Integer getDuration() {
@@ -46,7 +46,7 @@ public class Lecture {
 	}
 	
 	/**
-	 * @return El String que identifica la sessi√≥.
+	 * @return El String que identifica la sessio.
 	 */
 	@Override
 	public String toString() {

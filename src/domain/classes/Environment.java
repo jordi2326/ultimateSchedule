@@ -181,7 +181,7 @@ public class Environment {
 	/**
 	 * Diu si un grup te restriccions unaries. 
 	 * @param g	Group a mirar.
-	 * @return True si el grup @link{g} te restriccions unaries. False en cas contrari.
+	 * @return True si el grup {@link Environment#g} te restriccions unaries. False en cas contrari.
 	 */
 	public Boolean groupHasUnaryRestrictions(String g) {
 		return unaryRestrictions.containsKey(g);
@@ -190,7 +190,7 @@ public class Environment {
 	/**
 	 * Diu si un grup te restriccions naries.
 	 * @param g	Grup a mirar.
-	 * @return True si el grup @link{g} te restriccions naries. False en cas contrari.
+	 * @return True si el grup {@link Environment#g} te restriccions naries. False en cas contrari.
 	 */
 	public Boolean groupHasNaryRestrictions(String g) {
 		return naryRestrictions.containsKey(g);
@@ -218,7 +218,7 @@ public class Environment {
 	 * Elimina una restriccio.
 	 * @param group	Grup on eliminar la restriccio.
 	 * @param name Nom de la restriccio a eliminar.
-	 * @return True si la restriccio amb nom #link{name} que pertanyia a #link{group} s'ha eliminat. False en cas contrari.
+	 * @return True si la restriccio amb nom {@link Environment#name} que pertanyia a {@link Environment#group} s'ha eliminat. False en cas contrari.
 	 */
 	public boolean removeRestriction(String group, String name) {
 		if (unaryRestrictions.get(group).containsKey(name)) {
@@ -231,7 +231,7 @@ public class Environment {
 	/**
 	 * Retorna el conjunt de restriccions unaries d'un grup en concret.
 	 * @param g	Grup on agafar les restriccions.
-	 * @return Set de les restriccions unaries que pertanyen al grup #link{group}.
+	 * @return Set de les restriccions unaries que pertanyen al grup {@link Environment#group}.
 	 */
 	public Set<String> getGroupUnaryRestrictions(String g) {
 		return unaryRestrictions.get(g).keySet();
@@ -240,7 +240,7 @@ public class Environment {
 	/**
 	 * Retorna el conjunt de restriccions naries d'un grup en concret.
 	 * @param g	Grup on agafar les restriccions.
-	 * @return Set de les restriccions naries que pertanyen al grup #link{group}.
+	 * @return Set de les restriccions naries que pertanyen al grup {@link Environment#group}.
 	 */
 	public Set<String> getGroupNaryRestrictions(String g) {
 		if (naryRestrictions.containsKey(g)) {
@@ -255,7 +255,7 @@ public class Environment {
 	 * @param r			Nom de la restriccio.
 	 * @param day		Dia en que s'ha de validar la restriccio.
 	 * @param hour		Hora en que s'ha de validar la restriccio.
-	 * @param duration	Duracio de la sessió del grup #link{g};
+	 * @param duration	Duracio de la sessió del grup {@link Environment#g};
 	 * @return True si s'ha pogut validar la restriccio unaria. False en cas contrari.
 	 */
 	public Boolean validateGroupUnaryRestriction(String g, String r, int day, int hour, int duration) {
@@ -269,11 +269,11 @@ public class Environment {
 	 * @param room		Nom de l'aula a la que esta el grup.
 	 * @param day		Dia en que esta el grup.
 	 * @param hour		Hora en que esta el grup.
-	 * @param lecture	Nom de la lecture a comparar amb #link{l}.
-	 * @param d			Dia en el que esta #link{l}.
-	 * @param h			Hora en la que esta #link{l}.
-	 * @param r			Aula en la que esta #link{l}.
-	 * @param l			Nom de la lecture a comparar amb #link{lecture}
+	 * @param lecture	Nom de la lecture a comparar amb {@link Environment#l}.
+	 * @param d			Dia en el que esta {@link Environment#l}.
+	 * @param h			Hora en la que esta {@link Environment#l}.
+	 * @param r			Aula en la que esta {@link Environment#l}.
+	 * @param l			Nom de la lecture a comparar amb {@link Environment#lecture}.
 	 * @return True si s'ha pogut validar la restriccio naria. False en cas contrari.
 	 */
 	public Boolean validateGroupNaryRestriction(String g, String restr, String room, int day, int hour, String lecture, Integer d, Integer h, String r, String l) {
@@ -310,7 +310,7 @@ public class Environment {
 	 * Afageix un grup.
 	 * @param inCode			Codi del grup a afegir.
 	 * @param inNPeople			Nombre de persones del grup.
-	 * @param inParentGroupCode	Codi del grup pare del grup amb codi @link{inCode}.
+	 * @param inParentGroupCode	Codi del grup pare del grup amb codi {@link Environment#inCode}.
 	 * @param subjectCode		Codi de l'assignatura a la qual pertany el grup.
 	 * @param inNeedsComputers	Boolea que indica si el grup necessita una aula amb ordinadors o no.
 	 * @param inType			Tipus de classe del grup.
@@ -345,7 +345,7 @@ public class Environment {
 	 * Indica si una restriccio esta activada o no.
 	 * @param g	Grup on mirar la restriccio.
 	 * @param r	Nom de la restriccio.
-	 * @return True si la restriccio del grup @link{g} amb nom @link{r} esta activada. False en cas contrari.
+	 * @return True si la restriccio del grup {@link Environment#g} amb nom {@link Environment#r} esta activada. False en cas contrari.
 	 */
 	public Boolean restrictionIsEnabled(String g, String r) {
 		return unaryRestrictions.get(g).get(r).isEnabled();
@@ -371,7 +371,7 @@ public class Environment {
 	/**
 	 * Elimina un grup.
 	 * @param name	Nom del grup a eliminar.
-	 * @return True si s'ha pogut eliminar el grup amb nom @link{name}. False en cas contrari.
+	 * @return True si s'ha pogut eliminar el grup amb nom {@link Environment#name}. False en cas contrari.
 	 */
 	public boolean removeGroup(String name) {
 		subjects.get(groups.get(name).getSubject()).removeGroup(name);
@@ -385,7 +385,7 @@ public class Environment {
 	/**
 	 * Nom de l'assignatura a la qual pertany un grup.
 	 * @param g	Nom del grup.
-	 * @return El nom de l'assignatura a la qual pertany el grup @link{g}.
+	 * @return El nom de l'assignatura a la qual pertany el grup {@link Environment#g}.
 	 */
 	public String getGroupSubject(String g) {
 		return groups.get(g).getSubject();
@@ -394,7 +394,7 @@ public class Environment {
 	/**
 	 * Codi d'un grup.
 	 * @param g	Nom del grup.
-	 * @return El nom del codi del grup @link{g}.
+	 * @return El nom del codi del grup {@link Environment#g}.
 	 */
 	public String getGroupCode(String g) {
 		return groups.get(g).getCode();
@@ -403,7 +403,7 @@ public class Environment {
 	/**
 	 * Numero de persones d'un grup.
 	 * @param g	Nom del grup.
-	 * @return La capacitat del grup @link{g}.
+	 * @return La capacitat del grup {@link Environment#g}.
 	 */
 	public Integer getGroupNumOfPeople (String g) {
 		return groups.get(g).getNumOfPeople();
@@ -412,7 +412,7 @@ public class Environment {
 	/**
 	 * Tipus de classe d'un grup.
 	 * @param g	Nom del grup.
-	 * @return El tipus de classe del grup @link{g}.
+	 * @return El tipus de classe del grup {@link Environment#g}.
 	 */
 	public Group.Type getGroupType(String g) {
 		return groups.get(g).getType();
@@ -421,7 +421,7 @@ public class Environment {
 	/**
 	 * Periode del dia on fa classe un grup.
 	 * @param g	Nom del grup.
-	 * @return El periode del dia on fa classe el grup @link{g}.
+	 * @return El periode del dia on fa classe el grup {@link Environment#g}.
 	 */
 	public Group.DayPeriod getGroupDayPeriod(String g) {
 		return groups.get(g).getDayPeriod();
@@ -430,7 +430,7 @@ public class Environment {
 	/**
 	 * Codi del grup pare d'un grup.
 	 * @param g	Nom del grup.
-	 * @return El codi del grup pare del grup @link{g};
+	 * @return El codi del grup pare del grup {@link Environment#g};
 	 */
 	public String getGroupParentGroupCode(String g) {
 		return groups.get(g).getParentGroupCode();
@@ -439,7 +439,7 @@ public class Environment {
 	/**
 	 * Informa sobre si un grup necessita ordinadors a l'aula o no.
 	 * @param g	Nom del grup.
-	 * @return True si el grup @link{g} necessita ordinadors a la classe. False en cas contrari.
+	 * @return True si el grup {@link Environment#g} necessita ordinadors a la classe. False en cas contrari.
 	 */
 	public Boolean groupNeedsComputers(String g) {
 		return groups.get(g).needsComputers();
@@ -448,7 +448,7 @@ public class Environment {
 	/**
 	 * Conjunt de sessions d'un grup.
 	 * @param g	Nom del grup.
-	 * @return ArrayList amb els noms de les sessions del grup @link{g}.
+	 * @return ArrayList amb els noms de les sessions del grup {@link Environment#g}.
 	 */
 	public ArrayList<String> getGroupLectures(String g) {
 		return groups.get(g).getLectures();
@@ -500,7 +500,7 @@ public class Environment {
 	/**
 	 * Codi d'una assignatura.
 	 * @param s	Nom de l'assignatura.
-	 * @return El codi de l'assignatura @link{s}.
+	 * @return El codi de l'assignatura {@link Environment#s}.
 	 */
 	public String getSubjectCode(String s) {
 		return subjects.get(s).getCode();
@@ -509,7 +509,7 @@ public class Environment {
 	/**
 	 * Nom d'una assignatura.
 	 * @param s	Nom de l'assignatura.
-	 * @return El nom de l'assignatura @link{s}.
+	 * @return El nom de l'assignatura {@link Environment#s}.
 	 */
 	public String getSubjectName(String s) {
 		return subjects.get(s).getName();
@@ -518,7 +518,7 @@ public class Environment {
 	/**
 	 * Nivell de'una assignatura.
 	 * @param s	Nom de l'assignatura.
-	 * @return El nivell de l'assignatura @link{s}.
+	 * @return El nivell de l'assignatura {@link Environment#s}.
 	 */
 	public String getSubjectLevel(String s) {
 		return subjects.get(s).getLevel();
@@ -527,7 +527,7 @@ public class Environment {
 	/**
 	 * Conjunt de corequisits d'una assignatura.
 	 * @param s	Nom de l'assignatura.
-	 * @return ArrayList amb el nom del conjunt de corequisits de l'assignatura @link{s}.
+	 * @return ArrayList amb el nom del conjunt de corequisits de l'assignatura {@link Environment#s}.
 	 */
 	public ArrayList<String> getSubjectCoreqs(String s) {
 		return subjects.get(s).getCoreqs();
@@ -536,7 +536,7 @@ public class Environment {
 	/**
 	 * Conjunt de grups d'una assignatura.
 	 * @param s	Nom de l'assignatura.
-	 * @return ArrayList amb el conjunt de grups de l'assignatura @link{s}.
+	 * @return ArrayList amb el conjunt de grups de l'assignatura {@link Environment#s}.
 	 */
 	public ArrayList<String> getSubjectGroups(String s) {
 		return subjects.get(s).getGroups();
@@ -574,7 +574,7 @@ public class Environment {
 	/**
 	 * Elimina una sessio.
 	 * @param name	Nom de la sessio.
-	 * @return True si s'ha pogut eliminar la sessio @link{name}.
+	 * @return True si s'ha pogut eliminar la sessio {@link Environment#name}.
 	 */
 	public boolean removeLecture(String name) {
 		lectures.remove(name);
@@ -585,7 +585,7 @@ public class Environment {
 	/**
 	 * Duracio d'una sessio.
 	 * @param l	Nom de la sessio.
-	 * @return La duracio de la sessio @link{l}.
+	 * @return La duracio de la sessio {@link Environment#l}.
 	 */
 	public Integer getLectureDuration(String l) {
 		return lectures.get(l).getDuration();
@@ -594,7 +594,7 @@ public class Environment {
 	/**
 	 * Grup al qual pertany una sessio.
 	 * @param l	Nom de la sessio.
-	 * @return El grup al qual pertany la sessio @link{l}.
+	 * @return El grup al qual pertany la sessio {@link Environment#l}.
 	 */
 	public String getLectureGroup(String l) {
 		return lectures.get(l).getGroup();
@@ -641,7 +641,7 @@ public class Environment {
 	/**
 	 * Codi d'una aula.
 	 * @param r	Nom de l'aula.
-	 * @return El codi de l'aula @link{r}.
+	 * @return El codi de l'aula {@link Environment#r}.
 	 */
 	public String getRoomCode(String r) {
 		return rooms.get(r).getCode();
@@ -650,7 +650,7 @@ public class Environment {
 	/**
 	 * Capacitat d'una aula.
 	 * @param r	Nom de l'aula.
-	 * @return La capacitat de l'aula @link{r}.
+	 * @return La capacitat de l'aula {@link Environment#r}.
 	 */
 	public Integer getRoomCapacity(String r) {
 		return rooms.get(r).getCapacity();
@@ -659,7 +659,7 @@ public class Environment {
 	/**
 	 * Informa si l'aula te ordinadors.
 	 * @param r	Nom de l'aula.
-	 * @return True si l'aula @link{r} te ordinadors. False en cas contrari.
+	 * @return True si l'aula {@link Environment#r} te ordinadors. False en cas contrari.
 	 */
 	public Boolean roomHasComputers(String r) {
 		return rooms.get(r).hasComputers();
