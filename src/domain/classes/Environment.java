@@ -106,7 +106,6 @@ public class Environment {
 			iter.remove();
 		}
 		path = null;
-		System.out.println("cleared!");
 	}
 	
 	public Boolean setPath(String path) {
@@ -204,7 +203,6 @@ public class Environment {
 			Group g = new Group(inCode, inNPeople, inParentGroupCode, subjectCode, inNeedsComputers, Group.Type.valueOf((String) inType), Group.DayPeriod.valueOf((String) inDayPeriod), arrayList);
 			
 			groups.put(g.toString(), g);
-			//System.out.println(g.toString());
 			naryRestrictions.put(g.toString(), groupRestr);
 			return true;
 		}
