@@ -29,7 +29,7 @@ import domain.classes.restrictions.SpecificDayOrHourRestriction;
 import domain.classes.restrictions.UnaryRestriction;
 import persistance.CtrlData;
 
-/** Controlador principal de domini de l'aplicaci�.
+/** Controlador principal de domini de l'aplicacio.
  * @author Carlos Bergillos Varela
 */
 
@@ -52,16 +52,6 @@ public class CtrlDomain {
 	 */
 	private Environment environment;
 
-	/*
-	public static void main(String[] args) throws Throwable, IOException {
-		CtrlDomain cd = CtrlDomain.getInstance();
-		cd.importEnvironment("Q1+Q2.json");
-		Environment env = Environment.getInstance();
-
-		int i = 0;
-
-	}*/
-
 	/** Constructora estandard.
 	*/
 	private CtrlDomain() {
@@ -72,7 +62,7 @@ public class CtrlDomain {
 
 	/**
 	 * Retorna la instancia d'aquesta classe.
-	 * @return {@link CtrlDomain#instance}
+	 * @return {@link CtrlDomain#instance}.
 	 */
 	public static CtrlDomain getInstance() {
 		if (instance == null)
@@ -101,6 +91,9 @@ public class CtrlDomain {
 		return schedule.toJsonString();
 	}
 
+	/**
+	 * Borra l'horari actual.
+	 */
 	public void erase() {
 		schedule = new Schedule();
 	}
@@ -190,18 +183,28 @@ public class CtrlDomain {
 		System.out.println("|---------------------------------------------------------------------------------------------------------------|");
 	}
 	
+	/**
+	 * @return El path de l'escenari.
+	 */
 	public String getEnvirnonmentPath() {
 		Environment env = Environment.getInstance();
 		return env.getPath();		
 	}
 	
+	/**
+	 * Activa/Desactiva una restriccio.
+	 * @param g		Nom del grup que te la restriccio.
+	 * @param r		Nom de la restriccio.
+	 * @param state	Boolea que indica l'estat a posar a la restriccio.
+	 * @return True si s'ha pogut fer correctament el setter. False en cas contrari.
+	 */
 	public Boolean setRestrictionEnabled(String g, String r, Boolean state) {
 		Environment env = Environment.getInstance();
 		return env.setRestrictionEnabled(g, r, state);
 	}
 
 	/**
-	 * Importa un entorn (aules, assignatures, aules) desde un arxiu.
+	 * Importa un entorn (aules, assignatures, aules) des d'un arxiu.
 	 * @param filename Nom de l'entorn a importar.
 	 * @return true si s'ha importat correctament, sino false.
 	 */
@@ -286,7 +289,12 @@ public class CtrlDomain {
 		return true;
 	}
 
-
+	/**
+	 * Exporta un escenari.
+	 * @param filename		Nom de l'arxiu.
+	 * @param absolutePath	Path absolut d'on guardar l'arxiu.
+	 * @return Exporta un escenari.
+	 */
 	@SuppressWarnings("unchecked")
 	public boolean exportEnvironment(String filename, Boolean absolutePath) throws IOException {
 		Environment environment = Environment.getInstance();
@@ -427,6 +435,9 @@ public class CtrlDomain {
 		return dataController.getScheduleFilesList();
 	}
 
+	/**
+	 * @return La matriu de l'horari per cada aula.
+	 */
 	public ArrayList<String[]>[][] getScheduleMatrix() {
 		ArrayList<String[]>[][] data = new ArrayList[12][5];
 		for(Entry<String, String[][]> d : schedule.getSchedule().entrySet()) {
@@ -442,6 +453,11 @@ public class CtrlDomain {
 		return data;
 	}
 
+	/**
+	 * Grup al qual pertany una sessio.
+	 * @param lecture	Nom de la sessio.
+	 * @return Nom del grup al qual pertany la sessio.
+	 */
 	public String getLectureGroup(String lecture){
 		return environment.getLectureGroup(lecture);
 	}
@@ -449,11 +465,19 @@ public class CtrlDomain {
 	// Funcions per comunicar-se amb la capa de presentaci�
 
 		// ROOM
+		/**
+		 * @return El Set de noms d'aules de l'escenari actual.
+		 */
 		public Set<String> getRoomNames() {
 			Environment env = Environment.getInstance();
 			return new TreeSet<String>(env.getAllRooms());
 		}
 
+		/**
+		 * Informacio d'una aula.
+		 * @param room	Nom de l'aula.
+		 * @return La informacio d'una aula.
+		 */
 		public String[] getRoomInfo(String room) {
 			 /* ********* ORDRE *********
 			  * param code			Codi de l'aula.
@@ -471,11 +495,19 @@ public class CtrlDomain {
 		};
 
 		// GROUP
+		/**
+		 * @return El Set de noms dels grups de l'escenari actual.
+		 */
 		public Set<String> getGroupNames() {
 			Environment env = Environment.getInstance();
 			return new TreeSet<String>(env.getAllGroups());
 		}
 
+		/**
+		 * Informacio d'un grup.
+		 * @param group	Nom del grup.
+		 * @return La informacio d'un grup.
+		 */
 		public String[] getGroupInfo(String group) {
 			 /* ********* ORDRE *********
 			  * param code				Codi del grup.
@@ -500,17 +532,30 @@ public class CtrlDomain {
 			return infoGroup;
 		};
 
+		/**
+		 * Conjunt de grups que pertanyen a una assignatura.
+		 * @param s	Nom de l'assignatura.
+		 * @return El Set de noms de grup que pertanyen a l'assignatura {@link CtrlDomain#s}.
+		 */
 		public Set<String> getGroupsNamesFromSuject(String s) {
 			Environment env = Environment.getInstance();
 			return new TreeSet<String>(env.getSubjectGroups(s));
 		}
 
 		// SUBJECT
+		/**
+		 * @return Conjunt de noms de les assignatures de l'escenari actual.
+		 */
 		public Set<String> getSubjectNames() {
 			Environment env = Environment.getInstance();
 			return new TreeSet<String>(env.getAllSubjects());
 		}
 
+		/**
+		 * Informacio d'una assignatura.
+		 * @param sub	Nom de la signatura.
+		 * @return La informacio que correspon a l'assignatura {@link CtrlDomain#sub}.
+		 */
 		public Object[] getSubjectInfo(String sub) {
 			 /* ********* ORDRE *********
 			  * param code		Codi de l'assignatura.
@@ -533,6 +578,9 @@ public class CtrlDomain {
 		};
 
 		// RESTRICTION
+		/**
+		 * @return Conjunt de noms de les restriccions de l'escenari actual.
+		 */
 		public Set<String> getRestrictionNames() {
 			Environment env = Environment.getInstance();
 
@@ -546,6 +594,9 @@ public class CtrlDomain {
 			return R;
 		}
 
+		/**
+		 * @return Nom de les restriccions per a la classe NamesView.
+		 */
 		public Set<String> getRestrictionNamesView() {
 			Environment env = Environment.getInstance();
 
@@ -569,20 +620,25 @@ public class CtrlDomain {
 			return R;
 		}
 
+		/**
+		 * @return El conjunt de restriccions negociables.
+		 */
 		public ArrayList<Object[]> getNegotiableRestrictions() {
 			return environment.getNegotiableRestrictions();
 		}
-		
+		/**
+		 * @return El path de l'escenari actual.
+		 */
 		public String getEnvironmentName(){
 			return environment.getPath();
 		}
 		
 		/** Elimina un grup en un dia i aula determinats.
-		*   @param duration Duraci� del grup.
+		*   @param duration Duracio del grup.
 		*	@param room		Aula on eliminarem el grup.
 		*	@param day		Dia on eliminarem el grup.
 		*	@param hour		Hora on eliminarem el grup.
-		*	@return Si existeix l'aula, eliminem el grup en q�esti� i retornem true. Fals en cas contrari.
+		*	@return Si existeix l'aula, eliminem el grup en que esta i retornem true. Fals en cas contrari.
 		*/
 		public boolean removeLecture(int duration, String room, int day, int hour) {
 			for (int i = 0; i < duration; i++) {
@@ -592,6 +648,15 @@ public class CtrlDomain {
 			return true;
 		}
 
+		/**
+		 * Valida totes les restriccions.
+		 * @param lecture	Nom de la sessio que passarem a les restriccions.
+		 * @param day		Dia que passarem a les restriccions.
+		 * @param hour		Hora que passarem a les restriccions.
+		 * @param room		Aula que passarem a les restriccions.
+		 * @param duration	Duracio de la sessio.
+		 * @return True si s'han validat totes les restriccions que s'han passat. False en cas contrari.
+		 */
 		private boolean validateAllRestrictions(String lecture, int day, int hour, String room, int duration) { 
 			Environment env = Environment.getInstance();
 			String group = env.getLectureGroup(lecture);
@@ -632,13 +697,13 @@ public class CtrlDomain {
 		}
 
 		/** Mou un grup de dia, aula i hora determinats
-		*   @param duration Duraci� del grup.
-		*	@param iniDay		Dia on est� actualment el grup.
-		*	@param fiDay		Dia on anir� el grup si es pot.
-		*	@param iniHour		Hora on est� actualment el grup.
-		*	@param fiHour		Hora on anir� el grup si es pot.
-		*	@param iniRoom		Aula on est� actualment el grup.
-		*	@param fiRoom		Aula on anir� el grup si es pot.
+		*   @param duration Duracio del grup.
+		*	@param iniDay		Dia on esta actualment el grup.
+		*	@param fiDay		Dia on anira el grup si es pot.
+		*	@param iniHour		Hora on esta actualment el grup.
+		*	@param fiHour		Hora on anira el grup si es pot.
+		*	@param iniRoom		Aula on esta actualment el grup.
+		*	@param fiRoom		Aula on anira el grup si es pot.
 		*	@return True si s'ha pogut moure el grup. Fals en cas contrari.
 		*/
 		public boolean moveLecture(int duration, int iniDay, int fiDay, int iniHour, int fiHour, String iniRoom, String fiRoom) {
@@ -667,12 +732,11 @@ public class CtrlDomain {
 		}
 
 		/**
-		 * @param inCode
-		 * @param inName
-		 * @param inLevel
-		 * @param arrayList
-		 * @param inCoreqs
-		 * @return
+		 * @param inCode	Codi de l'assignatura.
+		 * @param inName	Nom de l'assignatura.
+		 * @param inLevel	Nivell de l'assignatura.
+		 * @param inCoreqs	Conjunt de corequisits de l'assignatura.
+		 * @return True si s'ha pogut afegir l'assignatura. False en cas contrari.
 		 */
 		public boolean addSubject(String inCode, String inName, String inLevel, ArrayList<String> inCoreqs) {
 			if (inCode == null || inCode.isEmpty() || inName == null || inName.isEmpty() || inLevel == null || inLevel.isEmpty()) return false;
@@ -680,8 +744,9 @@ public class CtrlDomain {
 		}
 
 		/**
-		 * @param name
-		 * @return
+		 * Elimina una assignatura.
+		 * @param name	Nom de l'assiognatura.
+		 * @return True si s'ha pogut eliminar una assignatura. False en cas contrari.
 		 */
 		public boolean removeSubject(String name) {
 			ArrayList<String> groups = environment.getSubjectGroups(name);
@@ -706,10 +771,11 @@ public class CtrlDomain {
 		}
 
 		/**
-		 * @param inCode
-		 * @param inCapacity
-		 * @param inHasComputers
-		 * @return
+		 * Afageix una aula.
+		 * @param inCode			Codi de l'aula.
+		 * @param inCapacity		Capacitat de l'aula.
+		 * @param inHasComputers	Boolea que indica si una aula te ordinadors o no.
+		 * @return True si s'ha pogut afegir l'aula. False en cas contrari.
 		 */
 		public boolean addRoom(String inCode, Integer inCapacity, Boolean inHasComputers) {
 			if (inCode == null || inCode.isEmpty()) return false;
@@ -717,8 +783,9 @@ public class CtrlDomain {
 		}
 
 		/**
-		 * @param code
-		 * @return
+		 * Elimina una aula.
+		 * @param code	Codi de l'aula a eliminar.
+		 * @return True si s'ha pogut eliminar l'aula. False en cas contrari.
 		 */
 		public boolean removeRoom(String code) {
 			boolean erase = environment.removeRoom(code);
@@ -733,15 +800,16 @@ public class CtrlDomain {
 		}
 
 		/**
-		 * @param inCode
-		 * @param inNPeople
-		 * @param inParentGroupCode
-		 * @param subjectCode
-		 * @param inNeedsComputers
-		 * @param inType
-		 * @param inDayPeriod
-		 * @param arrayList
-		 * @return
+		 * Afegeix grup.
+		 * @param inCode				Codi del grup.
+		 * @param inNPeople				Numero de persones que pertanyen al grup.
+		 * @param inParentGroupCode		Codi del grup pare.
+		 * @param subjectCode			Codi de l'assignatura.
+		 * @param inNeedsComputers		Boolea que indica si el grup necessita una aula amb ordinadors.
+		 * @param inType				Tipus de classe del grup.
+		 * @param inDayPeriod			Periode del dia en que el grup te classe.
+		 * @param arrayList				Conjunt de sessions del grup.
+		 * @return True si s'ha pogut afegir el grup. False en cas contrari.
 		 */
 		public boolean addGroup(String inCode, Integer inNPeople, String inParentGroupCode, String subjectCode,
 				Boolean inNeedsComputers, String inType, String inDayPeriod, ArrayList<String> arrayList) {
@@ -752,8 +820,9 @@ public class CtrlDomain {
 		}
 
 		/**
-		 * @param name
-		 * @return
+		 * Elimina un grup.
+		 * @param name	Nom del grup.
+		 * @return True si s'ha pogut eliminar el grup. False en cas contrari.
 		 */
 		public boolean removeGroup(String name) {
 			ArrayList<String> lectures = environment.getGroupLectures(name);
@@ -770,18 +839,20 @@ public class CtrlDomain {
 		}
 
 		/**
-		 * @param codi
-		 * @param group
-		 * @param duration
-		 * @return
+		 * Afageix sessio.
+		 * @param codi		Codi de la sessio.
+		 * @param group		Nom del grup al qual pertany la sessio.
+		 * @param duration	Duracio de la sessio.
+		 * @return True si s'ha pogut afegir la sessio. False en cas contrari.
 		 */
 		public boolean addLecture(Integer codi, String group, Integer duration) {
 			 return environment.addLecture(codi, group, duration);
 		 }
 
 		/**
-		 * @param name
-		 * @return
+		 * Elimina una sessio.
+		 * @param name	Nom de la sessio.
+		 * @return True si s'ha pogut eliminar la sessio. False en cas contrari.
 		 */
 		public boolean removeLecture(String name) {
 			boolean erase = environment.removeLecture(name);
@@ -794,7 +865,8 @@ public class CtrlDomain {
 		}
 
 		/**
-		 * @param name
+		 * Eliminar sessio de l'horari.
+		 * @param name	Nom de la sessio a eliminar.
 		 */
 		public void eraseLecture(String name) {
 			for (String room : schedule.getSchedule().keySet()) {
@@ -811,10 +883,11 @@ public class CtrlDomain {
 		}
 		
 		/**
-		 * @param group
-		 * @param day
-		 * @param hour
-		 * @return
+		 * Afageix una restriccio.
+		 * @param group	Grup al qual pertany la restriccio.
+		 * @param day	Dia que passarem a la restriccio.
+		 * @param hour	Hora que passarem a la restriccio.
+		 * @return True si s'ha pogut afegir la restriccio. False en cas contrari.
 		 */
 		public boolean addRestriction(String group, Integer day, Integer hour) {
 			if (group == null || group.isEmpty()) return false;
@@ -830,9 +903,10 @@ public class CtrlDomain {
 		}
 		
 		/**
-		 * @param group
-		 * @param name
-		 * @return
+		 * Elimina una restriccio.
+		 * @param group	Nom del grup al qual pertany la restriccio.
+		 * @param name	Nom de la restriccio.
+		 * @return True si s'ha pogut eliminar la restriccio. False en cas contrari.
 		 */
 		public boolean removeRestriction(String group, String name) {
 			return environment.removeRestriction(group, name);
