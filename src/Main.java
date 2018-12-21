@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import org.json.simple.parser.ParseException;
+
 import domain.classes.Environment;
 import domain.classes.Group;
 import domain.classes.Group.DayPeriod;
@@ -153,15 +155,14 @@ public class Main {
 	          	+ " 2| View Saved Schedule\n"
 	          	+ " 3| View Subjects\n"
 	          	+ " 4| View Rooms\n"
-	          	+ " 5| View Restrictions\n"
-	          	+ " 6| View Groups\n"
-	          	+ " 7| Save the Environment\n"
+	          	+ " 5| View Groups\n"
+	          	+ " 6| Save the Environment\n"
 	          	+ " 0| Back\n"
 	            + "--------------------------\n"
 	            );         
     }
 	
-	public static void environmentMenu(String envName) throws IOException{
+	public static void environmentMenu(String envName) throws IOException, ParseException{
 		printEnvironmentMenu(envName);
 	    int n = sc.nextInt();
 	    while (n != 0) {
@@ -174,26 +175,21 @@ public class Main {
 	            		System.out.println("Error. No Valid Schedule Found");
 	            	}
 	                break;
-	            case 7:
-	            	ctDomain.exportEnvironment("test.json", false);
-	                /*
 	            case 2:
 	            	loadSchedulesMenu();
 	                break;
 	            case 3:
-	            	genericListMenu("Subjects", ctDomain.getSubjectNamesList());
+	            	genericListMenu("Subjects", ctDomain.getSubjectNames());
 	                break;
 	            case 4:
-	            	genericListMenu("Rooms", ctDomain.getRoomNamesList());
+	            	genericListMenu("Rooms", ctDomain.getRoomNames());
 	                break;
 	            case 5:
-	            	genericListMenuMap("Un-ary restrictions", ctDomain.getUnaryRestrictions());
-	            	genericListMenu("N-ary restrictions", ctDomain.getNaryRestrictions());
+	            	genericListMenu("Groups", ctDomain.getGroupNames());
 	            	break;
 	            case 6:
-	            	genericListMenu("Groups", ctDomain.getGroupNamesList());
+	            	saveEnvironment();
 	            	break;
-	            	*/
 	        }
 	        printEnvironmentMenu(envName);
 	        n = sc.nextInt();
@@ -225,7 +221,7 @@ public class Main {
 		System.out.print("--------------------------\n");       
     }
 	
-	public static void scheduleMenu(){
+	public static void scheduleMenu() throws ParseException{
 		printScheduleMenu();
 		int n = sc.nextInt();
 	    switch (n) {
@@ -244,7 +240,7 @@ public class Main {
 	            );         
     }
 	
-	public static void saveSchedule(){
+	public static void saveSchedule() throws ParseException{
 		if (!silent) System.out.print("Enter name: ");
 		sc.nextLine(); //clear for next line
 		String filename = sc.nextLine();
@@ -256,8 +252,28 @@ public class Main {
 		}
 	}
 	
+	public static void saveEnvironment() throws ParseException{
+		if (!silent) System.out.print("Enter name: ");
+		sc.nextLine(); //clear for next line
+		String filename = sc.nextLine();
+		try {
+			ctDomain.exportEnvironment(filename+".json", false);
+			System.out.println("Saved '"+filename+".json'");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void genericListMenu(String title, List<String> items){
 		printGenericListMenu(title, items);
+	    int n = sc.nextInt();
+	    while (n != 0) n = sc.nextInt();
+	}
+	
+	public static void genericListMenu(String title, Set<String> items){
+		List<String> list = new ArrayList<String>();
+		list.addAll(items);
+		printGenericListMenu(title, list);
 	    int n = sc.nextInt();
 	    while (n != 0) n = sc.nextInt();
 	}
