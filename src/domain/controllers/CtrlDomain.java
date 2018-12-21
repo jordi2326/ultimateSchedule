@@ -569,12 +569,16 @@ public class CtrlDomain {
 			return R;
 		}
 		
-		public String[] getRestrictionInfo(String res) {
+		public ArrayList<Object[]> getRestrictionInfo() {
+			return getRestrictionInfo();
+		}
+		
+		//public String[] getRestrictionInfo(String res) {
 			 /* ********* ORDRE *********
 			  * param negotiable	Indica si la restricci� �s negociable.
 			  * param enabled		Indica si la restricci� est� activada.
 			  * ************************* */
-			Environment env = Environment.getInstance();
+			/*Environment env = Environment.getInstance();
 			
 			String[] infoRes = new String[2];
 			
@@ -611,7 +615,7 @@ public class CtrlDomain {
 			
 			String[] error = new String[0];
 			return error;
-		};
+		};*/
 		
 		/** Elimina un grup en un dia i aula determinats.
 		*   @param duration Duraci� del grup.
