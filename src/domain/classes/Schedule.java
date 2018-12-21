@@ -64,7 +64,6 @@ public class Schedule {
 	*	@return L'horari amb el grup afegit a l'aula room al dia day i hora hour.
 	*/
 	public boolean putLecture(String room, Integer day, Integer hour, String group) {
-		System.out.println(group + " || " + day + " - " + hour + " || " + room);
 		if(!schedule.containsKey(room)){
 			String[][] ls = new String[5][12];
 			ls[day][hour] = group;
