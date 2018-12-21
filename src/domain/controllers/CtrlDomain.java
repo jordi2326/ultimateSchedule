@@ -67,6 +67,7 @@ public class CtrlDomain {
 	private CtrlDomain() {
 		dataController = CtrlData.getInstance();
 		schedule = new Schedule();
+		environment = Environment.getInstance();
 	}
 
 	/**
@@ -103,7 +104,7 @@ public class CtrlDomain {
 	public void erase() {
 		schedule = new Schedule();
 	}
-
+	
 	/**
 	 * Imprimeix l'horari en una taula.
 	 */
@@ -371,7 +372,6 @@ public class CtrlDomain {
 	 * @throws IOException
 	 */
 	public boolean importSchedule(String filename, boolean isFullpath) throws ParseException, IOException {
-		Environment environment = Environment.getInstance();
 		String jsonData = dataController.readSchedule(filename, isFullpath);
 
 		Object obj = new JSONParser().parse(jsonData);
@@ -443,7 +443,7 @@ public class CtrlDomain {
 	}
 
 	public String getLectureGroup(String lecture){
-		return environment.getInstance().getLectureGroup(lecture);
+		return environment.getLectureGroup(lecture);
 	}
 
 	// Funcions per comunicar-se amb la capa de presentaci�
@@ -570,57 +570,11 @@ public class CtrlDomain {
 		}
 
 		public ArrayList<Object[]> getNegotiableRestrictions() {
-			return environment.getInstance().getNegotiableRestrictions();
+			return environment.getNegotiableRestrictions();
 		}
-
-		//public String[] getRestrictionInfo(String res) {
-
-			 /* ********* ORDRE *********
-			  * param negotiable	Indica si la restricci� �s negociable.
-			  * param enabled		Indica si la restricci� est� activada.
-			  * ************************* */
-
-			/*Environment env = Environment.getInstance();
-
-			String[] infoRes = new String[2];
-
-			for (Map<String, UnaryRestriction> groupRes : env.getUnaryRestrictions().values()) {
-				for (String rest : groupRes.keySet()) {
-					if (rest == res) {
-						Boolean nego = groupRes.get(rest).isNegotiable();
-						infoRes[0] = nego.toString();
-
-						Boolean ena = groupRes.get(rest).isEnabled();
-						infoRes[1] = ena.toString();
-
-						return infoRes;
-					}
-				}
-			}
-
-			for (Map<String, NaryRestriction> groupRes : env.getNaryRestrictions().values()) {
-				for (String rest : groupRes.keySet()) {
-					if (rest == res) {
-						Boolean nego = groupRes.get(rest).isNegotiable();
-						infoRes[0] = nego.toString();
-
-						Boolean ena = groupRes.get(rest).isEnabled();
-						infoRes[1] = ena.toString();
-
-						return infoRes;
-					}
-				}
-			}
-
-			// No existeix (error)
-			//System.out.println("error");
-
-			String[] error = new String[0];
-			return error;
-		};*/
 		
 		public String getEnvironmentName(){
-			return environment.getInstance().getPath();
+			return environment.getPath();
 		}
 		
 		/** Elimina un grup en un dia i aula determinats.
@@ -689,7 +643,6 @@ public class CtrlDomain {
 		*/
 		public boolean moveLecture(int duration, int iniDay, int fiDay, int iniHour, int fiHour, String iniRoom, String fiRoom) {
 			String lecture = schedule.getSchedule().get(iniRoom)[iniDay][iniHour];
-			System.out.println(lecture);
 			// Eliminar lecture
 			boolean removed = removeLecture(duration, iniRoom, iniDay, iniHour);
 
@@ -699,13 +652,11 @@ public class CtrlDomain {
 
 				if (restr) {
 					// Afegir-lo al lloc nou
-					System.out.println("VALID");
 					while(--duration >= 0) {
 						schedule.putLecture(fiRoom, fiDay, fiHour + duration, lecture);
 					}
 					return true;
 				} else {
-					System.out.println("INVALID");
 					// Tornar a afegir-lo al lloc inicial
 					while(--duration >= 0) {
 						schedule.putLecture(iniRoom, iniDay, iniHour + duration, lecture);
@@ -725,7 +676,7 @@ public class CtrlDomain {
 		 */
 		public boolean addSubject(String inCode, String inName, String inLevel, ArrayList<String> inCoreqs) {
 			if (inCode == null || inCode.isEmpty() || inName == null || inName.isEmpty() || inLevel == null || inLevel.isEmpty()) return false;
-			return environment.getInstance().addSubject(inCode, inName, inLevel, new ArrayList(), inCoreqs);
+			return environment.addSubject(inCode, inName, inLevel, new ArrayList(), inCoreqs);
 		}
 
 		/**
@@ -733,13 +684,13 @@ public class CtrlDomain {
 		 * @return
 		 */
 		public boolean removeSubject(String name) {
-			ArrayList<String> groups = environment.getInstance().getSubjectGroups(name);
+			ArrayList<String> groups = environment.getSubjectGroups(name);
 			Map<String, ArrayList<String>> lectures = new HashMap<String, ArrayList<String>>();
 			for (String group : groups) {
-				lectures.put(group, environment.getInstance().getGroupLectures(group));
+				lectures.put(group, environment.getGroupLectures(group));
 			}
 
-			boolean erase = environment.getInstance().removeSubject(name);
+			boolean erase = environment.removeSubject(name);
 
 			if (erase) {
 				for (String lecture : lectures.keySet()) {
@@ -762,7 +713,7 @@ public class CtrlDomain {
 		 */
 		public boolean addRoom(String inCode, Integer inCapacity, Boolean inHasComputers) {
 			if (inCode == null || inCode.isEmpty()) return false;
-			return environment.getInstance().addRoom(inCode, inCapacity, inHasComputers);
+			return environment.addRoom(inCode, inCapacity, inHasComputers);
 		}
 
 		/**
@@ -770,7 +721,7 @@ public class CtrlDomain {
 		 * @return
 		 */
 		public boolean removeRoom(String code) {
-			boolean erase = environment.getInstance().removeRoom(code);
+			boolean erase = environment.removeRoom(code);
 
 			if (erase) {
 				schedule.getSchedule().remove(code);
@@ -796,7 +747,7 @@ public class CtrlDomain {
 				Boolean inNeedsComputers, String inType, String inDayPeriod, ArrayList<String> arrayList) {
 			if (inCode == null || inCode.isEmpty() || inParentGroupCode == null || inParentGroupCode.isEmpty()) return false;
 
-			return environment.getInstance().addGroup(inCode, inNPeople, inParentGroupCode, subjectCode,
+			return environment.addGroup(inCode, inNPeople, inParentGroupCode, subjectCode,
 					inNeedsComputers, inType, inDayPeriod, arrayList);
 		}
 
@@ -805,8 +756,8 @@ public class CtrlDomain {
 		 * @return
 		 */
 		public boolean removeGroup(String name) {
-			ArrayList<String> lectures = environment.getInstance().getGroupLectures(name);
-			boolean erase = environment.getInstance().removeGroup(name);
+			ArrayList<String> lectures = environment.getGroupLectures(name);
+			boolean erase = environment.removeGroup(name);
 			if (erase) {
 				for (String lecture : lectures) {
 					eraseLecture(lecture);
@@ -825,7 +776,7 @@ public class CtrlDomain {
 		 * @return
 		 */
 		public boolean addLecture(Integer codi, String group, Integer duration) {
-			 return environment.getInstance().addLecture(codi, group, duration);
+			 return environment.addLecture(codi, group, duration);
 		 }
 
 		/**
@@ -833,7 +784,7 @@ public class CtrlDomain {
 		 * @return
 		 */
 		public boolean removeLecture(String name) {
-			boolean erase = environment.getInstance().removeLecture(name);
+			boolean erase = environment.removeLecture(name);
 			if (erase) {
 				eraseLecture(name);
 				return true;
@@ -870,8 +821,8 @@ public class CtrlDomain {
 			
 			SpecificDayOrHourRestriction rest = new SpecificDayOrHourRestriction(day, hour);
 			
-			if (!environment.getInstance().getGroupUnaryRestrictions(group).contains(rest.toString())) {
-				environment.getInstance().addUnaryRestriction(group, rest);
+			if (!environment.getGroupUnaryRestrictions(group).contains(rest.toString())) {
+				environment.addUnaryRestriction(group, rest);
 				return true;
 			}
 			
@@ -884,6 +835,6 @@ public class CtrlDomain {
 		 * @return
 		 */
 		public boolean removeRestriction(String group, String name) {
-			return environment.getInstance().removeRestriction(group, name);
+			return environment.removeRestriction(group, name);
 		}
 }
