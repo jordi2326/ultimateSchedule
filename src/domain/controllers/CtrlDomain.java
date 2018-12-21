@@ -353,7 +353,7 @@ public class CtrlDomain {
 	}
 	
 	
-	private ArrayList<Group> getGroupsFromSubject(String subject) {
+	/*private ArrayList<Group> getGroupsFromSubject(String subject) {
 		Subject auxSubject = subjects.get(subject);
 		ArrayList<String> subjectGroupsToString = auxSubject.getGroups();
 		ArrayList<Group> groupsFromSubject = new ArrayList<Group>();
@@ -361,7 +361,7 @@ public class CtrlDomain {
 			groupsFromSubject.add(groups.get(groupToString));
 		}
 		return groupsFromSubject;
-	}
+	}*/
 
 	
 	/**
@@ -718,12 +718,30 @@ public class CtrlDomain {
 			return environment.getInstance().removeRoom(code);
 		}
 		
+		/**
+		 * @param inCode
+		 * @param inNPeople
+		 * @param inParentGroupCode
+		 * @param subjectCode
+		 * @param inNeedsComputers
+		 * @param inType
+		 * @param inDayPeriod
+		 * @param arrayList
+		 * @return
+		 */
 		public boolean addGroup(String inCode, Integer inNPeople, String inParentGroupCode, String subjectCode,
 				Boolean inNeedsComputers, String inType, String inDayPeriod, ArrayList<String> arrayList) {
-			System.out.println(inCode + " " + inParentGroupCode);
 			if (inCode == null || inCode.isEmpty() || inParentGroupCode == null || inParentGroupCode.isEmpty()) return false;
 			
 			return environment.getInstance().addGroup(inCode, inNPeople, inParentGroupCode, subjectCode,
 					inNeedsComputers, inType, inDayPeriod, arrayList);
+		}
+		
+		/**
+		 * @param name
+		 * @return
+		 */
+		public boolean removeGroup(String name) {
+			return environment.getInstance().removeGroup(name);
 		}
 }

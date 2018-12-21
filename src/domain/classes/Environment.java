@@ -178,6 +178,17 @@ public class Environment {
 	
 	/////////////// GROUPS //////////////////////////////
 	
+	/**
+	 * @param inCode
+	 * @param inNPeople
+	 * @param inParentGroupCode
+	 * @param subjectCode
+	 * @param inNeedsComputers
+	 * @param inType
+	 * @param inDayPeriod
+	 * @param arrayList
+	 * @return
+	 */
 	public boolean addGroup(String inCode, Integer inNPeople, String inParentGroupCode, String subjectCode,
 			Boolean inNeedsComputers, String inType, String inDayPeriod, ArrayList<String> arrayList) {
 		if (!groups.containsKey(inCode)) {
@@ -189,6 +200,15 @@ public class Environment {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * @param name
+	 * @return
+	 */
+	public boolean removeGroup(String name) {
+		groups.remove(name);
+		return true;
 	}
 	
 	public String getGroupSubject(String g) {

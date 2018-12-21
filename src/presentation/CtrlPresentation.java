@@ -394,4 +394,12 @@ public class CtrlPresentation {
 		return ctrlDomain.addGroup(inCode, inNPeople, inParentGroupCode, subjectCode,
 				inNeedsComputers, inType, inDayPeriod, arrayList);
 	}
+	
+	/**
+	 * @param name
+	 * @return
+	 */
+	public boolean removeGroup(String name) {
+		return ctrlDomain.removeGroup(name);
+	}
 }
