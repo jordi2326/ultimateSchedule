@@ -876,6 +876,8 @@ public class CtrlDomain {
 		 * @return
 		 */
 		public boolean addRestriction(String group, Integer day, Integer hour) {
+			if (group == null || group.isEmpty()) return false;
+			
 			SpecificDayOrHourRestriction rest = new SpecificDayOrHourRestriction(day, hour);
 			
 			if (!environment.getInstance().getGroupUnaryRestrictions(group).contains(rest.toString())) {

@@ -224,7 +224,7 @@ public class Environment {
 	public boolean addGroup(String inCode, Integer inNPeople, String inParentGroupCode, String subjectCode,
 			Boolean inNeedsComputers, String inType, String inDayPeriod, ArrayList<String> arrayList) {
 		if (!groups.containsKey(subjectCode + "-" + inCode + "-" + inType)) {
-			Group g = new Group(inCode, inNPeople, inParentGroupCode, subjectCode, inNeedsComputers, Group.Type.valueOf((String) inType), Group.DayPeriod.valueOf((String) inDayPeriod), arrayList);
+			Group g = new Group(subjectCode + "-" + inCode + "-" + inType, inNPeople, inParentGroupCode, subjectCode, inNeedsComputers, Group.Type.valueOf((String) inType), Group.DayPeriod.valueOf((String) inDayPeriod), arrayList);
 			
 			groups.put(g.toString(), g);
 			naryRestrictions.put(g.toString(), groupRestr);

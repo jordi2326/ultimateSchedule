@@ -51,5 +51,23 @@
     ], 
     "restrictions": 
       [
+       {
+          "name": "SpecificDayOrHourRestriction",
+          "info":
+          {
+            "group": "M2-10-THEORY",
+            "day": 0,
+            "hour": 0
+          }
+        },
+         {
+          "name": "SpecificDayOrHourRestriction",
+          "info":
+          {
+            "group": "M2-10-THEORY",
+            "day": 0,
+            "hour": 1
+          }
+        }
       ]
 }
