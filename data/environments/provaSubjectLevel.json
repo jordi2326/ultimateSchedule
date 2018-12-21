@@ -16,7 +16,7 @@
     [
       {
           "code": "PRO1",
-          "name": "Programaci¨® 1",
+          "name": "Programaciï¿½ï¿½ 1",
           "level": "Q1",
           "coreqs": [],
           "groups": 
@@ -33,7 +33,7 @@
       },
       {
           "code": "FM",
-          "name": "Fonaments Matem¨¤ics",
+          "name": "Fonaments Matemï¿½ï¿½ics",
           "level": "Q1",
           "coreqs": [],
           "groups": 
@@ -48,5 +48,8 @@
               },
           ] 
       }
-    ]
+    ],
+    "restrictions": 
+      [
+      ]
 }

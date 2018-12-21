@@ -188,9 +188,14 @@ public class CtrlDomain {
 		System.out.println("|---------------------------------------------------------------------------------------------------------------|");
 	}
 	
-	String getEnvirnonmentPath() {
+	public String getEnvirnonmentPath() {
 		Environment env = Environment.getInstance();
-		return env.getPath();
+		return env.getPath();		
+	}
+	
+	public Boolean setRestrictionEnabled(String g, String r, Boolean state) {
+		Environment env = Environment.getInstance();
+		return env.setRestrictionEnabled(g, r, state);
 	}
 
 	/**

@@ -114,7 +114,7 @@ public class CtrlSchedule {
 						boolean valid = true;
 						if (env.groupHasUnaryRestrictions(g)) {
 							for (String restr : env.getGroupUnaryRestrictions(g)) {
-								if (!env.validateGroupUnaryRestriction(g, restr, day, hour, lecDuration)) {
+								if (env.restrictionIsEnabled(g, restr) && !env.validateGroupUnaryRestriction(g, restr, day, hour, lecDuration)) {
 									valid = false;
 									break;
 								}
