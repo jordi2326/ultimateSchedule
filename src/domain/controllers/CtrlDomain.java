@@ -195,7 +195,7 @@ public class CtrlDomain {
 	
 	public Boolean setRestrictionEnabled(String g, String r, Boolean state) {
 		Environment env = Environment.getInstance();
-		env.setRestrictionEnabled(g, r, state);
+		return env.setRestrictionEnabled(g, r, state);
 	}
 
 	/**

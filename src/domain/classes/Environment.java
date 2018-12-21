@@ -235,6 +235,10 @@ public class Environment {
 		return false;
 	}
 	
+	public Boolean restrictionIsEnabled(String g, String r) {
+		return unaryRestrictions.get(g).get(r).isEnabled();
+	}
+	
 	public Boolean setRestrictionEnabled(String g, String r, Boolean state) {
 		if (state) {
 			unaryRestrictions.get(g).get(r).enable();
