@@ -13,6 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * @author Xavier Lacasa Curto
+*/
 public class RoomInfoView extends JDialog {
 	
 	public RoomInfoView(Frame parent, CtrlPresentation ctrlPresentation, String name) {

@@ -24,9 +24,8 @@ import domain.classes.Environment;
 import domain.controllers.CtrlDomain;
 
 /**
- * @author Carlos
- *
- */
+ * @author Carlos Bergillos Varela
+*/
 public class CtrlPresentation {
 	
 	/**

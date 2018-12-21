@@ -96,6 +96,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -105,6 +106,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -114,6 +116,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -123,6 +126,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -132,6 +136,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -141,6 +146,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -150,6 +156,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -159,6 +166,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		}]
 	},
@@ -174,6 +182,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -183,6 +192,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -192,6 +202,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -201,6 +212,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -210,6 +222,7 @@
 		"numPeople":20,
 		"parentGroupCode":"20",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -219,6 +232,7 @@
 		"numPeople":20,
 		"parentGroupCode":"20",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -228,6 +242,7 @@
 		"numPeople":20,
 		"parentGroupCode":"20",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -237,6 +252,7 @@
 		"numPeople":20,
 		"parentGroupCode":"20",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -246,6 +262,7 @@
 		"numPeople":20,
 		"parentGroupCode":"30",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -255,6 +272,7 @@
 		"numPeople":20,
 		"parentGroupCode":"30",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -264,6 +282,7 @@
 		"numPeople":20,
 		"parentGroupCode":"30",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -273,6 +292,7 @@
 		"numPeople":20,
 		"parentGroupCode":"30",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -282,6 +302,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -291,6 +312,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -300,6 +322,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -309,6 +332,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -318,6 +342,7 @@
 		"numPeople":20,
 		"parentGroupCode":"50",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -327,6 +352,7 @@
 		"numPeople":20,
 		"parentGroupCode":"50",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -336,6 +362,7 @@
 		"numPeople":20,
 		"parentGroupCode":"50",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -345,6 +372,7 @@
 		"numPeople":20,
 		"parentGroupCode":"50",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -354,6 +382,7 @@
 		"numPeople":20,
 		"parentGroupCode":"60",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -363,6 +392,7 @@
 		"numPeople":20,
 		"parentGroupCode":"60",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -372,6 +402,7 @@
 		"numPeople":20,
 		"parentGroupCode":"60",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -381,6 +412,7 @@
 		"numPeople":20,
 		"parentGroupCode":"60",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -390,6 +422,7 @@
 		"numPeople":20,
 		"parentGroupCode":"70",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -399,6 +432,7 @@
 		"numPeople":20,
 		"parentGroupCode":"70",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -408,6 +442,7 @@
 		"numPeople":20,
 		"parentGroupCode":"70",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -417,6 +452,7 @@
 		"numPeople":20,
 		"parentGroupCode":"70",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		}]
 	},
@@ -432,6 +468,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -441,6 +478,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"PROBLEMS"
 		},
 		{
@@ -450,6 +488,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"PROBLEMS"
 		},
 		{
@@ -459,6 +498,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"PROBLEMS"
 		},
 		{
@@ -468,6 +508,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -477,6 +518,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":false,
 		"type":"PROBLEMS"
 		}]
 	},
@@ -492,6 +534,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -501,6 +544,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"PROBLEMS"
 		},
 		{
@@ -510,6 +554,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"PROBLEMS"
 		},
 		{
@@ -519,6 +564,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"PROBLEMS"
 		},
 		{
@@ -528,6 +574,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -537,6 +584,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":false,
 		"type":"PROBLEMS"
 		},
 		{
@@ -546,6 +594,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":false,
 		"type":"PROBLEMS"
 		}]
 	},
@@ -561,6 +610,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -570,6 +620,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -579,6 +630,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -588,6 +640,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -597,6 +650,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -606,6 +660,7 @@
 		"numPeople":20,
 		"parentGroupCode":"20",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -615,6 +670,7 @@
 		"numPeople":20,
 		"parentGroupCode":"20",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -624,6 +680,7 @@
 		"numPeople":20,
 		"parentGroupCode":"20",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -633,6 +690,7 @@
 		"numPeople":20,
 		"parentGroupCode":"20",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -642,6 +700,7 @@
 		"numPeople":20,
 		"parentGroupCode":"20",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -651,6 +710,7 @@
 		"numPeople":20,
 		"parentGroupCode":"30",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -660,6 +720,7 @@
 		"numPeople":20,
 		"parentGroupCode":"30",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -669,6 +730,7 @@
 		"numPeople":20,
 		"parentGroupCode":"30",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -678,6 +740,7 @@
 		"numPeople":20,
 		"parentGroupCode":"30",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -687,6 +750,7 @@
 		"numPeople":20,
 		"parentGroupCode":"30",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -696,6 +760,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -705,6 +770,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -714,6 +780,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -723,6 +790,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -732,6 +800,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -741,6 +810,7 @@
 		"numPeople":20,
 		"parentGroupCode":"50",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -750,6 +820,7 @@
 		"numPeople":20,
 		"parentGroupCode":"50",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -759,6 +830,7 @@
 		"numPeople":20,
 		"parentGroupCode":"50",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -768,6 +840,7 @@
 		"numPeople":20,
 		"parentGroupCode":"50",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -777,6 +850,7 @@
 		"numPeople":20,
 		"parentGroupCode":"50",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -786,6 +860,7 @@
 		"numPeople":20,
 		"parentGroupCode":"60",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -795,6 +870,7 @@
 		"numPeople":20,
 		"parentGroupCode":"60",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -804,6 +880,7 @@
 		"numPeople":20,
 		"parentGroupCode":"60",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -813,6 +890,7 @@
 		"numPeople":20,
 		"parentGroupCode":"60",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -822,6 +900,7 @@
 		"numPeople":20,
 		"parentGroupCode":"60",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -831,6 +910,7 @@
 		"numPeople":20,
 		"parentGroupCode":"70",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -840,6 +920,7 @@
 		"numPeople":20,
 		"parentGroupCode":"70",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -849,6 +930,7 @@
 		"numPeople":20,
 		"parentGroupCode":"70",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -858,6 +940,7 @@
 		"numPeople":20,
 		"parentGroupCode":"70",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -867,6 +950,7 @@
 		"numPeople":20,
 		"parentGroupCode":"70",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		}]
 	},
@@ -882,6 +966,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -891,6 +976,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -900,6 +986,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -909,6 +996,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -918,6 +1006,7 @@
 		"numPeople":20,
 		"parentGroupCode":"20",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -927,6 +1016,7 @@
 		"numPeople":20,
 		"parentGroupCode":"20",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -936,6 +1026,7 @@
 		"numPeople":20,
 		"parentGroupCode":"20",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -945,6 +1036,7 @@
 		"numPeople":20,
 		"parentGroupCode":"20",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -954,6 +1046,7 @@
 		"numPeople":20,
 		"parentGroupCode":"30",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -963,6 +1056,7 @@
 		"numPeople":20,
 		"parentGroupCode":"30",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -972,6 +1066,7 @@
 		"numPeople":20,
 		"parentGroupCode":"30",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -981,6 +1076,7 @@
 		"numPeople":20,
 		"parentGroupCode":"30",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -990,6 +1086,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -999,6 +1096,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1008,6 +1106,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1017,6 +1116,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1026,6 +1126,7 @@
 		"numPeople":20,
 		"parentGroupCode":"50",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -1035,6 +1136,7 @@
 		"numPeople":20,
 		"parentGroupCode":"50",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1044,6 +1146,7 @@
 		"numPeople":20,
 		"parentGroupCode":"50",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1053,6 +1156,7 @@
 		"numPeople":20,
 		"parentGroupCode":"50",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1062,6 +1166,7 @@
 		"numPeople":20,
 		"parentGroupCode":"60",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -1071,6 +1176,7 @@
 		"numPeople":20,
 		"parentGroupCode":"60",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1080,6 +1186,7 @@
 		"numPeople":20,
 		"parentGroupCode":"60",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1089,6 +1196,7 @@
 		"numPeople":20,
 		"parentGroupCode":"60",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1098,6 +1206,7 @@
 		"numPeople":20,
 		"parentGroupCode":"70",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -1107,6 +1216,7 @@
 		"numPeople":20,
 		"parentGroupCode":"70",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1116,6 +1226,7 @@
 		"numPeople":20,
 		"parentGroupCode":"70",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1125,6 +1236,7 @@
 		"numPeople":20,
 		"parentGroupCode":"70",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		}]
 	},
@@ -1140,6 +1252,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -1149,6 +1262,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1158,6 +1272,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1167,6 +1282,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1176,6 +1292,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1185,6 +1302,7 @@
 		"numPeople":20,
 		"parentGroupCode":"20",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -1194,6 +1312,7 @@
 		"numPeople":20,
 		"parentGroupCode":"20",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1203,6 +1322,7 @@
 		"numPeople":20,
 		"parentGroupCode":"20",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1212,6 +1332,7 @@
 		"numPeople":20,
 		"parentGroupCode":"20",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1221,6 +1342,7 @@
 		"numPeople":20,
 		"parentGroupCode":"20",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1230,6 +1352,7 @@
 		"numPeople":20,
 		"parentGroupCode":"30",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -1239,6 +1362,7 @@
 		"numPeople":20,
 		"parentGroupCode":"30",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1248,6 +1372,7 @@
 		"numPeople":20,
 		"parentGroupCode":"30",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1257,6 +1382,7 @@
 		"numPeople":20,
 		"parentGroupCode":"30",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1266,6 +1392,7 @@
 		"numPeople":20,
 		"parentGroupCode":"30",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1275,6 +1402,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -1284,6 +1412,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1293,6 +1422,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1302,6 +1432,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1311,6 +1442,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1320,6 +1452,7 @@
 		"numPeople":20,
 		"parentGroupCode":"50",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -1329,6 +1462,7 @@
 		"numPeople":20,
 		"parentGroupCode":"50",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1338,6 +1472,7 @@
 		"numPeople":20,
 		"parentGroupCode":"50",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1347,6 +1482,7 @@
 		"numPeople":20,
 		"parentGroupCode":"50",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1356,6 +1492,7 @@
 		"numPeople":20,
 		"parentGroupCode":"50",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1365,6 +1502,7 @@
 		"numPeople":20,
 		"parentGroupCode":"60",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -1374,6 +1512,7 @@
 		"numPeople":20,
 		"parentGroupCode":"60",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1383,6 +1522,7 @@
 		"numPeople":20,
 		"parentGroupCode":"60",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1392,6 +1532,7 @@
 		"numPeople":20,
 		"parentGroupCode":"60",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1401,6 +1542,7 @@
 		"numPeople":20,
 		"parentGroupCode":"60",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1410,6 +1552,7 @@
 		"numPeople":20,
 		"parentGroupCode":"70",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -1419,6 +1562,7 @@
 		"numPeople":20,
 		"parentGroupCode":"70",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1428,6 +1572,7 @@
 		"numPeople":20,
 		"parentGroupCode":"70",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1437,6 +1582,7 @@
 		"numPeople":20,
 		"parentGroupCode":"70",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1446,6 +1592,7 @@
 		"numPeople":20,
 		"parentGroupCode":"70",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		}]
 	},
@@ -1461,6 +1608,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -1470,6 +1618,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1479,6 +1628,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1488,6 +1638,7 @@
 		"numPeople":20,
 		"parentGroupCode":"10",
 		"dayPeriod":"MORNING",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1497,6 +1648,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":false,
 		"type":"THEORY"
 		},
 		{
@@ -1506,6 +1658,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1515,6 +1668,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		},
 		{
@@ -1524,6 +1678,7 @@
 		"numPeople":20,
 		"parentGroupCode":"40",
 		"dayPeriod":"AFTERNOON",
+		"needsComputers":true,
 		"type":"LABORATORY"
 		}]
 	}],
@@ -1533,6 +1688,30 @@
 		"hour":0,
 		"day":1,
 		"group":"PRO2-10-THEORY"
+		}
+	},
+	{
+	"name":"SpecificDayOrHourRestriction",
+	"info":{
+		"hour":1,
+		"day":3,
+		"group":"PRO1-10-THEORY"
+		}
+	},
+	{
+	"name":"SpecificDayOrHourRestriction",
+	"info":{
+		"hour":5,
+		"day":0,
+		"group":"IC-12-LABORATORY"
+		}
+	},
+	{
+	"name":"SpecificDayOrHourRestriction",
+	"info":{
+		"hour":5,
+		"day":3,
+		"group":"EC-42-LABORATORY"
 		}
 	}]
 }

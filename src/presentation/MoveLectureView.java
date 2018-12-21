@@ -3,6 +3,9 @@ package presentation;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
+/**
+ * @author Carlos Bergillos Varela
+*/
 public class MoveLectureView {
 	
 	Object[] message;

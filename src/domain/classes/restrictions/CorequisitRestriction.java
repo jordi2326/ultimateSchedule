@@ -52,31 +52,39 @@ public class CorequisitRestriction extends NaryRestriction{
 		//Get inserted lecture info
 		Integer duration = env.getLectureDuration(lecture);
 		String group = env.getLectureGroup(lecture);
-		String groupCode = env.getLectureGroup(lecture);
+		String groupCode = env.getGroupCode(group);
 		String subject = env.getGroupSubject(group);
 		String groupParentCode = env.getGroupParentGroupCode(group);
 		ArrayList<String> coreqs = env.getSubjectCoreqs(subject);
 		//get checking lecture (l) info
 		Integer dur = env.getLectureDuration(l);
 		String g = env.getLectureGroup(l);
-		String gcode = env.getLectureGroup(l);
+		String gcode = env.getGroupCode(g);
 		String s = env.getGroupSubject(g);
 		String gpcode = env.getGroupParentGroupCode(g);
 		ArrayList<String> cqs = env.getSubjectCoreqs(s);
 		//Nomes importa si son coreqs si tenen el mateix parent group
+		System.out.println("hola");
 		Boolean sonCoreqs = false;
+		System.out.println(gcode);
+		System.out.println(groupCode);
 		if (groupCode.equals(gpcode) || groupCode.equals(gcode) || gcode.equals(groupParentCode)) {
+			System.out.println("adeu");
 			for (String c : cqs) {
+				System.out.println(c);
+				System.out.println(subject);
 				if (c.equals(subject)) {
 					sonCoreqs = true;
+				}
 			}
 			for (String coreq : coreqs) {
+				System.out.println(coreq);
+				System.out.println(subject);
 				if (coreq.equals(s)) {
 					sonCoreqs = true;
 				}
 			}
-			}
 		}
-		return !(day.equals(d) && ((hour >= h && hour < h+dur) || (h >= hour && h < hour+duration)) && sonCoreqs);
+		return !(day.equals(d) && hour < h+dur && h < hour+duration && sonCoreqs);
 	}
 }

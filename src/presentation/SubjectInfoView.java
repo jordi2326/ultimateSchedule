@@ -14,6 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * @author Xavier Lacasa Curto
+*/
 public class SubjectInfoView extends JDialog {
 	
 	public SubjectInfoView(Frame parent, CtrlPresentation ctrlPresentation, String name) {

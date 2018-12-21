@@ -29,6 +29,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
+/** Representa un grup.
+ * @author Xavier Martín Ballesteros
+*/
 public class NewRoomView extends JDialog {
 	
 	public NewRoomView(Frame parent) {

@@ -322,7 +322,7 @@ public class CtrlDomain {
         		jsonGroup.put("subject", environment.getGroupSubject(g));
         		jsonGroup.put("type", environment.getGroupType(g).toString());
         		jsonGroup.put("dayPeriod", environment.getGroupDayPeriod(g).toString());
-        		jsonGroup.put("needsComputers", environment.groupNeedsComputers(g).toString());
+        		jsonGroup.put("needsComputers", environment.groupNeedsComputers(g));
         		JSONArray jsonLectures = new JSONArray();
         		for (String l : environment.getGroupLectures(g)) {
         			jsonLectures.add(environment.getLectureDuration(l));
