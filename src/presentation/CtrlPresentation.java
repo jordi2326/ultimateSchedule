@@ -475,4 +475,8 @@ public class CtrlPresentation {
 	public String getEnvironmentName(){
 		return ctrlDomain.getEnvironmentName();
 	}
+	
+	public ArrayList<Integer> getGroupsDuration(String name) {
+		return ctrlDomain.getGroupDurations(name);
+	}
 }

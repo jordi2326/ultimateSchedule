@@ -462,6 +462,22 @@ public class Environment {
 		return groups.keySet();
 	}
 	
+	/**
+	 * Duracions d'un grup.
+	 * @param name	Nom del grup.
+	 * @return Les duracions de les lectures d'un grup.
+	 */
+	public ArrayList<Integer> getGroupDurations(String name) {
+		Group g = groups.get(name);
+		ArrayList<Integer> dur = new ArrayList<Integer>();
+		ArrayList<String> lecture = g.getLectures();
+		for (String l : lecture) {
+			dur.add(lectures.get(l).getDuration());
+		}
+		
+		return dur;
+	}
+	
 	/////////////// SUBJECTS //////////////////////////////
 	
 	/**
