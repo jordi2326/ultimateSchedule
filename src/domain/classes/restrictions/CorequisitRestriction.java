@@ -65,8 +65,6 @@ public class CorequisitRestriction extends NaryRestriction{
 		ArrayList<String> cqs = env.getSubjectCoreqs(s);
 		//Nomes importa si son coreqs si tenen el mateix parent group
 		Boolean sonCoreqs = false;
-		System.out.println(gcode);
-		System.out.println(groupCode);
 		if (groupCode.equals(gpcode) || groupCode.equals(gcode) || gcode.equals(groupParentCode)) {
 			for (String c : cqs) {
 				if (c.equals(subject)) {
@@ -74,8 +72,6 @@ public class CorequisitRestriction extends NaryRestriction{
 				}
 			}
 			for (String coreq : coreqs) {
-				System.out.println(coreq);
-				System.out.println(subject);
 				if (coreq.equals(s)) {
 					sonCoreqs = true;
 				}
