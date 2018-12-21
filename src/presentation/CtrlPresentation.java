@@ -165,10 +165,12 @@ public class CtrlPresentation {
 	 * @throws ParseException
 	 * @throws IOException 
 	 */
-	public boolean importSchedule(String filename)
-		throws ParseException, IOException {
-		
-		return ctrlDomain.importSchedule(filename, true);
+	public boolean importSchedule(String filename) {
+		try {
+			return ctrlDomain.importSchedule(filename, true);
+		} catch (ParseException | IOException e) {
+			return false;
+		}
 	}
 	
 	/**
@@ -428,5 +430,17 @@ public class CtrlPresentation {
 	 */
 	public void subjectAdded(String name) {
 		mainView.subjectAdded(name);
+	}
+	
+	public void subjectRemoved(String name) {
+		mainView.subjectRemoved(name);
+	}
+	
+	public void roomAdded(String name) {
+		mainView.roomAdded(name);
+	}
+	
+	public void roomRemoved(String name) {
+		mainView.roomRemoved(name);
 	}
 }
